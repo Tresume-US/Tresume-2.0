@@ -67,6 +67,47 @@ router.post('/updatehrmscandidate', async (req, res) => {
 })
 
 router.post('/addHrmsCandidate', async (req, res) => {
+
+  try {
+    const pool = await sql.connect(config);
+    const orgID = req.body.orgID;
+
+    const query = "SELECT * FROM trainee where organizationID = '"+orgID+"'";
+    console.log(query);
+    const result = await pool.request()
+      .query(query);
+
+    res.json({
+      flag: 1,
+      result: result.recordset,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred.' });
+  }
+})
+
+
+router.post('/fetchHrmsRecruiter', async (req, res) => {
+
+  try {
+    const pool = await sql.connect(config);
+    const orgID = req.body.orgID;
+
+    const query = "SELECT * FROM trainee where organizationID = '"+orgID+"'";
+    console.log(query);
+    const result = await pool.request()
+      .query(query);
+
+    res.json({
+      flag: 1,
+      result: result.recordset,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred.' });
+  }
+
 })
 
 router.post('/saveSubmissionFormData', async (req, res) => {
@@ -267,5 +308,7 @@ async function deactivateplacementdata(PID) {
     throw error;
   }
 }
+
+
 module.exports = router;
  

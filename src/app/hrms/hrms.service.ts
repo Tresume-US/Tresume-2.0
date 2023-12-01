@@ -25,6 +25,10 @@ export class HrmsService {
   addHrmsCandidate(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'addHrmsCandidate', request);
   }
+
+  fetchHrmsRecruiter(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'fetchHrmsRecruiter', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;

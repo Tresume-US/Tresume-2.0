@@ -1,6 +1,6 @@
 <div *ngIf="enableNav" class="wrapper">
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  <div *ngIf="!enableNav" class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="assets/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60" />
   </div>
 
@@ -159,7 +159,7 @@
           <!-- Add icons to the links using the .nav-icon class
   with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard/{{traineeID}}" >
+            <a class="nav-link" routerLink="/dashboard/{{traineeID}}" routerLinkActive="active">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Dashboard
@@ -167,51 +167,42 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/compliancedashboard">
-              <i class="nav-icon fas fa-chart-bar"></i>
+            <a class="nav-link" routerLink="/compliancedashboard" routerLinkActive="active">
+              <i class="nav-icon fas fa-chart-pie"></i>
               <p>
                 Compliance Dashboard
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/searchMain" class=" nav-link">
-              <i class="nav-icon fas fa-search"></i>
-              <p>JobBoard Search</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/hrms" class="nav-link">
-              <i class="nav-icon fas fa-address-book "></i>
-              <p> HRMS</p>
-            </a>
-          </li>
-          
-            <!-- <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=SearchResumes" class="nav-link">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=SearchResumes" class="nav-link">
+              <!-- <a href="https://tresume.us/searchResumes.aspx" class="nav-link"> -->
               <i class="nav-icon fas fa-search"></i>
               <p>
                 Search Tresume
               </p>
-            </a> -->
-          
+            </a>
+          </li>
           <li class="nav-item">
-            <a routerLink="/jobapplication" class="nav-link">
+            <a routerLink="/searchMain" class="nav-link">
+              <i class="nav-icon fas fa-search"></i>
+              <p>
+                Job Board Search
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=JobApplication1" class="nav-link">
+              <!-- <a href="https://tresume.us/JobApplication1.aspx" class="nav-link"> -->
               <i class="nav-icon fas fa-clone"></i>
               <p>
                 Job Applications
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=MyJobs" class="nav-link">
-              <i class="nav-icon fas fa-link"></i>
-              <p>
-                My Jobs
-              </p>
-            </a>
-          </li> -->
           <li class="nav-item">
-            <a class="nav-link" routerLink="/jobpostings" routerLinkActive="active">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=MyJobs" class="nav-link">
+              <!-- <a href="https://tresume.us/MyJobs.aspx" class="nav-link"> -->
               <i class="nav-icon fas fa-link"></i>
               <p>
                 My Jobs
@@ -226,28 +217,90 @@
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=JobBoard1" class="nav-link">
+              <!-- <a href="https://tresume.us/JobBoard1.aspx" class="nav-link"> -->
               <i class="nav-icon fas fa-tasks"></i>
               <p>
                 Job Boards
               </p>
             </a>
-          </li> -->
-          <li class="nav-item">
-            <a routerLink="/harvest" class=" nav-link">
-              <i class="nav-icon fas fa-leaf"></i>
-              <p>Harvest</p>
-            </a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="/harvest" class="nav-link">
+          <li class="nav-item">
+            <a routerLink="/harvest" class="nav-link">
               <i class="nav-icon fas fa-leaf"></i>
               <p>
                 Harvest
               </p>
             </a>
-          </li> -->
+          </li>
+          <li class="nav-item">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=ShowClients" class="nav-link">
+              <!-- <a href="https://tresume.us/ShowClients.aspx" class="nav-link"> -->
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Clients
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=TalentBench1" class="nav-link">
+              <!-- <a href="https://tresume.us/TalentBench1.aspx" class="nav-link"> -->
+              <i class="nav-icon fas fa-user-circle"></i>
+              <p>
+                Talent Bench
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=Batch" class="nav-link">
+              <!-- <a href="https://tresume.us/Batch.aspx" class="nav-link"> -->
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>
+                Batch
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                My Account
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=WorkFlowPayment" class="nav-link">
+                  <!-- <a href="https://tresume.us/WorkFlowPayment.aspx" class="nav-link"> -->
+                  <i class="far fa-credit-card nav-icon"></i>
+                  <p>Subscription</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=AccountMembers" class="nav-link">
+                <!-- <a href="https://tresume.us/AccountMembers.aspx" class="nav-link"> -->
+                  <i class="far fa-user nav-icon"></i>
+                  <p>Add Users</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/division" class=" nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Division</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=Profile" class="nav-link">
+              <!-- <a href="https://tresume.us/Profile.aspx" class="nav-link"> -->
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                My Profile
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
@@ -259,137 +312,18 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a class="nav-link" routerLink="/onboarding">
-                  <i class="nav-icon fas fa-list "></i>
+                  <i class="far fa-credit-card nav-icon"></i>
                   <p>Checklists</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="/onboardingList">
-                  <i class="nav-icon fas fa-chalkboard-teacher"></i>
-                  <p> OnBoarding</p>
+                  <i class="far fa-user nav-icon"></i>
+                  <p>OnBoarding</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a  class=" nav-link">
-              <i class="nav-icon fas fa-clock"></i>
-              <p>Timesheet</p>
-              <i class="right fas fa-angle-left"></i>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="alltimelist">
-                  <i class="nav-icon fas fa-list "></i>
-                  <p>All Time List</p>
-                </a>
-              </li>
-              <li class="nav-item" *ngIf="timesheetrole == 1">
-                <a class="nav-link" routerLink="/assignrole">
-                  <i class="nav-icon fas fa-highlighter"></i>
-                  <p> Assign Role</p>
-                </a>
-              </li>
-              <li class="nav-item" *ngIf="timesheetrole == 1">
-                <a class="nav-link" routerLink="/create-project">
-                  <i class="nav-icon fas fa-plus"></i>
-                  <p> Create Project</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          
-          <li class="nav-item">
-            <a routerLink="/allclient" class=" nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p> Clients</p>
-            </a>
-          </li>
-          <!-- <li class="nav-item">
-            <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=ShowClients" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Clients
-              </p>
-            </a>
-          </li> -->
-          <li class="nav-item">
-            <a routerLink="/vendor" class=" nav-link">
-              <i class="nav-icon fas fa-store"></i>
-              <p> Vendors</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/talentBench" class="nav-link">
-              <i class="nav-icon fas fa-user-circle"></i>
-              <p>
-                Talent Bench
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/batch" class="nav-link">
-              <i class="nav-icon fas fa-id-card"></i>
-              <p>
-                Batch
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/jobboardaccount" class=" nav-link">
-              <i class="nav-icon fas fa-tasks"></i>
-              <p>Job Boards</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-tie"></i>
-              <p>
-                My Account
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-
-            <ul class="nav nav-treeview">
-              <!-- <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p>Subscription</p>
-                </a>
-              </li> -->
-              <li class="nav-item">
-                <a routerLink="/accountsadduser" class="nav-link">
-                  <i class="nav-icon fas fa-user "></i>
-                  <p> Add Users </p>
-                </a>
-              </li>
-              <!-- <li class="nav-item">
-                <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=AccountMembers" class="nav-link">
-                  <i class="nav-icon far fa-user"></i>
-                  <p>Add Users</p>
-                </a>
-              </li> -->
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/division" class=" nav-link">
-              <i class="nav-icon fas fa-sitemap"></i>
-              <p>Division</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <!-- <a href="{{url}}Clogin.aspx?A={{accesstoken}}&R=Profile" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                My Profile
-              </p>
-            </a> -->
-            <a routerLink="/profile" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>  My Profile</p>
-            </a>
-          </li>
-          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

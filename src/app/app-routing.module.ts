@@ -120,7 +120,7 @@ const routes: Routes = [
   { path: 'hrms' , component:HrmsComponent, canActivate: [AuthGuard]},
   { path: 'accountsadduser', component:AccountsAddUserComponent},
   { path: 'accountsaddrole',component:AccountsAddRoleComponent},
-  { path: 'login', component: LoginComponent , canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent},
   { path: 'profile',component:ProfileComponent},
   { path: 'information',component:InformationComponent},
   { path: 'password',component:PasswordComponent},
