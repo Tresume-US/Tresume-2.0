@@ -2945,6 +2945,8 @@ app.post("/checkmd5resume", function (req, res) {
 });
 
 app.post('/getOnboardingCount', function (req, res) {
+try{
+
 
   sql.connect(config, function (err) {
     if (err) console.log(err);
@@ -2958,8 +2960,13 @@ app.post('/getOnboardingCount', function (req, res) {
       }
       res.send(recordset.recordsets[0]);
     });
+    
 
   });
+} catch (error) {
+  console.error('Error:', error);
+  res.status(500).json({ message: 'An error occurred' });
+}
 });
 
 function parsePhraseToQuery(phrase) {

@@ -37,22 +37,20 @@
     </thead>
     <tbody>
       <tr *ngFor="let job of jobs">
-        <td>{{ job.jobTitle }}</td>
-        <td>{{ job.company }}</td>
-        <td>{{ job.location }}</td>
-        <td>{{ job.payRate }}</td>
-        <td>{{ job.newApplicants }}</td>
+        <td>{{ job.JobTitle }}</td>
+        <td>{{ job.Company }}</td>
+        <td>{{ job.Location }}</td>
+        <td>{{ job.PayRate }}</td>
+        <td>{{ job.NewApplicants }}</td>
         <td>
-          {{ job.totalApplicants }}
+          {{ job.TotalApplicants }}
           <a [routerLink]="['/applicantdetails']">
             <i class="fas fa-external-link-alt"></i></a>
         </td>
-        <td>{{ job.postedOn | date }}</td>
-        <td>{{ job.postedBy }}</td>
-        <td>{{ job.jobType }}</td>
-        <td><select id="role" [(ngModel)]="selectedRole">
-          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
-        </select></td>
+        <td>{{ job.PostedOn | date }}</td>
+        <td>{{ job.PostedBy }}</td>
+        <td>{{ job.JobType }}</td>
+        <td>{{ job.Assignee }}</td>
         <td>
           <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a>
           <a [routerLink]="['/submittedcandidates']"><i class="fas fa-id-badge"></i></a>

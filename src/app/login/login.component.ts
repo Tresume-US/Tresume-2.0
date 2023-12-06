@@ -41,15 +41,15 @@ export class LoginComponent {
         const FullAccess = response.result[0].FullAccess
         const DashboardPermission = response.result[0].DashboardPermission
         const RoleID = response.result[0].RoleID
+        const IsAdmin = response.result[0].IsAdmin
         this.cookieService.set('userName1', userName);
         this.cookieService.set('OrgID', orgID);
         this.cookieService.set('TraineeID',traineeID);
         this.cookieService.set('ViewOnly',ViewOnly);
-        
         this.cookieService.set('FullAccess',FullAccess);
         this.cookieService.set('DashboardPermission',DashboardPermission);
         this.cookieService.set('RoleID',RoleID);
-        
+        this.cookieService.set('IsAdmin',RoleID);
         
         var url = '/dashboard/'+traineeID;
         this.router.navigateByUrl(url);

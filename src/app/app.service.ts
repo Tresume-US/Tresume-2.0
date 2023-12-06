@@ -35,17 +35,17 @@ export class AppService {
     }
 
     isLoggedIn(): boolean {
-        this.cookieService.set('userName1','karthik@tresume.us');
-        this.cookieService.set('OrgID','82');
-        this.cookieService.set('TraineeID','569');  
-        this.cookieService.set('TimesheetRole','1');   
-        // const userName = this.cookieService.get('userName1');
-        // const orgID = this.cookieService.get('OrgID');
-        // const traineeID = this.cookieService.get('TraineeID');
+        // this.cookieService.set('userName1','karthik@tresume.us');
+        // this.cookieService.set('OrgID','82');
+        // this.cookieService.set('TraineeID','569');  
+        // this.cookieService.set('TimesheetRole','1');   
+        const userName = this.cookieService.get('userName1');
+        const orgID = this.cookieService.get('OrgID');
+        const traineeID = this.cookieService.get('TraineeID');
 
-        const orgID = 9;
-        const userName = 'karthik@tresume.us';
-        const traineeID = 36960;
+        // const orgID = 9;
+        // const userName = 'karthik@tresume.us';
+        // const traineeID = 36960;
         return !!userName && !!orgID && !!traineeID;
       }
 

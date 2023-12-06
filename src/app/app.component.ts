@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   public timesheetrole: string;
   FullAccess: number[]
   ViewOnly: number[]
+  IsAdmin:any;
   constructor(private route: ActivatedRoute, private service1: AppService, private router: Router, private cookieService: CookieService) {
     //this.traineeID = this.route.snapshot.params["traineeId"];
 
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
     var FullAccess = this.cookieService.get('FullAccess');
     this.FullAccess = FullAccess.split(',').map(Number);
     var VewAccess = this.cookieService.get('ViewOnly');
+    this.IsAdmin = this.cookieService.get('IsAdmin');
     this.ViewOnly = VewAccess.split(',').map(Number);
     await this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {

@@ -48,26 +48,26 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of tableData">
-            <td>{{ item.benchId }}</td>
+            <td>{{ item.TBID }}</td>
             <td>
-              <div class="ml-10"> {{ item.name }}</div>
-              <i [routerLink]="['/hrms']" class="fas fa-network-wired icon"></i>
-              <i class="far fa-clipboard icon" [routerLink]="['/searchtresume/reviewtresume/interview']"></i>
+              <div class="ml-10"> {{ item.FirstName }} {{item.LastName}}</div>
+              <i class="fas fa-network-wired icon" [routerLink]="['/reviewtresume/'+item.TraineeID]" ></i>
+              <!-- <i class="far fa-clipboard icon" [routerLink]="['/searchtresume/reviewtresume/'+item.TraineeID]"></i>
               <i class="fas fa-pencil-alt icon" [routerLink]="['/placementview']"></i>
-              <i class="far fa-file-alt icon" [routerLink]="['/searchtresume/reviewtresume/submission']"></i>
+              <i class="far fa-file-alt icon" [routerLink]="['/searchtresume/reviewtresume/submission']"></i> -->
               <i class="fas fa-trash icon" type="button" data-toggle="modal" data-target="#exampleModal"></i>
 
             </td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.location }}</td>
-            <td>{{ item.timeOnBench }}</td>
-            <td>{{ item.title }}</td>
+            <td>{{ item.UserName }}</td>
+            <td>{{ item.CurrentLocation }}</td>
+            <td>{{ item.age }} days</td>
+            <td>{{ item.TraineeTitle }}</td>
             <td>{{ item.phone }}</td>
-            <td>{{ item.status }}</td>
-            <td>{{ item.billRate }}</td>
-            <td>{{ item.refer }}</td>
+            <td>{{ item.CandidateStatus }}</td>
+            <td>$ {{ item.BillRate }}</td>
+            <td>{{ item.ReferredBy }}</td>
             <td>
-              <select class="form-control" [(ngModel)]="item.groupName">
+              <select class="form-control" [(ngModel)]="item.GroupID">
                 <option *ngFor="let option of groupOptions" [value]="option.value">
                   {{ option.label }}
                 </option>
