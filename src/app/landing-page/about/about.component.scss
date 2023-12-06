@@ -849,12 +849,14 @@ ul {
 #aboutTresume span:nth-child(12) { animation-delay: 1.2s; }
 #aboutTresume span:nth-child(13) { animation-delay: 1.3s; }
 
-.down {
+.description {
   font-size: 1rem;
-  font-weight: 600;
+  // font-weight: 600;
   font-style: inherit;
   text-align: center;
-  font-size: 22px;
+  font-size: 19px;
   color: #676a6a;
-  line-height: 1.5rem;
+  line-height: 1.8rem;
+  text-align: left;
+  margin-right: 50px;
 }
