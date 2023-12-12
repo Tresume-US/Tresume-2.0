@@ -246,7 +246,7 @@
             </div>
             <div class="col-md-4">
               <label class="label">Middle Name</label>
-              <input type="text" class="form-control" name="middleName" placeholder="Middle name" required>
+              <input type="text" class="form-control" name="middleName" formControlName="middleName" placeholder="Middle name" required>
             </div>
             <div class="col-md-4">
               <label class="label">Last Name *</label>
@@ -281,8 +281,8 @@
             <div class="col-md-4">
               <label class="label">Gender</label>
               <div class="radio">
-                <input type="radio" name="gender" value="male"> Male
-                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="male" formControlName="gender"> Male
+                <input type="radio" name="gender" value="female" formControlName="gender"> Female
               </div>
             </div>
           </div>
@@ -290,34 +290,34 @@
           <div class="row row2">
             <div class="col-md-4">
               <label class="label">Recruiter Name *</label>
-              <select class="form-control" name="recruiterName">
+              <select class="form-control" name="recruiterName"  formControlName="recruiterName">  
                 <option *ngFor="let name of recruiterNames" [value]="name">{{ name }}</option>
               </select>
             </div>
             <div class="col-md-4">
               <label class="label">Degree</label>
-              <input type="text" class="form-control" name="degree" placeholder="Degree">
+              <input type="text" class="form-control" name="degree" placeholder="Degree"  formControlName="degree">
             </div>
             <div class="col-md-4">
               <label class="label">University</label>
-              <input type="text" class="form-control" name="university" placeholder="University">
+              <input type="text" class="form-control" name="university" placeholder="University"  formControlName="university">
             </div>
           </div>
 
           <div class="row row2">
             <div class="col-md-4">
               <label class="label">Candidate Status</label>
-              <select class="form-control" name="candidateStatus" [(ngModel)]="formData.candidateStatus">
+              <select class="form-control" name="candidateStatus" [(ngModel)]="formData.candidateStatus"  formControlName="candidateStatus">
                 <option *ngFor="let status of candidateStatuses" [value]="status">{{ status }}</option>
               </select>
             </div>
             <div class="col-md-4">
               <label class="label">Groups</label>
-              <input type="text" class="form-control" name="groups">
+              <input type="text" class="form-control" name="groups"  formControlName="groups">
             </div>
             <div class="col-md-4">
               <label class="label">Legal Status</label>
-              <select class="form-control" name="legalStatus">
+              <select class="form-control" name="legalStatus"  formControlName="legalStatus">
                 <option value="legal">Legal</option>
                 <option value="illegal">Illegal</option>
               </select>
@@ -338,26 +338,23 @@
             <div class="col-md-4">
               <label class="label">Location Constraint</label>
               <div class="radio">
-                <input type="radio" name="locationConstraint" value="yes"> Yes
-                <input type="radio" name="locationConstraint" value="no"> No
+                <input type="radio" name="locationConstraint" value="yes"  formControlName="locationConstraint"> Yes
+                <input type="radio" name="locationConstraint" value="no"  formControlName="locationConstraint"> No
               </div>
             </div>
-            <div class="col-md-4">
-              <label class="label">Video</label>
-              <input type="file" class="form-control" name="video">
-            </div>
+          
           </div>
 
           <div class="row row2">
             <div class="col-md-4">
               <label class="label">Referral Type</label>
-              <select class="form-control" name="referralType" [(ngModel)]="formData.referralType">
+              <select class="form-control" name="referralType" [(ngModel)]="formData.referralType"   formControlName="referralType">
                 <option *ngFor="let type of referralTypes" [value]="type">{{ type }}</option>
               </select>
             </div>
             <div class="col-md-4">
               <label class="label">Notes</label>
-              <textarea class="textarea" name="notes" rows="4"></textarea>
+              <textarea class="textarea" name="notes" rows="4" formControlName="notes"></textarea>
             </div>
           </div>
         </form>
