@@ -35,7 +35,7 @@ router.post('/getAllTimeList', async (req, res) => {
     if (err) console.log(err);
     var request = new sql.Request();
 
-    var query = "SELECT t.firstname,t.lastname,TM.fromdate, TM.todate, TM.totalhrs, TM.approvalstatus, TM.comments FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "' ";
+    var query = "SELECT t.firstname,t.lastname,TM.fromdate, TM.todate, TM.totalhrs, TM.approvalstatus, TM.comments FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "'";
 
     console.log(query);
     request.query(query,
@@ -62,39 +62,39 @@ router.post('/createTimesheet', async (req, res) => {
       return res.status(500).send({ flag: 0, error: "Database connection error" });
     }
 
-    try {
-      const pool = await sql.connect(config);
-      const transaction = new sql.Transaction(pool);
-      await transaction.begin();
+    // try {
+    //   const pool = await sql.connect(config);
+    //   const transaction = new sql.Transaction(pool);
+    //   await transaction.begin();
 
-      try {
-        const request = new sql.Request(transaction);
+    //   try {
+    //     const request = new sql.Request(transaction);
 
-        for (const data of timesheetData) {
-          request.input('traineeID', sql.VarChar, req.body.traineeID);
-          request.input('project', sql.VarChar, data.project);
-          request.input('fromdate', sql.Date, data.fromdate);
-          request.input('todate', sql.Date, data.todate);
-          request.input('totalhrs', sql.Decimal(18, 2), data.totalhrs);
-          request.input('approvalstatus', sql.VarChar, data.approvalstatus);
-          request.input('comments', sql.VarChar, data.comments);
+    //     for (const data of timesheetData) {
+    //       request.input('traineeID', sql.VarChar, req.body.traineeID);
+    //       request.input('project', sql.VarChar, data.project);
+    //       request.input('fromdate', sql.Date, data.fromdate);
+    //       request.input('todate', sql.Date, data.todate);
+    //       request.input('totalhrs', sql.Decimal(18, 2), data.totalhrs);
+    //       request.input('approvalstatus', sql.VarChar, data.approvalstatus);
+    //       request.input('comments', sql.VarChar, data.comments);
 
-          const query = `INSERT INTO Timesheet_Master (traineeid, project, fromdate, todate, totalhrs, approvalstatus, comments) VALUES (@traineeID, @project, @fromdate, @todate, @totalhrs, @approvalstatus, @comments)`;
+    //       const query = `INSERT INTO Timesheet_Master (traineeid, project, fromdate, todate, totalhrs, approvalstatus, comments) VALUES (@traineeID, @project, @fromdate, @todate, @totalhrs, @approvalstatus, @comments)`;
 
-          await request.query(query);
-        }
+    //       await request.query(query);
+    //     }
 
-        await transaction.commit();
-        res.status(200).send({ flag: 1, message: "Timesheet data inserted successfully" });
-      } catch (err) {
-        console.log(err);
-        await transaction.rollback();
-        res.status(500).send({ flag: 0, error: "Error inserting timesheet data" });
-      }
-    } catch (err) {
-      console.log(err);
-      res.status(500).send({ flag: 0, error: "Database connection error" });
-    }
+    //     await transaction.commit();
+    //     res.status(200).send({ flag: 1, message: "Timesheet data inserted successfully" });
+    //   } catch (err) {
+    //     console.log(err);
+    //     await transaction.rollback();
+    //     res.status(500).send({ flag: 0, error: "Error inserting timesheet data" });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    //   res.status(500).send({ flag: 0, error: "Database connection error" });
+    // }
   });
 });
 

@@ -70,23 +70,23 @@ export class TimesheetCreateComponent implements OnInit {
   //   }
   // }
 
-  // async saveTimesheet() {
-  //   const formData = new FormData();
-  //   if (this.CAselectedFile) {
-  //     formData.append('CAfile', this.CAselectedFile, this.CAselectedFile.name);
-  //   }
-  //   if (this.SRselectedFile) {
-  //     formData.append('SRfile', this.SRselectedFile, this.SRselectedFile.name);
-  //   }
-  //   formData.append('timesheetData', JSON.stringify(this.timesheetData));
+  async saveTimesheet() {
+    const formData = new FormData();
+    if (this.CAselectedFile) {
+      formData.append('CAfile', this.CAselectedFile, this.CAselectedFile.name);
+    }
+    if (this.SRselectedFile) {
+      formData.append('SRfile', this.SRselectedFile, this.SRselectedFile.name);
+    }
+    formData.append('timesheetData', JSON.stringify(this.timesheetData));
   
-  //   try {
-  //     const response = await this.Service.createTimesheet(formData).toPromise();
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error('An error occurred:', error);
-  //   }
-  // }
+    try {
+      const response = await this.Service.createTimesheet(formData).toPromise();
+      console.log(response);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
 
   // cancel() {
   //   this.timesheetData = [];

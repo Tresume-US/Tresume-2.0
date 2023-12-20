@@ -30,7 +30,7 @@ export class AllTimeListComponent implements OnChanges {
   }
   fetchtimesheet(){
     let Req = {
-      OrgID: this.OrgID,
+      traineeID: this.TraineeID,
     };
     this.service.getAllTimeList(Req).subscribe((x: any) => {
       this.tableData = x.result;
