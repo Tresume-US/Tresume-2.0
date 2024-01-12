@@ -17,6 +17,14 @@ getTalentBenchList(request: any): Observable<ResponseDetails> {
 addTalentBenchList(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'addTalentBenchList', request);
   }
+
+candidatestatus(request: any): Observable<ResponseDetails> {
+   return this.http.post<ResponseDetails>(this.endpoint + 'candidatestatus', request);
+ }
+
+ getLegalStatus(request: any): Observable<ResponseDetails> {
+   return this.http.post<ResponseDetails>(this.endpoint + 'getLegalStatus', request);
+ }
 }
 export interface ResponseDetails {
 flag?: any;

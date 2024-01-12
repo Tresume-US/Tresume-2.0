@@ -17,7 +17,8 @@ import { ActivatedRoute } from '@angular/router';
 export class HrmsComponent implements OnInit {
 
   candidates1: string[] = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
-  recruiterNames: string[] = ['Recruiter 1', 'Recruiter 2', 'Recruiter 3'];
+  recruiterNames: any ='';
+  recruiterName:any;
   candidateStatuses: string[] = ['', '', ''];
   marketerNames: string[] = ['Marketer 1', 'Marketer 2', 'Marketer 3'];
   referralTypes: string[] = ['Phone', 'Email', 'Others'];
@@ -70,7 +71,7 @@ export class HrmsComponent implements OnInit {
 
     this.addCandidate = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(3)]],
       recruiterName: ['', [Validators.required, this.atLeastOneSelectedValidator()]],
@@ -205,6 +206,10 @@ export class HrmsComponent implements OnInit {
 
   savehrmsdata() {
     this.loading = true;
+    var followupon = '';
+    if(this.selectedFollowUpOption == 'SpecifiedDate'){
+      followupon = this.specifiedDate;
+    }
 
     let Req = {
       firstName: this.addCandidate.value.firstName,
@@ -213,7 +218,7 @@ export class HrmsComponent implements OnInit {
       email: this.addCandidate.value.email,
       phone: this.addCandidate.value.phone,
       gender: this.addCandidate.value.gender,
-      recruiterName: this.addCandidate.value.recruiterName,
+      recruiterName: this.recruiterName,
       degree: this.addCandidate.value.degree,
       university: this.addCandidate.value.university,
       referralType: this.formData.referralType,
@@ -223,8 +228,8 @@ export class HrmsComponent implements OnInit {
       recruiteremail: this.userName,
       orgID:this.OrgID,
       creeateby:this.userName,
-      
-
+      followupon:followupon,
+      currentLocation:this.currentLocation
 
       // marketerName: this.formData.marketerName,
       // groups: this.addCandidate.value.groups,
@@ -274,7 +279,6 @@ export class HrmsComponent implements OnInit {
   sortBy: string = 'DateCreated';
   sortOrder: string = 'asc';
 
-  // Function to handle sorting
   sortTable(column: string) {
     if (this.sortBy === column) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -286,7 +290,6 @@ export class HrmsComponent implements OnInit {
     this.filteredCandidates = this.sortCandidates();
   }
 
-  // Function to sort the candidates based on the current sort settings
   sortCandidates(): any[] {
     return this.candidates.sort((a, b) => {
       const dateA = new Date(a.DateCreated).getTime();
@@ -305,14 +308,12 @@ export class HrmsComponent implements OnInit {
   isCandidateVisible(candidate: any): boolean {
     const searchValue = this.searchInput.toLowerCase();
 
-     // Filter for Follow Up On date range
      const followUpDate = new Date(candidate.FollowUpDate);
      const followUpStartDate = this.followUpStartDate ? new Date(this.followUpStartDate) : null;
      const followUpEndDate = this.followUpEndDate ? new Date(this.followUpEndDate) : null;
      const followUpInRange = (!followUpStartDate || followUpDate >= followUpStartDate) &&
        (!followUpEndDate || followUpDate <= followUpEndDate);
  
-     // Filter for Date Created date range
      const dateCreated = new Date(candidate.DateCreated);
      const dateCreatedStartDate = this.dateCreatedStartDate ? new Date(this.dateCreatedStartDate) : null;
      const dateCreatedEndDate = this.dateCreatedEndDate ? new Date(this.dateCreatedEndDate) : null;
@@ -337,21 +338,14 @@ export class HrmsComponent implements OnInit {
     });
   }
 
-  // Properties to track date input states
   fromDateEntered: boolean = false;
   toDateEntered: boolean = false;
 
-  // Event handler for the "Clear" button
   onClear() {
-    // Clear date values
     this.dateCreatedStartDate = '';
     this.dateCreatedEndDate = '';
-
-    // Update date input states
     this.fromDateEntered = false;
     this.toDateEntered = false;
-
-    // Clear filtered candidates
     this.filteredCandidates = [];
     this.fetchhrmscandidatelist();
   }
@@ -360,25 +354,14 @@ export class HrmsComponent implements OnInit {
     return !this.fromDateEntered || !this.toDateEntered || this.dateCreatedStartDate > this.dateCreatedEndDate;
   }
 
-  // onSearch(): void {
-
-  //   this.candidates = this.candidates.filter(candidate => {
-  //     const candidateDate = new Date(candidate.DateCreated); 
-
-  //     return candidateDate >= new Date(this.dateCreatedStartDate) && candidateDate <= new Date(this.dateCreatedEndDate);
-  //   });
-  // }
-
   onSearch(): void {
     this.loading = true;
-
     const Req = {
       TraineeID: this.TraineeID,
     };
 
     this.service.gethrmscandidateList(Req).subscribe((response: any) => {
       this.candidates = response.result;
-
       this.candidates = this.candidates.filter(candidate => {
         const candidateDate = new Date(candidate.DateCreated);
         return candidateDate >= new Date(this.dateCreatedStartDate) && candidateDate <= new Date(this.dateCreatedEndDate);
@@ -386,6 +369,39 @@ export class HrmsComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  followstartdate: boolean = false;
+  followenddate: boolean = false;
+  
+  clearAndReload() {
+    this.followUpStartDate = '';
+    this.followUpEndDate = '';
+    this.followstartdate = false;
+    this.followenddate = false;
+    this.fetchhrmscandidatelist();
+  }
+
+  followuponbutton(): boolean{
+    return  !this.followstartdate || !this.followenddate || this.followUpStartDate > this.followUpEndDate;
+  }
+
+  filterCandidates(): void {
+    this.loading = true;
+    const Req = {
+      TraineeID: this.TraineeID,
+    };
+  
+    this.service.gethrmscandidateList(Req).subscribe((response: any) => {
+      this.candidates = response.result;
+      this.candidates = this.candidates.filter(candidate => {
+        const followUpDate = new Date(candidate.followupon);
+        return followUpDate >= new Date(this.followUpStartDate) && followUpDate <= new Date(this.followUpEndDate);
+      });
+      this.loading = false;
+    });
+  }
+  
+
 }
 
 

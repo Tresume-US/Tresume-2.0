@@ -156,8 +156,8 @@
           <div class="row row2">
             <div class="col-md-4">
               <label class="label">Recruiter Name *</label>
-              <select class="form-control" name="RecruiterName" formControlName="RecruiterName">
-                <option *ngFor="let name of recruiterNames" [value]="name">{{ name }}</option>
+              <select class="form-control" name="recruiterName" [(ngModel)]="recruiterName" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let name of recruiterNames" [value]="name.traineeid">{{name.firstname }} {{name.lastname }}</option>
               </select>
             </div>
             <div class="col-md-4">
@@ -173,8 +173,9 @@
           <div class="row row2">
             <div class="col-md-4">
               <label class="label">Candidate Status</label>
-              <select class="form-control" name="CandidateStatus" formControlName="CandidateStatus">
-                <option *ngFor="let status of candidateStatuses" [value]="status">{{ status }}</option>
+              <select class="form-control" id="currentStatus" [(ngModel)]="selectedcurrentstatus"
+                [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let option of  currentStatusOptions" [value]="option.CandidateStatusID">{{ option.Value }}</option>
               </select>
             </div>
             <div class="col-md-4">
@@ -183,9 +184,9 @@
             </div>
             <div class="col-md-4">
               <label class="label">Legal Status</label>
-              <select class="form-control" name="LegalStatus" formControlName="LegalStatus">
-                <option value="legal">Legal</option>
-                <option value="illegal">Illegal</option>
+              <select class="form-control" name="legalStatus" [(ngModel)]="legalStatus" [ngModelOptions]="{standalone: true}">
+                <option value>-- Select Legal Status --</option>
+                <option *ngFor="let stat of legalStatusOptions" [value]="stat.LegalStatusID">{{ stat.LegalValue }}</option>
               </select>
             </div>
           </div>

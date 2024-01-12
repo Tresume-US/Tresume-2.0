@@ -4,82 +4,241 @@
   </div>
 
   <body>
+
+
              <div class="container">
+
+
+              
                 <div class="container mt-3">
+                  <div class="container mt-3">
                     <ul class="nav nav-tabs" style="justify-content: flex-start; position: relative;">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="allinvoices-tab" data-toggle="tab" href="#allinvoices" style="margin-left: 12px">
+                                All Invoices
+                            </a>
+                        </li>
                         <li class="nav-item" style="position: relative;">
-                            <a class="nav-link active" id="paidinvoices-tab" data-toggle="tab" href="#paidinvoices">
+                            <a class="nav-link" id="paidinvoices-tab" data-toggle="tab" href="#paidinvoices">
                                 Paid Invoices
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="unpaidinvoices-tab" data-toggle="tab" href="#unpaidinvoices" style="margin-left: 12px">
-                              Unpaid Invoice
+                                Unpaid Invoices
                             </a>
                         </li>
-                      
                     </ul>
-                    <div class="tab-content" style=" margin-top: 26px;">
-                        <!-- Pending Tab Content -->
-                        <div id="paidinvoices" class="tab-pane fade show active">
                 
-                            <table class="table no-border">
-                                <!-- Table structure (headers, rows) -->
-                                <thead class="underline">
-                                
-                                        <tr>
-        
-                                            <th>Invoice ID/Description</th>
-                                            <th>Client Name</th>
-                                            <th> Date</th>
-                                            <th>Due Date</th>
-                                            <th>Original Amount</th>
-                                            <th>Partitally Paid</th>
-                                            <th>Payment</th>
-                                        
-            
-                                        </tr>
-                                        <tr>
-                                            <td>12345</td> 
-                                            <td>Client A</td> 
-                                            <td>05-01-2024</td>
-                                            <td>05-02-2024</td> 
-                                            <td>Pending</td> 
-                                            <td>$500.00</td> 
-                                        </tr>
-                                </thead>
-                                
-                            </table>
+
+
+                    
+                    <div class="tab-content" style="margin-top: 26px;">
+                      <!-- All Invoices Tab Content -->
+                      <div id="allinvoices" class="tab-pane fade show active">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label for="batchActions">Batch Actions</label>
+                            <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="batchActions" name="batchActions">
+                              <!-- Add your batch actions options here -->
+                              <option value="action1">Action 1</option>
+                              <option value="action2">Action 2</option>
+                              <!-- Add more options as needed -->
+                            </select>
+                          </div>
+                  
+                          <div class="col-md-2">
+                            <label for="type">Type</label>
+                            <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="type" name="type">
+                              <!-- Add your type options here -->
+                              <option value="allTransaction">All transaction</option>
+                              <option value="allPlusDeposits">All plus deposits</option>
+                              <option value="estimate">Estimate</option>
+                              <option value="creditMemos">Credit memos</option>
+                              <option value="salesReceipt">Sales Receipts</option>
+                              <option value="unbilledIncome">Unbilled Income</option>
+                              <option value="moneyReceived">Money received</option>
+                              <option value="recentlyPaid">Recently paid</option>
+                             
+                              <!-- Add more options as needed -->
+                            </select>
+                          </div>
+                  
+                          <div class="col-md-2">
+                            <label for="status">Status</label>
+                            <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="status" name="status">
+                              <!-- Add your status options here -->
+                              <option value="all">All</option>
+                              <option value="open">Open</option>
+                              <option value="overDue">Overdue</option>
+                              <option value="paid">Paid</option>
+                              <option value="voided">Voided</option>
+                              <!-- Add more options as needed -->
+                            </select>
+                          </div>
+                  
+                          <div class="col-md-2">
+                            <label for="date">Date</label>
+                            <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="date" name="date">
+                              <!-- Add your date options here -->
+                              <option value="all">All</option>
+                              <option value="customDate" (click)="toggleCustomDateModel()">Custom dates</option>
+                              <option value="today">Today</option>
+                              <option value="yesterday">Yesterday</option>
+                              <option value="thisWeek">This week</option>
+                              <option value="lastWeek">Last week</option>
+                              <option value="thisMonth">This month</option>
+                              <option value="lastMonth">Last month</option>
+                              <option value="thisQuarter">This quarter</option>
+                              <option value="lastQuarter">Last quarter</option>
+                            </select>
+                            <!-- Custom Dates Model -->
+                            <div *ngIf="showCustomDateModel" class="custom-date-model">
+                              <label for="startDate">Start Date:</label>
+                              <input type="date" id="startDate" [(ngModel)]="startDate">
+                          
+                              <label for="endDate">End Date:</label>
+                              <input type="date" id="endDate" [(ngModel)]="endDate">
+                          
+                              <button (click)="resetDates()">Reset</button>
+                              <button (click)="applyDates()">Apply</button>
+                            </div>
+                          </div>
+                            <div class="col-md-2 mt-4 " >
+                              <a href="#" (click)="viewRecurringTemplates()" style="margin-left: 8px;"> Recurring templates</a>
+                            </div>
+                            
+
+                          <div class="col-md-2 mt-4">
+                            <a href="#" (click)="feedbackWithIcon()">Feedback </a>
+                          </div>
+                          <div class="row col-md-2 mt-4">
+                          <input type="text" id="searchInput" placeholder="Find by Invoice no." style=" width : 136px; height: 34px; margin-left: 25px;">
                         </div>
-                        <!-- Rejected Tab Content -->
-                        <div id="unpaidinvoices" class="tab-pane fade">
-                         
-                            <table class="table no-border">
+                        <div class="col-md-2 mt-4">
+                          <input type="text" id="searchInput" placeholder="Find by client" style=" width : 136px; height: 34px; margin-left: 25px;">
+                        </div>
+                        </div>
+                        <table class="table no-border" style="margin-top: 50px;">
+                          <!-- Table structure (headers, rows) -->
+                          <thead class="underline">
+                            <tr>
+                              <td><input type="checkbox"></td>
+                                <th>DATE</th>
+                                <th>TYPE</th>
+                                <th>NO.</th>
+                                <th>CLIENT/PROJECT</th>
+                                <th>MEMO</th>
+                                <th>AMOUNT STATUS</th>
+                                <th>ACTION</th>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>11/17/23</td>                                      
+                                <td>Invoice</td>
+                                <td>90801</td>
+                                <td>TEK system Inc: Shushant Bathini </td>
+                                <td>11/17/2023 to 08/04/2023</td>
+                                <td>240.00</td>
+                                <td>
+                                  <!-- Edit and Payment Received actions -->
+                                  <button onclick="editAction()">Edit</button>
+                                  <button onclick="paymentReceivedAction()" style="margin-left: 16px;">Payment Received</button>
+                              </td>
+                            </tr>
+                        </thead>
+                        </table>
+                      </div>
+                
+                        <!-- Paid Invoices Tab Content -->
+                        <div id="paidinvoices" class="tab-pane fade">
+                          <div class="row">
+                            <div class="col-md-2 mt-4">
+                                <input type="text" id="searchInputInvoice" placeholder="Find by Invoice no." style="width: 136px; height: 34px; margin-left: 25px;">
+                            </div>
+                            <div class="col-md-2 mt-4">
+                                <input type="text" id="searchInputClient" placeholder="Find by client" style="width: 136px; height: 34px; margin-left: 25px;">
+                            </div>
+                        </div>
+                
+                            <table class="table no-border" style="margin-top: 50px;">
                                 <!-- Table structure (headers, rows) -->
                                 <thead class="underline">
-                                    <tr>
-                                        <th>Invoice ID/Description</th>
-                                        <th>Client Name</th>
-                                        <th> Date</th>
-                                        <th>Due Date</th>
-                                        <th>Original Amount</th>
-                                        <th>Partitally Paid</th>
-                                        <th>Payment</th>
-                                    
-                                    </tr>
-                                    <tr>
-                                        <td>12346</td> 
-                                        <td>Client B</td> 
-                                        <td>05-01-2024</td>
-                                        <td>05-02-2024</td> 
-                                        <td>Pending</td> 
-                                        <td>$500.00</td> 
-                                    </tr>
-                                </thead>
-                               
-                            </table>
+                                  <tr>
+                                    <td><input type="checkbox"></td>
+                                      <th>DATE</th>
+                                      <th>TYPE</th>
+                                      <th>NO.</th>
+                                      <th>CLIENT/PROJECT</th>
+                                      <th>MEMO</th>
+                                      <th>AMOUNT STATUS</th>
+                                      <th>ACTION</th>
+                                  </tr>
+                                  <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>11/17/23</td>                                      
+                                    <td>Invoice</td>
+                                    <td>90801</td>
+                                    <td>TEK system Inc: Shushant Bathini </td>
+                                    <td>11/17/2023 to 08/04/2023</td>
+                                    <td>240.00</td>
+                                      <td>
+                                        <!-- Edit and Payment Received actions -->
+                                        <button class="btn btn-" onclick="editAction()">Edit</button>
+                                        <button class="btn btn-" onclick="paymentReceivedAction()" style="margin-left: 16px;" >Payment received</button>
+                                    </td>
+                                  </tr>
+                              </thead>
+                          </table>
+                        </div>
+                
+                        <!-- Unpaid Invoices Tab Content -->
+                        <div id="unpaidinvoices" class="tab-pane fade">
+                          <div class="row">
+                            <div class="col-md-2 mt-4">
+                                <input type="text" id="searchInputInvoice" placeholder="Find by Invoice no." style="width: 136px; height: 34px; margin-left: 25px;">
+                            </div>
+                            <div class="col-md-2 mt-4">
+                                <input type="text" id="searchInputClient" placeholder="Find by client" style="width: 136px; height: 34px; margin-left: 25px;">
+                            </div>
+                        </div>
+                            <table class="table no-border" style="margin-top: 50px;">
+                                <!-- Table structure (headers, rows) -->
+                                <thead class="underline">
+                                  <tr>
+                                      <th><input type="checkbox"></th>
+                                      <th>DATE</th>
+                                      <th>TYPE</th>
+                                      <th>NO.</th>
+                                      <th>CLIENT/PROJECT</th>
+                                      <th>MEMO</th>
+                                      <th>AMOUNT STATUS</th>
+                                      <th>ACTION</th>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="checkbox"></td>
+                                      <td>12346</td>
+                                      <td>Client B</td>
+                                      <td>05-01-2024</td>
+                                      <td>05-02-2024</td>
+                                      <td>Pending</td>
+                                      <td>$500.00</td>
+                                      <td>
+                                        <!-- Edit and Payment Received actions -->
+
+                                        <button class="btn btn-" onclick="editAction()">Edit</button>
+                                        <button class="btn btn-" onclick="paymentReceivedAction()" style="margin-left: 16px;" >Payment received</button>
+                                        
+                                    </td>
+                                  </tr>
+                              </thead>
+                          </table>
                         </div>
                     </div>
+                </div>
+
+
+
                 </div>
             </div>
 

@@ -60,18 +60,18 @@
           </div>
         </div>
 
-        <div class="clientemail mt-0 ml-3">
+        <div class="billingaddress mt-0 ml-3">
           <label for="address" class="ml-0">Billing address</label>
-          <input type="text" id="clientEmail" placeholder="Email" class="form-control ml-3"
+          <input type="text" id="billingaddress" placeholder="Email" class="form-control ml-3"
             style="width: 150px; height: 40px;">
         </div>
-        <div class="clientemail mt-0 ml-3">
+        <div class="invoiceDate mt-0 ml-3">
           <div class="form-group">
             <label for="invoiceDate" class="ml-0">Invoice Date</label>
             <input type="date" id="invoiceDate" class="form-control ml-0">
           </div>
         </div>
-        <div class="clientemail mt-0 ml-3">
+        <div class="dueDate mt-0 ml-3">
           <div class="form-group">
             <label for="dueDate" class="ml-0">Due Date</label>
             <input type="date" id="dueDate" class="form-control ml-0">
@@ -95,10 +95,10 @@
       <div class="clientemail mt-0 ml-3">
         <div class="form-group">
           <label for="dropdown" class="ml-0">Terms</label>
-          <select id="dropdown" class="form-control ml-0" (change)="onDropdownChange($event)">
+          <select id="terms" class="form-control ml-0" (change)="onDropdownChange($event)">
             <option value="option1">10 days</option>
             <option value="option2">20 days</option>
-            <option value="option2">Net 15</option>
+            <option value="option3">Net 15</option>
             <option value="addNew">Add New</option>
           </select>
         </div>
@@ -115,7 +115,7 @@
             </div>
             <div class="modal-body" style="height: 300px; overflow-y: auto;">
               <label for="nameInput">*Name:</label><br>
-              <input type="text" id="nameInput" name="name"><br><br>
+              <input type="text" id="name" name="name"><br><br>
 
               <input type="radio" id="dueFixed" name="dueType" value="fixed">
               <label for="dueFixed">Due in fixed number of days</label><br><br>

@@ -34,7 +34,7 @@ router.post('/gethrmscandidateList', async (req, res) => {
     try {
       const pool = await sql.connect(config);
       const request = new sql.Request();
-      const query = "SELECT T.TraineeID,CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.Value AS CandidateStatus, T.CreateTime AS DateCreated FROM Trainee T INNER JOIN CandidateStatus CS ON T.CandidateStatus = CS.CandidateStatusID LEFT JOIN Trainee CreatedBy ON T.CreateBy = CreatedBy.UserName WHERE T.RecruiterName = '"+ req.body.TraineeID + "'";
+      const query = "SELECT T.TraineeID,CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.Value AS CandidateStatus, T.CreateTime AS DateCreated,T.followupon FROM Trainee T INNER JOIN CandidateStatus CS ON T.CandidateStatus = CS.CandidateStatusID LEFT JOIN Trainee CreatedBy ON T.CreateBy = CreatedBy.UserName WHERE T.RecruiterName = '"+ req.body.TraineeID + "' order by T.CreateTime desc";
   
       console.log(query);
   
@@ -225,7 +225,7 @@ router.post('/insertTraineeCandidate', async function (req, res) {
   req.body.orgID +
   "') " +
   "BEGIN " +
-  "INSERT INTO Trainee (TraineeID, username, firstName, phonenumber, middleName, lastName, legalStatus, candidateStatus, degree, gender, notes, recruiterName, referralType, locationConstraint, marketerName,Active,Accountstatus,profilestatus,role,createtime,userorganizationid,createby ) " +
+  "INSERT INTO Trainee (TraineeID, username, firstName, phonenumber, middleName, lastName, legalStatus, candidateStatus, degree, gender, notes, recruiterName, referralType, locationConstraint, marketerName,Active,Accountstatus,profilestatus,role,createtime,userorganizationid,createby,FollowUpon, CurrentLocation ) " +
   "VALUES (" +
   `'${TraineeID}',` +
   ` ${formatValue(req.body.email || '')},` +
@@ -248,7 +248,9 @@ router.post('/insertTraineeCandidate', async function (req, res) {
   " 'TRESUMEUSER', " +
   " GETDATE(), " +
   ` ${formatValue(req.body.orgID || '')},` +
-  ` ${formatValue(req.body.creeateby || '')}` +
+  ` ${formatValue(req.body.creeateby || '')},` +
+  ` ${formatValue(req.body.followupon || '')},` +
+  ` ${formatValue(req.body.currentLocation || '')}` +
   ") END";
 
     console.log(query);

@@ -22,11 +22,16 @@ export class TalentBenchComponent implements OnInit {
   TraineeID:string = '';
   addCandidate: any;
   noResultsFound:boolean = true;
+  recruiterName: any;
+  selectedcurrentstatus: any;
+  currentStatusOptions: any = [];
+  legalStatusOptions: any;
+  legalStatus: string[] = [];
 
   constructor(private dialog: MatDialog,private cookieService: CookieService, private service:TalentBenchService,private messageService: MessageService,private formBuilder: FormBuilder) {
     }
 
-  recruiterNames: string[] = ['Recruiter 1', 'Recruiter 2', 'Recruiter 3'];
+  recruiterNames: string[] = [];
   candidateStatuses: string[] = ['Active', 'Inactive', 'On Hold'];
   marketerNames: string[] = ['Marketer 1', 'Marketer 2', 'Marketer 3'];
   referralTypes: string[] = ['Type 1', 'Type 2', 'Type 3'];
@@ -65,12 +70,14 @@ export class TalentBenchComponent implements OnInit {
     this.userName = this.cookieService.get('userName1');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.fetchtalentbenchlist();
+    this.getcandidaterstatus();
+    this.getLegalStatusOptions();
 
 
     this.addCandidate = this.formBuilder.group({
       FirstName: ['', [Validators.required, Validators.minLength(3)]],
       MiddleName: [''],
-      LastName: ['', [Validators.required, Validators.minLength(3)]],
+      LastName: ['', [Validators.required]],
       Email: ['', [Validators.required, Validators.minLength(3)]],
       Phone: ['', [Validators.required, Validators.minLength(3)]],
       Gender: ['male'],
@@ -87,6 +94,23 @@ export class TalentBenchComponent implements OnInit {
     });
 
   }
+  getcandidaterstatus(){
+    const Req = {
+         };
+    this.service.candidatestatus(Req).subscribe((x: any) => {
+      this.currentStatusOptions = x;
+      console.log(this.currentStatusOptions);
+    });
+  }
+
+  getLegalStatusOptions() {
+    const request = {};
+  
+    this.service.getLegalStatus(request).subscribe((response: any) => {
+      this.legalStatusOptions = response;
+      console.log(this.legalStatusOptions);
+    });
+  }
 
   saveData(){
     let Req = {
@@ -99,7 +123,7 @@ export class TalentBenchComponent implements OnInit {
       RecruiterName: this.addCandidate.value.RecruiterName,
       Degree: this.addCandidate.value.Degree,
       University: this.addCandidate.value.University,
-      CandidateStatus: this.addCandidate.value.CandidateStatus,
+      CandidateStatus: this.selectedcurrentstatus,
       Groups: this.addCandidate.value.Groups,
       LegalStatus: this.addCandidate.value.LegalStatus,
       MarketerName: this.addCandidate.value.MarketerName,
