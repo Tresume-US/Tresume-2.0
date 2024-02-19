@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngIf="submittedCandidates.length > 0; else noResults">
+        <!-- <ng-container *ngIf="submittedCandidates.length > 0; else noResults"> -->
           <tr *ngFor="let candidate of submittedCandidates">
             <td>{{ candidate.SubmittedID }}</td>
             <td>{{ candidate.FirstName }}</td>
@@ -24,7 +24,7 @@
             <td>{{ candidate.PhoneNumber }}</td>
             <td>{{ candidate.RecruiterName }}</td>
           </tr>
-        </ng-container>
+        <!-- </ng-container> -->
         <ng-template #noResults>
           <tr>
             <td colspan="6" class="text-center">No results found.</td>

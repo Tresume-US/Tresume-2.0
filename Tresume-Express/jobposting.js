@@ -101,8 +101,6 @@ async function deactivatememberdetails(email) {
   );
   return queryResult;
 }
-
-
 router.post('/getSubmittedCandidateList', async (req, res) => {
   try {
     sql.connect(config, async function (err) {
@@ -110,9 +108,7 @@ router.post('/getSubmittedCandidateList', async (req, res) => {
         console.log(err);
         return res.status(500).json({ error: 'Database connection error' });
       }
-
       const request = new sql.Request();
-
       const query = `
         SELECT
           CS.SubmittedID,
@@ -134,16 +130,12 @@ router.post('/getSubmittedCandidateList', async (req, res) => {
           MemberDetails MR ON J.RecruiterID = MR.ID
         WHERE
           J.JobTitle = @JobTitle;`;
-
       request.input('JobTitle', sql.NVarChar, req.body.JobTitle);
-
       const recordset = await request.query(query);
-
       const result = {
         flag: 1,
         result: recordset.recordset,
       };
-
       res.send(result);
     });
   } catch (error) {

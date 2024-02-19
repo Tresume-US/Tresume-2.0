@@ -48,7 +48,6 @@ const projects = require('./project');
 const jobBoardAccount = require('./jobBoardAccount');
 const leadenquiry = require('./enquiry');
 const jobapplication = require('./jobapplication');
-const submittedcandidates = require('./submittedcandidates');
 
 app.use('/', onboardRoutes);
 app.use('/', candidateRoutes);
@@ -68,7 +67,6 @@ app.use('/', projects);
 app.use('/', jobBoardAccount);
 app.use('/', leadenquiry);
 app.use('/', jobapplication);
-app.use('/', submittedcandidates);
 
 
 app.use(session({
