@@ -146,13 +146,20 @@
               <label for="file{{i}}" class="file-label">
                 <i class="fa fa-upload"></i> Client Approved
               </label>
-              <input type="file" id="file{{i}}" class="form-control-file visually-hidden"
-                (change)="onFileChange($event, 'file1', row)">
+              <input type="file" id="file{{i}}" class="form-control-file visually-hidden" (change)="onFileChange($event, 'file1', row)">
             </div>
             <div class="col-md-5 mt-2">
-              <div *ngIf="row.file1" class="file-name">{{ row.file1.name }}</div>
+              <div *ngIf="row.file1" class="file-name">
+                {{ row.file1.name }}
+                <span class="clear-icon" (click)="clearFile(row)">
+                  <i class="fas fa-times"></i>
+                </span>
+              </div>
             </div>
           </div>
+          
+          
+          
         </td>
         <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.mon" id="mon"></td>
         <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.tues" id="tues"></td>

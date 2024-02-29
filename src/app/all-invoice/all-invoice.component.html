@@ -51,21 +51,26 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#makeInactiveModal">Make inactive</a>
-                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mergeContactsModal">Merge contacts</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#makeInactiveModal">Make
+                      inactive</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#mergeContactsModal">Merge
+                      contacts</a>
                   </div>
                 </div>
 
-              
-                <div class="modal fade" id="makeInactiveModal" tabindex="-1" role="dialog" aria-labelledby="makeInactiveModal" aria-hidden="true">
+
+                <div class="modal fade" id="makeInactiveModal" tabindex="-1" role="dialog"
+                  aria-labelledby="makeInactiveModal" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content" id="modal-3">
 
-                      <div class="modal-body  modal-body-with-space" >
+                      <div class="modal-body  modal-body-with-space">
                         <div class="exclamation-icon">
                           <i class="fas fa-exclamation-circle"></i>
                         </div>
-                        <p>Either Tek System Inc or its sub-clients have an open balance. If Tek Systems Inc has sub-clients, making this client inactive and will create one or more adjusting transaction.</p> <br>
+                        <p>Either Tek System Inc or its sub-clients have an open balance. If Tek Systems Inc has
+                          sub-clients, making this client inactive and will create one or more adjusting transaction.
+                        </p> <br>
                         <p>If this clients has active projects, it will not be made inactive.</p> <br>
                         <p>Is this OK?</p>
                         <hr class="grey-line">
@@ -73,7 +78,7 @@
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           <span class="button-space"></span> <!-- Add this line for spacing -->
                           <button class="save-button" (click)="save()">Yes, make inactive</button>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -86,11 +91,12 @@
 
 
 
-                <div class="modal fade" id="mergeContactsModal" tabindex="-1" role="dialog" aria-labelledby="mergeContactsModal" aria-hidden="true">
+                <div class="modal fade" id="mergeContactsModal" tabindex="-1" role="dialog"
+                  aria-labelledby="mergeContactsModal" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content" id="modal-4">  
+                    <div class="modal-content" id="modal-4">
                       <div class="modal-body">
-                        
+
                         <div class="row">
                           <div class="col-md-10">
                             <!-- Heading "Merge contacts" in the center of the popup -->
@@ -102,15 +108,17 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                        </div> 
+                        </div>
                         <!-- 2. Input text or dropdown for "Merge transactions from" -->
                         <div class="form-group" style="margin-top: 5rem;">
                           <label for="mergeFrom">Merge transactions from:</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" id="mergeFrom" placeholder="Select a value" readonly>
+                            <input type="text" class="form-control" id="mergeFrom" placeholder="Select a value"
+                              readonly>
                             <div class="input-group-append">
-                              <button class="btn dropdown-toggle" type="button" id="mergeFromDropdown" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" style="width: 43px;"></button>
+                              <button class="btn dropdown-toggle" type="button" id="mergeFromDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 43px;"></button>
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Option 1</a>
                                 <a class="dropdown-item" href="#">Option 2</a>
@@ -119,19 +127,23 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <!-- 3. Paragraph below the input -->
-                        <p> <i class="fas fa-exclamation-circle" style="color: orangered;"></i> Make sure to save any address, phone numbers, or other details from this contact. After you merge transactions, all info from this contact will be deleted. </p>
-                    
+                        <p> <i class="fas fa-exclamation-circle" style="color: orangered;"></i> Make sure to save any
+                          address, phone numbers, or other details from this contact. After you merge transactions, all
+                          info from this contact will be deleted. </p>
+
                         <!-- 4. Input for "Into" -->
                         <div class="form-group">
                           <label for="mergeInto" class="light-label">Into:</label>
 
                           <div class="input-group">
-                            <input type="text" class="form-control" id="mergeInto" placeholder="Select a value" readonly>
+                            <input type="text" class="form-control" id="mergeInto" placeholder="Select a value"
+                              readonly>
                             <div class="input-group-append">
-                              <button class="btn dropdown-toggle" type="button" id="mergeIntoDropdown" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"style="width: 43px;"></button>
+                              <button class="btn dropdown-toggle" type="button" id="mergeIntoDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="width: 43px;"></button>
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Option A</a>
                                 <a class="dropdown-item" href="#">Option B</a>
@@ -140,16 +152,16 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <hr class="grey-line">
-                        
+
                         <div class="button-container" style="margin-top: 4rem;">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           <span class="button-space"></span>
                           <button class="save-button" (click)="save()">Merge</button>
                         </div>
                       </div>
-                    
+
                     </div>
                   </div>
                 </div>
@@ -251,7 +263,6 @@
                         </div>
                       </div>
                       <div class="modal-body">
-
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn">Save</button>
@@ -316,11 +327,9 @@
                     <h1 class="card-title">Summary</h1>
                   </div>
                   <div class="balance-section" style="margin-left: 4rem;">
-
                     <h2 class="text-dark">
                       <div class="balance-mark" style="margin-bottom: -7px;"></div> $66,069.55
                     </h2>
-
                     <p>Open Balance</p>
                   </div>
                   <div class="balance-section" style="margin-left: 4rem;">
@@ -332,56 +341,58 @@
                 </div>
               </div>
               <div class="row" style="margin-top: 5rem;">
-                <div class="col-md-2">   
+                <div class="col-md-2">
                   <label for="batchActions">Batch Actions</label>
-                  <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="batchActions" name="batchActions">
-                    <option *ngFor="let option of batchActionsOptions" [value]="option" disabled selected>{{ option }}</option>
+                  <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="batchActions"
+                    name="batchActions">
+                    <option *ngFor="let option of batchActionsOptions" [value]="option" disabled selected>{{ option }}
+                    </option>
                   </select>
                 </div>
-              
+
                 <!-- <div class="col-md-2">
                   <label for="type">Type</label>
                   <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="type" name="type">
                     <option *ngFor="let option of typeOptions" [value]="option">{{ option }}</option>
                   </select>
                 </div> -->
-              
+
                 <div class="col-md-2">
                   <label for="status">Status</label>
                   <select *ngIf="activeTab === 'allinvoices'" class="form-control" id="status" name="status">
                     <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
                   </select>
                 </div>
-              
+
                 <div class="col-md-2">
                   <label for="date">Date</label>
-                  <select class="form-control" id="date" name="date" (change)="toggleCustomDateModel($event.target.value)">
+                  <select class="form-control" id="date" name="date"
+                    (change)="toggleCustomDateModel($event.target.value)">
                     <option *ngFor="let option of dateOptions" [value]="option">{{ option }}</option>
                   </select>
-                  
+
                   <div *ngIf="showCustomDateModel" class="custom-date-model">
                     <label for="startDate">Start Date:</label>
                     <input type="date" id="startDate" [(ngModel)]="startDate" name="startDate">
-                  
+
                     <label for="endDate">End Date:</label>
                     <input type="date" id="endDate" [(ngModel)]="endDate" name="endDate">
-                  
+
                     <button (click)="resetDates()">Reset</button>
                     <button (click)="applyAndClose()" class="m-1">Apply</button>
                   </div>
                 </div>
-                
-              
-              
+
+
+
                 <div class="col-md-2 mt-4">
                   <a href="#" (click)="viewRecurringTemplates()" style="margin-left: 8px;">Recurring templates</a>
                 </div>
-              
+
                 <div class="col-md-2 mt-4">
                   <a href="#" (click)="feedbackWithIcon()">Feedback</a>
                 </div>
               </div>
-              
               <div class="action-icons icons-container float-right">
                 <i class="material-icons" onclick="handlePrint()">print</i>
                 <i class="fas fa-upload" onclick="handleFileUpload()"></i>
@@ -401,8 +412,8 @@
                       <th> STATUS <i class="fas fa-angle-down" style="margin-left: 5px;"></i></th>
 
                       <th>ACTION</th>
-                    
-                    </tr>                    
+
+                    </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let invoice of allInvoices">
@@ -447,7 +458,6 @@
                   </tbody>
                 </table>
               </div>
-
             </div>
 
 
@@ -553,46 +563,46 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tbody>
-                      <tr *ngFor="let invoice of unpaidInvoices">
-                        <td><input type="checkbox"></td>
-                        <td>{{ invoice.date }}</td>
-                        <td>{{ invoice.type }}</td>
-                        <td>{{ invoice.number }}</td>
-                        <td>{{ invoice.clientProject }}</td>
-                        <td>{{ invoice.memo }}</td>
-                        <td>{{ invoice.amount }}</td>
-                        <td>{{ invoice.status }}</td>
-                        <td>
-                          <button class="btn btn-" (click)="editAction()">Edit</button>
-                          <div class="btn-group received" style="margin-left: 5px;">
-                            <a class="btn btn float-left" style=" height: 30px;" href="payment">Receive Payment</a>
-                            <button type="button" class="btn btn- dropdown-toggle dropdown-toggle-split"
-                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 1px;">
-                              <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <i class="fas fa-download" style="margin-top: 4px;margin-left: 10px;font-size: 22px; "></i>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="create-invoice" (click)="duplicateAction()">View/Edit</a>
-                              <a class="dropdown-item" href="create-invoice" (click)="sendAction()">Duplicate</a>
-                              <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send</a>
-                              <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send reminder</a>
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createTaskModal">Create
-                                task</a>
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#shareLinkModal">Share
-                                invoice link</a>
-                              <a class="dropdown-item" href="#" (click)="duplicateAction()">Print</a>
-                              <a class="dropdown-item" href="#" data-toggle="modal"
-                                data-target="#deleteConfirmationModal">Delete</a>
-                            </div>
+                  <tbody>
+                    <tr *ngFor="let invoice of unpaidInvoices">
+                      <td><input type="checkbox"></td>
+                      <td>{{ invoice.date }}</td>
+                      <td>{{ invoice.type }}</td>
+                      <td>{{ invoice.number }}</td>
+                      <td>{{ invoice.clientProject }}</td>
+                      <td>{{ invoice.memo }}</td>
+                      <td>{{ invoice.amount }}</td>
+                      <td>{{ invoice.status }}</td>
+                      <td>
+                        <button class="btn btn-" (click)="editAction()">Edit</button>
+                        <div class="btn-group received" style="margin-left: 5px;">
+                          <a class="btn btn float-left" style=" height: 30px;" href="payment">Receive Payment</a>
+                          <button type="button" class="btn btn- dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 1px;">
+                            <span class="sr-only">Toggle Dropdown</span>
+                          </button>
+                          <i class="fas fa-download" style="margin-top: 4px;margin-left: 10px;font-size: 22px; "></i>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="create-invoice" (click)="duplicateAction()">View/Edit</a>
+                            <a class="dropdown-item" href="create-invoice" (click)="sendAction()">Duplicate</a>
+                            <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send</a>
+                            <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send reminder</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createTaskModal">Create
+                              task</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#shareLinkModal">Share
+                              invoice link</a>
+                            <a class="dropdown-item" href="#" (click)="duplicateAction()">Print</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal"
+                              data-target="#deleteConfirmationModal">Delete</a>
                           </div>
-                        </td>
-                      </tr>
-                      <tr *ngIf="noResultsFound">
-                        <td colspan="9" class="text-center">
-                          No results found.
-                        </td>
-                      </tr>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="noResultsFound">
+                      <td colspan="9" class="text-center">
+                        No results found.
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

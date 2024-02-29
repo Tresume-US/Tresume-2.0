@@ -127,10 +127,11 @@ export class CreateAllTimeListComponent implements OnInit {
     if (fieldName === 'file1') {
       this.file1 = file;
     }
-    // You can extend this method to handle other file inputs similarly if needed
   }
-
-
+  clearFile(row: any): void {
+    row.file1 = null; 
+  }
+  
   calculateTotalAmount(row: any): number | string {
     const mon = row.mon || 0;
     const tues = row.tues || 0;
@@ -453,6 +454,7 @@ onChangesDropdown(selectedOption: any, row: any) {
   //   console.log('End Date:', endDate);
   // }
 
+  
   
   
   generateWeeks(): string[] {

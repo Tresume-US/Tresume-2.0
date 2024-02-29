@@ -42,8 +42,7 @@ throw new Error('Method not implemented.');
   endDate: string;
   
   
-  batchActionsOptions = ['Batch Actions'
-  ];
+  batchActionsOptions = ['Batch Actions'];
 
   typeOptions = ['All transaction','All plus deposits'];
 
@@ -63,7 +62,6 @@ cancelDelete() {
 }
 
 duplicateActions(): void {
-  // Your delete logic here
   console.log('Deleting...');
 }
 
@@ -71,7 +69,6 @@ uploadFile(event: any): void {
   const fileList: FileList = event.target.files;
   if (fileList.length > 0) {
     const file: File = fileList[0];
-    // You can perform further actions with the uploaded file
     console.log('File uploaded:', file);
   }
 }
@@ -116,16 +113,12 @@ selectDocument(event: Event): void {
   onRowOut(event: MouseEvent): void {
     this.isRowSelected = false;
   }
-
-
   
 showModal: any;
 
 closeModal2() {
   this.showModal = false;
 } 
-
-  
 
   paymentReceivedAction() {
     console.log('Payment Received');
@@ -174,21 +167,18 @@ throw new Error('Method not implemented.');
          
     ) {
 
-    
-    }
+       }
     
   ngOnInit(): void {
-    this.loading = true;
+    // this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.fetchPaidInvoiceList();
     this.fetchunPaidInvoiceList();
     this.fetchAllInvoiceList();
 
-   
     throw new Error('Method not implemented.');
     
-
   }
 
 
@@ -199,7 +189,8 @@ throw new Error('Method not implemented.');
     this.service.getPaidInvoiceList(Req).subscribe((x: any) => {
       this.invoices = x.result;
       this.noResultsFound = this.invoices.length === 0;
-      this.loading = false;
+      // this.loading = false;
+
     });
   }
 
@@ -210,7 +201,6 @@ throw new Error('Method not implemented.');
     this.service.getunPaidInvoiceList(Req).subscribe((x: any) => {
       this.unpaidInvoices = x.result;
       this.noResultsFound = this.unpaidInvoices.length === 0;
-      this.loading = false;
      });
   }
   fetchAllInvoiceList(){
@@ -220,7 +210,6 @@ throw new Error('Method not implemented.');
     this.service.getAllInvoiceList(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
       this.noResultsFound = this.allInvoices.length === 0;
-      this.loading = false;
      });
   }
   toggleCustomDateModel(option: string): void {
