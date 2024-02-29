@@ -20,7 +20,7 @@ isModal3Open: any;
 deleteAction() {
 throw new Error('Method not implemented.');
 }
-loading: boolean = false;
+  loading: boolean = false;
   isRowSelected = false;
   isContentVisible = false;
   showContent1 = false;
@@ -174,16 +174,20 @@ throw new Error('Method not implemented.');
          
     ) {
 
-      this.OrgID = this.cookieService.get('OrgID');
-      this.TraineeID = this.cookieService.get('TraineeID');
+    
     }
     
   ngOnInit(): void {
-    // this.loading = true;
+    this.loading = true;
+    this.OrgID = this.cookieService.get('OrgID');
+    this.TraineeID = this.cookieService.get('TraineeID');
     this.fetchPaidInvoiceList();
     this.fetchunPaidInvoiceList();
     this.fetchAllInvoiceList();
+
+   
     throw new Error('Method not implemented.');
+    
 
   }
 
@@ -195,9 +199,10 @@ throw new Error('Method not implemented.');
     this.service.getPaidInvoiceList(Req).subscribe((x: any) => {
       this.invoices = x.result;
       this.noResultsFound = this.invoices.length === 0;
-    this.loading = false;
+      this.loading = false;
     });
   }
+
   fetchunPaidInvoiceList(){
     let Req = {
       OrgID: this.OrgID,
@@ -205,10 +210,9 @@ throw new Error('Method not implemented.');
     this.service.getunPaidInvoiceList(Req).subscribe((x: any) => {
       this.unpaidInvoices = x.result;
       this.noResultsFound = this.unpaidInvoices.length === 0;
-    this.loading = false;
-    });
+      this.loading = false;
+     });
   }
-
   fetchAllInvoiceList(){
     let Req = {
       OrgID: this.OrgID,
@@ -216,36 +220,25 @@ throw new Error('Method not implemented.');
     this.service.getAllInvoiceList(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
       this.noResultsFound = this.allInvoices.length === 0;
-    this.loading = false;
-    });
+      this.loading = false;
+     });
   }
-
-
-
   toggleCustomDateModel(option: string): void {
     this.showCustomDateModel = option === 'Custom dates';
-
   }
-  
   
   applyAndClose(): void {
-    this.applyDates(); // Apply dates
-    this.showCustomDateModel = false; // Close custom date model
+    this.applyDates(); 
+    this.showCustomDateModel = false;
   }
-  
-  resetDates() {  
+   resetDates() {  
     console.log('Resetting dates');
     this.startDate = '';
     this.endDate = '';
   }
-
   applyDates() {
-
     console.log(`Applying dates: Start - ${this.startDate}, End - ${this.endDate}`);
-
   }
-
- 
   }
 
 

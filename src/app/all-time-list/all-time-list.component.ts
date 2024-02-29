@@ -25,6 +25,7 @@ export class AllTimeListComponent implements OnChanges {
   {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.timesheetrole = this.cookieService.get('timesheet_role');
@@ -59,6 +60,7 @@ export class AllTimeListComponent implements OnChanges {
     this.service.getPendingTimesheetResult(Req).subscribe((x: any) => {
       this.PendingData = x.result;
       this.noResultsFound = this.PendingData.length === 0;
+      this.loading = false;
     });
   }
 

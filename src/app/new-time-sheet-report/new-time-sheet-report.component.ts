@@ -12,7 +12,7 @@ import { NewTimeSheetReportService} from './new-time-sheet-report.service';
   providers: [ NewTimeSheetReportService, CookieService,MessageService],
 })
 export class NewTimeSheetReportComponent implements OnInit {
-
+  loading:boolean = false;
   showNotes: boolean = false;
   notes: string = '';
   sort_mode: any;
@@ -25,7 +25,6 @@ export class NewTimeSheetReportComponent implements OnInit {
   maxSelectableDays: number;
   showExportOptions: boolean = false;
   selectedDateRange: Date[] = [];
-  loading:boolean = false;
   noResultsFound:boolean = true;
   timesheetrole: any;
   sortbyoptions = ['Activity Date', 'Client', 'product', 'Description', 'Rate', 'Duration', 'Billable'];
@@ -51,6 +50,7 @@ export class NewTimeSheetReportComponent implements OnInit {
 
 
   ngOnInit(): void { 
+    this.loading = true;
     this.fromDate = this.getFirstDayOfMonth();
     this.toDate = this.getLastDayOfMonth();
     this.fetchtimesheetreport();
@@ -76,7 +76,7 @@ fetchtimesheetreport(){
   };
   this.service.getTimesheetReport(Req).subscribe((x: any) => {
     this.tableData = x.result;
-    // this.noResultsFound = this.jobs.length === 0;
+    this.noResultsFound = this.tableData.length === 0;
   this.loading = false;
   
   });

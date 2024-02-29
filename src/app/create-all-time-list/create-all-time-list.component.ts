@@ -20,6 +20,7 @@ import { DatePipe } from '@angular/common';
 
 })
 export class CreateAllTimeListComponent implements OnInit {
+  loading:boolean = false;
   OrgID: string;
   rows: any[] = [];
   minDate: string;
@@ -206,6 +207,8 @@ export class CreateAllTimeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
 
     this.addDefaultRows();
@@ -351,6 +354,7 @@ onChangesDropdown(selectedOption: any, row: any) {
     };
     this.Service.getPayItemList(Req).subscribe((x: any) => {
       this.Text = x.result;
+      this.loading = false;
     });
   }
   getDropdownOptionn() {
