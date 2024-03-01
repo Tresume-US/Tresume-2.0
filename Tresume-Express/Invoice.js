@@ -11,7 +11,7 @@ const config = {
   user: "sa",
   password: "Tresume@123",
   server: "92.204.128.44",
-  database: "Tresume",
+  database: "Tresume_Beta",
   trustServerCertificate: true,
 };
 
@@ -19,13 +19,13 @@ router.post('/getPaidInvoiceList', async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const request = pool.request();
-        const query = "SELECT state FROM usazipcodenew";
+        const query = "SELECT im.created_at, im.invoiceNo, im.invoice_message, im.ispaid, c.ClientName FROM invoice_Master AS im JOIN Clients AS c ON im.clientid = c.clientid WHERE im.traineeid = '" + req.body.TraineeID + "' AND im.ispaid = 1";
         console.log(query);
         const queryResult = await request.query(query);
         
-        if (queryResult.rowsAffected[0] === 0) {
-          return res.status(404).json({ message: "No records found!" });
-        }
+        // if (queryResult.rowsAffected[0] === 0) {
+        //   return res.status(404).json({ message: "No records found!" });
+        // }
         
         return res.status(200).json(queryResult.recordset);
       } catch (error) {
@@ -38,13 +38,13 @@ router.post('/getunPaidInvoiceList', async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const request = pool.request();
-        const query = "SELECT state FROM usazipcodenew";
+        const query = "SELECT im.created_at, im.invoiceNo, im.invoice_message, im.ispaid, c.ClientName FROM invoice_Master AS im JOIN Clients AS c ON im.clientid = c.clientid WHERE im.traineeid = '" + req.body.TraineeID + "' AND im.ispaid = 0";
         console.log(query);
         const queryResult = await request.query(query);
         
-        if (queryResult.rowsAffected[0] === 0) {
-          return res.status(404).json({ message: "No records found!" });
-        }
+        // if (queryResult.rowsAffected[0] === 0) {
+        //   return res.status(404).json({ message: "No records found!" });
+        // }
         
         return res.status(200).json(queryResult.recordset);
       } catch (error) {
@@ -57,13 +57,13 @@ router.post('/getAllInvoiceList', async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const request = pool.request();
-        const query = "SELECT state FROM usazipcodenew";
+        const query = "SELECT im.created_at, im.invoiceNo, im.invoice_message, c.ClientName FROM invoice_Master AS im JOIN Clients AS c ON im.clientid = c.clientid WHERE im.traineeid = '" + req.body.TraineeID + "'";
         console.log(query);
         const queryResult = await request.query(query);
         
-        if (queryResult.rowsAffected[0] === 0) {
-          return res.status(404).json({ message: "No records found!" });
-        }
+        // if (queryResult.rowsAffected[0] === 0) {
+        //   return res.status(404).json({ message: "No records found!" });
+        // }
         
         return res.status(200).json(queryResult.recordset);
       } catch (error) {

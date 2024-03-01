@@ -5,7 +5,6 @@
       + Create Invoice
     </a>
   </div>
-
   <body>
     <div class="container" style="font-size: 14px;">
       <div class="container mt-3">
@@ -77,7 +76,7 @@
                         <div class="button-container">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                           <span class="button-space"></span> <!-- Add this line for spacing -->
-                          <button class="save-button" (click)="save()">Yes, make inactive</button>
+                          <button class="save-button" (click)="save()" data-dismiss="modal">Yes, make inactive</button>
 
                         </div>
                       </div>
@@ -295,7 +294,7 @@
               <div class="row cards">
                 <div class="card mb-3">
                   <div class="card-body rec">
-                    <h1 class="card-title">Tek System Inc <span>
+                    <h1 class="card-title">{{ companyName }}<span>
                         <i class="fas fa-envelope" style="margin-left: 12px;"></i>
                         <i class="fas fa-phone fa-flip-horizontal" style="margin-left: 14px;"></i>
                       </span></h1>
@@ -304,12 +303,12 @@
 
                     <div class="company-info" style="margin-left: 25px;">
                       <h4 style="text-decoration: underline;">Company Name</h4>
-                      <p>Tek System</p>
+                      <p>{{ companyTitle}}</p>
                     </div>
 
                     <div class="billing-address" style="margin-left: 20rem;">
                       <h4 style="text-decoration: underline;">Billing Address</h4>
-                      <p>7437 Race Road,Hanover,MD 21076</p>
+                      <p>{{ BillingAddress }}</p>
                     </div>
 
                   </div>
@@ -410,7 +409,6 @@
                       <th>MEMO</th>
                       <th colspan="2">AMOUNT </th>
                       <th> STATUS <i class="fas fa-angle-down" style="margin-left: 5px;"></i></th>
-
                       <th>ACTION</th>
 
                     </tr>
@@ -418,13 +416,13 @@
                   <tbody>
                     <tr *ngFor="let invoice of allInvoices">
                       <td><input type="checkbox"></td>
-                      <td>{{ invoice.date }}</td>
-                      <td>{{ invoice.type }}</td>
-                      <td>{{ invoice.number }}</td>
-                      <td>{{ invoice.clientProject }}</td>
-                      <td>{{ invoice.memo }}</td>
-                      <td>{{ invoice.amount }}</td>
-                      <td>{{ invoice.status }}</td>
+                      <td>{{ invoice.created_at | date : "MM/dd/y" : "UTC" }}</td>
+                      <td>{{ invoice }}</td>
+                      <td>{{ invoice.invoiceNo }}</td>
+                      <td>{{ invoice.ClientName }}</td>
+                      <td>{{ invoice.invoice_message }}</td>
+                      <td>{{ invoice }}</td>
+                      <td>{{ invoice }}</td>
                       <td>
                         <button class="btn btn-" (click)="editAction()">Edit</button>
                         <div class="btn-group received" style="margin-left: 5px;">
@@ -491,11 +489,11 @@
                 <tbody>
                   <tr *ngFor="let invoice of invoices">
                     <td><input type="checkbox"></td>
-                    <td>{{ invoice.date }}</td>
+                    <td>{{ invoice.created_at | date : "MM/dd/y" : "UTC" }}</td>
                     <td>{{ invoice.type }}</td>
-                    <td>{{ invoice.number }}</td>
-                    <td>{{ invoice.clientProject }}</td>
-                    <td>{{ invoice.memo }}</td>
+                    <td>{{ invoice.invoiceNo }}</td>
+                    <td>{{ invoice.ClientName }}</td>
+                    <td>{{ invoice.invoice_message }}</td>
                     <td>{{ invoice.amount }}</td>
                     <td>{{ invoice.status }}</td>
                     <td>
@@ -566,11 +564,11 @@
                   <tbody>
                     <tr *ngFor="let invoice of unpaidInvoices">
                       <td><input type="checkbox"></td>
-                      <td>{{ invoice.date }}</td>
+                      <td>{{ invoice.created_at | date : "MM/dd/y" : "UTC" }}</td>
                       <td>{{ invoice.type }}</td>
-                      <td>{{ invoice.number }}</td>
-                      <td>{{ invoice.clientProject }}</td>
-                      <td>{{ invoice.memo }}</td>
+                      <td>{{ invoice.invoiceNo }}</td>
+                      <td>{{ invoice.ClientName }}</td>
+                      <td>{{ invoice.invoice_message }}</td>
                       <td>{{ invoice.amount }}</td>
                       <td>{{ invoice.status }}</td>
                       <td>

@@ -29,13 +29,15 @@ throw new Error('Method not implemented.');
   shareLink = '';
   row: any;
   noResultsFound:boolean = true;
+  allInvoices: any[]=[{created_at:'27/06/2002'}];
   invoices: any[] = [];
   unpaidInvoices: any[] = [];
-  allInvoices: any[] = [];
+  companyName: string = '';
+  companyTitle: string = '';
+  BillingAddress: string = '';
 
   OrgID:string = '';
   TraineeID:string = '';
-
   activeTab = 'allinvoices';
   showCustomDateModel = false;
   startDate: string;
@@ -180,11 +182,9 @@ throw new Error('Method not implemented.');
     throw new Error('Method not implemented.');
     
   }
-
-
   fetchPaidInvoiceList(){
     let Req = {
-      OrgID: this.OrgID,
+      TraineeID: this.TraineeID,
     };
     this.service.getPaidInvoiceList(Req).subscribe((x: any) => {
       this.invoices = x.result;
@@ -196,7 +196,7 @@ throw new Error('Method not implemented.');
 
   fetchunPaidInvoiceList(){
     let Req = {
-      OrgID: this.OrgID,
+      TraineeID: this.TraineeID,
     };
     this.service.getunPaidInvoiceList(Req).subscribe((x: any) => {
       this.unpaidInvoices = x.result;
@@ -205,7 +205,7 @@ throw new Error('Method not implemented.');
   }
   fetchAllInvoiceList(){
     let Req = {
-      OrgID: this.OrgID,
+      TraineeID: this.TraineeID,
     };
     this.service.getAllInvoiceList(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
