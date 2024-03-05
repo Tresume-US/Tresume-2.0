@@ -88,7 +88,6 @@
       </div>
       <div class="col-md-6 text-center">
         <button type="button" class="btn mr-4" data-toggle="modal" data-target="#myModal2">
-          <!-- (click)="fetchtimesheetreport()" -->
           <i class="fas fa-arrow-right"></i> Add Service
         </button>
       </div>
@@ -126,9 +125,10 @@
               <label for="dueDays" style="margin-left: 4px;">Days</label><br><br>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearSelection()">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                (click)="clearSelection()">Close</button>
               <button type="button" class="btn btn-primary" (click)="closeModal2()">Save changes</button>
-            </div>            
+            </div>
           </div>
         </div>
       </div>
@@ -195,143 +195,39 @@
               </div>
               <div *ngIf="selectedFilter === 'option3'">
               </div>
-              <!-- <p style="color: #999; font-style: italic;"
+              <p style="color: #999; font-style: italic;"
                 *ngIf="selectedFilter == 'option1' || selectedFilter == 'option2' || selectedFilter == 'option3'">There
-                aren't any billable items for that date range.</p> -->
-              <!-- <div *ngIf="selectedFilter === 'option3'">
-                <div class="form-group mb-3">
-                  <select class="form-control" (change)="onOptionChanges($event)" [(ngModel)]="selectedOption">
-                    <option value="" disabled selected>--Select--</option>
-                    <ng-container *ngIf="selectedFilter === 'option3'">
-                      <option value="example1" *ngIf="selectedOption !== 'example2' || showAdditionalInputs">Don't group
-                        time</option>
-                    </ng-container>
-                    <option value="example2">Group time by service</option>
-                  </select>
-                </div>
+                aren't any billable items for that date range.</p>
 
-                <div *ngIf="selectedOption === 'example1' || showAdditionalInputs">
-
-                  <button class="btn " (click)="addAll()">Add all</button>
-                  <div *ngIf="showAdditionalInputs" class="mb-3">
-
+                <div *ngIf="selectedFilter === 'option3'">
+                  <div class="form-group mb-3">
+                    <select class="form-control" (change)="onOptionChanges($event)" [(ngModel)]="selectedOption">
+                      <option value="" disabled selected>--Select--</option>
+                      <option value="example1" *ngIf="selectedFilter === 'option3' && (selectedOption !== 'example2' || showAdditionalInputs)">Don't group time</option>
+                      <option value="example2">Group time by service</option>
+                    </select>
                   </div>
-                  <div class="card-display mt-3">
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 11, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn btn-">Add</button>
-                            <button class="btn btn-">Open</button>
-                          </div>
-                        </div>
-                      </div>
+               
+                  <div *ngIf="selectedOption === 'example1' || showAdditionalInputs">
+                    <button class="btn" (click)="addAll()">Add all</button>
+                    <div *ngIf="showAdditionalInputs" class="mb-3">
+                      <!-- Additional inputs content goes here -->
                     </div>
-
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 12, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn ">Add</button>
-                            <button class="btn ">Open</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 13, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn">Add</button>
-                            <button class="btn">Open</button>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="card-display mt-3">
+                      <!-- Your single card content goes here -->
                     </div>
                   </div>
-                </div>
-                <div *ngIf="selectedOption === 'example2' && !showAdditionalInputs">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h3 class="card-title" style="text-decoration: underline;">Time services</h3> <br>
-                      <div class="row">
-                        <div class="col mt-3 d-flex justify-content-between">
-                          <p class="card-text" style="margin-left: -6rem;">Dec 11 - Dec 22,<br> 2023</p>
-                          <p>8:00</p>
-                        </div>
-                      </div>
-                      <div class="row" style="margin-top: -11px;">
-                        <div class="col">
-                          <p class="card-text" style="margin-left: 9px;">$360.00</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <p class="card-text" style="margin-left: 9px;">Kivani kotecha</p>
-                        </div>
-                      </div>
-                      <div class="row mt-3">
-                        <div class="col d-flex justify-content-between">
-                          <button class="btn" style=" margin-left: 11rem;">Add</button>
-                        </div>
+                
+                  <div *ngIf="selectedOption === 'example2' && !showAdditionalInputs">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <h3 class="card-title" style="text-decoration: underline;">Time services</h3> <br>
+                        <!-- Content of the single card for example2 goes here -->
                       </div>
                     </div>
+                    <button class="btn mt-3" (click)="goToPreviousOption()">Back</button>
                   </div>
-                  <button class="btn mt-3" (click)="goToPreviousOption()">Back</button>
-                </div>
-              </div> -->
+                </div>                
             </div>
           </div>
         </div>

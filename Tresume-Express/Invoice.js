@@ -53,7 +53,7 @@ router.post('/getLocationinvoice', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
+
     // const query =  "select LocationName from Location";
     // const query =  " select distinct city from UsazipcodeNew";
     const query = "select distinct CONCAT(state,' - ',stateAbbr) as state from usazipcodenew ORDER BY state ASC";
@@ -151,8 +151,6 @@ router.post("/getAllInvoiceList", async (req, res) => {
   }
 });
 
-
-
 router.post("/UpdateRejectStatus", async function (req, res) {
   try {
     var query ="Update "
@@ -205,4 +203,40 @@ router.post("/UpdateAcceptStatus", async function (req, res) {
     res.status(500).send(data);
   }
 });
+
+router.post("/getReportTimesheet", async (req, res) => {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      var request = new sql.Request();
+
+      var query = "SELECT * FROM timesheet WHERE orgID = '" + req.body.OrgID + "' AND status = 1 AND isbillable = 1";
+      if (req.body.startdate) {
+        query += " AND fromdate BETWEEN '" + req.body.startdate + "' AND '" + req.body.enddate + "'";
+      }
+
+      console.log(query);
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
+
 module.exports = router;

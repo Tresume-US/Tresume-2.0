@@ -37,8 +37,8 @@ export class CreateInvoiceService {
     return this.http.post<ResponseDetails>(this.endpoint + 'createInvoice', request);
   }
 
-  getTimesheetReport(request: any): Observable<ResponseDetails> {
-    return this.http.post<ResponseDetails>(this.endpoint + 'getTimesheetReport', request);
+  getReportTimesheet(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'getReportTimesheet', request);
   }
 
 }

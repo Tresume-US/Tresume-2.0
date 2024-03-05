@@ -70,6 +70,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.getState();
     this.fetchclientlist();
     this.calculateSubtotal();
+    this.fetchtimesheetreport();
   }
 
   constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute) {
@@ -360,7 +361,7 @@ export class CreateInvoiceComponent implements OnInit {
     let Req = {
       OrgID: this.OrgID,
     };
-    this.Service.getTimesheetReport(Req).subscribe((x: any) => {
+    this.Service.getReportTimesheet(Req).subscribe((x: any) => {
       this.tableData = x.result;
       this.loading = false;
     });
