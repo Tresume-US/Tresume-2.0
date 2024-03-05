@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AllInvoiceService } from './all-invoice.service';
@@ -35,7 +36,12 @@ export class AllInvoiceComponent implements OnInit {
   paidInvoices: any[] = [];
   unpaidInvoices: any[] = [];
   allInvoices: any[] = [];
-
+  filteredInvoices: any[] = [];
+  searchQuery: string = '';
+  filteredPaidInvoices: any[] = [];
+  searchPaidQuery: string = '';
+  filteredUnpaidInvoices: any[] = [];
+  searchUnpaidQuery: string = '';
   OrgID: string = '';
   TraineeID: string = '';
 
@@ -178,31 +184,45 @@ export class AllInvoiceComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.loading = true;
     this.fetchPaidInvoiceList();
-    this.fetchunPaidInvoiceList();
+    this.fetchUnpaidInvoiceList();
     this.fetchAllInvoiceList();
   }
 
 
   fetchPaidInvoiceList() {
     let Req = {
-      OrgID: this.OrgID,
+        OrgID: this.OrgID,
     };
     this.service.getPaidInvoiceList(Req).subscribe((x: any) => {
-      this.invoices = x.result;
-      this.noResultsFound = this.invoices.length === 0;
-      this.loading = false;
+        this.paidInvoices = x.result;
+        this.applyPaidFilter();
+        this.loading = false;
     });
-  }
-  fetchunPaidInvoiceList() {
-    let Req = {
+}
+applyPaidFilter() {
+  this.filteredPaidInvoices = this.paidInvoices.filter(invoice =>
+      invoice.projectname.toLowerCase().includes(this.searchPaidQuery.toLowerCase())
+  );
+  this.noResultsFound = this.filteredPaidInvoices.length === 0 && this.searchPaidQuery !== '';
+}
+
+fetchUnpaidInvoiceList() {
+  let Req = {
       OrgID: this.OrgID,
-    };
-    this.service.getunPaidInvoiceList(Req).subscribe((x: any) => {
+  };
+  this.service.getunPaidInvoiceList(Req).subscribe((x: any) => {
       this.unpaidInvoices = x.result;
-      this.noResultsFound = this.unpaidInvoices.length === 0;
+      this.applyUnpaidFilter();
       this.loading = false;
-    });
-  }
+  });
+}
+
+applyUnpaidFilter() {
+  this.filteredUnpaidInvoices = this.unpaidInvoices.filter(invoice =>
+      invoice.projectname.toLowerCase().includes(this.searchUnpaidQuery.toLowerCase())
+  );
+  this.noResultsFound = this.filteredUnpaidInvoices.length === 0 && this.searchUnpaidQuery !== '';
+}
 
   fetchAllInvoiceList() {
     let Req = {
@@ -210,11 +230,26 @@ export class AllInvoiceComponent implements OnInit {
     };
     this.service.getAllInvoiceList(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
-      this.noResultsFound = this.allInvoices.length === 0;
+      this.applyFilter();
       this.loading = false;
     });
   }
 
+  applyFilter() {
+    this.filteredInvoices = this.allInvoices.filter(invoice =>
+      invoice.projectname.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+    this.noResultsFound = this.filteredInvoices.length === 0 && this.searchQuery !== '';
+}
+
+//this for amount filter
+// applyFilter() {
+//   this.filteredInvoices = this.allInvoices.filter(invoice =>
+//       (invoice.projectname.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+//       invoice.total.toLowerCase().includes(this.searchQuery.toLowerCase()))
+//   );
+//   this.noResultsFound = this.filteredInvoices.length === 0 && this.searchQuery !== '';
+// }
 
 
   toggleCustomDateModel(option: string): void {
@@ -245,9 +280,3 @@ export class AllInvoiceComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-

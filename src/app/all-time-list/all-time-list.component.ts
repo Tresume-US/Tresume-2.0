@@ -21,6 +21,7 @@ export class AllTimeListComponent implements OnChanges {
   noResultsFound: boolean = false;
   timesheetrole: any;
   id:string = '';
+  username: any;
 
   constructor(private cookieService: CookieService, private service: TimesheetListService, private messageService: MessageService)
   {}
@@ -30,7 +31,7 @@ export class AllTimeListComponent implements OnChanges {
     this.TraineeID = this.cookieService.get('TraineeID');
     this.id = this.cookieService.get('id');
     this.timesheetrole = this.cookieService.get('timesheet_role');
-
+    this.username = this.cookieService.get('userName1');
     // this.fetchtimesheet();
     this.fetchPendingResult();
     this.fetchRejectedData();
@@ -58,7 +59,8 @@ export class AllTimeListComponent implements OnChanges {
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
-      id: this.id
+      id: this.id,
+      username:this.username
     };
     this.service.getPendingTimesheetResult(Req).subscribe((x: any) => {
       this.PendingData = x.result;
@@ -69,7 +71,8 @@ export class AllTimeListComponent implements OnChanges {
   fetchRejectedData(){
     let Req = {
       traineeID: this.TraineeID,
-      timesheetrole:this.timesheetrole
+      timesheetrole:this.timesheetrole,
+      username:this.username
     };
     this.service.getRejectedTimesheetResult(Req).subscribe((x: any) => {
       this.rejectedData = x.result;
@@ -80,7 +83,8 @@ export class AllTimeListComponent implements OnChanges {
   fetchCompletedData(){
     let Req = {
       traineeID: this.TraineeID,
-      timesheetrole:this.timesheetrole
+      timesheetrole:this.timesheetrole,
+      username:this.username
     };
     this.service.getCompletedTimesheetResult(Req).subscribe((x: any) => {
       this.completedData = x.result;
@@ -91,7 +95,8 @@ export class AllTimeListComponent implements OnChanges {
   fetchNonBillableData(){
     let Req = {
       traineeID: this.TraineeID,
-      timesheetrole:this.timesheetrole
+      timesheetrole:this.timesheetrole,
+      username:this.username
     };
     this.service.getNonBillableTimesheetResult(Req).subscribe((x: any) => {
       this.nonBillableData = x.result;

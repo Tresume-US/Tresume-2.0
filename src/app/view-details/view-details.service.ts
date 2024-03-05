@@ -23,6 +23,10 @@ export class ViewDetailsService {
   UpdateAcceptStatus(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'UpdateAcceptStatus', request);
   }
+
+  Candidateviewdetails(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'Candidateviewdetails', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;

@@ -4,7 +4,7 @@
       <h2 class="pl-2">Details</h2>
     </div>
     <div class="row mt-2 pl-2">
-      <a href="#" [routerLink]="['/alltimelist']">Back to main view</a>
+      <a href="#" [routerLink]="['/alltimelist']" class="btn">Back to main view</a>
     </div>
   <div class="mt-3 d-flex">
   <table style="width: 60%;">
@@ -24,33 +24,29 @@
     </thead>
     <tbody>
       <tr  *ngFor="let row of rowdata">
-        <td>{{row.Candidate}}</td>
-        <td>Mon</td>
-        <td>Tue</td>
-        <td>Wed</td>
-        <td>Thu</td>
-        <td>Fri</td>
-        <td>Sat</td>
-        <td>Sun</td>
-        <td>Total</td>
-        <td>Description</td>
+        <td>{{row.id}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.day1}}</td>
+        <td>{{row.totalamt}}</td>
+        <td>{{row.comments}}</td>
       </tr>
     </tbody>
 </table>
 <div class="pl-4">
-  <div class="card p-4" style="width: 600px;">
+
+  <div class="card mt-3" *ngIf="this.document">
     <div class="card-body">
-      <h3 class="card-title">Document 1</h3>
-        <i class="fa fa-download" (click)="downloadDocument(1)"></i>
+      <a href="https://tresume.us/Content/Timesheet/{{this.document}}"></a><label for="fileInput" class="card-title" style="cursor: pointer;">Client Approved Timesheet</label> &nbsp;&nbsp;<i class="fas fa-download" id="uploadIcon"></i>
     </div>
   </div>
-  <div class="card mt-3">
-    <div class="card-body">
-      <h3 class="card-title">Document 2</h3>
-      <a href="#" (click)="downloadDocument(2)">
-        <i class="fa fa-download"></i>
-      </a>
-    </div>
+  <div *ngFor="let row of rowdata">
+    <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+    <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="comments" [ngModelOptions]="{standalone: true}">{{row.admincomment}}</textarea>
   </div>
 </div>
 <div>
@@ -108,5 +104,6 @@
     </div>
   </div>
 </div>
+
 <p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

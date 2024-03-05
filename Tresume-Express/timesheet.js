@@ -144,7 +144,7 @@ router.post("/getPendingTimesheetResult", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "' AND TM.status=1";
+        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -179,7 +179,7 @@ router.post("/getRejectedTimesheetResult", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "' AND TM.status = 2";
+        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 2";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -212,7 +212,7 @@ router.post("/getCompletedTimesheetResult", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "' AND TM.status = 3";
+        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 3";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -250,7 +250,7 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
 
 //Its the correct query
         var query =
-        "SELECT CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID + "' and isBillable = 0";
+        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.isBillable = 0";
 
       console.log(query);
       request.query(query, async function (err, recordset) {
@@ -273,6 +273,38 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
   }
 });
 
+router.post("/Candidateviewdetails", async (req, res) => {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      var request = new sql.Request();
+
+      var query = "SELECT TM.id,TM.admincomment, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='"+req.body.tid+"' AND TM.status=1";
+
+
+      console.log(query);
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
 
 // router.post("/createTimesheet", async (req, res) => {
 //   const timesheetData = req.body.timesheetData;
@@ -899,7 +931,7 @@ router.post('/getTimesheetCandidatetList', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
   
-    const query = "select * from trainee where istimesheet = 1 and Role = 'TRESUMEUSER' and userorganizationid =  '" + req.body.OrgID + "' and active = 1";
+    const query = "SELECT trainee.* FROM trainee INNER JOIN memberdetails ON trainee.userorganizationid IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(memberdetails.accessorg, ',')) WHERE trainee.istimesheet = 1 AND trainee.Role = 'TRESUMEUSER' AND memberdetails.useremail = '"+req.body.username+"' AND trainee.active = 1";
 
     console.log(query);
 

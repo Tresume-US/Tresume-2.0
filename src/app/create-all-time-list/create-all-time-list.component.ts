@@ -268,7 +268,7 @@ dropdownOptions: any[] = [];
   }
   getCandidateName() {
     let Req = {
-      OrgID: this.OrgID
+      username: this.username
     };
 
     this.Service.getTimesheetCandidatetList(Req).subscribe((x: any) => {
@@ -278,7 +278,7 @@ dropdownOptions: any[] = [];
 
 getCandidateList() {
   let Req = {
-    OrgID: this.OrgID
+    username: this.username
   };
   this.Service.getTimesheetCandidatetList(Req).subscribe((x: any) => { 
     this.dropdownOptions = x.result;

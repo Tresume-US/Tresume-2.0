@@ -153,7 +153,7 @@ router.post("/getAllInvoiceList", async (req, res) => {
 
 router.post("/UpdateRejectStatus", async function (req, res) {
   try {
-    var query ="Update "
+    var query = "UPDATE timesheet_master SET status = '" + req.body.status + "' AND admincomments = '" + req.body.comments + "' WHERE id = '" + req.body.id + "'";
 
     console.log(query);
 
@@ -177,10 +177,9 @@ router.post("/UpdateRejectStatus", async function (req, res) {
   }
 });
 
-
 router.post("/UpdateAcceptStatus", async function (req, res) {
   try {
-    var query ="Update "
+    var query = "UPDATE timesheet_master SET status = '" + req.body.status + "' AND admincomments = '" + req.body.comments + "' WHERE id = '" + req.body.id + "'";
 
     console.log(query);
 
