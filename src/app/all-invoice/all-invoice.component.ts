@@ -83,7 +83,9 @@ export class AllInvoiceComponent implements OnInit {
     this.showPopup = true;
     this.invoiceid = invoiceId;
   }
-
+  closePopup(){
+    this.showPopup = false;
+  }
   saveAmount() {
     // console.log('Invoice ID:', this.invoiceid);
     // console.log('Received payment amount:', this.receivedamt);

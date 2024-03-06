@@ -356,7 +356,10 @@ addservice(timesheet:any){
   this.updateAmount(data);
 }
 
+
+
   addinvoice() {
+    
     this.loading = true;
     let invoiceLinesData: { serviceDate: any, description: any, qty: any, rate: any,timesheetid:any }[] = [];
     this.invoiceLines.forEach((line, index) => {
@@ -367,6 +370,8 @@ addservice(timesheet:any){
         rate: line.rate,
         timesheetid:line.timesheetid
       });
+
+      this.loading = false;
     });
 
   const formData = new FormData();

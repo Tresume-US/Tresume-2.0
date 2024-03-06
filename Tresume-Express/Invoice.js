@@ -178,7 +178,7 @@ router.post("/updateReceivedPayment", async function (req, res) {
 
     const data = {
       flag: 1,
-      message: "Data Updated",
+      message: "Payment Updated",
     };
 
     res.send(data);

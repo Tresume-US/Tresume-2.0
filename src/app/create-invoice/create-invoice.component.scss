@@ -1,5 +1,5 @@
 .input-field {
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 250px;
@@ -8,30 +8,32 @@
 
 .form-check {
   display: block;
-  padding-bottom: 1px;
+  padding-bottom: 5px;
 }
 
-body {
+.whitebg {
+  background-color: #ffffff;
+  color: #000;
   overflow-x: hidden;
 }
 
 .btn {
-
   background-color: #380838;
   color: white;
   font-size: 12px;
-
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .table {
-  width: 100px;
-  height: max-content;
-
+  width: 100%;
+  height: auto;
 }
 
 .col-md-6 {
-  max-width: 100%;
-
+  width: 50%;
 }
 
 .scrollable-msg-box {
@@ -48,27 +50,21 @@ body {
   right: 0;
 }
 
-.custom-control-input:checked+.custom-control-label::before {
+.custom-control-input:checked + .custom-control-label::before {
   background-color: rgb(101, 177, 101);
   border-color: rgb(101, 177, 101);
 }
 
-.custom-control-input:checked+.custom-control-label::after {
+.custom-control-input:checked + .custom-control-label::after {
   background-color: rgb(101, 177, 101);
 }
 
 .dis {
   width: 75px;
-
 }
 
 .align-top {
   vertical-align: top;
-}
-
-body {
-  background-color: #ffffff;
-  color: #000;
 }
 
 .table-container {
@@ -93,11 +89,11 @@ body {
 }
 
 .col-md-4 {
-  margin-left: 13rem;
+  width: 33.33%;
 }
 
 .balance {
-  margin-left: 39rem;
+  width: 33.33%;
 }
 
 .modal-dialog {
@@ -122,9 +118,9 @@ body {
 
 .fbtn {
   margin: 10px;
-  padding: 5px;
-  width: 150px;
-  border-radius: 15px;
+  padding: 8px 16px;
+  width: auto;
+  border-radius: 20px;
 }
 
 .popup {
@@ -134,27 +130,12 @@ body {
 }
 
 .popup .popover {
-
-  display: block;
-  position: absolute;
-  bottom: -130%;
-  /* Adjust to position the popover */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  width: 200px;
-  /* Adjust width as needed */
-  /* Other styles specific to this popup */
   display: block;
   position: absolute;
   bottom: -130%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
-  width: 200px;
-  /* Adjust width as needed */
-  /* Other styles specific to this popup */
-
   width: 200px;
 }
 
@@ -171,95 +152,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-.modal1-content {
-  /* Adjust the positioning and centering */
-  position: relative;
-  background: white;
-  padding: 50px;
-  border-radius: 6px;
-  text-align: center;
-  width: max-content;
-  margin: auto;
-  /* This centers the modal horizontally */
-}
-
-.close-modal1 {
-  /* Adjust positioning for the close button */
-  margin: 0;
-  position: absolute;
-  opacity: 1;
-  z-index: 10;
-  cursor: pointer;
-  top: 5%;
-  right: 5%;
-  /* Adjusted to right align */
-}
-
-.modal1-footerbtn {
-  margin-top: 20px;
-  /* Adjust the top margin as needed */
-  text-align: center;
-  /* Center the buttons horizontally */
-}
-
-.modal1-footerbtn button {
-  margin-right: 10px;
-  /* Add space between the buttons */
-}
-
-.delete-icon {
-  color: #380838;
-  /* Replace 'blue' with the color of your choice */
-}
-
-.attachment-symbol {
-  font-size: 21px;
-  /* Adjust the size as needed */
-  margin-left: 34px;
-  color: #380838;
-}
-
-
-.modal1-content {
-  position: relative;
-  background: white;
-  padding: 50px;
-  border-radius: 6px;
-  text-align: center;
-  width: max-content;
-  margin: auto;
-}
-
-.close-modal1 {
-  margin: 0;
-  position: absolute;
-  opacity: 1;
-  z-index: 10;
-  cursor: pointer;
-  top: 5%;
-  right: 5%;
-}
-
-.modal1-footerbtn {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.modal1-footerbtn button {
-  margin-right: 10px;
-}
-
-.delete-icon {
-  color: #380838;
-}
-
-.attachment-symbol {
-  font-size: 21px;
-  margin-left: 34px;
-  color: #380838;
-}
-
 
 .modal1-content {
   position: relative;
@@ -301,7 +193,7 @@ body {
 }
 
 .form {
-  width: 500px;
+  width: 100%;
 
   &__container {
     position: relative;
@@ -351,17 +243,85 @@ body {
     color: #1871b5;
     text-decoration: none;
   }
-
-  .primary {
-    color: blue;
-  } 
-  
-  .message-box {
-    height: 100px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    padding: 5px;
-  }
-  
-  
 }
+
+.primary {
+  color: blue;
+}
+
+.message-box {
+  height: 100px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.disabled-style {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+.btn {
+  background: linear-gradient(to bottom, #380838, #280828);
+  color: white;
+  font-size: 14px;
+  // padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: linear-gradient(to bottom, #280828, #180818);
+}
+
+/* Shadow effect */
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Whitespace */
+.container {
+  padding: 20px;
+}
+
+/* Typography */
+h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.icon {
+  font-size: 24px;
+  color: #380838;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+
+.btn {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+

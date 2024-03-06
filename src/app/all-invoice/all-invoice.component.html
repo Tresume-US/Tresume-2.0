@@ -415,7 +415,7 @@
                       <td>{{ invoice.total }}</td>
                       <td>{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
                       <td>
-                        <button  (click)="openPopup(invoice.id)">Received Payment</button>
+                        <button  class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                       </td>
                       <!-- <td>
                           <button class="btn btn-" (click)="editAction()">Edit</button>
@@ -494,7 +494,7 @@
                         <td>{{ invoice.total }}</td>
                         <td>{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
                         <td>
-                          <button  (click)="openPopup(invoice.id)">Received Payment</button>
+                          <button  class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                         </td>
                         <!-- <td>
                             <button class="btn btn-" (click)="editAction()">Edit</button>
@@ -575,7 +575,7 @@
                           <td>{{ invoice.total }}</td>
                           <td>{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
                           <td>
-                            <button  (click)="openPopup(invoice.id)">Received Payment</button>
+                            <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                           </td>
                           <!-- <td>
                               <button class="btn btn-" (click)="editAction()">Edit</button>
@@ -756,8 +756,10 @@
 
 <div *ngIf="showPopup" class="popup-overlay">
   <div class="popup">
-    <input type="number" [(ngModel)]="receivedamt" placeholder="Enter amount">
-    <button (click)="saveAmount()">Save</button>
+    <span>Enter the Amount</span>
+    <input type="number" class="mt-2" [(ngModel)]="receivedamt" placeholder="Enter amount">
+    <button class="btn mr-2" (click)="closePopup()">Cancel</button>
+    <button class="btn float-right" (click)="saveAmount()">Save</button>
   </div>
 </div>
 

@@ -558,22 +558,32 @@ color: #4f4e4e; /* Replace with your desired light color */
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 400px;
+  height: 170px;
 }
 
 .popup input {
   display: block;
+  width: 100%;
+  padding: 10px;
   margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .popup button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
   padding: 10px 20px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.popup button:hover {
-  background-color: #0056b3;
-}
+// .popup button.btn {
+//   background-color: #f0f0f0;
+//   color: #333;
+// }
+
+// .popup button.btn.float-right {
+//   background-color: #007bff;
+//   color: #fff;
+// }
