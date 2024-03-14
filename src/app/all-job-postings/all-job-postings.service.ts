@@ -19,6 +19,10 @@ export class AllJobPostingsService {
     fetchassigneeRecruiter(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'fetchassigneeRecruiter', request);
     }
+    
+    TBassignee(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'TBassignee', request);
+    }
      // deleteJobPosting(request: any): Observable<ResponseDetails> {
     //     return this.http.post<ResponseDetails>(this.endpoint + 'deleteJobPosting', request);
     // }

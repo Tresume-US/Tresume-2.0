@@ -39,13 +39,8 @@ router.post('/getJobPostingList', async (req, res) => {
         return res.status(500).json({ error: 'Database connection error' });
       }
       const request = new sql.Request();
-
-      if(req.body.admin ==1){
-
-      }
-      const query = "SELECT J.JobID AS JobID, J.jobtitle AS JobTitle, J.company AS Company, CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, J.payrate AS PayRate, SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, J.createtime AS PostedOn, CONCAT(T.FirstName, ' ', T.LastName) AS PostedBy, JT.Value AS JobType, T2.FirstName AS Assignee, J.JobStatus FROM Job J INNER JOIN JobApplication JA ON J.JobID = JA.JobID LEFT JOIN Trainee T ON J.Recruiterid = T.TraineeID LEFT JOIN Trainee T2 ON J.PrimaryRecruiterID = T2.TraineeID INNER JOIN JobType JT ON J.JobTypeID = JT.JobTypeID WHERE T.OrganizationID = '" + req.body.OrgID + "' GROUP BY J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, J.createtime, T.FirstName, T.LastName, JT.Value, T2.FirstName, J.JobStatus ORDER BY J.createtime DESC;";
-
-
+      
+      const query = "SELECT J.JobID AS JobID, J.jobtitle AS JobTitle, J.company AS Company, CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, J.payrate AS PayRate, SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, J.createtime AS PostedOn, CONCAT(T.FirstName, ' ', T.LastName) AS PostedBy, JT.Value AS JobType, T2.TraineeID, J.JobStatus FROM Job J INNER JOIN JobApplication JA ON J.JobID = JA.JobID LEFT JOIN Trainee T ON J.Recruiterid = T.TraineeID LEFT JOIN Trainee T2 ON J.PrimaryRecruiterID = T2.TraineeID INNER JOIN JobType JT ON J.JobTypeID = JT.JobTypeID WHERE T.OrganizationID = '" + req.body.OrgID + "' GROUP BY J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, J.createtime, T.FirstName, T.LastName,T2.TraineeID, JT.Value, T2.FirstName, J.JobStatus ORDER BY J.createtime DESC;";
       console.log(query);
       const recordset = await request.query(query);
       const result = {
@@ -63,6 +58,7 @@ router.post('/getJobPostingList', async (req, res) => {
     return res.send(result);
   }
 });
+
 
 router.post('/deleteJobPosting', async (req, res) => {
   const email = req.body.email;
@@ -312,6 +308,52 @@ router.post("/acceptApplication", async function (req, res) {
       message: "Internal Server Error",
     };
     res.status(500).send(data);
+  }
+});
+
+router.post("/fetchassigneeRecruiter", function (req, res) {
+  sql.connect(config, function (err) {
+    if (err) console.log(err);
+    var request = new sql.Request();
+    request.query(
+      "SELECT T.TraineeID, T.FirstName, T.LastName, T.Active FROM Trainee T JOIN memberdetails M ON " +
+      "T.Username = M.useremail WHERE M.isAdmin != 1 AND T.Active = 1 AND M.Active = 1 AND M.PrimaryOrgID = " +
+      req.body.orgID +
+      "",
+      function (err, recordset) {
+        if (err) console.log(err);
+        var result = { flag: 1, result: recordset.recordsets[0] };
+        res.send(recordset.recordsets[0]);
+      }
+    );
+  });
+});
+
+router.post('/TBassignee', async (req, res) => {
+  try {
+    sql.connect(config, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Database connection error' });
+      }
+      const request = new sql.Request();
+      let query = "update job set PrimaryRecruiterID ='"+req.body.selectedValue+"' where JobID = '"+req.body.JobID+"'";
+
+      console.log(query);
+      const recordset = await request.query(query);
+      const result = {
+        flag: 1,
+        result: 'Successfully Inserted',
+      };
+      res.send(result);
+    });
+  } catch (error) {
+    console.error(error);
+    const result = {
+      flag: 0,
+      message: 'Internal server error',
+    };
+    return res.send(result);
   }
 });
 
