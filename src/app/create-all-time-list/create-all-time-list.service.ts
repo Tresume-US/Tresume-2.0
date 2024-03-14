@@ -36,6 +36,10 @@ export class CreateAllTimeListService {
   deletetimesheetdata(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deletetimesheetdata', request);
   }
+
+  gettimesheetrole(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'gettimesheetrole', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;
