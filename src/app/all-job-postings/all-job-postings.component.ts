@@ -15,9 +15,6 @@ import { Router } from '@angular/router';
 
 export class AllJobPostingsComponent implements OnInit{
   loading:boolean = false;
-  recruiterNames: any = '';
-  recruiterName: any;
- 
 
   OrgID:string = '';
   JobID:string = '';
@@ -33,7 +30,6 @@ ngOnInit(): void {
   // this.JobID = this.cookieService.get('userName1');
   this.TraineeID = this.cookieService.get('TraineeID');
   this.fetchjobpostinglist();
-  this.getOrgUserList();
 }
   constructor(private dialog: MatDialog,private cookieService: CookieService, private service:AllJobPostingsService,private messageService: MessageService) {}
 
@@ -63,14 +59,5 @@ fetchjobpostinglist(){
 
 jobOptions = ['My Jobs', 'Assigned Jobs', 'All Jobs'];
 
-getOrgUserList() {
-  let Req = {
-    TraineeID: this.TraineeID,
-    orgID: this.OrgID
-  };
-  this.service.fetchrecruiterjobposting(Req).subscribe((x: any) => {
-    this.recruiterNames = x;
-  });
-}
 
 }
