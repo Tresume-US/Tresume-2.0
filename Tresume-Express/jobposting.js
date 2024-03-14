@@ -180,6 +180,7 @@ router.post("/fetchrecruiterjobposting", function (req, res) {
 
 
 
+
 router.post('/getjobapplicants', async (req, res) => {
   try {
     sql.connect(config, async function (err) {
