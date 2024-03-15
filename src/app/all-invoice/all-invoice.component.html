@@ -376,7 +376,7 @@
                 </div> -->
               <!-- </div> -->
 
-              <div class="action-icons icons-container float-right mt-3" style="border: none;">
+              <div class="action-icons icons-container float-right mt-3" style="border: none;    padding: 10px;">
                 <i class="material-icons" onclick="exportAsPDF()">print</i>
                 <i class="fas fa-upload" onclick="downloadExcel()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
@@ -385,7 +385,7 @@
                 <table class="table ">
                   <thead>
                       <tr class="text-center">
-                          <td><input type="checkbox"></td>
+                        <td><input type="checkbox" (change)="selectAll($event.target.checked)"></td>
                           <th>Invoiceid</th>
                           <th>Date</th>
                           <th>Type</th>
@@ -396,12 +396,6 @@
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
-
-                      <tr >
-                        <td colspan="10" class="text-center">
-                            No results found.
-                        </td>
-                    </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let invoice of filteredInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
@@ -451,7 +445,7 @@
                               </div>
                           </div>
                       </td> -->
-                  
+                  <!-- </tr> -->
 
                   </tbody>
                 </table>
@@ -468,7 +462,7 @@
                   <input type="search" style="width: 20%;" placeholder="Search by Project/Client Name" [(ngModel)]="searchPaidQuery" (input)="applyPaidFilter()">
                 </div>
               </div>
-              <div class="action-icons icons-container float-right mt-3">
+              <div class="action-icons icons-container float-right mt-3" style="padding: 10px;">
                 <i class="material-icons" onclick="handlePrint()">print</i>
                 <i class="fas fa-upload" onclick="handleFileUpload()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
@@ -477,7 +471,7 @@
                 <thead>
                   <tr>
                     <!-- Header cells -->
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" (change)="selectAll1($event.target.checked)"></td>
                     <th>Invoiceid</th>
                     <th>Date</th>
                     <th>Type</th>
@@ -487,12 +481,6 @@
                     <th>Amount</th>
                     <th>Status</th>
                     <th>Action</th>
-
-                  </tr>
-                  <tr >
-                    <td colspan="10" class="text-center">
-                      No results found.
-                    </td>
                   </tr>
                 </thead>
                 <tbody>
@@ -513,6 +501,11 @@
                         <td>
                           <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                         </td>
+                        <tr *ngIf="noResultsFound">
+                          <td colspan="10" class="text-center" style="font-size: 16px;">
+                            No results found.
+                          </td>
+                        </tr>
                         <!-- <td>
                             <button class="btn btn-" (click)="editAction()">Edit</button>
                             <div class="btn-group received" style="margin-left: 5px;">
@@ -538,7 +531,7 @@
                                 </div>
                             </div>
                         </td> -->
-                    </tr>
+
                 </tbody>
 
               </table>
@@ -560,7 +553,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <td><input type="checkbox"></td>
+                      <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td>
                       <th>Invoiceid</th>
                       <th>Date</th>
                       <th>Type</th>
@@ -572,11 +565,7 @@
                       <th>Action</th>
 
                     </tr>
-                    <tr >
-                      <td colspan="10" class="text-center">
-                        No results found.
-                      </td>
-                    </tr>
+
                   </thead>
 
                   <tbody>
@@ -597,6 +586,11 @@
                           <td>
                             <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                           </td>
+                          <tr *ngIf="noResultsFound">
+                            <td colspan="10" class="text-center" style="font-size: 16px;">
+                              No results found.
+                            </td>
+                          </tr>
                           <!-- <td>
                               <button class="btn btn-" (click)="editAction()">Edit</button>
                               <div class="btn-group received" style="margin-left: 5px;">
@@ -622,7 +616,7 @@
                                   </div>
                               </div>
                           </td> -->
-                      </tr>
+
                   </tbody>
 
                 </table>
