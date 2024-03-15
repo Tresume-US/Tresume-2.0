@@ -44,7 +44,7 @@ export class LoginComponent {
           this.cookieService.set('usertype', this.userType);
           if(this.userType === 'TRESUMEUSER'){
             const userName = response.data[0].UserName
-            const orgID = response.data[0].OrganizationID
+            const orgID = response.data[0].UserOrganizationID
             const traineeID = response.data[0].TraineeID
             const timesheet_role = response.data[0].timesheet_role
             const timesheet_admin = response.data[0].timesheet_admin

@@ -227,14 +227,16 @@ export class CreateAllTimeListComponent implements OnInit {
 
   constructor(private zone: NgZone, private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private Service: CreateAllTimeListService, private messageService: MessageService, private cookieService: CookieService, private fm: FormsModule) {
     this.OrgID = this.cookieService.get('OrgID');
+    this.traineeID = this.cookieService.get('TraineeID');
+    this.username = this.cookieService.get('userName1'); 
 
   }
 
   ngOnInit(): void {
     this.loading = true;
-    this.OrgID = this.cookieService.get('OrgID');
-    this.traineeID = this.cookieService.get('TraineeID');
-    this.username = this.cookieService.get('userName1');
+    // this.OrgID = this.cookieService.get('OrgID');
+    // this.traineeID = this.cookieService.get('TraineeID');
+    // this.username = this.cookieService.get('userName1');
 
     this.addDefaultRows();
     this.addDefaultRows();
@@ -242,21 +244,35 @@ export class CreateAllTimeListComponent implements OnInit {
     this.getCandidateList();
     this.getLocation();
     this.getpayItem();
+    this.getTimesheetRole();
 
-    if(this.timesheetrole === '3'){
-      this.candidateid = this.traineeID
-      this.traineeID = this.cookieService.get('timesheet_admin');
-    }
+    // if(item.timesheetrole === '3'){
+    //   this.candidateid = this.traineeID;
+    //   this.traineeID = this.cookieService.get('timesheet_admin');
+    //   this.username = this.cookieService.get('userName1');
+    // }
+
 
     const today = new Date();
     const currentWeekStart = new Date(today);
-    currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay() + 1); // Start of the current week
+    currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay() + 1); 
     const currentWeekEnd = new Date(currentWeekStart);
-    currentWeekEnd.setDate(currentWeekEnd.getDate() + 6); // End of the current week
+    currentWeekEnd.setDate(currentWeekEnd.getDate() + 6); 
     this.selectedWeek = `${this.formatDate(currentWeekStart)} to ${this.formatDate(currentWeekEnd)}`;
 
     // Generate weeks
     this.dynamicDays = this.generateWeeks();
+  }
+
+  timesheetrole: number[] = []
+  getTimesheetRole() {
+    let Req = {
+      traineeID: this.traineeID
+    };
+
+    this.Service.gettimesheetrole(Req).subscribe((x: any) => {
+      this.timesheetrole = x.result;
+    });
   }
 
   getCurrentWeekDates(): { start: Date; end: Date } {
@@ -470,7 +486,7 @@ onChangesDropdown(selectedOption: any, row: any) {
         // this.loading = true;
         if(row.projectName !=''){
           const formData = new FormData();
-          if (!row.file1) {
+          if (row.billable && !row.file1) {
             
             alert('Please upload client-approved timesheet.');
             // this.loading = false;

@@ -3,9 +3,9 @@
     <h2>Weekly Timesheet</h2>
     <i class="fa fa-close" [routerLink]="['/alltimelist']"></i>
   </div>
-  <div class="content pl-3 pt-1 pb-1 dropdown">
+  <div class="content pl-3 pt-1 pb-1 dropdown" *ngFor="let item of timesheetrole">
     <div class="row mt-3">
-      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.timesheetrole === 1">
         <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem" id="selectedItem"
           placeholder="Who's time are you tracking?" aria-describedby="searchIcon">
         <div class="input-group-append">
@@ -21,7 +21,12 @@
           </div>
         </div>
       </div>
-
+      <div class="col-md-3" *ngIf="item.timesheetrole === 3">
+        <div class="mt-2 username" >
+         <!-- Candidate Name: {{ username }} -->
+         {{ item.Name }}
+        </div>
+      </div>
       <!-- <div class="col-md-4">
         <input type="text" class="form-control" placeholder="Select Date Range" bsDaterangepicker
           [(ngModel)]="selectedDateRange" (ngModelChange)="onDateRangeChange($event)" style="width: 16rem;">
@@ -30,7 +35,7 @@
       <!-- <div *ngIf="selectedWeek" class="selected-week">
             You selected: {{ selectedWeek }}
           </div> -->
-
+  
       <div class="col-md-3 gray-theme">
         <div class="weekly-datepicker">
           <select id="weekPicker" [(ngModel)]="selectedWeek" (change)="onWeekSelect($event.target.value)">
@@ -40,6 +45,7 @@
       </div>
     </div>
   </div>
+  
   <table>
     <thead>
       <tr>
