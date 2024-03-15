@@ -75,7 +75,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="modal fade" id="mergeContactsModal" tabindex="-1" role="dialog"
                     aria-labelledby="mergeContactsModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,11 +145,9 @@
                             <button class="save-button" (click)="save()">Merge</button>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
-
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -424,6 +421,13 @@
                       <td>
                         <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                       </td>
+                    </tr>
+
+                    <tr *ngIf="noResultsFound">
+                      <td colspan="10" class="text-center" style="font-size: 16px;">
+                        No results found.
+                      </td>
+                    </tr>
                       <!-- <td>
                           <button class="btn btn-" (click)="editAction()">Edit</button>
                           <div class="btn-group received" style="margin-left: 5px;">
@@ -452,8 +456,8 @@
                   </tbody>
                 </table>
               </div>
-              
-              
+
+
 
             </div>
 
