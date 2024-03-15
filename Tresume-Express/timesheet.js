@@ -1312,7 +1312,7 @@ router.post('/gettimesheetrole', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
     
-       const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole from trainee where traineeID='"+req.body.traineeID+"'";
+    const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole, CONCAT(FirstName,' ',LastName) as Name from trainee where traineeID='"+req.body.traineeID+"'";
 
     console.log(query);
 

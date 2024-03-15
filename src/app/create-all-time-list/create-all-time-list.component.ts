@@ -252,12 +252,6 @@ export class CreateAllTimeListComponent implements OnInit {
     //   this.username = this.cookieService.get('userName1');
     // }
 
-    // if(this.timesheetrole === '1'){
-    //   // this.candidateid = this.traineeID;
-    //   // this.traineeID = this.cookieService.get('timesheet_admin');
-    //   // this.username = this.cookieService.get('userName1');
-    // }
-  
 
     const today = new Date();
     const currentWeekStart = new Date(today);
