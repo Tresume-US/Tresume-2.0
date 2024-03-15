@@ -75,7 +75,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="modal fade" id="mergeContactsModal" tabindex="-1" role="dialog"
                     aria-labelledby="mergeContactsModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,11 +145,9 @@
                             <button class="save-button" (click)="save()">Merge</button>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
-
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -419,7 +416,7 @@
                         <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                       </td>
                     </tr>
-                    
+
                     <tr *ngIf="noResultsFound">
                       <td colspan="10" class="text-center" style="font-size: 16px;">
                         No results found.
@@ -428,8 +425,8 @@
                   </tbody>
                 </table>
               </div>
-              
-              
+
+
 
             </div>
 
@@ -545,7 +542,7 @@
                       <th>ACTION</th>
                     </tr>
                   </thead>
-                  
+
                   <tbody>
                       <tr *ngFor="let invoice of filteredUnpaidInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
                           <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>

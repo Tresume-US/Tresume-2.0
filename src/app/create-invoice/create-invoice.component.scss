@@ -354,16 +354,16 @@ body {
 
   .primary {
     color: blue;
-  } 
-  
+  }
+
   .message-box {
     height: 100px;
     overflow-y: scroll;
     border: 1px solid #ccc;
     padding: 5px;
   }
-  
-  
+
+
 }
 
 .save-close-btn:disabled:hover {
@@ -388,4 +388,37 @@ body {
   border: 1px solid red;
   background-color: white;
   color: black;
+}
+
+
+.table {
+  // width: 100%;
+  border-collapse: collapse;
+}
+
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #e0e0e0;
+}
+td{
+  width: 200px;
+  color: #94618e;
+}
+.custom-bg-purple {
+  background-color: #380838 !important;
 }

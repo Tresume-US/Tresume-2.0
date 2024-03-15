@@ -5,8 +5,8 @@
     <body style="font-size: 14px">
       <form #invoiceForm="ngForm" (ngSubmit)="addinvoice()" novalidate>
     <div class="row mt-4">
-      <div class="col-md-12 d-flex">
-        <div class="dropdown-container" style="margin-left: 16px;">
+      <div class="col-md-12 d-flex" style="padding: 20px;">
+        <!-- <div class="dropdown-container" style="margin-left: 16px;">
           <label for="client" class="dropdown-label ml-3">Client</label>
           <select class="form-control" style="width: 100%;" name="client" [(ngModel)]="selectedclient" required
               #client="ngModel">
@@ -15,8 +15,18 @@
             <div *ngIf="client.invalid && client.touched">
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
             </div>
-        </div>
-        <div class="clientemail mt-0 ml-3">
+        </div> -->
+        <div class=" dropdown-container" style="margin-left: 16px;">
+          <label for="client" class="dropdown-label ml-3">Client</label>
+          <select class="form-control custom-select" style="width: 100%;" name="client" [(ngModel)]="selectedclient" required #client="ngModel">
+              <option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}</option>
+          </select>
+          <div *ngIf="client.invalid && client.touched">
+              <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
+          </div>
+      </div>
+
+        <!-- <div class="clientemail mt-0 ml-3">
           <label for="clientEmail" class="dropdown-label">Client Email</label>
           <a href="#" class="text-decoration-none" style="margin-left: 11px; width: 9rem;"
             (click)="togglePopup($event)">Cc(2)/Bcc</a>
@@ -26,7 +36,22 @@
               <div *ngIf="invoiceForm.controls.clientEmail.errors.required" class="text-danger">Client Email is Required
               </div>
             </div>
-        </div>
+        </div> -->
+        <div class=" clientemail mt-0 ml-3">
+          <label for="clientEmail" class="dropdown-label">Client Email</label>
+          <div class="input-group">
+              <input type="text" name="clientEmail" id="clientEmail" placeholder="Email" class="form-control"
+                     [(ngModel)]="clientEmail" style="height: 40px;" required>
+              <div class="input-group-append">
+                  <a href="#" class="btn btn-outline-secondary" (click)="togglePopup($event)" style="width: 5rem;"><p style="    margin: 0;
+                    padding-top: 3px;">Cc(2)/Bcc</p> </a>
+              </div>
+          </div>
+          <div *ngIf="invoiceForm.controls.clientEmail.touched && invoiceForm.controls.clientEmail.invalid">
+              <div *ngIf="invoiceForm.controls.clientEmail.errors.required" class="text-danger">Client Email is Required</div>
+          </div>
+      </div>
+
 
         <div class="popup" *ngIf="showPopup" (clickOutside)="closePopup()">
           <div class="popover bs-popover-bottom" role="tooltip" style="max-height: 550px; position: relative;">
@@ -64,7 +89,7 @@
           </div>
         </div>
 
-        <div class="billingaddress mt-0 ml-3">
+        <!-- <div class="billingaddress mt-0 ml-3">
           <label for="Billingaddress" class="ml-0">Billing address</label>
           <textarea class="form-control" name="Billingaddress" id="Billingaddress" placeholder="Enter Address" rows="1"
             [(ngModel)]="selectedBillingaddress" required></textarea>
@@ -72,7 +97,22 @@
               <div *ngIf="invoiceForm.controls.Billingaddress.errors.required" class="text-danger">Billing Address is
                 Required</div>
             </div>
-        </div>
+        </div> -->
+        <div class=" billingaddress mt-0 ml-3">
+          <label for="Billingaddress" class="ml-0">Billing address</label>
+          <div class="input-group">
+              <textarea class="form-control" name="Billingaddress" id="Billingaddress" placeholder="Enter Address" rows="1"
+                  [(ngModel)]="selectedBillingaddress" required></textarea>
+              <!-- <div class="input-group-append">
+                  <span class="input-group-text bg-transparent border-0" style="height: 100%;">
+                      <i class="fas fa-map-marker-alt text-muted"></i>
+                  </span>
+              </div> -->
+          </div>
+          <div *ngIf="invoiceForm.controls.Billingaddress.touched && invoiceForm.controls.Billingaddress.invalid">
+              <div *ngIf="invoiceForm.controls.Billingaddress.errors.required" class="text-danger">Billing Address is Required</div>
+          </div>
+      </div>
 
         <div class="invoiceDate mt-0 ml-3">
           <div class="form-group">
@@ -151,7 +191,7 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearSelection()">Close</button>
               <button type="button" class="btn btn-primary" (click)="closeModal2()">Save changes</button>
-            </div>            
+            </div>
           </div>
         </div>
       </div>
@@ -168,10 +208,10 @@
             </div>
         </div>
       </div>
-      <div class="ml-3">
+      <!-- <div class="ml-3">
         <div class="form-group">
           <label for="location">Location</label>
-          <select class="form-control" name="location" [(ngModel)]="selectedState" [ngModelOptions]="{standalone: true}"
+          <select class="form-control custom-select" name="location" [(ngModel)]="selectedState" [ngModelOptions]="{standalone: true}"
             style="height: 40px; width: 9rem;" required #location="ngModel">
             <option value="0" selected>Select Location</option>
             <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
@@ -180,7 +220,26 @@
             <div *ngIf="location.errors.required" class="text-danger">Location selection is required</div>
           </div>
         </div>
-      </div>
+      </div> -->
+
+      <div class="ml-3">
+        <div class="form-group">
+            <label for="location">Location</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text custom-bg-purple text-light"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                <select class="form-control custom-select" name="location" [(ngModel)]="selectedState" [ngModelOptions]="{standalone: true}"
+                        style="height: 40px; width: 9rem;" required #location="ngModel">
+                    <option value="0" selected>Select Location</option>
+                    <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
+                </select>
+            </div>
+            <div *ngIf="location.invalid && location.touched">
+                <div *ngIf="location.errors.required" class="text-danger">Location selection is required</div>
+            </div>
+        </div>
+    </div>
 
       <!-- <div class="ml-3">
         <div class="input-group col-md-5">
@@ -422,8 +481,8 @@
       </div>
     </div> -->
 
-    <div class="col-md-12 d-flex mt-3" style="margin-left: 11px;">
-      <table class="table table-bordered" style="width: 100%; max-width: 1000px;">
+    <div class="col-md-12 d-flex mt-3" style="padding: 20px;">
+      <table class="table text-center" style="width: 100%;">
         <thead>
           <tr>
             <th>S/No</th>
@@ -469,7 +528,7 @@
             <!-- <td> </td> -->
 
             <!-- Remove Button -->
-            <td><button class="btn " (click)="removeLine(i)">Remove</button></td>
+            <td> <i class="fa fa-trash fa-lg" (click)="removeLine(i)"></i></td>
 
           </tr>
         </tbody>
@@ -610,7 +669,7 @@
           <form class="form" (ngSubmit)="uploadFiles()" #uploadForm="ngForm">
             <label class="form__container" id="upload-container" style="height: 6rem;">Choose or Drag & Drop Files
               <input type="file" class="form__file" multiple (change)="onFilesSelected($event)" #fileInput="ngModel" name="files" ngModel required/>
-            </label>           
+            </label>
             <div *ngIf="fileInput.invalid && fileInput.errors.required" class="error-message mandatory-field">This field is mandatory!.</div>
             <div id="files-list-container">
               <ul>
@@ -626,7 +685,7 @@
             </div>
           </form>
         </div>
-        
+
       </div>
     </div>
 
