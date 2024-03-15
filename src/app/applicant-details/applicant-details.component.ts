@@ -68,7 +68,7 @@ export class ApplicantDetailsComponent{
  
   acceptApplication(TraineeID: number) {
     let Req = {
-      TraineeID: this.TraineeID,
+      TraineeID: TraineeID,
       OrgID: this.OrgID,
       JobID: this.JobID,
     };
@@ -82,7 +82,7 @@ export class ApplicantDetailsComponent{
   
   rejectApplication(TraineeID: number) {
     let Req = {
-      TraineeID: this.TraineeID,
+      TraineeID: TraineeID,
       OrgID: this.OrgID,
       JobID: this.JobID,
     };

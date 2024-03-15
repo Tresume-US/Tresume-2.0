@@ -38,12 +38,12 @@
                 <td>{{ applicant.Source}} </td>
                 <td>{{ applicant.Status }}</td>
                 <td>
-                  <i class="fas fa-check mr-4" (click)="acceptApplication(applicant.TraineeID)" style="color: #94618E;" title="Accept"></i>
-                  <i class="fas fa-times mr-4" (click)="rejectApplication(applicant.TraineeID)" style="color: #94618E;" title="Reject"></i>
+                  <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'REJECTED'" class="fas fa-check mr-4" (click)="acceptApplication(applicant.TraineeID)" style="color: #94618E;" title="Accept"></i>
+                  <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'ACCEPTED'" class="fas fa-times mr-4" (click)="rejectApplication(applicant.TraineeID)" style="color: #94618E;" title="Reject"></i>
                   <a href="#" (click)="downloadDocument(applicant.documentUrl)" title="Download Resume">
                     <i class="fas fa-download" style="color: #94618E;"></i>
                   </a>
-                </td>                                             
+                </td>                                              
               </tr>
             </tbody>
           </table>

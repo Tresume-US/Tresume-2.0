@@ -268,7 +268,16 @@ router.post('/getjobapplicants', async (req, res) => {
       }
       const request = new sql.Request();
 
-      let query ="SELECT JobApplication.CreateTime AS Date, CONCAT(trainee.FirstName, ' ', trainee.LastName) AS Name, job.JobTitle AS JobTitle, JobApplication.Source, JobApplication.Status FROM JobApplication JOIN trainee ON JobApplication.TraineeID = trainee.TraineeID JOIN job ON JobApplication.JobID = job.JobID WHERE JobApplication.JobID = '" + req.body.JobID + "' ";     
+      // let query ="SELECT JobApplication.CreateTime AS Date, CONCAT(trainee.FirstName, ' ', trainee.LastName) AS Name, job.JobTitle AS JobTitle, JobApplication.Source, JobApplication.Status FROM JobApplication JOIN trainee ON JobApplication.TraineeID = trainee.TraineeID JOIN job ON JobApplication.JobID = job.JobID WHERE JobApplication.JobID = '" + req.body.JobID + "' ";     
+      
+      let query = '';
+      
+      if(req.body.isAdmin == 'true'){
+        query = "SELECT JobApplication.TraineeID, JobApplication.CreateTime AS Date, CONCAT(trainee.FirstName, ' ', trainee.LastName) AS Name, job.JobTitle AS JobTitle, JobApplication.Source, JobApplication.Status FROM JobApplication JOIN trainee ON JobApplication.TraineeID = trainee.TraineeID JOIN job ON JobApplication.JobID = job.JobID WHERE JobApplication.JobID = '" + req.body.JobID + "' AND (JobApplication.Status = 'SUBMITTED' OR JobApplication.Status = 'ACCEPTED' OR JobApplication.Status = 'REJECTED')";
+
+      }else{
+         query ="SELECT  JobApplication.TraineeID, JobApplication.CreateTime AS Date, CONCAT(trainee.FirstName, ' ', trainee.LastName) AS Name, job.JobTitle AS JobTitle, JobApplication.Source, JobApplication.Status FROM JobApplication JOIN trainee ON JobApplication.TraineeID = trainee.TraineeID JOIN job ON JobApplication.JobID = job.JobID WHERE JobApplication.JobID = '" + req.body.JobID + "'"; 
+      }
 
       console.log(query);
       const recordset = await request.query(query);
@@ -299,6 +308,30 @@ router.post("/acceptApplication", async function (req, res) {
     const data = {
       flag: 1,
       message: "Application accepted",
+    };
+    res.send(data);
+  } catch (error) {
+    console.error(error);
+    const data = {
+      flag: 0,
+      message: "Internal Server Error",
+    };
+    res.status(500).send(data);
+  }
+});
+
+router.post("/rejectApplication", async function (req, res) {
+  try {
+    const { TraineeID, JobID } = req.body;
+    const query = `UPDATE JobApplication SET Status = 'REJECTED' WHERE TraineeID = '${req.body.TraineeID}' AND JobID = '${req.body.JobID}'`;
+    console.log(query);
+    await sql.connect(config);
+    const request = new sql.Request();
+    const result = await request.query(query);
+
+    const data = {
+      flag: 1,
+      message: "Application rejected",
     };
     res.send(data);
   } catch (error) {
@@ -357,29 +390,7 @@ router.post('/TBassignee', async (req, res) => {
   }
 });
 
-router.post("/rejectApplication", async function (req, res) {
-  try {
-    const { TraineeID, JobID } = req.body;
-    const query = `UPDATE JobApplication SET Status = 'REJECTED' WHERE TraineeID = '${req.body.TraineeID}' AND JobID = '${req.body.JobID}'`;
-    console.log(query);
-    await sql.connect(config);
-    const request = new sql.Request();
-    const result = await request.query(query);
 
-    const data = {
-      flag: 1,
-      message: "Application rejected",
-    };
-    res.send(data);
-  } catch (error) {
-    console.error(error);
-    const data = {
-      flag: 0,
-      message: "Internal Server Error",
-    };
-    res.status(500).send(data);
-  }
-});
 
 module.exports = router;
 
