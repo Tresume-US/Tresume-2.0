@@ -228,7 +228,7 @@ export class CreateAllTimeListComponent implements OnInit {
   constructor(private zone: NgZone, private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private Service: CreateAllTimeListService, private messageService: MessageService, private cookieService: CookieService, private fm: FormsModule) {
     this.OrgID = this.cookieService.get('OrgID');
     this.traineeID = this.cookieService.get('TraineeID');
-    this.username = this.cookieService.get('userName1'); 
+    this.username = this.cookieService.get('userName1');
 
   }
 
@@ -246,18 +246,10 @@ export class CreateAllTimeListComponent implements OnInit {
     this.getpayItem();
     this.getTimesheetRole();
 
-    // if(item.timesheetrole === '3'){
-    //   this.candidateid = this.traineeID;
+    // if(this.timesheetrole === '3'){
+    //   this.candidateid = this.traineeID
     //   this.traineeID = this.cookieService.get('timesheet_admin');
-    //   this.username = this.cookieService.get('userName1');
     // }
-
-    // if(this.timesheetrole === '1'){
-    //   // this.candidateid = this.traineeID;
-    //   // this.traineeID = this.cookieService.get('timesheet_admin');
-    //   // this.username = this.cookieService.get('userName1');
-    // }
-  
 
     const today = new Date();
     const currentWeekStart = new Date(today);
@@ -268,17 +260,6 @@ export class CreateAllTimeListComponent implements OnInit {
 
     // Generate weeks
     this.dynamicDays = this.generateWeeks();
-  }
-
-  timesheetrole: number[] = []
-  getTimesheetRole() {
-    let Req = {
-      traineeID: this.traineeID
-    };
-
-    this.Service.gettimesheetrole(Req).subscribe((x: any) => {
-      this.timesheetrole = x.result;
-    });
   }
 
   getCurrentWeekDates(): { start: Date; end: Date } {
@@ -314,6 +295,18 @@ export class CreateAllTimeListComponent implements OnInit {
   //   this.rows = this.rows.slice(0, 3);
   //   this.updateSerialNumbers();
   // }
+
+
+  timesheetrole: any[]=[];
+  getTimesheetRole() {
+    let Req = {
+      traineeID: this.traineeID
+    };
+
+    this.Service.gettimesheetrole(Req).subscribe((x: any) => {
+      this.timesheetrole = x.result;
+    });
+  }
 
 selectedItem: string;
 dropdownOptions: any[] = [];
@@ -492,12 +485,14 @@ onChangesDropdown(selectedOption: any, row: any) {
         // this.loading = true;
         if(row.projectName !=''){
           const formData = new FormData();
+
           if (row.billable && !row.file1) {
             
             alert('Please upload client-approved timesheet.');
             // this.loading = false;
             return; 
           }
+
           formData.append('file1', row.file1);
           formData.append('traineeid', this.candidateid);
           formData.append('projectid', row.projectid);
