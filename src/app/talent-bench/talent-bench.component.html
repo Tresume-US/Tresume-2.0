@@ -125,7 +125,7 @@
                     <tr>
                       <th style="margin-top: 5px;">Group Name:</th>
                       <td>
-                        <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.groupid"
+                        <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.GroupID"
                           (change)="updateSelected($event.target.value, item.TraineeID, 1)">
                           <option *ngFor="let option of groupOptions" [value]="option.GID">{{ option.GroupName }}
                           </option>
@@ -135,7 +135,7 @@
                     <tr>
                       <th style="line-height: 1rem;">Marketer Name:</th>
                       <td>
-                        <select class="form-control" name="recruiterName" [(ngModel)]="item.RecruiterName"
+                        <select class="form-control" name="recruiterName" [(ngModel)]="item.MarketerName"
                           [ngModelOptions]="{standalone: true}"
                           (change)="updateSelected($event.target.value, item.TraineeID, 2)">
                           <option *ngFor="let name of recruiterNames" [value]="name.traineeid">

@@ -102,7 +102,7 @@ router.post("/insertcandidatejob", async function (req, res) {
 
     const insertQuery = `
       INSERT INTO jobapplication (JobApplicationID, JobID, TraineeID, Active, CreateTime, CreateBy, LastUpdateTime, LastUpdateBy, Status, Source)
-      VALUES (@JobApplicationID, @JobID, @TraineeID, '1', GETDATE(), @CreateBy, GETDATE(), @LastUpdateBy, 'PENDING', @Source)
+      VALUES (@JobApplicationID, @JobID, @TraineeID, '1', GETDATE(), @CreateBy, GETDATE(), @LastUpdateBy, 'SUBMITTED', @Source)
     `;
 
     var request = new sql.Request();

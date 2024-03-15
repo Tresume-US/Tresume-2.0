@@ -14,6 +14,13 @@ export class CreateNewJobsService {
   getCity(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'getCity', request);
   }
+
+  getJobPostData(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'getJobPostData', request);
+  }
+  PostJob(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'PostJob', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;

@@ -476,7 +476,7 @@ export class SearchResumesComponent implements OnInit {
         let req = {
             username:this.username,
             orgID:this.OrgID,
-            TraineeID: this.traineeId,
+            TraineeID: this.selectedJobDetail.TraineeID,
             Source:this.selectedJobDetail.Source,
             JobID:this.SelectedjobID
         }
