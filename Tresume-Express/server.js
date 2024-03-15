@@ -997,7 +997,8 @@ app.post("/getCandidatesbyStatus", function (req, res) {
                         T.LastName, 
                         (T.FirstName + ' ' + T.LastName) as CandidateName, 
                         T.TraineeID,
-                        O.Organizationname
+                        O.Organizationname,
+                        O.organizationid
                  FROM Trainee T
                  INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(T.userorganizationid AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
                  INNER JOIN Organization O ON T.userorganizationid = O.organizationid
@@ -1455,23 +1456,23 @@ app.post("/insertUploadFilepath", function (req, res) {
     var request = new sql.Request();
     let filepath = req.body.filepath ? req.body.filepath : "";
     request.query(
-      "insert into OnboardingDocRequest (ID,OnboardID,DocTypeName,DocTypeID,isRequested,Status,isViewed,isUpload,filepath,DocNotes,AdditionalChecklistID,AdditionalChecklistName) Values ((select isnull(max(ID),0) + 1 from OnboardingDocRequest)," +
-        req.body.onboardID +
-        ",'" +
-        req.body.docTypeName +
-        "'," +
-        req.body.docTypeID +
-        "," +
-        req.body.requested +
-        ",0,0,0,'" +
-        filepath +
-        "','" +
-        req.body.docNote +
-        "','" +
-        req.body.additionalChecklistID +
-        "','" +
-        req.body.additionalChecklistName +
-        "')",
+      "INSERT INTO OnboardingDocRequest (ID, OnboardID, DocTypeName, DocTypeID, isRequested, Status, isViewed, isUpload, filepath, DocNotes, AdditionalChecklistID, AdditionalChecklistName) VALUES ((SELECT ISNULL(MAX(ID),0) + 1 FROM OnboardingDocRequest), " +
+      req.body.onboardID +
+      ", '" +
+      req.body.docTypeName +
+      "', " +
+      req.body.docTypeID +
+      ", " +
+      req.body.requested +
+      ", 0, 0, 0, '" +
+      filepath +
+      "', '" +
+      req.body.docNote +
+      "', '" +
+      req.body.additionalChecklistID +
+      "', '" +
+      req.body.additionalChecklistName +
+      "')",
       function (err, recordset) {
         if (err) console.log(err);
         var result = {
@@ -1483,6 +1484,8 @@ app.post("/insertUploadFilepath", function (req, res) {
     );
   });
 });
+
+
 
 app.get("/download/:ID/:DocID", function (req, res) {
   sql.connect(config, function (err) {
