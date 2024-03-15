@@ -11,7 +11,7 @@
                 <div class="text-left">
                     <label> Document Type </label>
                     <select class="form-control" name="DocumentType">
-                        <option *ngFor="let type of DocumentType " [value]="type">{{ type }}</option>
+                        <option *ngFor="let type of DocumentType" [value]="type.CDTID">{{ type.DocTypeName }}</option>
                     </select>
                 </div>
             </div>
@@ -40,16 +40,16 @@
                 <div class="tab-pane fade show active" id="corporate" role="tabpanel" aria-labelledby="corporate-tab">
                     <ul class="nav nav-tabs" id="corporateTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="corporate-tab1" data-toggle="tab" href="#corporate1" role="tab" aria-controls="corporate1" aria-selected="true">Tax Document</a>
+                            <a class="nav-link active" id="corporate-tab1" data-toggle="tab" href="#corporate1" role="tab" aria-controls="corporate1" aria-selected="true" (click)="fetchTabslist(1)">Tax Document</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="corporate-tab2" data-toggle="tab" href="#corporate2" role="tab" aria-controls="corporate2" aria-selected="false">Rental/Lease Document</a>
+                            <a class="nav-link" id="corporate-tab2" data-toggle="tab" href="#corporate2" role="tab" aria-controls="corporate2" aria-selected="false" (click)="fetchTabslist(2)">Rental/Lease Document</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="corporate-tab3" data-toggle="tab" href="#corporate3" role="tab" aria-controls="corporate3" aria-selected="false">License(s)</a>
+                            <a class="nav-link" id="corporate-tab3" data-toggle="tab" href="#corporate3" role="tab" aria-controls="corporate3" aria-selected="false" (click)="fetchTabslist(4)">License(s)</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="corporate-tab4" data-toggle="tab" href="#corporate4" role="tab" aria-controls="corporate4" aria-selected="false">Other</a>
+                            <a class="nav-link" id="corporate-tab4" data-toggle="tab" href="#corporate4" role="tab" aria-controls="corporate4" aria-selected="false" (click)="fetchTabslist(12)">Other</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="corporateTabContent">
@@ -63,6 +63,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -76,6 +81,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -89,6 +99,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -102,6 +117,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -110,25 +130,25 @@
                 <div class="tab-pane fade" id="miscellaneous" role="tabpanel" aria-labelledby="miscellaneous-tab">
                     <ul class="nav nav-tabs" id="miscellaneousTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="miscellaneous-tab1" data-toggle="tab" href="#miscellaneous1" role="tab" aria-controls="miscellaneous1" aria-selected="true">Guest House</a>
+                            <a class="nav-link active" id="miscellaneous-tab1" data-toggle="tab" href="#miscellaneous1" role="tab" aria-controls="miscellaneous1" aria-selected="true" (click)="fetchTabslist(5)">Guest House</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab2" data-toggle="tab" href="#miscellaneous2" role="tab" aria-controls="miscellaneous2" aria-selected="false">Recruitment</a>
+                            <a class="nav-link" id="miscellaneous-tab2" data-toggle="tab" href="#miscellaneous2" role="tab" aria-controls="miscellaneous2" aria-selected="false" (click)="fetchTabslist(6)">Recruitment</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab3" data-toggle="tab" href="#miscellaneous3" role="tab" aria-controls="miscellaneous3" aria-selected="false">Sales</a>
+                            <a class="nav-link" id="miscellaneous-tab3" data-toggle="tab" href="#miscellaneous3" role="tab" aria-controls="miscellaneous3" aria-selected="false" (click)="fetchTabslist(7)">Sales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab4" data-toggle="tab" href="#miscellaneous4" role="tab" aria-controls="miscellaneous4" aria-selected="false">Legal</a>
+                            <a class="nav-link" id="miscellaneous-tab4" data-toggle="tab" href="#miscellaneous4" role="tab" aria-controls="miscellaneous4" aria-selected="false" (click)="fetchTabslist(8)">Legal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab5" data-toggle="tab" href="#miscellaneous5" role="tab" aria-controls="miscellaneous5" aria-selected="false">MSA</a>
+                            <a class="nav-link" id="miscellaneous-tab5" data-toggle="tab" href="#miscellaneous5" role="tab" aria-controls="miscellaneous5" aria-selected="false" (click)="fetchTabslist(9)">MSA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab6" data-toggle="tab" href="#miscellaneous6" role="tab" aria-controls="miscellaneous6" aria-selected="false">Finance</a>
+                            <a class="nav-link" id="miscellaneous-tab6" data-toggle="tab" href="#miscellaneous6" role="tab" aria-controls="miscellaneous6" aria-selected="false" (click)="fetchTabslist(10)">Finance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab7" data-toggle="tab" href="#miscellaneous7" role="tab" aria-controls="miscellaneous7" aria-selected="false">Templates</a>
+                            <a class="nav-link" id="miscellaneous-tab7" data-toggle="tab" href="#miscellaneous7" role="tab" aria-controls="miscellaneous7" aria-selected="false" (click)="fetchTabslist(11)">Templates</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="miscellaneousTabContent">
@@ -142,6 +162,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -155,6 +180,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -168,6 +198,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -181,6 +216,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -194,6 +234,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -207,6 +252,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -220,14 +270,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{data.DocumentName}}</td>
+                                        <td>{{data.CreateTime}}</td>
+                                        <td><i class="fa fa-trash" (click)="    (data.CorporateDocumentID)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>        
     </div>
 </div>
 
