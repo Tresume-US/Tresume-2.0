@@ -41,8 +41,8 @@
   border-bottom: 2px solid #000;
 }
 .nav-link {
-font-size: 20px; 
-color: #333; 
+font-size: 20px;
+color: #333;
 color: black;
 }
 
@@ -73,7 +73,7 @@ border-radius: 0.25rem;
 }
 
 .nav-link:hover {
-background-color: rgba(243, 242, 242, 0.666); 
+background-color: rgba(243, 242, 242, 0.666);
 }
 
 .custom-date-model {
@@ -112,7 +112,7 @@ width : 136px; height: 34px; margin-left: 25px;
 .btn{
 background-color: #380838;
 color: white;
-font-size: 12px; 
+font-size: 12px;
 padding: 5px 10px;
 }
 
@@ -124,7 +124,7 @@ padding: 5px 10px;
 .action-icons {
 display: flex;
 align-items: center;
-margin-left: -8rem;
+border: none;
 }
 
 .action-icons i {
@@ -149,7 +149,7 @@ width: 15rem;
 
 .table {
 border-collapse: separate;
-border-spacing: 0 10px; 
+border-spacing: 0 10px;
 }
 
 
@@ -191,7 +191,7 @@ margin-left: 10px;
 
 input[type="search"]::placeholder {
 color: #bbb;
-} 
+}
 
 input[type="search"]:focus {
 box-shadow: 0 0 3px 0 rgb(88, 21, 88);
@@ -430,7 +430,7 @@ left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
 display: flex;
-flex-direction: column; 
+flex-direction: column;
 }
 
 .close-button {
@@ -467,14 +467,14 @@ border: none;
 border-radius: 4px;
 cursor: pointer;
 margin-right: 10px;
-font-size: 12px; 
+font-size: 12px;
 
 }
 
 .copy-link-button:hover,
 .save-button:hover {
 background-color: #380838;
-font-size: 12px; 
+font-size: 12px;
 }
 /* delete-confirmation.component.css */
 .custom-modal-dialog {
@@ -503,7 +503,7 @@ position: fixed;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
-z-index: 1001; 
+z-index: 1001;
 }
 /* // .icons-container {
 //   position: absolute;
@@ -578,19 +578,31 @@ color: #4f4e4e; /* Replace with your desired light color */
   background-color: #0056b3;
 }
 
-.paid {
-  color: green; 
+table {
+   width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.unpaid {
-  color: red; 
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
 }
 
-.overdue {
-  color: orange; 
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
 }
 
-.selected {
-  background-color: #f0f0f0; 
+tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
+tr:hover {
+  background-color: #e0e0e0;
+}
+
+td{
+  color: #94618e;
+}

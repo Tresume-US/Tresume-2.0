@@ -81,12 +81,12 @@ export class TalentBenchComponent implements OnInit {
     this.startDate = this.datePipe.transform(firstDayOfMonth, 'yyyy-MM-dd')!;
 
     this.endDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd')!;
+    this.fetchgrouplist();
     this.fetchtalentbenchlist();
     this.getcandidaterstatus();
     this.getLegalStatusOptions();
     this.getOrgUserList();
     this.getGroupList();
-    this.fetchgrouplist();
     this.startDate = '';
     this.endDate = '';
 
@@ -139,14 +139,13 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
 }
   this.service.TBupdateSelected(req).subscribe((x: any) => {
     if(x.flag == 1){
-      this.messageService.add({ severity: 'success', summary: x.message });
+      this.messageService.add({ severity: 'success', summary: 'Data Updated' });
       this.loading = false;
     }else{
-      this.messageService.add({ severity: 'error', summary: x.message });
+      this.messageService.add({ severity: 'error', summary: 'Failed to Updated' });
       this.loading = false;
     }
   });
-
  }
 
 

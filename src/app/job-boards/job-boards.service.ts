@@ -214,6 +214,12 @@ export class JobBoardsService {
     optSaveResume(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'optSaveResume', request);
     }
+    getjobtitle(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getjobtitle', request);
+    }
+    insertcandidatejob(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'insertcandidatejob', request);
+    }
     
 }
 

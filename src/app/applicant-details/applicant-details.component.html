@@ -1,64 +1,57 @@
 <div class="content-header">
-<div class="main main-container">
-<div class="container">
-    <div class="row">
-      <div class="col mt-2">
-        <h2>Job Applicants</h2>
-      </div>
-    </div>
-  
-    <div class="row mt-2">
-      <div class="col">
-        <button class="btn btnColor">Mark all as Read</button>
-      </div>
-
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search" (input)="performSearch($event.target.value)">
-      </div>
-    </div>
-  
-
-    <div class="row mt-2">
-        <div class="col">
-          <p>Displaying {{ displayedApplications }} of {{ totalApplications }} Applications</p>
+  <div class="main main-container">
+    <div class="container">
+      <div class="row">
+        <div class="col mt-2">
+          <h2>Job Applicants</h2>
         </div>
       </div>
-  
-    <div class="row justify-content-end">
-        
+
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Search" (input)="performSearch($event.target.value)">
+        </div>
       </div>
-  
-    <div class="row mt-3">
-      <div class="col">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Name</th>
-              <th>Job Title</th>
-              <th>Legal Status</th>
-              <th>Pay Rate</th>
-              <th>Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let applicant of applicants">
-              <td>{{ applicant.date }}</td>
-              <td>{{ applicant.name }}</td>
-              <td>{{ applicant.jobTitle }}</td>
-              <td>{{ applicant.legalStatus }}</td>
-              <td>{{ applicant.payRate}}</td>
-              <td>{{ applicant.source}} </td>
-            </tr>
-            <tr *ngIf="applicants.length === 0">
-              <td colspan="6">No data available in the table</td>
-            </tr>
-          </tbody>
-        </table>
+
+      <div class="row justify-content-end">
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Job Title</th>
+                <th>Source</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let applicant of applicants">
+                <td>{{ applicant.Date | date : "MM/dd/y" : "UTC"}}</td>
+                <td>{{ applicant.Name }}</td>
+                <td>{{ applicant.JobTitle }}</td>
+                <td>{{ applicant.Source}} </td>
+                <td>{{ applicant.Status }}</td>
+                <td>
+                  <i class="fas fa-check mr-4" (click)="acceptApplication(applicant.TraineeID)" style="color: #94618E;" title="Accept"></i>
+                  <i class="fas fa-times mr-4" (click)="rejectApplication(applicant.TraineeID)" style="color: #94618E;" title="Reject"></i>
+                  <a href="#" (click)="downloadDocument(applicant.documentUrl)" title="Download Resume">
+                    <i class="fas fa-download" style="color: #94618E;"></i>
+                  </a>
+                </td>                                             
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+  </div>
 </div>
-</div>
-  
-</div>
+
+<p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

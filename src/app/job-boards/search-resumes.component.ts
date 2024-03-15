@@ -17,7 +17,7 @@ import { MessageService } from 'primeng/api';
     selector: 'app-search-resumes',
     templateUrl: './search-resumes.component.html',
     styleUrls: ['./search-resumes.component.scss'],
-    providers: [JobBoardsService, CookieService]
+    providers: [JobBoardsService, CookieService,MessageService]
 })
 
 
@@ -26,6 +26,7 @@ export class SearchResumesComponent implements OnInit {
     form = new FormGroup({});
     model: any = {};
     options: FormlyFormOptions = {};
+    SelectedjobID: any = {};
     fields: FormlyFieldConfig[] = [
         {
             key: 'keyword',
@@ -98,10 +99,10 @@ export class SearchResumesComponent implements OnInit {
         { value: 'CB', name: 'Career Builder' },
         { value: 'Monster', name: 'Monster' },
 
-      ];
+    ];
 
     selectedJobboard: any[] = [];
-    states:any[];
+    states: any[];
     rowData: any;
     columnDefs: any;
     public gridOptions: GridOptions = {};
@@ -126,8 +127,8 @@ export class SearchResumesComponent implements OnInit {
     jobTitle: string = '';
 
     loading: boolean = false;
-    recruiterList:any;
-    selectedRecruiter:any;
+    recruiterList: any;
+    selectedRecruiter: any;
 
     @ViewChild('lgModal', { static: false }) lgModal?: ModalDirective;
     @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
@@ -135,20 +136,26 @@ export class SearchResumesComponent implements OnInit {
     OrgID: string;
     userName1: string;
 
-    searchType:number = 1;
-    startdate:Date;
-    enddate:Date;
-    constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService, private modalService: BsModalService) {
+    searchType: number = 1;
+    startdate: Date;
+    enddate: Date;
+    userName: any;
+
+    constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService, private modalService: BsModalService, private messageService: MessageService) {
         this.traineeId = this.cookieService.get('TraineeID');
-        // this.traineeId = '36960';
+        this.OrgID = this.cookieService.get('OrgID');
+        this.userName = this.cookieService.get('userName1');
     }
 
     ngOnInit(): void {
         this.loading = true;
         this.cookieValue = this.cookieService.get('userName1')
         this.OrgID = this.cookieService.get('OrgID');
-        this.userName1 = this.cookieService.get('userName1');
+        this.username = this.cookieService.get('userName1');
+        this.traineeId = this.cookieService.get('TraineeID');
+
         let req1 = {}
+        this.jobtitle();
         this.service.getcandidatelocation(req1).subscribe(x => {
             let response = x.result;
             this.states = response;
@@ -163,23 +170,23 @@ export class SearchResumesComponent implements OnInit {
             }
 
             this.service.getResumes(req).subscribe(x => {
-                
+
                 let response = x.result;
                 this.resultsFound = true;
                 this.responseData = response;
 
                 this.rowData = this.responseData.slice(0, 10);
                 this.rowData.map((items: any) => {
-                   items.editMode = false;
+                    items.editMode = false;
                 });
                 this.totalResults = this.responseData.length;
                 this.sizeToFit();
                 console.log(this.rowData)
                 this.loading = false;
             });
-            
 
-            
+
+
         }
         else {
             let req = {
@@ -256,19 +263,19 @@ export class SearchResumesComponent implements OnInit {
         }
     }
 
-    public async FetchRecruiterbyOrg(){
-        
+    public async FetchRecruiterbyOrg() {
+
         let req = {
             OrgID: this.OrgID
         }
-       await this.service.FetchRecruiterList(req).subscribe((x: any) => {
+        await this.service.FetchRecruiterList(req).subscribe((x: any) => {
             console.log(x);
             this.recruiterList = x.result;
             this.recruiterList.unshift({
                 "value": 0,
                 "name": "All"
             });
-            
+
         });
         console.log(this.recruiterList);
     }
@@ -329,13 +336,13 @@ export class SearchResumesComponent implements OnInit {
             "traineeId": this.traineeId,
             'keyword': this.model.keyword,
             'location': this.selectedState,
-            'daysWithin':this.daysWithin,
-            'yearsOfExpmin':this.yearsOfExpmin,
-            'yearsOfExp':this.yearsOfExp,
-            'jobTitle':this.jobTitle,
-            'Jobboard':this.selectedJobboard,
-            'recruiter':this.selectedRecruiter.value,
-            'OrgID':this.OrgID
+            'daysWithin': this.daysWithin,
+            'yearsOfExpmin': this.yearsOfExpmin,
+            'yearsOfExp': this.yearsOfExp,
+            'jobTitle': this.jobTitle,
+            'Jobboard': this.selectedJobboard,
+            'recruiter': this.selectedRecruiter.value,
+            'OrgID': this.OrgID
         }
         console.log(req);
         this.service.getResumes2(req).subscribe(x => {
@@ -358,10 +365,10 @@ export class SearchResumesComponent implements OnInit {
             "traineeId": this.traineeId,
             'keyword': this.model.keyword,
             'location': this.selectedState,
-            'startdate':this.startdate,
-            'enddate':this.enddate,
-            'recruiter':this.selectedRecruiter.value,
-            'OrgID':this.OrgID
+            'startdate': this.startdate,
+            'enddate': this.enddate,
+            'recruiter': this.selectedRecruiter.value,
+            'OrgID': this.OrgID
         }
         console.log(req);
         this.service.getResumes3(req).subscribe(x => {
@@ -375,7 +382,7 @@ export class SearchResumesComponent implements OnInit {
 
         });
     }
-    
+
 
     pageChanged(event: PageChangedEvent): void {
         const startItem = (event.page - 1) * event.itemsPerPage;
@@ -390,74 +397,115 @@ export class SearchResumesComponent implements OnInit {
         window.history.back();
     }
 
-    public migrate(id:string){
+    public migrate(id: string) {
         let req = {
             traineeId: id
-          };
-          this.service.atsmigrateprofile(req).subscribe((x) => {
+        };
+        this.service.atsmigrateprofile(req).subscribe((x) => {
             if (this.traineeId) {
                 let req = {
-                  traineeId: this.traineeId,
-                  keyword: '',
-                };
-          
-                this.service.getResumes(req).subscribe((x) => {
-                  let response = x.result;
-                  this.resultsFound = true;
-                  this.responseData = response;
-                  this.rowData = this.responseData.slice(0, 10);
-                  this.totalResults = this.responseData.length;
-                  this.sizeToFit();
-                });
-              } else {
-                let req = {
-                  userName: this.cookieValue,
-                };
-                this.service.getLoggedUser(req).subscribe((x: any) => {
-                  if (x) {
-                    this.traineeId = x[0].TraineeID;
-                  }
-                  let req = {
                     traineeId: this.traineeId,
                     keyword: '',
-                  };
-                  this.service.getResumes(req).subscribe((x) => {
-                    let response = x.result;
-                    this.rowData = response;
-                    this.sizeToFit();
-                  });
-                });
-              }          
-          });
-          
-      }
+                };
 
-      enableEditMode(index: number): void {
+                this.service.getResumes(req).subscribe((x) => {
+                    let response = x.result;
+                    this.resultsFound = true;
+                    this.responseData = response;
+                    this.rowData = this.responseData.slice(0, 10);
+                    this.totalResults = this.responseData.length;
+                    this.sizeToFit();
+                });
+            } else {
+                let req = {
+                    userName: this.cookieValue,
+                };
+                this.service.getLoggedUser(req).subscribe((x: any) => {
+                    if (x) {
+                        this.traineeId = x[0].TraineeID;
+                    }
+                    let req = {
+                        traineeId: this.traineeId,
+                        keyword: '',
+                    };
+                    this.service.getResumes(req).subscribe((x) => {
+                        let response = x.result;
+                        this.rowData = response;
+                        this.sizeToFit();
+                    });
+                });
+            }
+        });
+
+    }
+
+    enableEditMode(index: number): void {
         console.log(index);
         this.rowData[index].editMode = true;
         let req = {
             Notes: this.rowData[index].Notes,
-            traineeID:this.rowData[index].TraineeID
+            traineeID: this.rowData[index].TraineeID
         }
         this.service.updateCandidateNotes(req).subscribe((x: any) => {
-          console.log(x); 
+            console.log(x);
         });
-      }
-    
-      saveChanges(index: number): void {
+    }
+
+    saveChanges(index: number): void {
         this.rowData[index].editMode = false;
         let req = {
             Notes: this.rowData[index].Notes,
-            traineeID:this.rowData[index].TraineeID
+            traineeID: this.rowData[index].TraineeID
         }
         this.service.updateCandidateNotes(req).subscribe((x: any) => {
-          console.log(x); 
+            console.log(x);
         });
-      }
-    
-      cancelEdit(index: number): void {
+    }
+
+    cancelEdit(index: number): void {
         // Cancel edit mode
         this.rowData[index].editMode = false;
-      }
+    }
 
+    jobtitles:any;
+    jobDetail: any = {};
+    selectedJobDetail:any;
+    username: any;
+
+    Assigntojob() {
+        let req = {
+            username:this.username,
+            orgID:this.OrgID,
+            TraineeID: this.selectedJobDetail.TraineeID,
+            Source:this.selectedJobDetail.Source,
+            JobID:this.SelectedjobID
+        }
+        console.log(req);
+        console.log(this.selectedJobDetail)
+
+        this.service.insertcandidatejob(req).subscribe(
+            (x: any) => {
+              this.messageService.add({ severity: 'success', summary: 'Successfully', detail: 'Candidate Added' });
+            },
+            (error: any) => {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to Add Candidate' });
+            }
+          )
+
+    }
+
+    jobtitle() {
+        
+        let Req = {
+            username:this.username,
+            orgID:this.OrgID
+        };
+        this.service.getjobtitle(Req).subscribe((x: any) => {
+            this.jobtitles = x;
+        });
+    }
+    openModal(jobDetail: any) {
+        this.SelectedjobID = ''; 
+        this.selectedJobDetail = jobDetail;
+      }
 }

@@ -376,25 +376,31 @@
                 </div> -->
               <!-- </div> -->
 
-              <div class="action-icons icons-container float-right mt-3">
+              <div class="action-icons icons-container float-right mt-3" style="border: none;">
                 <i class="material-icons" onclick="exportAsPDF()">print</i>
                 <i class="fas fa-upload" onclick="downloadExcel()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
               </div>
-              <div style="font-size: 12px;">
-                <table class="table no-border mt-4">
-                  <thead class="underline">
-                    <tr>
-                      <td><input type="checkbox" (change)="selectAll($event.target.checked)"></td>
-                      <th>Invoice ID</th>
-                      <th>DATE</th>
-                      <th>TYPE</th>
-                      <th>NO.</th>
-                      <th>CLIENT/PROJECT</th>
-                      <th>MEMO</th>
-                      <th>AMOUNT</th>
-                      <th>STATUS</th>
-                      <th>ACTION</th>
+              <div>
+                <table class="table ">
+                  <thead>
+                      <tr class="text-center">
+                          <td><input type="checkbox"></td>
+                          <th>Invoiceid</th>
+                          <th>Date</th>
+                          <th>Type</th>
+                          <th>No.</th>
+                          <th>Client/Project</th>
+                          <th>Memo</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+
+                      <tr >
+                        <td colspan="10" class="text-center">
+                            No results found.
+                        </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -422,6 +428,31 @@
                         No results found.
                       </td>
                     </tr>
+                      <!-- <td>
+                          <button class="btn btn-" (click)="editAction()">Edit</button>
+                          <div class="btn-group received" style="margin-left: 5px;">
+                              <a class="btn btn float-left" style=" height: 30px;" href="payment">Receive Payment</a>
+                              <button type="button" class="btn btn- dropdown-toggle dropdown-toggle-split"
+                                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                      style="margin-left: 1px;">
+                                  <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <i class="fas fa-download" style="margin-top: 4px;margin-left: 10px;font-size: 22px; "></i>
+                              <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="create-invoice" (click)="duplicateAction()">View/Edit</a>
+                                  <a class="dropdown-item" href="create-invoice" (click)="sendAction()">Duplicate</a>
+                                  <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send</a>
+                                  <a class="dropdown-item" href="send-invoice" (click)="sendAction()">Send reminder</a>
+                                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createTaskModal">Create task</a>
+                                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#shareLinkModal">Share invoice link</a>
+                                  <a class="dropdown-item" href="#" (click)="duplicateAction()">Print</a>
+                                  <a class="dropdown-item" href="#" data-toggle="modal"
+                                      data-target="#deleteConfirmationModal">Delete</a>
+                              </div>
+                          </div>
+                      </td> -->
+                  </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -442,21 +473,26 @@
                 <i class="fas fa-upload" onclick="handleFileUpload()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
               </div>
-              <table class="table no-border" style="margin-top: 50px;">
-                <thead class="underline">
+              <table class="table">
+                <thead>
                   <tr>
                     <!-- Header cells -->
-                    <th><input type="checkbox" (change)="selectAll1($event.target.checked)"></th>
-                    <th>Invoice ID</th>
-                    <th>DATE</th>
-                    <th>TYPE</th>
-                    <th>NUMBER</th>
-                    <th>CLIENT/PROJECT</th>
-                    <th>MEMO</th>
-                    <th>AMOUNT</th>
-                    <th>STATUS</th>
-                    <th>ACTION</th>
+                    <td><input type="checkbox"></td>
+                    <th>Invoiceid</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>No</th>
+                    <th>Client/Project</th>
+                    <th>Memo</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
 
+                  </tr>
+                  <tr >
+                    <td colspan="10" class="text-center">
+                      No results found.
+                    </td>
                   </tr>
                 </thead>
                 <tbody>
@@ -503,12 +539,6 @@
                             </div>
                         </td> -->
                     </tr>
-                  <tr *ngIf="noResultsFound">
-                    <td colspan="10" class="text-center" style="font-size: 16px;">
-                      No results found.
-                    </td>
-                  </tr>
-
                 </tbody>
 
               </table>
@@ -526,20 +556,26 @@
                 <i class="fas fa-upload" onclick="handleFileUpload()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
               </td>
-              <div style="font-size: 12px;">
-                <table class="table no-border" style="margin-top: 50px;">
-                  <thead class="underline">
+              <div>
+                <table class="table">
+                  <thead>
                     <tr>
-                      <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td>
-                      <th>Invoice ID</th>
-                      <th>DATE</th>
-                      <th>TYPE</th>
-                      <th>NO.</th>
-                      <th>CLIENT/PROJECT</th>
-                      <th>MEMO</th>
-                      <th>AMOUNT </th>
-                      <th>STATUS</th>
-                      <th>ACTION</th>
+                      <td><input type="checkbox"></td>
+                      <th>Invoiceid</th>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>No</th>
+                      <th>Client/Project</th>
+                      <th>Memo</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+
+                    </tr>
+                    <tr >
+                      <td colspan="10" class="text-center">
+                        No results found.
+                      </td>
                     </tr>
                   </thead>
 
@@ -587,11 +623,6 @@
                               </div>
                           </td> -->
                       </tr>
-                    <tr *ngIf="noResultsFound">
-                      <td colspan="10" class="text-center" style="font-size: 16px;">
-                        No results found.
-                      </td>
-                    </tr>
                   </tbody>
 
                 </table>

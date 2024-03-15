@@ -153,7 +153,7 @@ const routes: Routes = [
   { path: 'jobpostings',component:AllJobPostingsComponent, canActivate: [AuthGuard]  },
   { path: 'jobapplication',component:JobApplicationComponent, canActivate: [AuthGuard]  },
   { path: 'organizationinfo' , component:OrganinfoComponent, canActivate: [AuthGuard]  },
-  { path: 'applicantdetails', component:ApplicantDetailsComponent, canActivate: [AuthGuard]  },
+  { path: 'applicantdetails/:jobID', component:ApplicantDetailsComponent, canActivate: [AuthGuard]  },
   { path: 'jobboardaccount', component:JobBoardAccountComponent, canActivate: [AuthGuard]  },
   { path: 'talentBench', component:TalentBenchComponent, canActivate: [AuthGuard]  },
   { path: 'submitted-candidates/:jobId', component:SubmittedCandiatesComponent, canActivate: [AuthGuard]  },
