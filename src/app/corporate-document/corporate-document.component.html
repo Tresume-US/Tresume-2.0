@@ -1,0 +1,237 @@
+<div class="header p-3">
+    <div class="container-fluid">
+        <div class="row main">
+            <div class="col">
+                <h2 class="ml-3 mt-4 text-dark">Corporate Documents</h2>
+            </div>
+        </div>       
+  
+        <div class="row">
+            <div class="col-md-4 mt-2">
+                <div class="text-left">
+                    <label> Document Type </label>
+                    <select class="form-control" name="DocumentType">
+                        <option *ngFor="let type of DocumentType " [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 mt-5">
+                <div class="text-right">
+                    <input type="file" id="fileUpload">
+                </div>
+            </div>
+            <div class="col-md-4 mt-3">
+                <div class="text-right">
+                    <button class="btn text-white btn-bgcolor mt-3 mr-4">Upload</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mt-4">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="corporate-tab" data-toggle="tab" href="#corporate" role="tab" aria-controls="corporate" aria-selected="true">Corporate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="miscellaneous-tab" data-toggle="tab" href="#miscellaneous" role="tab" aria-controls="miscellaneous" aria-selected="false">Miscellaneous</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="corporate" role="tabpanel" aria-labelledby="corporate-tab">
+                    <ul class="nav nav-tabs" id="corporateTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="corporate-tab1" data-toggle="tab" href="#corporate1" role="tab" aria-controls="corporate1" aria-selected="true">Tax Document</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="corporate-tab2" data-toggle="tab" href="#corporate2" role="tab" aria-controls="corporate2" aria-selected="false">Rental/Lease Document</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="corporate-tab3" data-toggle="tab" href="#corporate3" role="tab" aria-controls="corporate3" aria-selected="false">License(s)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="corporate-tab4" data-toggle="tab" href="#corporate4" role="tab" aria-controls="corporate4" aria-selected="false">Other</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="corporateTabContent">
+                        <div class="tab-pane fade show active" id="corporate1" role="tabpanel" aria-labelledby="corporate-tab1">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="corporate2" role="tabpanel" aria-labelledby="corporate-tab2">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="corporate3" role="tabpanel" aria-labelledby="corporate-tab3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="corporate4" role="tabpanel" aria-labelledby="corporate-tab4">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="miscellaneous" role="tabpanel" aria-labelledby="miscellaneous-tab">
+                    <ul class="nav nav-tabs" id="miscellaneousTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="miscellaneous-tab1" data-toggle="tab" href="#miscellaneous1" role="tab" aria-controls="miscellaneous1" aria-selected="true">Guest House</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab2" data-toggle="tab" href="#miscellaneous2" role="tab" aria-controls="miscellaneous2" aria-selected="false">Recruitment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab3" data-toggle="tab" href="#miscellaneous3" role="tab" aria-controls="miscellaneous3" aria-selected="false">Sales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab4" data-toggle="tab" href="#miscellaneous4" role="tab" aria-controls="miscellaneous4" aria-selected="false">Legal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab5" data-toggle="tab" href="#miscellaneous5" role="tab" aria-controls="miscellaneous5" aria-selected="false">MSA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab6" data-toggle="tab" href="#miscellaneous6" role="tab" aria-controls="miscellaneous6" aria-selected="false">Finance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="miscellaneous-tab7" data-toggle="tab" href="#miscellaneous7" role="tab" aria-controls="miscellaneous7" aria-selected="false">Templates</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="miscellaneousTabContent">
+                        <div class="tab-pane fade show active" id="miscellaneous1" role="tabpanel" aria-labelledby="miscellaneous-tab1">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous2" role="tabpanel" aria-labelledby="miscellaneous-tab2">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous3" role="tabpanel" aria-labelledby="miscellaneous-tab3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous4" role="tabpanel" aria-labelledby="miscellaneous-tab4">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous5" role="tabpanel" aria-labelledby="miscellaneous-tab5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous6" role="tabpanel" aria-labelledby="miscellaneous-tab6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="miscellaneous7" role="tabpanel" aria-labelledby="miscellaneous-tab7">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- 
+<p-toast position="bottom-right"></p-toast>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>  -->
