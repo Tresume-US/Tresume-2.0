@@ -502,11 +502,9 @@ export class WizardWorkflowComponent implements OnInit {
         }
         this.service.approveFile(requestItem).subscribe((x: any) => {
         });
-        setTimeout(() => {
             this.getOnboardRequests();
             this.approveDocItem = {};
             this.modalService.hide();
-        }, 500);
 
     }
 

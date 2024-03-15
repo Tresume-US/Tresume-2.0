@@ -49,7 +49,7 @@ export class ImportDetailsComponent implements OnInit {
 
     startOnboard() {
         let requestItem: any = {
-            OrgID: this.OrgID || 9,
+            OrgID: this.selectedEmployee.organizationid,
             traineeID: this.selectedEmployee.TraineeID,
             FirstName: this.selectedEmployee.FirstName,
             LastName: this.selectedEmployee.LastName
