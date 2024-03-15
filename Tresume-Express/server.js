@@ -50,6 +50,7 @@ const leadenquiry = require("./enquiry");
 const jobapplication = require("./jobapplication");
 const submittedcandidates = require("./submittedcandidates");
 const Invoice = require("./Invoice");
+const CorporateDocument = require("./corporate-document");
 
 app.use("/", onboardRoutes);
 app.use("/", candidateRoutes);
@@ -71,6 +72,7 @@ app.use("/", leadenquiry);
 app.use("/", jobapplication);
 app.use("/", Invoice);
 app.use("/", submittedcandidates);
+app.use("/", CorporateDocument);
 
 app.use(
   session({

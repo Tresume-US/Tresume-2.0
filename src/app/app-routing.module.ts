@@ -107,6 +107,7 @@ import { TimeActivityComponent } from './all-invoice/time-activity/time-activity
 import { CreateStatementsComponent } from './all-invoice/create-statements/create-statements.component';
 import { MultipleInvoicesComponent } from './all-invoice/multiple-invoices/multiple-invoices.component';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
+import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
 
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
@@ -228,7 +229,7 @@ const routes: Routes = [
   { path: 'time-activity', component: TimeActivityComponent },
   { path: 'create-statements', component: CreateStatementsComponent },
   { path: 'multiple-invoices', component: MultipleInvoicesComponent },
-
+  { path: 'corporatedocument', component: CorporateDocumentComponent },
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  

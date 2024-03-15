@@ -1194,14 +1194,16 @@ router.post('/deletetimesheetdata', async (req, res) => {
 
 router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
   try {
-    // Extracting data from FormData and request body
+    
     const { traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
-    const filename = req.file.filename;
+    let filename = '';
 
-    // Create a new SQL connection pool
+    if (req.file) {
+      filename = req.file.filename;
+    }
+
     const pool = await sql.connect(config);
 
-    // Execute the INSERT query
     await pool.request()
       .input('traineeid', sql.Int, traineeid)
       .input('totalhrs', sql.Int, totalhrs)
@@ -1213,8 +1215,8 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       .input('clientapproved', sql.VarChar(sql.MAX), filename)
       .input('approvedby', sql.Int, '')
       .input('admincomment', sql.Text, '')
-      .input('created_at', sql.DateTime, new Date()) // Current datetime
-      .input('status', sql.Int, 1) // Assuming default status
+      .input('created_at', sql.DateTime, new Date()) 
+      .input('status', sql.Int, 1) 
       .input('fromdate', sql.DateTime, fromdate)
       .input('todate', sql.DateTime, todate)
       .input('isBillable', sql.Bit, isBillable)
@@ -1242,6 +1244,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // router.post('/createTimesheet', async (req, res) => {
 //   sql.connect(config, function (err) {
@@ -1312,7 +1315,7 @@ router.post('/gettimesheetrole', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
     
-    const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole, CONCAT(FirstName,' ',LastName) as Name from trainee where traineeID='"+req.body.traineeID+"'";
+       const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole, CONCAT(FirstName,' ', LastName) as Name from trainee where traineeID='"+req.body.traineeID+"'";
 
     console.log(query);
 
