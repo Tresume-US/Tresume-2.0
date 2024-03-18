@@ -1206,7 +1206,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
 
     await pool.request()
       .input('traineeid', sql.Int, traineeid)
-      .input('totalhrs', sql.Int, totalhrs)
+      .input('totalhrs', sql.Float, parseFloat(totalhrs))
       .input('comments', sql.Text, '')
       .input('projectid', sql.Int, projectid)
       .input('details', sql.Text, details)
@@ -1237,7 +1237,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       .input('create_by', sql.VarChar(50), create_by)
       .query(`INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, projectid, details, clientapproved,created_at,status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @projectid, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`);
 
-    // Respond with success message
+   
     res.status(200).json({ message: 'Timesheet Created successfully', filename });
   } catch (error) {
     console.error('Error creating timesheet:', error);
@@ -1341,5 +1341,40 @@ router.post('/gettimesheetrole', async (req, res) => {
       error: "An error occurred while fetching project data!",
     };
     res.status(500).send(result);
+  }
+});
+
+
+
+
+
+router.post("/deleteTimesheet", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '"+req.body.Id+"'";
+    // request.input('Id', sql.Int, req.body.Id);
+    
+    const result = await request.query(query);
+    
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were deleted.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error deleting Timesheet:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while deleting Timesheet!",
+    };
+    res.status(500).send(response);
   }
 });
