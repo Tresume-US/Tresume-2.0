@@ -116,3 +116,30 @@ tbody{
     color: black;/* Dark color for the text */
     /* Additional styles like font-weight, text-transform, etc., can be added here */
 }
+
+.modal {
+  background-color: transparent;
+}
+
+.modal-dialog {
+  margin: 10% auto;
+}
+
+.modal-content {
+  border: 1px solid black;
+  box-shadow: none;
+}
+
+.modal-body {
+  text-align: center;
+  padding: 20px 0 5px 0;
+}
+
+
+.modal-footer {
+  border-top: none; 
+}
+
+.con-text{
+  font-size: 18px;
+}

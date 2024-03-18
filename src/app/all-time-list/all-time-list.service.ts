@@ -40,6 +40,9 @@ export class TimesheetListService {
         return this.http.post<ResponseDetails>(this.endpoint + 'getLocation', request);
     }
     
+    deleteTimesheet(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'deleteTimesheet', request);
+    }
 
     
     

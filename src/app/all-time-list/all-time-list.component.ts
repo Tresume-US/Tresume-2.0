@@ -56,7 +56,7 @@ export class AllTimeListComponent implements OnChanges {
   ngOnChanges(){
   }
 
-    fetchPendingResult(){
+  fetchPendingResult(){
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
@@ -64,12 +64,12 @@ export class AllTimeListComponent implements OnChanges {
       username:this.username
     };
     this.service.getPendingTimesheetResult(Req).subscribe((x: any) => {
-      this.PendingData = x.result;
-       this.noResultsFound = this.PendingData.length === 0;
-    this.loading = false;
-
+        this.PendingData = x.result;
+        this.loading = false;
+        this.noResultsFound = this.PendingData.length === 0;
     });
-  }
+}
+
 
   fetchRejectedData(){
     let Req = {
@@ -142,4 +142,27 @@ export class AllTimeListComponent implements OnChanges {
       this.Locations = x;
     });
   }
+
+  deleteItem(id: any): void {
+    let Req = {
+      Id: id,
+    };
+  
+    this.service.deleteTimesheet(Req).subscribe((x: any) => {
+      var flag1 = x.flag;
+      if (flag1 === 1) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Timesheet Deleted Successfully',
+        });
+        this.fetchPendingResult();
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please try again later',
+        });
+      }
+    });    
+  }
+  
 }
