@@ -323,7 +323,7 @@ export class PlacementViewComponent implements OnInit {
 
 export interface PlacementItem {
     Notes?: string;
-    billRate?: string;
+    billRate?: any;
     marketerName?: string;
     clientState?: string;
     startDate?: Date;

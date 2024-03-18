@@ -2966,7 +2966,10 @@ app.post("/addPlacement", function (req, res) {
     request.input("PlacementId", sql.Int, req.body.PlacementID);
     request.input("TraineeID", sql.Int, req.body.TraineeID);
     request.input("Notes", sql.NVarChar(sql.MAX), req.body.Notes);
-    request.input("BillRate", sql.Int(50), req.body.BillRate);
+    // request.input("BillRate", sql.Float(50), req.body.BillRate);
+    request.input("BillRate", sql.NVarChar(50), req.body.BillRate.toString());
+    // request.input("BillRate", sql.Float(50), `${req.body.BillRate}`);
+    // request.input("BillRate", sql.VarChar(50),`${req.body.BillRate}`);
     request.input("BillType", sql.Int, billType);
     request.input("CreateBy", sql.NVarChar(100), req.body.CreateBy);
     request.input("MarketerName", sql.Int, req.body.MarketerName);
@@ -3010,7 +3013,7 @@ app.post("/addPlacement", function (req, res) {
       if (err) console.log(err);
       var result = {
         flag: 1,
-        result: recordset.recordsets[0],
+        result: recordset,
       };
       res.send(result);
     });
