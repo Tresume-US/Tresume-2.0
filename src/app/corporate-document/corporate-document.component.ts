@@ -21,12 +21,16 @@ export class CorporateDocumentComponent implements OnInit {
   corporateTabIndex: number = 0;
   miscellaneousTabIndex: number = 0;
   DocumentData: any;
+  file:File;
+  username: string | Blob;
+  CorporateDocumentTypeID: string | Blob;
 
   constructor(private cookieService: CookieService, private service: CorporateDocumentService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.TraineeID = this.cookieService.get('TraineeID');
+    this.username = this.cookieService.get('userName1');
     this.OrgID = this.cookieService.get('OrgID');
     this.fetchDocumnetType();
     this.fetchTabslist(1);
@@ -75,5 +79,29 @@ export class CorporateDocumentComponent implements OnInit {
     downloadLink.click();
     
     document.body.removeChild(downloadLink);
+  }
+
+  upload(){
+    if (!this.file) {
+      console.error("No file selected!");
+      return;
+    }
+    const formData = new FormData();
+    formData.append('TraineeID', this.TraineeID);
+    formData.append('file', this.file);
+    formData.append('CreateBy', this.username);
+    formData.append('OrgID', this.OrgID);
+    formData.append('CorporateDocumentTypeID', this.CorporateDocumentTypeID);
+    this.service.uploadCorporateDoc(formData).subscribe((x: any) => {
+      alert(x.message);
+    },(error) => {
+      console.error("Upload failed:", error);
+    });
+  }
+
+  
+
+  onFileChange(event: any) {
+    this.file = event.target.files[0] as File;
   }
 }

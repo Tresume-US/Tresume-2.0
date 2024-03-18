@@ -22,6 +22,9 @@ export class CorporateDocumentService {
   deletecorporatedocument(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deletecorporatedocument', request);
   }
+  uploadCorporateDoc(request: FormData): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'uploadCorporateDoc', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;

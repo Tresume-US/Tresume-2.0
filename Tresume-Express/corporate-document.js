@@ -12,6 +12,8 @@ const envconfig = require(`./config.${environment}.js`);
 const apiUrl = envconfig.apiUrl;
 router.use(bodyparser.json());
 const exceljs = require("exceljs");
+const multer = require('multer');
+const path = require('path');
 
 const config = {
   user: "sa",
@@ -32,6 +34,16 @@ const transporter = nodemailer.createTransport({
   secure: true,
 });
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'C:/inetpub/vhosts/tresume.us/httpdocs/Content/CorporateDocument');
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // router.post('/getDocumnetType', async (req, res) => {
 //     try {
@@ -129,6 +141,48 @@ const transporter = nodemailer.createTransport({
         error: "An error occurred while fetching data!",
       };
       res.status(500).send(result);
+    }
+  });
+  
+  router.post('/uploadCorporateDoc', upload.single('file'), async (req, res) => {
+    try {
+      // Open database connection
+      await sql.connect(config);
+  
+      // Get filename and document path
+      const filename = req.file.filename;
+      const documentPath = 'CorporateDocument/' + filename;
+  
+      // Prepare SQL query parameters
+      const request = new sql.Request();
+      request.input('TraineeID', sql.Int, req.body.TraineeID);
+      request.input('DocumentName', sql.VarChar(100), filename);
+      request.input('DocumentPath', sql.VarChar(300), documentPath);
+      request.input('Active', sql.Bit, 1);
+      request.input('CreateTime', sql.DateTime, new Date());
+      request.input('CreateBy', sql.VarChar(200), req.body.CreateBy);
+      request.input('LastUpdateTime', sql.DateTime, new Date());
+      request.input('LastUpdateBy', sql.VarChar(200), req.body.CreateBy);
+      request.input('CorporateDocumentTypeID', sql.Int, req.body.CorporateDocumentTypeID);
+      request.input('OrgID', sql.Int, req.body.OrgID);
+  
+      // Insert into database
+      const result = await request.query(`
+        INSERT INTO [dbo].[CorporateDocument]
+        ([TraineeID], [DocumentName], [DocumentPath], [Active], [CreateTime], [CreateBy],
+        [LastUpdateTime], [LastUpdateBy], [CorporateDocumentTypeID], [OrgID])
+        VALUES
+        (@TraineeID, @DocumentName, @DocumentPath, @Active, @CreateTime, @CreateBy,
+        @LastUpdateTime, @LastUpdateBy, @CorporateDocumentTypeID, @OrgID)
+      `);
+  
+      res.json({ message: 'File uploaded and data inserted successfully' });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    } finally {
+      // Close database connection
+      sql.close();
     }
   });
   
