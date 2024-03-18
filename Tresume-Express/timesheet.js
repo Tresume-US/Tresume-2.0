@@ -1343,3 +1343,38 @@ router.post('/gettimesheetrole', async (req, res) => {
     res.status(500).send(result);
   }
 });
+
+
+
+
+
+router.post("/deleteTimesheet", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '"+req.body.Id+"'";
+    // request.input('Id', sql.Int, req.body.Id);
+    
+    const result = await request.query(query);
+    
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were deleted.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error deleting Timesheet:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while deleting Timesheet!",
+    };
+    res.status(500).send(response);
+  }
+});
