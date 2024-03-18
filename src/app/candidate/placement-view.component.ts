@@ -12,12 +12,14 @@ import { dateComparator } from '../common/dateComparator';
 import * as FileSaver from 'file-saver';
 import { CookieService } from 'ngx-cookie-service';
 import { MatLabel } from '@angular/material/form-field';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
     selector: 'app-placement-view',
     templateUrl: './placement-view.component.html',
     styleUrls: ['./candidate.component.scss'],
-    providers: [CandidateService, DashboardService, DatePipe]
+    providers: [CandidateService, DashboardService, DatePipe,MessageService]
 })
 
 
@@ -98,7 +100,7 @@ export class PlacementViewComponent implements OnInit {
     OrgID: any;
     placementAdd: any;
 
-    constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private service: CandidateService, private datePipe: DatePipe, private cd: ChangeDetectorRef, private cookieService: CookieService,private router: Router) {
+    constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private service: CandidateService, private datePipe: DatePipe, private cd: ChangeDetectorRef, private cookieService: CookieService,private router: Router, private messageService: MessageService) {
         this.placementItem.placementID = this.route.snapshot.params["placementID"];
         this.placementItem.TraineeID = this.traineeId = this.route.snapshot.params["traineeId"];
         this.placementItem.routetype = this.traineeId = this.route.snapshot.params["routetype"];
@@ -304,6 +306,7 @@ export class PlacementViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.loading = true;
         const requestItem = Object.assign({}, this.placementItem, this.myForm.value);
         requestItem.MarketerName = this.placementItem.MarketerID;
         this.service.addUpdatePlacementDetails(requestItem).subscribe(x => {
@@ -312,10 +315,13 @@ export class PlacementViewComponent implements OnInit {
         console.log(url);
           this.router.navigateByUrl(url);
         });
+        this.messageService.add({ severity: 'success', summary:  'Success' });
+        this.loading = false;
+
     }
 
     backToList() {
-        var url = '/reviewtresume/'+this.placementItem.routetype+'/'+this.placementItem.TraineeID+'/2';
+        var url = '/reviewtresume/1/' + this.placementItem.TraineeID + '/2';
         console.log(url);
           this.router.navigateByUrl(url);
     }
