@@ -485,60 +485,64 @@ onChangesDropdown(selectedOption: any, row: any) {
     const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
   
     this.timesheetRows.forEach((row, index) => {
-        if (row.projectName != '') {
-            const formData = new FormData();
-            
-            if (row.billable && !row.file1) {
-
-                alert('Please Upload Client Approved File.');
-            }
-            // this.loading = true;
-
-            // Append file if exists
-            if (row.file1) {
-              formData.append('file1', row.file1);
-          } else {
-              // Add a placeholder or handle the absence of file1
-              formData.append('file1', ''); // or formData.append('file1', null);
-          }
-          
-            
-            formData.append('traineeid', this.candidateid);
-            formData.append('projectid', row.projectid);
-            formData.append('totalhrs', row.totalHours);
-            formData.append('details', row.description);
-            formData.append('fromdate', startDateFormatted);
-            formData.append('todate', endDateFormatted);
-            formData.append('isBillable', row.billable);
-            formData.append('payterm', '1');
-            formData.append('service', '1');
-            formData.append('location', row.locationid);
-            formData.append('billableamt', row.hourlyRate);
-            formData.append('day1', row.mon);
-            formData.append('day2', row.tues);
-            formData.append('day3', row.wed);
-            formData.append('day4', row.thu);
-            formData.append('day5', row.fri);
-            formData.append('day6', row.sat);
-            formData.append('day7', row.sun);
-            formData.append('totalamt', row.totalAmount);
-            formData.append('admin', this.traineeID);
-            formData.append('orgid', this.OrgID);
-            formData.append('create_by', this.username);
-            this.Service.createTimesheet(formData).subscribe(
-                (x: any) => {
-                    this.handleSuccess(x);
-                    this.loading = false;
-                },
-                (error: any) => {
-                    this.handleError(error);
-                    this.loading = false;
-                }
-            );
-        }       
+      if (row.projectName != '') {
+        const formData = new FormData();
+  
+        if (row.billable && !row.file1) {
+          alert('Please Upload Client Approved File.');
+        }
+  
+        if (row.file1) {
+          formData.append('file1', row.file1);
+        } else {
+          formData.append('file1', ''); 
+        }
+  
+      
+        const totalHours = this.calculateTotalHours(row).toFixed(2);
         
+        // console.log('Total Hours:', totalHours); 
+  
+        formData.append('traineeid', this.candidateid);
+        formData.append('projectid', row.projectid);
+        formData.append('totalhrs', totalHours);
+        formData.append('details', row.description);
+        formData.append('fromdate', startDateFormatted);
+        formData.append('todate', endDateFormatted);
+        formData.append('isBillable', row.billable.toString());
+        formData.append('payterm', '1');
+        formData.append('service', '1');
+        formData.append('location', row.locationid);
+        formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
+        formData.append('day1', row.mon);
+        formData.append('day2', row.tues);
+        formData.append('day3', row.wed);
+        formData.append('day4', row.thu);
+        formData.append('day5', row.fri);
+        formData.append('day6', row.sat);
+        formData.append('day7', row.sun);
+        formData.append('totalamt', row.totalAmount);
+        formData.append('admin', this.traineeID);
+        formData.append('orgid', this.OrgID);
+        formData.append('create_by', this.username);
+  
+        this.Service.createTimesheet(formData).subscribe(
+          (x: any) => {
+            this.handleSuccess(x);
+            this.loading = false;
+          },
+          (error: any) => {
+            this.handleError(error);
+            this.loading = false;
+          }
+        );
+      }       
     });
-}
+  }
+  
+  
+  
+  
 
 private handleSuccess(response: any): void {
   this.messageService.add({ severity: 'success', summary: response.message });
@@ -713,4 +717,3 @@ private handleError(response: any): void {
 
 //   return weeks;
 // }
-
