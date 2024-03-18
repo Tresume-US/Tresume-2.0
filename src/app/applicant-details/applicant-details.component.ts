@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ApplicantDetailsService } from './applicant-details.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-applicant-details',
@@ -24,6 +25,9 @@ export class ApplicantDetailsComponent{
   isAdmin: string;
   JobApplicationID:string;
   Status: string;
+  currentResumeID: any;
+  resumeHTMLContent: any;
+  visibleSidebar2: boolean;
 
   constructor(
     private cookieService: CookieService,
@@ -97,5 +101,36 @@ export class ApplicantDetailsComponent{
   downloadDocument(documentUrl: string) {
     window.open(documentUrl, '_blank');
   }
+
+  public downloadAsPdf() {
+    let req = {
+        userName: this.currentResumeID
+    }
+    this.service.getResumePath(req).subscribe((x: any) => {
+        console.log('x', x)
+        FileSaver.saveAs("https://tresume.us/" + x[0].ResumePath, x[0].ResumeName);
+    });
+}
+
+private download(TraineeID: any) {
+  console.log('TraineeID', TraineeID)
+  if (TraineeID) {
+      let req = {
+          traineeID: TraineeID
+      }
+      this.currentResumeID = TraineeID.UserName;
+      this.service.getResumeDetails(req).subscribe((x: any) => {
+          if (x[0].HtmlResume) {
+              this.resumeHTMLContent = x[0].HtmlResume;
+          }
+          else {
+              this.resumeHTMLContent = "No Resume found"
+          }
+          //this.modalRef = this.modalService.show();
+          //this.lgModal?.show()
+          this.visibleSidebar2 = true;
+      });
+  }
+}
 
 }

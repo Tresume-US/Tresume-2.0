@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 
 export class ApplicantDetailsService {
+
     public endpoint = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
@@ -21,6 +22,13 @@ export class ApplicantDetailsService {
     rejectApplication(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'rejectApplication', request);
     }
+    getResumeDetails(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getResumeDetails', request);
+    }
+    getResumePath(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getResumePath', request);
+    }
+    
 }
 export interface ResponseDetails {
     flag?: any;

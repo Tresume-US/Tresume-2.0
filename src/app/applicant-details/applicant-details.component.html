@@ -40,9 +40,8 @@
                 <td>
                   <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'REJECTED'" class="fas fa-check mr-4" (click)="acceptApplication(applicant.TraineeID)" style="color: #94618E;" title="Accept"></i>
                   <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'ACCEPTED'" class="fas fa-times mr-4" (click)="rejectApplication(applicant.TraineeID)" style="color: #94618E;" title="Reject"></i>
-                  <a href="#" (click)="downloadDocument(applicant.documentUrl)" title="Download Resume">
-                    <i class="fas fa-download" style="color: #94618E;"></i>
-                  </a>
+                    <i class="fa fa-eye clickable" style="color: #94618E;" (click)="download(applicant.TraineeID)"></i>
+      
                 </td>                                              
               </tr>
             </tbody>
@@ -52,6 +51,20 @@
     </div>
   </div>
 </div>
+
+<p-sidebar #pTemplate [(visible)]="visibleSidebar2" position="right" [baseZIndex]="1000000" [appendTo]='"body"'
+  [style]="{'width':'60rem'}" [blockScroll]="true">
+  <h4 id="dialog-sizes-name1" class="modal-title pull-left">Resume View</h4>
+  <div>
+    <span [innerHTML]="resumeHTMLContent"></span>
+  </div>
+  <div style="display: flex;
+    flex-direction: row;">
+    <div>
+      <button type="submit" class="btn btn-primary" (click)="downloadAsPdf()">Download</button>
+    </div>
+  </div>
+</p-sidebar>
 
 <p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
