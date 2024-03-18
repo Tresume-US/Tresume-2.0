@@ -229,7 +229,7 @@ const routes: Routes = [
   { path: 'time-activity', component: TimeActivityComponent },
   { path: 'create-statements', component: CreateStatementsComponent },
   { path: 'multiple-invoices', component: MultipleInvoicesComponent },
-  { path: 'corporatedocument', component: CorporateDocumentComponent },
+  { path: 'corpdocument', component: CorporateDocumentComponent },
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  

@@ -480,9 +480,32 @@ export class SearchResumesDiceComponent implements OnInit {
       };
 
       this.service.checkmd5resume(Req).subscribe((y: any) => {
-        if (y.length > 0) {
-          this.isPDFSrc = false;
-          this.objUrl = this.sanitizer.bypassSecurityTrustHtml(y[0].HtmlResume);
+        let inputString = this.model.boolean || '';
+              console.log(this.model.boolean);
+              var keywords: any[] = [];
+              if (inputString.trim() !== '') {
+                keywords = inputString.match(/"[^"]+"|\S+/g);
+                if (keywords !== null) {
+                  keywords = keywords
+                    .map((keyword: string) => keyword.replace(/(^"|"$|\(|\))/g, ''))
+                    .filter(
+                      (keyword: string) =>
+                        !['and', 'or', 'not'].includes(keyword.toLowerCase())
+                    );
+                  keywords = keywords.filter(keyword => keyword !== '');
+                  keywords = keywords.map(keyword => keyword.replace(/^"|"$/g, ''));
+                } else {
+                  keywords = [];
+                }
+              }
+
+                console.log(keywords);
+          if (y.length > 0) {
+            this.isPDFSrc = false;
+            this.objUrl = this.highlightSkills(
+              y[0].HtmlResume,
+              keywords
+            );
           this.Htmlresumetopdf = y[0].HtmlResume;
           this.loading = false;
           this.fileReady = true;
@@ -539,9 +562,14 @@ export class SearchResumesDiceComponent implements OnInit {
               console.log(b64Data);
               let contentType = x.resume.contentType;
               const blob = b64toBlob(b64Data, contentType);
-              this.isPDFSrc = contentType === 'application/pdf' ? true : false;
+              // this.isPDFSrc = contentType === 'application/pdf' ? true : false;
               this.fileReady = true;
-              this.objUrl = this.sanitizer.bypassSecurityTrustHtml(HtmlResume);
+
+              // this.objUrl = this.sanitizer.bypassSecurityTrustHtml(HtmlResume);
+              this.objUrl = this.highlightSkills(
+                HtmlResume,
+                keywords
+              );
               this.Htmlresumetopdf = HtmlResume;
               let createRequest: DiceProfileRequestItem = {
                 emailID: emailID,
@@ -1016,6 +1044,34 @@ export class SearchResumesDiceComponent implements OnInit {
     });
     this.fetchcredit();
   }
+
+  highlightSkills(htmlContent: string, skills: string[]): string {
+    skills.forEach((skill) => {
+      // Constructing regex pattern to match all variations of the skill
+      var htmltagslist= ['data','big','center','embed','form','meta','input','select','menu','style','strike','border','disc','type','circle']
+      if (!htmltagslist.includes(skill.toLowerCase())) {
+        const regex = new RegExp(
+          `\\b${skill
+            .split('')
+            .map((c) => `[${c}${c.toUpperCase()}]`)
+            .join('')}+\\b`,
+          'g'
+        );
+        console.log(regex);
+        htmlContent = htmlContent.replace(
+          regex,
+          `<span style="background-color: yellow;font-weight: bold;">$&</span>`
+        );
+      }
+      
+    });
+    return htmlContent;
+  }
+
+  sanitizeHtml(htmlContent: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+  }
+
 }
 
 export interface CBSearchRequestItem {

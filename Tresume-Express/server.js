@@ -824,7 +824,7 @@ app.post("/getResumes1", function (req, res) {
         var OrgID = recordset.recordsets[0][0].OrganizationID;
         var sqlQuery =
           `SELECT TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy, YearsOfExpInMonths,
-                  ISNULL(YearsOfExpInMonths,0) [YRSEXP],
+                  ISNULL(YearsOfExpInMonths,0) [YRSEXP],Skill,
                   LegalStatus, UserOrganizationID, CurrentLocation, Title as [TraineeTitle], ISNULL(LegalStatus,'') ,
                   ISNULL(CONVERT(NVARCHAR(10),CreateTime,101), '1900-01-01T00:00:00') as LastUpdateTime,
                   ISNULL(YearsOfExpInMonths,0), Source, Collab, Notes,

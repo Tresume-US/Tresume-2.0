@@ -36,7 +36,7 @@ const transporter = nodemailer.createTransport({
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'C:/inetpub/vhosts/tresume.us/httpdocs/Content/CorporateDocument');
+    cb(null, 'C:/inetpub/vhosts/tresume.us/httpdocs/CorporateDocument');
   },
   filename: function(req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));

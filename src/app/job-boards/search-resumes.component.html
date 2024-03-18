@@ -258,7 +258,7 @@
   [style]="{'width':'60rem'}" [blockScroll]="true">
   <h4 id="dialog-sizes-name1" class="modal-title pull-left">Resume View</h4>
   <div>
-    <span [innerHTML]="resumeHTMLContent"></span>
+    <div [innerHTML]="sanitizeHtml(resumeHTMLContent)"></div>
   </div>
   <div style="display: flex;
     flex-direction: row;">
