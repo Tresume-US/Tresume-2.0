@@ -1352,8 +1352,8 @@ router.post("/deleteTimesheet", async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = @Id";
-    request.input('Id', sql.Int, req.body.Id);
+    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '"+req.body.Id+"'";
+    // request.input('Id', sql.Int, req.body.Id);
     
     const result = await request.query(query);
     
