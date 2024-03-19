@@ -314,27 +314,27 @@ router.post("/insertTimesheetTraineeCandidate", async function (req, res) {
     var TraineeID = await generateTraineeID();
 
     var query =
-      "IF NOT EXISTS(SELECT * FROM Trainee WHERE UserName = @UserName AND UserOrganizationID = @UserOrganizationID) " +
+      "IF NOT EXISTS(SELECT * FROM Trainee WHERE UserName = @username AND UserOrganizationID = @userorganizationid) " +
       "BEGIN " +
-      "INSERT INTO Trainee (TraineeID, username, firstName, phonenumber, lastName,Active,createtime,userorganizationid,CreateBy, CurrentLocation,timesheet_role,istimesheet ) " +
-      "VALUES (@TraineeID, @username, @firstName, @phonenumber, @lastName, 1, GETDATE(), @userorganizationid, @createby, @currentLocation, 3, 1) " +
+      "INSERT INTO Trainee (TraineeID, username, firstName, lastName, phonenumber, Active, createtime, userorganizationid, CreateBy, CurrentLocation, timesheet_role, istimesheet, Title, IsOrganic, AccountStatus, ProfileStatus, isInserted, Role, password) " +
+      "VALUES (@TraineeID, @username, @firstName, @lastName, @phonenumber, 1, GETDATE(), @userorganizationid, @createby, @currentLocation, 3, 1, 'RECRUITER', 1, 'ACTIVE', 'READY', 1, 'TRESUMEUSER', '6e061ece3e7b1ec2147b95212b5afa24de00143dc68e1a82631bb2b1883ce0bb') " +
       "END";
 
     console.log(query);
 
-    await sql.connect(config); 
+    await sql.connect(config);
     var request = new sql.Request();
     request.input('TraineeID', TraineeID);
-    request.input('username', req.body.email || "");
+    request.input('username', req.body.email || ""); // Bind username to email from request body
     request.input('firstName', req.body.firstName || "");
     request.input('phonenumber', req.body.phone || "");
     request.input('lastName', req.body.lastName || "");
     request.input('userorganizationid', req.body.orgID || "");
-    request.input('createby', req.body.createby || "");
+    request.input('createby', req.body.userName || ""); // Bind createby to userName from cookie
     request.input('currentLocation', req.body.currentLocation || "");
 
     var result = await request.query(query);
-    
+
     const data = {
       flag: 1,
       message: "Trainee Candidate Data Inserted",
@@ -350,6 +350,7 @@ router.post("/insertTimesheetTraineeCandidate", async function (req, res) {
     res.status(500).send(data);
   }
 });
+
 
 
 async function generateTraineeID() {
