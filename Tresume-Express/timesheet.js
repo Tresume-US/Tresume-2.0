@@ -1354,6 +1354,9 @@ router.post("/deleteTimesheet", async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
     const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '"+req.body.Id+"'";
+
+
+
     // request.input('Id', sql.Int, req.body.Id);
     
     const result = await request.query(query);
@@ -1371,11 +1374,79 @@ router.post("/deleteTimesheet", async (req, res) => {
       res.send(response);
     }
   } catch (error) {
-    console.error("Error deleting Timesheet:", error);
+    console.error("Error Deleteing Timesheet:", error);
     const response = {
       flag: 0,
-      error: "An error occurred while deleting Timesheet!",
+      error: "An error occurred while Deleting Timesheet!",
     };
     res.status(500).send(response);
   }
 });
+
+
+
+router.post("/UpdateAcceptStatus", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 3 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
+    // request.input('Id', sql.Int, req.body.Id);
+    const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 3 WHERE id = '"+req.body.id+"';"
+    const result = await request.query(query);
+    
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were Updated.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error Update Status:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while Update Status!",
+    };
+    res.status(500).send(response);
+  }
+});
+
+router.post("/UpdateRejectStatus", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
+    // request.input('Id', sql.Int, req.body.Id);
+
+    const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE  id = '"+req.body.id+"';"
+    
+    const result = await request.query(query);
+    
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were Updated.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error Update status:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while Update!",
+    };
+    res.status(500).send(response);
+  }
+});
+
+
