@@ -7,8 +7,8 @@
                     <div class="col-auto">
                       <button class="btn" [routerLink]="['/createalltimelist']">Create</button>
                     </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal">Add Candidate</button>
+                    <div class="col-auto" *ngFor="let item of timesheetroles">
+                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal" *ngIf="item.timesheetroles === 1">Add Candidate</button>
                     </div>
                   </div>
             </div>
