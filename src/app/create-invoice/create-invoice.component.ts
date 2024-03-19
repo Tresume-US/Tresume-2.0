@@ -46,6 +46,7 @@ export class CreateInvoiceComponent implements OnInit {
   balanceDue: number = 0;
   selectedState: any;
   states: any[] = [];
+  
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
   termsOptions = [
     { value: '10 days', label: '10 days' },
@@ -397,7 +398,7 @@ addservice(timesheet:any){
   formData.append('statement', this.messageOnStatement);
   formData.append('newTermName', this.newTermName);
   formData.append('dueType', this.dueType.toString());
-  // formData.append('duedate', this.dueDays.toString());
+  formData.append('duedate', this.dueDays.toString());
   formData.append('status', '1');
   formData.append('created_by', this.username);
 

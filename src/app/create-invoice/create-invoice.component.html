@@ -5,7 +5,7 @@
     <body style="font-size: 14px">
       <form #invoiceForm="ngForm" (ngSubmit)="addinvoice()" novalidate>
     <div class="row mt-4">
-      <div class="col-md-12 d-flex" style="padding: 20px;">
+      <div class="col-md-12 d-flex p-2">
         <!-- <div class="dropdown-container" style="margin-left: 16px;">
           <label for="client" class="dropdown-label ml-3">Client</label>
           <select class="form-control" style="width: 100%;" name="client" [(ngModel)]="selectedclient" required
@@ -16,10 +16,10 @@
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
             </div>
         </div> -->
-        <div class=" dropdown-container" style="margin-left: 16px;">
-          <label for="client" class="dropdown-label ml-3">Client</label>
-          <select class="form-control custom-select" style="width: 100%;" name="client" [(ngModel)]="selectedclient" required #client="ngModel">
-              <option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}</option>
+        <div class="dropdown-container">
+          <label for="client" class="dropdown-label">Client</label>
+          <select class="form-control custom-select" style="width: 100%;" name="client" required #client="ngModel" [(ngModel)]="selectedclient" style="width: 9rem" (change)="onclientChanges()">
+              <option *ngFor="let client of clients"  [ngValue]="client">{{ client.ClientName }}</option>
           </select>
           <div *ngIf="client.invalid && client.touched">
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
@@ -37,13 +37,13 @@
               </div>
             </div>
         </div> -->
-        <div class=" clientemail mt-0 ml-3">
+        <div class=" clientemail ml-3">
           <label for="clientEmail" class="dropdown-label">Client Email</label>
           <div class="input-group">
               <input type="text" name="clientEmail" id="clientEmail" placeholder="Email" class="form-control"
                      [(ngModel)]="clientEmail" style="height: 40px;" required>
               <div class="input-group-append">
-                  <a href="#" class="btn btn-outline-secondary" (click)="togglePopup($event)" style="width: 5rem;"><p style="    margin: 0;
+                  <a href="#" class="btn btn-outline-secondary" (click)="togglePopup($event)" style="width: 5rem;"><p style="margin: 0;
                     padding-top: 3px;">Cc(2)/Bcc</p> </a>
               </div>
           </div>
@@ -189,8 +189,8 @@
               <label for="dueDays" style="margin-left: 4px;">Days</label><br><br>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearSelection()">Close</button>
-              <button type="button" class="btn btn-primary" (click)="closeModal2()">Save changes</button>
+              <button type="button" class="btn" data-dismiss="modal" (click)="clearSelection()">Close</button>
+              <button type="button" class="btn" (click)="closeModal2()">Save changes</button>
             </div>
           </div>
         </div>
