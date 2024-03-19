@@ -215,6 +215,16 @@ export class SearchResumesCBComponent implements OnInit {
 
     showcrediterror: boolean = false;
     cbcrediterror:boolean = false
+    cfullname: any;
+    clocation: any;
+    cphone: any;
+    cemail: any;
+    cworkpermit: any;
+    cyearsofExperience: any;
+    cjobtitle: any;
+    csocialsource: any;
+    ceducation: any;
+    cskill: any;
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer) {
@@ -371,7 +381,7 @@ export class SearchResumesCBComponent implements OnInit {
             this.loading = true;
             this.service.downloadCBpdf(req).subscribe((x: any) => {
                 console.log('x', x)
-                this.isPDFSrc = (x.ContentType === "application/pdf") ? true : false;
+                // this.isPDFSrc = (x.ContentType === "application/pdf") ? true : false;
                 let b64Data: any = x.Content;
                 this.currentResumeResp = x;
                 this.currentResumeContent = x.Content;
@@ -539,8 +549,36 @@ export class SearchResumesCBComponent implements OnInit {
             }
             this.loading = true;
             this.service.getCBProfileDetails(req).subscribe((profileDetails: any) => {
+                let inputString = this.model.keyword || '';
+              console.log(this.model.keyword);
+              var keywords: any[] = [];
+              if (inputString.trim() !== '') {
+                keywords = inputString.match(/"[^"]+"|\S+/g);
+                if (keywords !== null) {
+                  keywords = keywords
+                    .map((keyword: string) => keyword.replace(/(^"|"$|\(|\))/g, ''))
+                    .filter(
+                      (keyword: string) =>
+                        !['and', 'or', 'not'].includes(keyword.toLowerCase())
+                    );
+                  keywords = keywords.filter(keyword => keyword !== '');
+                  keywords = keywords.map(keyword => keyword.replace(/^"|"$/g, ''));
+                } else {
+                  keywords = [];
+                }
+              }
+
+                console.log(keywords);
                 if (profileDetails) {
                     this.currentEdgeID = params.EdgeID;
+                    this.cfullname = profileDetails.Names[0].First+' '+profileDetails.Names[0].Last;
+                    this.clocation = profileDetails.Locations.CurrentLocations[0].State;
+                    this.cemail = profileDetails.IDs.Email.Identifiers[0].ID?.[0] ?? null;
+                    this.cyearsofExperience = profileDetails.YearsOfExperience ;
+                    this.cjobtitle = profileDetails.JobTitle?? null;
+                    this.ceducation = profileDetails?.Educations;
+                    this.cskill = profileDetails?.Keywords;
+                    
                     //this.download(params);
                     console.log('x', profileDetails)
                     let emailID = profileDetails.IDs.Email.Identifiers[0].ID;
@@ -565,7 +603,12 @@ export class SearchResumesCBComponent implements OnInit {
                     }
                     this.service.checkIfResumeExists(req1).subscribe((y: any) => {
                         if (y.length > 0) {
-                            this.objUrl = this.sanitizer.bypassSecurityTrustHtml(y[0].HtmlResume);
+                            this.objUrl = this.highlightSkills(
+                                y[0].HtmlResume,
+                                keywords
+                              );
+                            // this.objUrl = this.sanitizer.bypassSecurityTrustHtml(y[0].HtmlResume);
+
                             this.loading = false;
                             this.fileReady = true;
                             this.visibleSidebar2 = true;
@@ -592,7 +635,11 @@ export class SearchResumesCBComponent implements OnInit {
                                 }
 
                                 if (!this.isPDFSrc) {
-                                    this.objUrl = this.sanitizer.bypassSecurityTrustHtml(html.text);
+                                    // this.objUrl = this.sanitizer.bypassSecurityTrustHtml(html.text);
+                                    this.objUrl = this.highlightSkills(
+                                        html.text,
+                                        keywords
+                                      );
                                 }
 
                                 this.service.createJobSeekerProfile(createRequest).subscribe(z => {
@@ -610,6 +657,32 @@ export class SearchResumesCBComponent implements OnInit {
         }
     }
 
+    highlightSkills(htmlContent: string, skills: string[]): string {
+        skills.forEach((skill) => {
+          // Constructing regex pattern to match all variations of the skill
+          var htmltagslist= ['data','big','center','embed','form','meta','input','select','menu','style','strike','border','disc','type','circle']
+          if (!htmltagslist.includes(skill.toLowerCase())) {
+            const regex = new RegExp(
+              `\\b${skill
+                .split('')
+                .map((c) => `[${c}${c.toUpperCase()}]`)
+                .join('')}+\\b`,
+              'g'
+            );
+            console.log(regex);
+            htmlContent = htmlContent.replace(
+              regex,
+              `<span style="background-color: yellow;font-weight: bold;">$&</span>`
+            );
+          }
+          
+        });
+        return htmlContent;
+      }
+    
+      sanitizeHtml(htmlContent: string): SafeHtml {
+        return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+      }
 
     public goBack() {
         window.history.back();

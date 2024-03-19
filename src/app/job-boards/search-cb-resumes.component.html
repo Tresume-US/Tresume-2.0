@@ -161,7 +161,7 @@
         [align]="true"></pagination>
 </div>
 
-<p-sidebar #pTemplate [(visible)]="visibleSidebar2" position="right" [baseZIndex]="1000000" [appendTo]='"body"'
+<!-- <p-sidebar #pTemplate [(visible)]="visibleSidebar2" position="right" [baseZIndex]="1000000" [appendTo]='"body"'
     [style]="{'width':'60rem'}" [blockScroll]="true" (onHide)="close()">
     <div class="card-footer-actions">
         <h1 id="dialog-sizes-name1" class="modal-title" style="text-align: center;">Quick Resume View</h1>
@@ -178,6 +178,79 @@
             <div [innerHTML]="objUrl" id="pdfdoc" #pdfdoc></div>
         </div>
     </div>
+</p-sidebar> -->
+
+<p-sidebar #pTemplate [(visible)]="visibleSidebar2" position="right" [baseZIndex]="1000000" [appendTo]="'body'"
+  [style]="{ width: '100%' }" [fullScreen]="true" [blockScroll]="true" (onHide)="close()">
+  <div class="card-footer-actions">
+    <h1 id="dialog-sizes-name1" class="modal-title" style="text-align: center">
+      Quick Resume View
+    </h1>
+    <i *ngIf="fileReady && !isPDFSrc" class="fa fa-download clickable" (click)="downloadDoc()"></i>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table">
+          <tr>
+            <td><b>Name</b></td>
+            <td>{{cfullname}}</td>
+          </tr>
+          <tr>
+            <td><b>Job Title</b></td>
+            <td>{{cjobtitle}}</td>
+          </tr>
+          <tr>
+            <td><b>Experience</b></td>
+            <td>{{cyearsofExperience}} Years</td>
+          </tr>
+          <tr>
+            <td><b>Email</b></td>
+            <td>{{cemail}}</td>
+          </tr>
+          <tr>
+            <td><b>Location</b></td>
+            <td>{{clocation}}</td>
+          </tr>
+          <tr>
+            <td>
+              <b>Education</b>
+            </td>
+            <td>
+              <div *ngFor="let edu of ceducation; index as i" class="" style="padding: 5px">
+                Degree : {{edu.DegreeLevel}}<br>
+                University/College : {{edu.Institution}}
+              </div>
+            </td>
+          </tr>
+          
+         
+          <tr>
+            <td><b>Skills</b></td>
+            <td>
+              <div *ngFor="let skills of cskill; index as i" class="" style="padding: 5px">
+                <p-chip label="{{ skills.Keyword }}"></p-chip>
+              </div>
+
+            </td>
+          </tr>
+          
+        </table>
+      </div>
+      <div class="col-md-6">
+        <!-- <div *ngIf="fileReady && isPDFSrc">
+          <ngx-extended-pdf-viewer [base64Src]="currentResumeResp.resumeData" [height]="'90vh'"
+            (pdfLoadingStarts)="onReady()" [showPagingButtons]="false" [showOpenFileButton]="false"
+            [showRotateButton]="false" [showFindButton]="true" [textLayer]="true">
+          </ngx-extended-pdf-viewer>
+        </div> -->
+        <div *ngIf="fileReady && !isPDFSrc" style="padding: 30px 0px" >
+          <div [innerHTML]="sanitizeHtml(objUrl)" id="pdfdoc" #pdfdoc></div>
+          <!-- <div >{{objUrl}}</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
 </p-sidebar>
 <p-toast position="bottom-right"></p-toast>
 <div *ngIf="loading" class="loader-container">
