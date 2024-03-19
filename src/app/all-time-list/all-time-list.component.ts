@@ -24,7 +24,7 @@ export class AllTimeListComponent implements OnChanges {
   username: any;
   firstname:any;
   lastname:any;
-  candiateEmail:any;
+  candidateEmail:any;
   phonenumber:any;
   selectedGender:any;
   Locations: any;
@@ -112,16 +112,16 @@ export class AllTimeListComponent implements OnChanges {
     // this.loading = false;
   }
 
-  CandidateSave(){
-    let req= {
-      createby: this.userName,
+  CandidateSave() {
+    let req = {
+      userName: this.cookieService.get('userName1'), // Assuming userName is stored in the cookie
       firstName: this.firstname,
-      lastName:this.lastname,
-      email:this.candiateEmail,
-      phone:this.phonenumber,
+      lastName: this.lastname,
+      email: this.candidateEmail,
+      phone: this.phonenumber,
       currentLocation: this.currentLocation,
       orgID: this.OrgID,
-    }
+    };
     console.log(req);
     this.service.insertTimesheetTraineeCandidate(req).subscribe(
       (x: any) => {
@@ -130,9 +130,10 @@ export class AllTimeListComponent implements OnChanges {
       (error: any) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to Add Candidate' });
       }
-    )
+    );
   }
- 
+  
+  
   gethrmsLocation() {
     let Req = {
       TraineeID: this.TraineeID,
