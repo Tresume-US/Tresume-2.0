@@ -95,14 +95,12 @@ router.post('/getJobPostingList', async (req, res) => {
 });
 
 
-
-router.post('/deleteJobPosting', async (req, res) => {
-  const email = req.body.email;
+router.post('/deleteJobPost', async (req, res) => {
+  const JobID = req.body.JobID;
   try {
-    const dtrainee = await deactivatetrainee(email);
-    const dmemberdetails = await deactivatememberdetails(email);
+    const jobs = await deactivateJob(JobID);
 
-    if (dtrainee && dmemberdetails) {
+    if (jobs) {
       const result = {
         flag: 1,
       };
@@ -121,24 +119,16 @@ router.post('/deleteJobPosting', async (req, res) => {
   }
 })
 
-async function deactivatetrainee(email) {
+async function deactivateJob(JobID) {
   const pool = await sql.connect(config);
   const request = pool.request();
   const queryResult = await request.query(
-    `update trainee set active = 0 where username = '${email}'`
+    `UPDATE job 
+     SET active = 0 
+     WHERE jobid = '${JobID}'`
   );
   return queryResult;
 }
-
-async function deactivatememberdetails(email) {
-  const pool = await sql.connect(config);
-  const request = pool.request();
-  const queryResult = await request.query(
-    `update memberdetails set active = 0 where  useremail ='${email}'`
-  );
-  return queryResult;
-}
-
 
 router.post('/getSubmittedCandidateList', async (req, res) => {
   try {

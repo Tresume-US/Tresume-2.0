@@ -65,7 +65,7 @@
               <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a>
             </span>
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
-            <span data-toggle="tooltip" data-placement="bottom" title="Delete">
+            <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
               <i class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
           </td>
@@ -82,7 +82,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" *ngIf="showConfirmationDialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -94,9 +94,9 @@
       <div class="modal-body">
         Are you sure to delete the selected job?
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" >
         <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn">Ok</button>
+        <button type="button" class="btn" (click)="deleteJobPosting(JobID)">Ok</button>
       </div>
     </div>
   </div>
