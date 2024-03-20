@@ -7,8 +7,8 @@
                     <div class="col-auto">
                       <button class="btn" [routerLink]="['/createalltimelist']">Create</button>
                     </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal">Add Candidate</button>
+                    <div class="col-auto" *ngFor="let item of timesheetrole">
+                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal" *ngIf="item.timesheetrole === 1">Add Candidate</button>
                     </div>
                   </div>
             </div>
@@ -69,7 +69,7 @@
                                     <td>
                                         <div>
                                             <i class="fa fa-eye fa-fw fa-lg ml-4 text-center"
-                                                [routerLink]="['/viewtimesheet',row.id ]"></i>
+                                                [routerLink]="['/viewtimesheet',row.id]"></i>
                                         </div>
                                     </td>
                                     <td>
@@ -78,11 +78,11 @@
                                           </div>
                                     </td>
                                 </tr>
-                                <!-- <tr *ngIf="noResultsFound">
+                                <tr *ngIf="PendingData.length === 0">
                                   <td colspan="9" class="text-center">
                                       No results found.
                                   </td>
-                              </tr> -->
+                              </tr>
                               
                             </tbody>
                         </table>
@@ -117,7 +117,7 @@
                                     <td>
                                         <div>
                                             <i class="fa fa-eye fa-fw fa-lg ml-4 text-center"
-                                            [routerLink]="['/viewtimesheet',row.id ]"></i>
+                                            [routerLink]="['/viewtimesheet',row.id]"></i>
                                         </div>
                                     </td>
                                     <td>
@@ -127,11 +127,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- <tr *ngIf="noResultsFound" >
-                                    <td colspan="9" class="text-center">
+                                <tr *ngIf="rejectedData.length === 0">
+                                  <td colspan="9" class="text-center">
                                       No results found.
-                                    </td>
-                                  </tr> -->
+                                  </td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>
@@ -165,7 +165,7 @@
                                     <td>
                                         <div>
                                             <i class="fa fa-eye fa-fw fa-lg ml-4 text-center"
-                                            [routerLink]="['/viewtimesheet/',row.id]" ></i>
+                                            [routerLink]="['/viewtimesheet',row.id]"></i>
                                         </div>
                                     </td>
                                     <td>
@@ -175,16 +175,16 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- <tr *ngIf="noResultsFound" >
-                                    <td colspan="9" class="text-center">
+                                <tr *ngIf="completedData.length === 0">
+                                  <td colspan="9" class="text-center">
                                       No results found.
-                                    </td>
-                                  </tr> -->
+                                  </td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- Non-billable Tab Content -->
-                    <div id="non-billable" class="tab-pane fade">
+                    <div id="non-billable" class="tab-pane fade"> 
                   
                         <table class="table">
                        
@@ -215,7 +215,7 @@
                                     <td>
                                         <div>
                                             <i class="fa fa-eye fa-fw fa-lg ml-4 text-center"
-                                            [routerLink]="['/viewtimesheet',row.id ]"></i>
+                                            [routerLink]="['/viewtimesheet',row.id]"></i>
                                         </div>
                                     </td>
                                     <td>
@@ -225,11 +225,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- <tr *ngIf="noResultsFound" >
-                                    <td colspan="10" class="text-center">
+                                <tr *ngIf="nonBillableData.length === 0">
+                                  <td colspan="10" class="text-center">
                                       No results found.
-                                    </td>
-                                  </tr> -->
+                                  </td>
+                              </tr>
                             </tbody>
                         </table>
                     </div>

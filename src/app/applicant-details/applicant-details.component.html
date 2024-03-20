@@ -37,11 +37,12 @@
                 <td>{{ applicant.JobTitle }}</td>
                 <td>{{ applicant.Source}} </td>
                 <td>{{ applicant.Status }}</td>
-                <td>
+                <td >
+                  <ng-container *ngIf="isAdmin === 'true'">
                   <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'REJECTED'" class="fas fa-check mr-4" (click)="acceptApplication(applicant.TraineeID)" style="color: #94618E;" title="Accept"></i>
                   <i *ngIf="applicant.Status === 'SUBMITTED' || applicant.Status === 'ACCEPTED'" class="fas fa-times mr-4" (click)="rejectApplication(applicant.TraineeID)" style="color: #94618E;" title="Reject"></i>
+                </ng-container>
                     <i class="fa fa-eye clickable" style="color: #94618E;" (click)="download(applicant.TraineeID)"></i>
-      
                 </td>                                              
               </tr>
             </tbody>

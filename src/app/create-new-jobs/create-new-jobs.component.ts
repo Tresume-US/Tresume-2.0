@@ -50,11 +50,11 @@ export class CreateNewJobsComponent{
   selectedCountry: any = 'US'; 
   countries: string[] = ['United States,'];
 
-  selectedState: string = 'Georgia'; 
-  state: string[] = ['Georgia', 'District of Columbia', 'Florida', 'Hawaii', 'Idaho', 'Other'];
+  selectedState: string = ''; 
+  state: string[] 
 
   selectedCity: string;
-  cities: string[] = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'Other'];
+  cities: string[];
 
 
   selectedCurrency: string = '1'; 
@@ -170,7 +170,18 @@ this.loading = true;
     this.selectedLegalstatus = event.value;
   }
 
-
+  onJobStatusChange(selectedValue: any) {
+    // Find the corresponding object in jobStatusOptions array
+    const selectedOption = this.jobStatusOptions.find(option => option.Value === selectedValue);
+  
+    // Set the selectedJobStatus to the whole object or just the Value based on your requirements
+    this.selectedJobStatus = selectedOption; // or selectedOption.Value if you just want the value
+  
+    // Log the selected value
+    console.log(selectedOption.Value);
+  }
+  
+   
 
 
 
@@ -218,10 +229,15 @@ getCity() {
   PostJob(type:any){
     this.loading = true;
     this.Legalstatus = this.selectedLegalstatus.map((item: { value: any; }) => item.value).join(',');
+    console.log( this.internaltaxterms);
+    console.log( this.selectedPrimaryRecruiter);
+    console.log( this.jobtitle);
+    console.log( this.selectedstate);
+    console.log( this.selectedRespondBy);
     if (
       this.selectedPrimaryRecruiter &&
       this.jobtitle &&
-      this.selectedState &&
+      this.selectedstate &&
       this.selectedCity &&
       this.selectedRespondBy &&
       this.numberOfPositions &&
@@ -290,6 +306,7 @@ getCity() {
       );
   } else {
       alert('Please Enter all Mandatory Fields');
+      this.loading = false;
   }
   
   }

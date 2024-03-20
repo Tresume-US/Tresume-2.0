@@ -24,15 +24,15 @@ export class AllJobPostingsComponent implements OnInit {
   jobs: any[];
   noResultsFound: boolean = true;
   recruiterNames: any;
-  traineeid: () => string;
   deleteIndex: any;
+  IsAdmin: string;
 
   // roles: string[] = ["Recruiter", "Admin", "User"];
 
   ngOnInit(): void {
     this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
-    // this.JobID = this.cookieService.get('userName1');
+    this.IsAdmin = this.cookieService.get('IsAdmin');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.fetchjobpostinglist();
     this.getAssigneelist();
@@ -48,6 +48,8 @@ export class AllJobPostingsComponent implements OnInit {
   fetchjobpostinglist() {
     let Req = {
       OrgID: this.OrgID,
+      TraineeID:this.TraineeID,
+      IsAdmin:this.IsAdmin
     };
     this.service.getJobPostingList(Req).subscribe((x: any) => {
       this.jobs = x.result;
