@@ -25,7 +25,24 @@ export class ViewDetailsComponent {
   idFromUrl: any;
   idFromCookie: any;
   document: any;
-
+  row: any;
+  approves() {
+    if (!this.rowdata.some(row => !row.admincomment)) {
+      // All comments are filled, proceed with approval logic
+      // Your approval logic here
+    } else {
+      // alert('Please fill out all mandatory fields!');
+    }
+  }
+  
+  rejects() {
+    if (!this.rowdata.some(row => !row.admincomment)) {
+      // All comments are filled, proceed with rejection logic
+      // Your rejection logic here
+    } else {
+      // alert('Please fill out all mandatory fields!');
+    }
+  }
   constructor(private router: Router,private cookieService: CookieService,private service: ViewDetailsService,private messageService: MessageService, private route: ActivatedRoute,private renderer: Renderer2) { }
 
   ngOnInit(): void {
