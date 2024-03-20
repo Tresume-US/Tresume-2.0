@@ -40,7 +40,7 @@ router.post('/getJobPostingList', async (req, res) => {
       }
       const request = new sql.Request();
       
-      const query = "SELECT J.JobID AS JobID, J.jobtitle AS JobTitle, J.company AS Company, CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, J.payrate AS PayRate, SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, J.createtime AS PostedOn, CONCAT(T.FirstName, ' ', T.LastName) AS PostedBy, JT.Value AS JobType, T2.TraineeID, J.JobStatus FROM Job J INNER JOIN JobApplication JA ON J.JobID = JA.JobID LEFT JOIN Trainee T ON J.Recruiterid = T.TraineeID LEFT JOIN Trainee T2 ON J.PrimaryRecruiterID = T2.TraineeID INNER JOIN JobType JT ON J.JobTypeID = JT.JobTypeID WHERE T.OrganizationID = '" + req.body.OrgID + "' GROUP BY J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, J.createtime, T.FirstName, T.LastName,T2.TraineeID, JT.Value, T2.FirstName, J.JobStatus ORDER BY J.createtime DESC;";
+      const query = "SELECT J.JobID AS JobID, J.jobtitle AS JobTitle, J.company AS Company, CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, J.payrate AS PayRate, SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, J.createtime AS PostedOn, CONCAT(T.FirstName, ' ', T.LastName) AS PostedBy, JT.Value AS JobType, T2.TraineeID, J.JobStatus FROM Job J INNER JOIN JobApplication JA ON J.JobID = JA.JobID LEFT JOIN Trainee T ON J.Recruiterid = T.TraineeID LEFT JOIN Trainee T2 ON J.PrimaryRecruiterID = T2.TraineeID INNER JOIN JobType JT ON J.JobTypeID = JT.JobTypeID WHERE T.OrganizationID = '" + req.body.OrgID + "' AND J.Active = 1 GROUP BY J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, J.createtime, T.FirstName, T.LastName,T2.TraineeID, JT.Value, T2.FirstName, J.JobStatus ORDER BY J.createtime DESC;";
       console.log(query);
       const recordset = await request.query(query);
       const result = {
@@ -60,13 +60,12 @@ router.post('/getJobPostingList', async (req, res) => {
 });
 
 
-router.post('/deleteJobPosting', async (req, res) => {
-  const email = req.body.email;
+router.post('/deleteJobPost', async (req, res) => {
+  const JobID = req.body.JobID;
   try {
-    const dtrainee = await deactivatetrainee(email);
-    const dmemberdetails = await deactivatememberdetails(email);
+    const jobs = await deactivateJob(JobID);
 
-    if (dtrainee && dmemberdetails) {
+    if (jobs) {
       const result = {
         flag: 1,
       };
@@ -85,24 +84,16 @@ router.post('/deleteJobPosting', async (req, res) => {
   }
 })
 
-async function deactivatetrainee(email) {
+async function deactivateJob(JobID) {
   const pool = await sql.connect(config);
   const request = pool.request();
   const queryResult = await request.query(
-    `update trainee set active = 0 where username = '${email}'`
+    `UPDATE job 
+     SET active = 0 
+     WHERE jobid = '${JobID}'`
   );
   return queryResult;
 }
-
-async function deactivatememberdetails(email) {
-  const pool = await sql.connect(config);
-  const request = pool.request();
-  const queryResult = await request.query(
-    `update memberdetails set active = 0 where  useremail ='${email}'`
-  );
-  return queryResult;
-}
-
 
 router.post('/getSubmittedCandidateList', async (req, res) => {
   try {

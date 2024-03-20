@@ -23,9 +23,9 @@ export class AllJobPostingsService {
     TBassignee(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'TBassignee', request);
     }
-     // deleteJobPosting(request: any): Observable<ResponseDetails> {
-    //     return this.http.post<ResponseDetails>(this.endpoint + 'deleteJobPosting', request);
-    // }
+    deleteJobPost(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'deleteJobPost', request);
+    }
 }
 export interface ResponseDetails {
     flag?: any;

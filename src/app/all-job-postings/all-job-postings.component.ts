@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { request } from 'http';
 
 @Component({
   selector: 'app-all-job-postings',
@@ -15,13 +16,16 @@ import { Router } from '@angular/router';
 
 export class AllJobPostingsComponent implements OnInit {
   loading: boolean = false;
-
   OrgID: string = '';
   JobID: string = '';
   TraineeID: string = '';
+  showConfirmationDialog: boolean = false;
+
   jobs: any[];
   noResultsFound: boolean = true;
   recruiterNames: any;
+  traineeid: () => string;
+  deleteIndex: any;
 
   // roles: string[] = ["Recruiter", "Admin", "User"];
 
@@ -121,6 +125,27 @@ export class AllJobPostingsComponent implements OnInit {
       console.error('Error occurred:', error);
       // Handle error here
       this.loading = false; // Set loading to false on error
+    };
+  }
+
+  deletejobdata(JobID:any){
+    this.deleteIndex = JobID;
+    this.showConfirmationDialog = true;
+
+  }
+  deleteJobPosting(JobID:any) {
+    var req = {
+      JobID:this.deleteIndex,
+    }
+    this.service.deleteJobPost(req).subscribe((x: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Removed Job' });
+      this.fetchjobpostinglist();
+      this.showConfirmationDialog = false;
+
+    }),
+    (error: any) => {
+      console.error('Error occurred:', error);
+      this.loading = false;
     };
   }
 
