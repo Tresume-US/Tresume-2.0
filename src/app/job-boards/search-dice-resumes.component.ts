@@ -480,7 +480,7 @@ export class SearchResumesDiceComponent implements OnInit {
       };
 
       this.service.checkmd5resume(Req).subscribe((y: any) => {
-        let inputString = this.model.boolean || '';
+              let inputString = this.model.boolean || '';
               console.log(this.model.boolean);
               var keywords: any[] = [];
               if (inputString.trim() !== '') {

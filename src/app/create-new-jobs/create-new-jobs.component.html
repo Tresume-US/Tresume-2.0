@@ -246,10 +246,12 @@
                 <div class="col-md-4">
                   <div class="form-group text-center">
                     <label class="post_jobs_contant post_jobs_font_clr">Job Status *</label>
-                    <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control">
+                    <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control" (change)="onJobStatusChange($event.target.value)">
                       <option value="">Select</option>
-                      <option *ngFor="let option of jobStatusOptions" [value]="option">{{ option.Value }}</option>
+                      <option *ngFor="let option of jobStatusOptions" [value]="option.Value">{{ option.Value }}</option>
                     </select>
+                    
+                    
                   </div>
                 </div>
               </div>
@@ -432,6 +434,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-8">
+                    <label class="post_jobs_contant post_jobs_font_clr">Job Description *</label>
                     <p-editor [style]="{'height':'320px', 'width':'100%'}"
                       placeholder="Enter the email content to be sent" [(ngModel)]="JobDescription" [ngModelOptions]="{ standalone: true }"></p-editor>
                   </div>
@@ -485,7 +488,7 @@
                     {{selectedCountry}}</span><br>
 
                   <strong>STATE:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
-                    {{ selectedState}}</span><br>
+                    {{ selectedstate}}</span><br>
 
                   <strong>CITY:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
                     {{selectedCity}}</span><br>
@@ -505,7 +508,7 @@
                 <address>
                   <strong>MIN. EXPERIENCE :</strong><span
                     id="RecruiterContent_lblMinExp">{{selectedExperience}}</span><br>
-                  <strong>Job Status :</strong><span id="RecruiterContent_lblJobStatus">{{selectedJobStatus}}</span><br>
+                  <strong>Job Status :</strong><span id="RecruiterContent_lblJobStatus">{{selectedJobStatus.Value}}</span><br>
                   <strong>Legal Status:</strong>
                   <span id="RecruiterContent_lblLegalStatus">
                     <div *ngFor="let data of selectedLegalstatus">
