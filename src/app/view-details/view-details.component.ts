@@ -52,8 +52,9 @@ export class ViewDetailsComponent {
       // this.noResultsFound = this.rowdata.length === 0;
     });
     this.loading = false;
-
   }
+
+  
   reject(){
     let Req = {
       traineeID: this.TraineeID,
@@ -61,8 +62,15 @@ export class ViewDetailsComponent {
     };
     this.service.UpdateRejectStatus(Req).subscribe((x: any) => {
       this.rowdata = x.result;
-    });
+
     this.messageService.add({ severity: 'success', summary: 'Rejected'});
+
+    setTimeout(() => {
+      this.router.navigate(['/alltimelist']);
+    }, 3000); 
+  }, error => {
+
+  });
   }
 
   Accept() {

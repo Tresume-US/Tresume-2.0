@@ -41,6 +41,7 @@ export class CreateAllTimeListComponent implements OnInit {
   totalAmountForAllRows: number = 0;
   totalAmount: number = 0;
   loading:boolean = false;
+  isBillable:boolean;
   updateTotalAmount() {
     setTimeout(() => {
       let totalAmount = 0;
@@ -509,7 +510,11 @@ onChangesDropdown(selectedOption: any, row: any) {
         formData.append('details', row.description);
         formData.append('fromdate', startDateFormatted);
         formData.append('todate', endDateFormatted);
-        formData.append('isBillable', row.billable.toString());
+        if (row.billable) {
+          formData.append('isBillable', '1');
+        } else {
+          formData.append('isBillable', '0');
+        }
         formData.append('payterm', '1');
         formData.append('service', '1');
         formData.append('location', row.locationid);

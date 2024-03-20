@@ -59,14 +59,14 @@ export class AllTimeListComponent implements OnChanges {
 
 
 
-  timesheetroles: number[] = []
+  // timesheetroles: number[] = []
   getTimesheetRole() {
     let Req = {
       traineeID: this.TraineeID
     };
 
     this.service.gettimesheetrole(Req).subscribe((x: any) => {
-      this.timesheetroles = x.result;
+      this.timesheetrole = x.result;
     });
   }
 
