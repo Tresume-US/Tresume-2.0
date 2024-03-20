@@ -82,7 +82,6 @@ export class AllTimeListComponent implements OnChanges {
     this.service.getPendingTimesheetResult(Req).subscribe((x: any) => {
         this.PendingData = x.result;
         this.loading = false;
-        this.noResultsFound = this.PendingData.length === 0;
     });
 }
 
@@ -95,7 +94,6 @@ export class AllTimeListComponent implements OnChanges {
     };
     this.service.getRejectedTimesheetResult(Req).subscribe((x: any) => {
       this.rejectedData = x.result;
-      this.noResultsFound = this.rejectedData.length === 0;
     // this.loading = false;
 
     });
@@ -109,7 +107,6 @@ export class AllTimeListComponent implements OnChanges {
     };
     this.service.getCompletedTimesheetResult(Req).subscribe((x: any) => {
       this.completedData = x.result;
-      this.noResultsFound = this.completedData.length === 0;
     // this.loading = false;
 
     });
@@ -123,7 +120,6 @@ export class AllTimeListComponent implements OnChanges {
     };
     this.service.getNonBillableTimesheetResult(Req).subscribe((x: any) => {
       this.nonBillableData = x.result;
-      this.noResultsFound = this.nonBillableData.length === 0;
     });
     // this.loading = false;
   }

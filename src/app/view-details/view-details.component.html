@@ -48,15 +48,23 @@
   </div>
   <div *ngFor="let row of rowdata">
     <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-    <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="comments" [ngModelOptions]="{standalone: true}">{{row.admincomment}}</textarea>
+    <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="row.admincomment" [ngModelOptions]="{standalone: true}" #comment="ngModel" required></textarea>
+    <div *ngIf="comment.invalid && (comment.dirty || comment.touched)">
+      <div *ngIf="comment.errors.required">
+        <div class="alert alert-danger" role="alert">
+          Please fill the comment field
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div>
 </div>
 </div>
   <div class="float-right">
-    <button type="button" class="btn  mr-2" data-toggle="modal" data-target="#exampleModal"> Approve </button>
-    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1"> Reject </button>
+    <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal" (click)="approves()"> Approve </button>
+    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1" (click)="rejects()"> Reject </button>
+    
   </div>
     <!-- <button class="btn" (click)="rejectAllProjects()">Reject</button> -->
 
