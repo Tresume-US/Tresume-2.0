@@ -51,10 +51,26 @@ export class AllTimeListComponent implements OnChanges {
     this.fetchCompletedData();
     this.fetchNonBillableData();
     this.gethrmsLocation();
+    this.getTimesheetRole();
   }
 
   ngOnChanges(){
   }
+
+
+
+  // timesheetroles: number[] = []
+  getTimesheetRole() {
+    let Req = {
+      traineeID: this.TraineeID
+    };
+
+    this.service.gettimesheetrole(Req).subscribe((x: any) => {
+      this.timesheetrole = x.result;
+    });
+  }
+
+
 
   fetchPendingResult(){
     let Req = {

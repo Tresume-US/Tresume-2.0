@@ -383,7 +383,7 @@ router.post("/Candidateviewdetails", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT TM.id,TM.admincomment, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='"+req.body.tid+"' AND TM.status=1";
+      var query = "SELECT TM.id,TM.admincomment, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='"+req.body.tid+"' AND TM.status=1";
 
 
       console.log(query);
@@ -1199,6 +1199,8 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     const { traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
     let filename = '';
 
+    const isBillableBool = isBillable === 'true' ? true : false;
+
     if (req.file) {
       filename = req.file.filename;
     }
@@ -1220,7 +1222,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       .input('status', sql.Int, 1) 
       .input('fromdate', sql.DateTime, fromdate)
       .input('todate', sql.DateTime, todate)
-      .input('isBillable', sql.Bit, isBillable)
+   .input('isBillable', sql.Bit, isBillableBool)
       .input('payterm', sql.Int, payterm)
       .input('service', sql.Int, service)
       .input('location', sql.Int, '1')
