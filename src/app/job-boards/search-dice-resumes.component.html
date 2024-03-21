@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-success btn-sm">Available Credits : {{availablecredits}}</button>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="searchType == 1">
           <div class="col-md-6" style="padding: 20px">
             <form [formGroup]="form">
               <formly-form [model]="model" [fields]="fieldBool" [options]="options" [form]="form1">
@@ -36,20 +36,43 @@
             </button>
           </div>
         </div>
-        <!-- <div class="row">
+        <div class="row" *ngIf="searchType == 2">
+          <div class="col-md-6" style="padding: 20px">
+            <form [formGroup]="form">
+              <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form">
+              </formly-form>
+            </form>
+          </div>
+          <div class="col-md-3" style="padding: 20px">
+            <label for="recruiter">Location (State, City, Zipcode) *</label>
+            <input [(ngModel)]="selectedState" [typeahead]="states" typeaheadOptionField="name" [isAnimated]="true"
+              class="form-control" placeholder="Enter Location" />
+          </div>
+          <div class="col-md-1" style="padding: 20px">
+            <label for="recruiter">Radius</label>
+            <input placeholder="Miles" [(ngModel)]="searchRequestItem.locationRadius" class="form-control" />
+          </div>
+          <div class="col-md-2" style="padding: 45px">
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="onSearch()">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
                     <div class="p-field-radiobutton">
                         <p-radioButton name="searchType" value="1" [(ngModel)]="searchType"
-                            inputId="jobDetail"></p-radioButton>
-                        <label class="labelType" for="jobDetail">Monster AI Search</label>
+                            inputId="boolean"></p-radioButton>
+                        <label class="labelType" for="jobDetail">Boolean Search</label>
                     </div>
                     <div class="p-field-radiobutton">
                         <p-radioButton name="searchType" value="2" [(ngModel)]="searchType"
-                            inputId="semantic"></p-radioButton>
-                        <label class="labelType" for="semantic">Boolean Search</label>
+                            inputId="intelli"></p-radioButton>
+                        <label class="labelType" for="semantic">Dice IntelliSearch</label>
                     </div>
-                </div> -->
+                </div>
       </accordion-group>
-      <accordion-group heading="Advanced Filters" [isOpen]="false">
+      <accordion-group heading="Advanced Filters" [isOpen]="false" *ngIf="searchType == 1">
         <div class="row">
           <div class="col-md-3" style="padding: 20px">
             <label for="recruiter">Resume Posted Within Days</label>
@@ -188,10 +211,11 @@
               </i>
               <i class="label fa fa-graduation-cap">Skills</i>
               <div class="card-job-skilllist">
-                <div *ngFor="let skill of jobDetail.diceSkills; index as i" class="" style="padding: 5px">
-                  <p-chip label="{{ skill }}"></p-chip>
+                <div *ngFor="let skill of jobDetail.diceSkills; let i = index" class="" style="padding: 5px">
+                  <p-chip *ngIf="i < 6" label="{{ skill }}"></p-chip>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -210,7 +234,7 @@
     <h1 id="dialog-sizes-name1" class="modal-title" style="text-align: center">
       Quick Resume View
     </h1>
-    <i *ngIf="fileReady && !isPDFSrc" class="fa fa-download clickable" (click)="downloadDoc()"></i>
+    <i *ngIf="fileReady && !isPDFSrc" class="fa fa-download clickable" (click)="downloadhtmlPdf()"></i>
   </div>
   <div>
     <div class="row">
@@ -287,7 +311,10 @@
           </ngx-extended-pdf-viewer>
         </div>
         <div *ngIf="fileReady && !isPDFSrc" style="padding: 30px 0px" >
-          <div [innerHTML]="sanitizeHtml(objUrl)" id="pdfdoc" #pdfdoc></div>
+          <div id="printpdf">
+            <div [innerHTML]="sanitizeHtml(objUrl)" id="pdfdoc" #pdfdoc></div>
+          </div>
+          
           <!-- <div >{{objUrl}}</div> -->
         </div>
       </div>

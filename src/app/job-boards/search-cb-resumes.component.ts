@@ -657,6 +657,23 @@ export class SearchResumesCBComponent implements OnInit {
         }
     }
 
+    public downloadhtmlPdf(){
+        setTimeout(() => {
+          const options = {
+            margin: [5, 5, 5, 5], // Optional margin settings
+            filename: this.cfullname+'.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+    
+          html2pdf()
+            .from(document.getElementById('printpdf')!)
+            .set(options)
+            .save();
+        });
+      }
+
     highlightSkills(htmlContent: string, skills: string[]): string {
         skills.forEach((skill) => {
           // Constructing regex pattern to match all variations of the skill

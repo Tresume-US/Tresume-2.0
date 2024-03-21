@@ -256,14 +256,13 @@
 
 <p-sidebar #pTemplate [(visible)]="visibleSidebar2" position="right" [baseZIndex]="1000000" [appendTo]='"body"'
   [style]="{'width':'60rem'}" [blockScroll]="true">
-  <h4 id="dialog-sizes-name1" class="modal-title pull-left">Resume View</h4>
-  <div>
+  <div id="printpdf">
     <div [innerHTML]="sanitizeHtml(resumeHTMLContent)"></div>
   </div>
   <div style="display: flex;
     flex-direction: row;">
     <div>
-      <button type="submit" class="btn btn-primary" (click)="downloadAsPdf()">Download</button>
+      <button type="submit" class="btn btn-primary" (click)="downloadhtmlPdf()">Download</button>
     </div>
   </div>
 </p-sidebar>

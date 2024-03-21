@@ -130,6 +130,13 @@ export class JobBoardsService {
         return this.http.get<ResponseDetails>('https://talent-api.dice.com/v2/profiles/search?' + request, httpOptions);
     }
 
+    getDiceIntelliSearch(request: any, token: string): Observable<ResponseDetails> {
+        let httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'bearer ' + token }),
+        };
+        return this.http.post<ResponseDetails>('https://talent-api.dice.com/v2/profiles/search',request, httpOptions);
+    }
+
     getDiceProfileView(request: any, token: string): Observable<ResponseDetails> {
         let httpOptions = {
             headers: new HttpHeaders({ 'Authorization': 'bearer ' + token }),

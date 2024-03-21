@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,AfterViewInit  } from '@angular/core';
 import {
   HttpClient,
   HttpEvent,
@@ -23,6 +23,7 @@ import * as FileSaver from 'file-saver';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { MessageService } from 'primeng/api';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import * as html2pdf from 'html2pdf.js';
 
 @Component({
   selector: 'app-search-resumes',
@@ -138,7 +139,7 @@ export class SearchResumesComponent implements OnInit {
   selectedRecruiter: any;
 
   @ViewChild('lgModal', { static: false }) lgModal?: ModalDirective;
-  @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
+  @ViewChild('pdfTable', { static: false }) pdfTable!: ElementRef;
   visibleSidebar2: boolean = false;
   OrgID: string;
   userName1: string;
@@ -383,6 +384,24 @@ export class SearchResumesComponent implements OnInit {
         'https://tresume.us/' + x[0].ResumePath,
         x[0].ResumeName
       );
+    });
+  
+  }
+
+  public downloadhtmlPdf(){
+    setTimeout(() => {
+      const options = {
+        margin: [5, 5, 5, 5], // Optional margin settings
+        filename: this.currentResumeID+'resume.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf()
+        .from(document.getElementById('printpdf')!)
+        .set(options)
+        .save();
     });
   }
 
