@@ -2081,7 +2081,7 @@ async function emailPlacementTracker(candidateID, OrgID, placementList) {
     const mailOptions = {
       from: 'support@tresume.us',
       to: 'venkat@tresume.us',
-      subject: 'Candidate Placement Notification',
+      subject: 'Marketers Placement Tracker',
       html: '<p><em>This is to notify that a candidate has been placed.</em></p>',
       attachments: [
         {
