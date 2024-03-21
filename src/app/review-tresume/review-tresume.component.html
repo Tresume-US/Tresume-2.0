@@ -190,8 +190,8 @@
                   [ngModelOptions]="{standalone: true}">
                   <option value disabled selected>Division</option>
                   <option *ngFor="let division of divisions"
-                    [value]="division">{{
-                    division }}</option>
+                    [value]="division.DID">{{
+                    division.Name }}</option>
                 </select>
               </div>
               <div class="col-md-4">
@@ -606,6 +606,7 @@
           <div class="col-md-3 mt-3">
             <button class="btn" (click)="emailPlacementTracker()">Email Placement Tracker</button>
           </div>
+          
 
           <div class="col-md-12 mt-3 text-right">
             <button class="btn"
