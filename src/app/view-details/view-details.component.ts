@@ -26,23 +26,39 @@ export class ViewDetailsComponent {
   idFromCookie: any;
   document: any;
   row: any;
-  approves() {
-    if (!this.rowdata.some(row => !row.admincomment)) {
-      // All comments are filled, proceed with approval logic
-      // Your approval logic here
-    } else {
-      // alert('Please fill out all mandatory fields!');
-    }
-  }
-  
-  rejects() {
-    if (!this.rowdata.some(row => !row.admincomment)) {
-      // All comments are filled, proceed with rejection logic
-      // Your rejection logic here
-    } else {
-      // alert('Please fill out all mandatory fields!');
-    }
-  }
+  commentContainer: any;
+  // isValidComment(): boolean {
+  //   // Check if any row's comment is invalid
+  //   for (let row of this.rowdata) {
+  //     if (!row.admincomment) {
+  //       return false; // Return false if any comment is empty
+  //     }
+  //   }
+  //   return true; // Return true if all comments are valid
+  // }
+
+  // approves() {
+  //   if (!this.isValidComment()) {
+  //     this.showAlert('Please fill the comment field');
+  //   } else {
+  //     // Your approve logic here
+  //   }
+  // }
+
+  // rejects() {
+  //   if (!this.isValidComment()) {
+  //     this.showAlert('Please fill the comment field');
+  //   } else {
+  //     // Your reject logic here
+  //   }
+  // }
+
+  // showAlert(message: string) {
+  //   alert(message);
+    
+  //   // Scroll to the comment container to bring it into view
+  //   this.commentContainer.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  // }
   constructor(private router: Router,private cookieService: CookieService,private service: ViewDetailsService,private messageService: MessageService, private route: ActivatedRoute,private renderer: Renderer2) { }
 
   ngOnInit(): void {
