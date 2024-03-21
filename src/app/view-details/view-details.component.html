@@ -57,15 +57,12 @@
       </div>
     </div>
   </div>
-</div>
-<div>
-</div>
-</div>
+  
   <div class="float-right">
-    <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal" (click)="approves()"> Approve </button>
-    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1" (click)="rejects()"> Reject </button>
-    
+    <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal" (click)="approves()" [disabled]="!isValidComment()">Approve</button>
+    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1" (click)="rejects()" [disabled]="!isValidComment()">Reject</button>
   </div>
+  
     <!-- <button class="btn" (click)="rejectAllProjects()">Reject</button> -->
 
   <div *ngIf="!isAdmin">

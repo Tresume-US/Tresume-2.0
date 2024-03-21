@@ -30,7 +30,11 @@ export class AllTimeListComponent implements OnChanges {
   Locations: any;
   currentLocation: any;
   userName: any;
-
+  sortByCandidateAsc: boolean = true;
+  sortByTotalHoursAsc: boolean = true;
+  sortByCreatedOnRecent: boolean = true;
+  sortByFromDateRecent: boolean = true; 
+  sortByToDateRecent: boolean = true;
   constructor(private cookieService: CookieService, private service: TimesheetListService, private messageService: MessageService)
   {
     this.OrgID = this.cookieService.get('OrgID');
@@ -57,7 +61,48 @@ export class AllTimeListComponent implements OnChanges {
   ngOnChanges(){
   }
 
+  sortDataByFromDate(): void {
+    this.PendingData.sort((a, b) => {
+      const dateA = new Date(a.fromdate).getTime();
+      const dateB = new Date(b.fromdate).getTime();
+      return this.sortByFromDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByFromDateRecent = !this.sortByFromDateRecent; // toggle sorting direction
+  }
 
+  sortDataByToDate(): void {
+    this.PendingData.sort((a, b) => {
+      const dateA = new Date(a.todate).getTime();
+      const dateB = new Date(b.todate).getTime();
+      return this.sortByToDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByToDateRecent = !this.sortByToDateRecent; // toggle sorting direction
+  }
+
+
+  sortDataByTotalHours(): void {
+    this.PendingData.sort((a, b) => {
+      return this.sortByTotalHoursAsc ? a.totalhrs - b.totalhrs : b.totalhrs - a.totalhrs;
+    });
+    this.sortByTotalHoursAsc = !this.sortByTotalHoursAsc; // toggle sorting direction
+  }
+  sortDataByCreatedOn(): void {
+    this.PendingData.sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return this.sortByCreatedOnRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByCreatedOnRecent = !this.sortByCreatedOnRecent; // toggle sorting direction
+  }
+
+  sortDataByCandidate(): void {
+    this.PendingData.sort((a, b) => {
+      if (a.Candidate < b.Candidate) return this.sortByCandidateAsc ? -1 : 1;
+      if (a.Candidate > b.Candidate) return this.sortByCandidateAsc ? 1 : -1;
+      return 0;
+    });
+    this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
+  }
 
   // timesheetroles: number[] = []
   getTimesheetRole() {
