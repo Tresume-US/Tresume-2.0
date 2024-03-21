@@ -526,7 +526,7 @@ onChangesDropdown(selectedOption: any, row: any) {
         formData.append('day5', row.fri);
         formData.append('day6', row.sat);
         formData.append('day7', row.sun);
-        formData.append('totalamt', row.totalAmount);
+        formData.append('totalamt', parseFloat(row.totalAmount).toFixed(2));
         formData.append('admin', this.traineeID);
         formData.append('orgid', this.OrgID);
         formData.append('create_by', this.username);

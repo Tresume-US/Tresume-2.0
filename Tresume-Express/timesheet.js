@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const router = express.Router();
 const pool = require("./database");
@@ -80,32 +82,32 @@ router.post("/getTimesheetReport", async (req, res) => {
         throw err;
       }
       var request = new sql.Request();
-      var query = `SELECT 
-      CONCAT(t.FirstName, ' ', t.LastName) AS TraineeName,
-      tm.*, -- Selecting all columns from timesheet_master
-      o.organizationname
-  FROM 
-      Memberdetails md
-  JOIN 
-      timesheet_master tm ON md.traineeid = tm.traineeid
-  JOIN 
-      organization o ON tm.orgid IN (SELECT value FROM STRING_SPLIT(md.accessorg, ','))
-  JOIN 
-      Trainee t ON tm.traineeid = t.traineeid
-  WHERE 
-      md.useremail = 'karthik@tresume.us'`;
-      
-      
-      
-      // `SELECT 
-      //                 t1.*, 
-      //                 CONCAT(t2.FirstName, ' ', t2.LastName) AS TraineeName
-      //             FROM 
-      //                 timesheet_master AS t1
-      //             JOIN 
-      //                 Trainee AS t2 ON t1.TraineeID = t2.TraineeID
-      //             WHERE 
-      //                 t1.orgid = '${req.body.OrgID}'`;
+  //     var query = `SELECT 
+  //     CONCAT(t.FirstName, ' ', t.LastName) AS TraineeName,
+  //     tm.*, -- Selecting all columns from timesheet_master
+  //     o.organizationname
+  // FROM 
+  //     Memberdetails md
+  // JOIN 
+  //     timesheet_master tm ON md.traineeid = tm.traineeid
+  // JOIN 
+  //     organization o ON tm.orgid IN (SELECT value FROM STRING_SPLIT(md.accessorg, ','))
+  // JOIN 
+  //     Trainee t ON tm.traineeid = t.traineeid
+  // WHERE 
+  //     md.useremail = 'kumarsaravana1821@gmail.com'`;
+
+
+
+  var query =  `SELECT 
+                      t1.*, 
+                      CONCAT(t2.FirstName, ' ', t2.LastName) AS TraineeName
+                  FROM 
+                      timesheet_master AS t1
+                  JOIN 
+                      Trainee AS t2 ON t1.TraineeID = t2.TraineeID
+                  WHERE 
+                      t1.orgid = '${req.body.OrgID}'`;
 
       // Check if startdate and enddate are provided
       if (req.body.startdate && req.body.enddate) {
@@ -145,10 +147,10 @@ router.post("/getPendingTimesheetResult", async (req, res) => {
       }
       var request = new sql.Request();
       if (timesheetrole === 1) {
-      var query =
-        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 1";
-      } else if(timesheetrole === 3) {
-        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '"+req.body.username+"' AND TM.status = 1";
+        var query =
+          "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 1";
+      } else if (timesheetrole === 3) {
+        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '" + req.body.username + "' AND TM.status = 1";
       }
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -178,14 +180,14 @@ router.post("/getRejectedTimesheetResult", async (req, res) => {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        throw err; 
+        throw err;
       }
       var request = new sql.Request();
       if (timesheetrole === 1) {
-      var query =
-        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 2";
-      } else if(timesheetrole === 3) {
-        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '"+req.body.username+"' AND TM.status = 2";
+        var query =
+          "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 2";
+      } else if (timesheetrole === 3) {
+        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '" + req.body.username + "' AND TM.status = 2";
       }
 
       console.log(query);
@@ -221,12 +223,12 @@ router.post("/getCompletedTimesheetResult", async (req, res) => {
         throw err;
       }
       var request = new sql.Request();
-if (timesheetrole === 1) {
-      var query =
-        "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.status = 3";
-      } else if(timesheetrole === 3) {
+      if (timesheetrole === 1) {
+        var query =
+          "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 3";
+      } else if (timesheetrole === 3) {
 
-        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '"+req.body.username+"' AND TM.status = 3";
+        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '" + req.body.username + "' AND TM.status = 3";
 
       }
       console.log(query);
@@ -252,29 +254,29 @@ if (timesheetrole === 1) {
 
 router.post("/getNonBillableTimesheetResult", async (req, res) => {
   try {
-  
+
     const timesheetrole = parseInt(req.body.timesheetrole);
 
 
     sql.connect(config, async function (err) {
       if (err) {
         console.log(err);
-        throw err; 
+        throw err;
       }
       var request = new sql.Request();
 
       var query;
       if (timesheetrole === 1) {
-        query = "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '"+req.body.username+"' AND TM.isBillable = 0";
-      } else if(timesheetrole === 3) {
-        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '"+req.body.username+"' AND TM.isBillable = 0";
- }
- 
+        query = "SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0";
+      } else if (timesheetrole === 3) {
+        query = " SELECT TM.id, CONCAT(t.firstname, ' ', t.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid   WHERE t.username = '" + req.body.username + "' AND TM.isBillable = 0";
+      }
+
       console.log(query);
       request.query(query, async function (err, recordset) {
         if (err) {
           console.log(err);
-          throw err; 
+          throw err;
         }
 
         var result = {
@@ -401,7 +403,7 @@ router.post("/Candidateviewdetails", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT TM.id,TM.admincomment, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='"+req.body.tid+"'";
+      var query = "SELECT TM.id,TM.admincomment, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
 
 
       console.log(query);
@@ -685,7 +687,7 @@ router.post("/fetchtimesheetallcandidate", async (req, res) => {
       }
 
       const query =
-        "SELECT t.traineeid, t.firstname AS TraineeFirstName, t.lastname AS TraineeLastName,ta.firstname AS AdminFirstName,ta.lastname AS AdminLastName,tp.projectname FROM  trainee t JOIN  timesheet_project tp ON t.timesheetproject = tp.projectid LEFT JOIN trainee ta ON t.timesheet_admin = ta.traineeid WHERE t.userorganizationid = " +organizationid;
+        "SELECT t.traineeid, t.firstname AS TraineeFirstName, t.lastname AS TraineeLastName,ta.firstname AS AdminFirstName,ta.lastname AS AdminLastName,tp.projectname FROM  trainee t JOIN  timesheet_project tp ON t.timesheetproject = tp.projectid LEFT JOIN trainee ta ON t.timesheet_admin = ta.traineeid WHERE t.userorganizationid = " + organizationid;
 
       console.log(query);
       const request = new sql.Request();
@@ -813,7 +815,7 @@ router.post('/getInvoiceClientList', async (req, res) => {
     // const request = new sql.Request();
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "SELECT tp.projectid AS projectid, tp.projectname AS ProjectName, c.clientid AS ClientID, c.clientname AS ClientName, c.emailid AS EmailID, c.Address AS Address FROM timesheet_project AS tp JOIN clients AS c ON tp.clientid = c.clientid WHERE tp.orgid = '"+req.body.orgID+"' AND tp.status = 1";
+    const query = "SELECT tp.projectid AS projectid, tp.projectname AS ProjectName, c.clientid AS ClientID, c.clientname AS ClientName, c.emailid AS EmailID, c.Address AS Address FROM timesheet_project AS tp JOIN clients AS c ON tp.clientid = c.clientid WHERE tp.orgid = '" + req.body.orgID + "' AND tp.status = 1";
 
     console.log(query);
 
@@ -957,8 +959,8 @@ router.post('/getProjectList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
-    const query =  "SELECT tp.projectid, tp.Projectname, c.ClientName, tp.startdate, tp.enddate FROM timesheet_project tp JOIN clients c ON tp.clientid = c.ClientID WHERE tp.orgid = '"+req.body.orgid+ "' AND tp.status = 1;";
+
+    const query = "SELECT tp.projectid, tp.Projectname, c.ClientName, tp.startdate, tp.enddate FROM timesheet_project tp JOIN clients c ON tp.clientid = c.ClientID WHERE tp.orgid = '" + req.body.orgid + "' AND tp.status = 1;";
 
     console.log(query);
 
@@ -989,10 +991,10 @@ router.post('/getProjectList', async (req, res) => {
 
 router.post("/deleteProject", async (req, res) => {
   try {
-   
+
     await sql.connect(config);
     const query =
-      "UPDATE timesheet_project SET status = 0 WHERE projectid =  '"+req.body.projectid+"' ";
+      "UPDATE timesheet_project SET status = 0 WHERE projectid =  '" + req.body.projectid + "' ";
 
     const request = new sql.Request();
 
@@ -1011,10 +1013,10 @@ router.post("/deleteProject", async (req, res) => {
 //   try {
 //     const pool = await sql.connect(config);
 //     const request = pool.request();
-  
+
 //     const query =  "select * from Trainee where Active = 1 and isTimeSheet = 1 AND userorganizationid = '" + req.body.OrgID + "' and Role = 'TRESUMEUSER'";
-   
-    
+
+
 //     console.log("Query Results:", recordset);
 
 //     const recordset = await request.query(query);
@@ -1041,7 +1043,7 @@ router.post("/deleteProject", async (req, res) => {
 //     };
 //     res.status(500).send(result);
 //   }
-  
+
 // });
 router.post('/getTimesheetCandidatetList', async (req, res) => {
   let recordset; // Declare recordset outside the try block
@@ -1049,8 +1051,8 @@ router.post('/getTimesheetCandidatetList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-  
-    const query = "SELECT trainee.* FROM trainee INNER JOIN memberdetails ON trainee.userorganizationid IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(memberdetails.accessorg, ',')) WHERE trainee.istimesheet = 1 AND trainee.Role = 'TRESUMEUSER' AND memberdetails.useremail = '"+req.body.username+"' AND trainee.active = 1";
+
+    const query = "SELECT trainee.* FROM trainee INNER JOIN memberdetails ON trainee.userorganizationid IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(memberdetails.accessorg, ',')) WHERE trainee.istimesheet = 1 AND trainee.Role = 'TRESUMEUSER' AND memberdetails.useremail = '" + req.body.username + "' AND trainee.active = 1";
 
     console.log(query);
 
@@ -1069,7 +1071,7 @@ router.post('/getTimesheetCandidatetList', async (req, res) => {
       };
       res.send(result);
     }
-  } 
+  }
   catch (error) {
     console.error("Error fetching candidate data:", error);
     const result = {
@@ -1086,9 +1088,9 @@ router.post('/getCreateProjectList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
+
     // const query =  "select * from timesheet_project where projectname like '%value%' and orgID = this.orgID and active = 1";
-    const query =  "select projectname,projectid from timesheet_project where orgid='"+req.body.OrgID+"' and status = 1";
+    const query = "select projectname,projectid from timesheet_project where orgid='" + req.body.OrgID + "' and status = 1";
 
     console.log(query);
 
@@ -1122,8 +1124,8 @@ router.post('/getPayItemList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
-    const query =  "Select Text from PayType";
+
+    const query = "Select Text from PayType";
 
     console.log(query);
 
@@ -1157,8 +1159,8 @@ router.post('/getLocationList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
-       const query = "select distinct CONCAT(state,' - ',stateAbbr) as state from usazipcodenew ORDER BY state ASC";
+
+    const query = "select distinct CONCAT(state,' - ',stateAbbr) as state from usazipcodenew ORDER BY state ASC";
 
     console.log(query);
 
@@ -1208,12 +1210,12 @@ router.post('/deletetimesheetdata', async (req, res) => {
       error: "An error occurred while deleting the timesheet data!",
     };
     res.status(500).send(result);
-  }  
+  }
 })
 
 router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
   try {
-    
+
     const { traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
     let filename = '';
 
@@ -1236,11 +1238,11 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       .input('clientapproved', sql.VarChar(sql.MAX), filename)
       .input('approvedby', sql.Int, '')
       .input('admincomment', sql.Text, '')
-      .input('created_at', sql.DateTime, new Date()) 
-      .input('status', sql.Int, 1) 
+      .input('created_at', sql.DateTime, new Date())
+      .input('status', sql.Int, 1)
       .input('fromdate', sql.DateTime, fromdate)
       .input('todate', sql.DateTime, todate)
-   .input('isBillable', sql.Bit, isBillableBool)
+      .input('isBillable', sql.Bit, isBillableBool)
       .input('payterm', sql.Int, payterm)
       .input('service', sql.Int, service)
       .input('location', sql.Int, '1')
@@ -1252,13 +1254,13 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       .input('day5', sql.VarChar(10), day5)
       .input('day6', sql.VarChar(10), day6)
       .input('day7', sql.VarChar(10), day7)
-      .input('totalamt', sql.VarChar(50), totalamt)
+      .input('totalamt', sql.Float, parseFloat(totalamt))
       .input('admin', sql.Int, admin)
       .input('orgid', sql.Int, orgid)
       .input('create_by', sql.VarChar(50), create_by)
       .query(`INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, projectid, details, clientapproved,created_at,status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @projectid, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`);
 
-   
+
     res.status(200).json({ message: 'Timesheet Created successfully', filename });
   } catch (error) {
     console.error('Error creating timesheet:', error);
@@ -1335,8 +1337,8 @@ router.post('/gettimesheetrole', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    
-       const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole, CONCAT(FirstName,' ', LastName) as Name from trainee where traineeID='"+req.body.traineeID+"'";
+
+    const query = "select TraineeID, OrganizationID,timesheet_role as timesheetrole, CONCAT(FirstName,' ', LastName) as Name from trainee where traineeID='" + req.body.traineeID + "'";
 
     console.log(query);
 
@@ -1373,14 +1375,14 @@ router.post("/deleteTimesheet", async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '"+req.body.Id+"'";
+    const query = "UPDATE timesheet_Master SET status = 0 WHERE id = '" + req.body.Id + "'";
 
 
 
     // request.input('Id', sql.Int, req.body.Id);
-    
+
     const result = await request.query(query);
-    
+
     if (result.rowsAffected[0] > 0) {
       const response = {
         flag: 1,
@@ -1411,9 +1413,9 @@ router.post("/UpdateAcceptStatus", async (req, res) => {
     const request = pool.request();
     // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 3 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
     // request.input('Id', sql.Int, req.body.Id);
-    const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 3 WHERE id = '"+req.body.id+"';"
+    const query = "UPDATE timesheet_Master SET comments = '" + req.body.comments + "', status = 3 WHERE id = '" + req.body.id + "';"
     const result = await request.query(query);
-    
+
     if (result.rowsAffected[0] > 0) {
       const response = {
         flag: 1,
@@ -1443,10 +1445,10 @@ router.post("/UpdateRejectStatus", async (req, res) => {
     // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
     // request.input('Id', sql.Int, req.body.Id);
 
-    const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE  id = '"+req.body.id+"';"
-    
+    const query = "UPDATE timesheet_Master SET comments = '" + req.body.comments + "', status = 2 WHERE  id = '" + req.body.id + "';"
+
     const result = await request.query(query);
-    
+
     if (result.rowsAffected[0] > 0) {
       const response = {
         flag: 1,
@@ -1468,5 +1470,4 @@ router.post("/UpdateRejectStatus", async (req, res) => {
     res.status(500).send(response);
   }
 });
-
 
