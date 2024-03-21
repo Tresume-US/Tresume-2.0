@@ -181,6 +181,7 @@ export class ReviewTresumeComponent implements OnChanges {
   txtComments: any;
   MarketerName: any;
   TresumeID:any = '';
+  candiateName: any;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -476,7 +477,9 @@ export class ReviewTresumeComponent implements OnChanges {
   constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router) {
     
     this.candidateID = this.route.snapshot.params["traineeID"];
+    this.candiateName  = this.route.snapshot.queryParams['firstName'];
     console.log(this.candidateID);
+    console.log('First Name:', this.candiateName);
     this.tabIndex = this.route.snapshot.params["tabIndex"];
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
@@ -497,7 +500,7 @@ export class ReviewTresumeComponent implements OnChanges {
     this.getcandidaterstatus();
     this.getLegalStatusOptions();
     this.getState();
-    
+    this.getdivision();
 
     this.currentTabIndex = this.tabIndex;
     
@@ -658,20 +661,45 @@ export class ReviewTresumeComponent implements OnChanges {
     });
   }
 
-  emailPlacementTracker() {
+  // emailPlacementTracker() {
     
+  //   const req = {
+  //     TraineeID: this.candidateID,
+  //     OrgID: this.OrgID,
+  //   };
+   
+  //   this.service.Sendplacementmail(req).subscribe((x: any) => {
+  //     this.TraineeID = x.result;
+  //     this.OrgID = x.result;
+  //   });
+
+  //   alert(this.candidateID);
+  // }
+
+  emailPlacementTracker() {
+    this.loading = true;
     const req = {
       TraineeID: this.candidateID,
-      OrgID: this.OrgID
+      OrgID: this.OrgID,
+      placementList: this.placementList
     };
-   
-    this.service.placementTrackerReport(req).subscribe((x: any) => {
-      this.TraineeID = x.result;
-      this.OrgID = x.result;
-    });
-
-    console.log(req);
+  
+    this.service.Sendplacementmail(req).subscribe(
+      (response: any) => {
+        console.log('Email sent successfully:', response);
+        this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
+        this.loading = false;
+      },
+      (error: any) => {
+        console.error('Error sending email:', error);
+        this.messageService.add({ severity: 'error', summary: 'Failed to send Mail' });
+        this.loading = false;
+      }
+    );
   }
+  
+
+  
   
   getSubmissionList() {
     const req = {
@@ -712,6 +740,15 @@ export class ReviewTresumeComponent implements OnChanges {
       this.currentStatusOptions = x;
     });
   }
+
+  getdivision() {
+    const Req = {
+    };
+    this.service.divisiondropdown(Req).subscribe((x: any) => {
+      this.divisions = x;
+    });
+  }
+
   getLegalStatusOptions() {
     const request = {};
 

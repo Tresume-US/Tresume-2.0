@@ -12,6 +12,10 @@ const envconfig = require(`./config.${environment}.js`);
 const apiUrl = envconfig.apiUrl;
 router.use(bodyparser.json());
 const exceljs = require("exceljs");
+const excel = require('exceljs');
+const fs = require('fs');
+
+
 
 const config = {
   user: "sa",
@@ -1642,6 +1646,21 @@ router.post("/candidatestatus", function (req, res) {
   });
 });
 
+router.post("/divisiondropdown", function (req, res) {
+  sql.connect(config, function (err) {
+    if (err) console.log(err);
+    var request = new sql.Request();
+    request.query("select * from division ", function (err, recordset) {
+      if (err) console.log(err);
+      var result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(recordset.recordsets[0]);
+    });
+  });
+});
+
 router.post("/getLegalStatus", function (req, res) {
   sql.connect(config, function (err) {
     if (err) console.log(err);
@@ -1925,39 +1944,179 @@ router.post("/DeleteTresumeNode", async (req, res) => {
   }
 });
 
-router.post("/placementTrackerReport", async (req, res) => {
+// router.post("/placementTrackerReport", async (req, res) => {
+//   try {
+//     const pool = await sql.connect(config);
+//     const request = new sql.Request();
+//     // const query =
+//     //   "select distinct state from usazipcodenew order by state asc;";
+
+//     console.log(query);
+
+//     const recordset = await request.query(query);
+
+//     if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+//       const result = {
+//         flag: 1,
+//         result: recordset.recordsets[0],
+//       };
+//       res.send(result);
+//     } else {
+//       const result = {
+//         flag: 0,
+//         error: "No Placements found! ",
+//       };
+//       res.send(result);
+//     }
+//   } catch (error) {
+//     console.error("Error fetching placement Details", error);
+//     const result = {
+//       flag: 0,
+//       error: "An error occurred while fetching Placements!",
+//     };
+//     res.status(500).send(result);
+//   }
+// });
+
+// async function emailPlacementTracker(candidateID, OrgID) {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       port: 465,
+//       host: "smtp.mail.yahoo.com",
+//       auth: {
+//         user: "support@tresume.us",
+//         pass: "xzkmvglehwxeqrpd",
+//       },
+//       secure: true,
+//     });
+
+//     const mailOptions = {
+//       from: 'support@tresume.us',
+//       to: 'venkat@tresume.us',
+//       bcc: '',
+//       subject: 'Candidate Placement Notification',
+//       html: `
+//         <p><strong>Organization ID:</strong> ${OrgID}</p>
+//         <p><em>This is to notify that a candidate has been placed.</em></p>
+//       `,
+//     };
+
+//     await transporter.sendMail(mailOptions);
+
+//     console.log("Placement email sent successfully.");
+//   } catch (error) {
+//     console.error("Error while sending placement email:", error);
+//   }
+// }
+
+// router.post("/Sendplacementmail", async (req, res) => {
+//   try {
+//     const { candidateID, OrgID } = req.body;
+
+//     await emailPlacementTracker(candidateID, OrgID);
+
+//     res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
+//   } catch (error) {
+//     console.error("Error handling placement notification:", error);
+//     res.status(500).json({ success: false, message: 'Internal server error' });
+//   }
+// });
+
+// router.post("/Sendplacementmail", async (req, res) => {
+//   try {
+//     const { candidateID, OrgID, placementList } = req.body;
+
+//     // Call emailPlacementTracker function with candidateID, OrgID, and placementList
+//     await emailPlacementTracker(candidateID, OrgID, placementList);
+
+//     res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
+//   } catch (error) {
+//     console.error("Error handling placement notification:", error);
+//     res.status(500).json({ success: false, message: 'Internal server error' });
+//   }
+// });
+
+async function emailPlacementTracker(candidateID, OrgID, placementList) {
   try {
-    const pool = await sql.connect(config);
-    const request = new sql.Request();
-    // const query =
-    //   "select distinct state from usazipcodenew order by state asc;";
+    // Create a workbook and add a worksheet
+    const workbook = new excel.Workbook();
+    const worksheet = workbook.addWorksheet('Placement Data');
+    
+    // Define table headers
+    const headers = ['Work Start Date', 'Work End Date', 'Position Title', 'Marketer', 'End Client Name', 'Vendor', 'End Client Address'];
 
-    console.log(query);
+    // Add headers to the worksheet
+    worksheet.addRow(headers);
 
-    const recordset = await request.query(query);
+    // Add data to the worksheet
+    placementList.forEach(placement => {
+      const rowData = [
+        placement.POStartDate,
+        placement.POEndDate,
+        placement.PositionTitle,
+        placement.MarketerFirstName,
+        placement.ClientName,
+        placement.VendorName,
+        placement.ClientAddress
+      ];
+      worksheet.addRow(rowData);
+    });
 
-    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
-      const result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    } else {
-      const result = {
-        flag: 0,
-        error: "No Placements found! ",
-      };
-      res.send(result);
-    }
-  } catch (error) {
-    console.error("Error fetching placement Details", error);
-    const result = {
-      flag: 0,
-      error: "An error occurred while fetching Placements!",
+    // Generate a temporary file to save the workbook
+    const tempFilePath = './placement_data.xlsx';
+    await workbook.xlsx.writeFile(tempFilePath);
+
+    // Create nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      port: 465,
+      host: "smtp.mail.yahoo.com",
+      auth: {
+        user: "support@tresume.us",
+        pass: "xzkmvglehwxeqrpd",
+      },
+      secure: true,
+    });
+
+    // Construct email options
+    const mailOptions = {
+      from: 'support@tresume.us',
+      to: 'venkat@tresume.us',
+      subject: 'Candidate Placement Notification',
+      html: '<p><em>This is to notify that a candidate has been placed.</em></p>',
+      attachments: [
+        {
+          filename: 'placement_data.xlsx',
+          path: tempFilePath
+        }
+      ]
     };
-    res.status(500).send(result);
+
+    // Send email with placement data
+    await transporter.sendMail(mailOptions);
+
+    console.log("Placement email sent successfully.");
+
+    // Delete the temporary Excel file after sending email
+    fs.unlinkSync(tempFilePath);
+  } catch (error) {
+    console.error("Error while sending placement email:", error);
+    throw error;
+  }
+}
+
+router.post("/Sendplacementmail", async (req, res) => {
+  try {
+    const { candidateID, OrgID, placementList } = req.body;
+
+    await emailPlacementTracker(candidateID, OrgID, placementList);
+
+    res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
+  } catch (error) {
+    console.error("Error handling placement notification:", error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
 
 router.post("/insertRecruitmentTracker", async (req, res) => {
   try {
