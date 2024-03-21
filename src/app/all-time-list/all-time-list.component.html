@@ -48,6 +48,7 @@
                                 <tr>
                                      <th>ID</th>
                                      <th (click)="sortDataByCandidate()">Candidate <i class="fa fa-sort"></i></th>
+                                     <th>Project Name</th>
                                      <th (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></th>
                                      <th (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></th>
                                     <th (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></th>
@@ -61,6 +62,7 @@
                                 <tr *ngFor="let row of PendingData">
                                     <td>{{ row.id}}</td>
                                     <td>{{ row.Candidate }}</td>
+                                    <td>{{ row.projectname}}</td>
                                     <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.totalhrs }}</td>
@@ -96,6 +98,7 @@
                                 <tr>
                                   <th>ID</th>
                                     <th>Candidate</th>
+                                    <th>Project Name</th>
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Total Hours</th>
@@ -109,6 +112,7 @@
                                 <tr *ngFor="let row of rejectedData">
                                   <td>{{ row.id}}</td>
                                     <td>{{ row.Candidate }}</td>
+                                    <td>{{ row.projectname}}</td>
                                     <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.totalhrs }}</td>
@@ -144,6 +148,7 @@
                                 <tr>
                                   <th>ID</th>
                                     <th>Candidate</th>
+                                    <th>Project Name</th>
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Total Hours</th>
@@ -157,6 +162,7 @@
                                 <tr *ngFor="let row of completedData">
                                   <td>{{ row.id}}</td>
                                     <td>{{ row.Candidate }}</td>
+                                    <td>{{ row.projectname}}</td>
                                     <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.totalhrs }}</td>
@@ -192,6 +198,7 @@
                                 <tr>
                                   <th>ID</th>
                                     <th>Candidate</th>
+                                    <th>Project Name</th>
                                     <th>From Date</th>
                                     <th>To Date</th>
                                     <th>Total Hours</th>
@@ -206,6 +213,7 @@
                                 <tr *ngFor="let row of nonBillableData">
                                   <td>{{ row.id}}</td>
                                     <td>{{ row.Candidate }}</td>
+                                    <td>{{ row.projectname}}</td>
                                     <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
                                     <td>{{ row.totalhrs }}</td>
