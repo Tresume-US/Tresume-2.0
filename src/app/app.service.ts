@@ -66,19 +66,6 @@ export class AppService {
         return this.ViewOnly.includes(numberToCheck);
       }
 
-      initializeDate(): Date {
-        const currentDate = new Date();
-        currentDate.setUTCHours(0, 0, 0, 0); // Set time to midnight
-        return currentDate;
-      }
-    
-      // Convert a date to UTC
-      toUTC(date: Date): Date {
-        const utcDate = new Date(date);
-        utcDate.setUTCHours(0, 0, 0, 0); // Set time to midnight
-        return utcDate;
-      }
-
 }
 
 export interface ResponseDetails {
