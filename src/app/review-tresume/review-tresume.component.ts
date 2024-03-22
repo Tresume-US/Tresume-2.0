@@ -81,7 +81,7 @@ export class ReviewTresumeComponent implements OnChanges {
   email: string = '';
   dealOffered: string = '';
   referredByExternal: string = '';
-  statusDate: string = '';
+  statusDate: Date;
   duiFelonyInfo: string = '';
   statusStartDate: string = '';
   statusEndtDate: string = '';
@@ -233,11 +233,11 @@ export class ReviewTresumeComponent implements OnChanges {
       DealOffered: this.DealOffered,
       ReferredBy: this.SelectedRefered,
       ssn: this.ssn,
-      statusDate: this.statusDate,
+      statusDate:this.AppService.toUTC(this.statusDate),
       duiFelonyInfo: this.duiFelonyInfo,
       selectedcurrentstatus: this.selectedcurrentstatus,
-      legalStatusVal: this.legalStatusVal,
-      legalStatusValend: this.legalStatusValend,
+      legalStatusVal:this.AppService.toUTC(this.legalStatusVal),
+      legalStatusValend:this.AppService.toUTC(this.legalStatusValend),
       selectedLegalStatus: this.selectedLegalStatus,
       ftcNotes: this.ftcNotes,
       otherNotes: this.otherNotes,
