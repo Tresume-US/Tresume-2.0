@@ -276,7 +276,7 @@
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="education5">University Address</label>
-                    <input type="text" class="form-control" id="univAddress"
+                    <input type="text" class="form-control" id="Location"
                       placeholder="University Address"
                       [(ngModel)]="education.Location" (change)="UpdateTresumeNode(1,education)">
                   </div>
@@ -307,14 +307,14 @@
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="experience2">Employment Start Date</label>
-                    <input type="text" class="form-control" id="experience2"
+                    <input type="date" class="form-control" id="experience2"
                       placeholder="Employment Start Date"
                       [ngModel]="experience.NodeDate | date:'yyyy-MM-dd'"
                       (ngModelChange)="experience.NodeDate = $event" (change)="UpdateTresumeNode(2,experience)">
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="experience3">Employment End Date</label>
-                    <input type="text" class="form-control" id="experience3"
+                    <input type="date" class="form-control" id="experience3"
                       placeholder="Employment End Date"
                       [ngModel]="experience.NodeDateTo | date:'yyyy-MM-dd'"
                       (ngModelChange)="experience.NodeDateTo = $event" (change)="UpdateTresumeNode(2,experience)">
