@@ -59,8 +59,8 @@ export class ReviewTresumeComponent implements OnChanges {
   recruiterName: any = 0;
   ReferredBy: any;
   currentStatus: any;
-  legalStatusVal: any;
-  legalStatusValend: any;
+  legalStatusVal: Date;
+  legalStatusValend: Date;
   division: any;
   OrgID: string;
   userName: string;
@@ -791,7 +791,7 @@ export class ReviewTresumeComponent implements OnChanges {
       this.phoneNumberG = x.result[0].PhoneNumber || ''; 
       this.generalEmail = x.result[0].UserName || '';
       this.selectedrecruiterName = x.result[0].RecruiterName || '';
-      this.legalStatusVal = x.result[0].LegalStatusValidFrom || ''; 
+      this.legalStatusVal = x.result[0].Legalstartdate || ''; 
       this.firstName = x.result[0].FirstName || '';
       this.middleName = x.result[0].MiddleName || '';
       this.lastName = x.result[0].LastName || '';
@@ -1055,24 +1055,19 @@ cancelDeletesubmission() {
   }
 
   addRecruitmentTracker() {
-     
-    this.loading = true;
       let Req = {
         TraineeID: this.candidateID,
         OrgID:this.OrgID
     };
-    console.log(Req);
+    console.log('Form values:', this.myFormFinancial.value);
     this.service.insertRecruitmentTracker(Req).subscribe(
       (x: any) => {
-        this.handleSuccess(x);
-        this.loading = false;
+        this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
       },
       (error: any) => {
-        this.handleError(error);
-        this.loading = false;
+        this.messageService.add({ severity: 'error', summary: 'Failed to send Mail' });
       }
     );
-    
   }
 
   // Education
