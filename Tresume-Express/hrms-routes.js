@@ -788,9 +788,10 @@ router.post("/getSubmissionList", async (req, res) => {
     const pool = await sql.connect(config);
     const request = new sql.Request();
     // const candidateID = '20742';
-    const query = `SELECT S.submissionid,S.Title, S.SubmissionDate, CONCAT(T.FirstName, ' ', T.LastName) AS MarketerName, S.VendorName, S.ClientName, S.Note, S.Rate, S.CreateBy, S.CreateTime, S.Active, S.TraineeID, S.LastUpdateBy, S.LastUpdateTime
+    const query = `SELECT S.submissionid,S.Title, S.SubmissionDate, CONCAT(MT.FirstName, ' ', MT.LastName) AS MarketerName, S.VendorName, S.ClientName, S.Note, S.Rate, S.CreateBy, S.CreateTime, S.Active, S.TraineeID, S.LastUpdateBy, S.LastUpdateTime
       FROM Submission S
       INNER JOIN Trainee T ON S.TraineeID = T.TraineeID
+      Left JOIN Trainee MT ON MT.TraineeID = S.MarkerterID
       WHERE T.TraineeID = ${req.body.TraineeID} AND S.Active = 1`;
     console.log(query);
 
