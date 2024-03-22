@@ -132,7 +132,8 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="statusDate">Status Date</label>
-                  <input type="text" class="form-control" id="statusDate"
+                  <input type="text" class="form-control" id="statusDate" [(bsValue)]="statusDate"
+                  bsDatepicker
                     placeholder="Status Date" [(ngModel)]="statusDate"
                     [ngModelOptions]="{standalone: true}">
                 </div>
@@ -149,7 +150,7 @@
             <div class="row mt-2">
               <div class="col-md-4">
                 <label for="status">Current Status</label>
-                <select class="form-control" id="currentStatus" [(ngModel)]="selectedcurrentstatus"
+                <select class="form-control" id="currentStatus" [(ngModel)]="selectedcurrentstatus" 
                 [ngModelOptions]="{standalone: true}">
                 <option *ngFor="let option of  currentStatusOptions" [value]="option.CSID">{{ option.CSName }}</option>
               </select>

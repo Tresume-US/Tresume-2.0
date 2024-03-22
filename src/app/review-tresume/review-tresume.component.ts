@@ -6,6 +6,7 @@ import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/fo
 import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
+import { DatePipe } from '@angular/common';
 
 @Component({
   templateUrl: './review-tresume.component.html',
@@ -233,7 +234,7 @@ export class ReviewTresumeComponent implements OnChanges {
       DealOffered: this.DealOffered,
       ReferredBy: this.SelectedRefered,
       ssn: this.ssn,
-      statusDate: this.statusDate,
+      statusDate: this.datePipe.transform(this.statusDate),
       duiFelonyInfo: this.duiFelonyInfo,
       selectedcurrentstatus: this.selectedcurrentstatus,
       legalStatusVal: this.legalStatusVal,
@@ -474,7 +475,7 @@ export class ReviewTresumeComponent implements OnChanges {
     }
   }
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router) {
+  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe) {
     
     this.candidateID = this.route.snapshot.params["traineeID"];
     this.candiateName  = this.route.snapshot.queryParams['firstName'];
