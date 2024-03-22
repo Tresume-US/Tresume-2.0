@@ -825,9 +825,9 @@ export class SearchResumesDiceComponent implements OnInit {
           this.totalResults = response.meta.totalCount;
           this.rowData.forEach((item: { migrated: boolean; legacyIds: any[]; showmigrated: boolean; EdgeID: any; diceSkills: any; skills: any[]; }) => {
             item.migrated = this.migratedProfiles.find(x => x.ATSID == item.legacyIds[0]) ? true : false;
-            if (this.showcrediterror) {
+            if (this.showcrediterror == true) {
               item.showmigrated = this.migratedProfiles.find(x => x.ATSID == item.EdgeID) ? true : false;
-            }
+          }
             item.diceSkills = item.skills ? item.skills.map((skill: { skill: any; }) => skill.skill) : [];
           });
         },

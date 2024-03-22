@@ -13,7 +13,7 @@ import * as FileSaver from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NgxExtendedPdfViewerService, TextLayerRenderedEvent } from 'ngx-extended-pdf-viewer';
-
+import * as html2pdf from 'html2pdf.js';
 
 const b64toBlob = (b64Data: any, contentType = '', sliceSize = 512) => {
     const byteCharacters = atob(b64Data);
@@ -237,6 +237,18 @@ export class SearchResumesMonsterComponent implements OnInit {
     isallowed: any = true;
     divcandidateemail: any = '';
     availablecredits:any = 0;
+    Htmlresumetopdf: any;
+    cfullname: string;
+    clocation: any;
+    cyearsofExperience: string;
+    cemail: any;
+    cphone: any;
+    cjobtitle: any;
+    cskill: any;
+    migratedResumeID: any;
+    cworkpermit: string;
+    csocialsource: string;
+    ceducation: string;
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer, private pdfViewerService: NgxExtendedPdfViewerService) {
@@ -323,53 +335,99 @@ export class SearchResumesMonsterComponent implements OnInit {
     }
 
     private download(params: any) {
-        console.log(params);
-        let req = {
-            resumeID: params.textResumeID,
-            token: this.accessToken
+        let inputString;
+        if(this.searchType ==2){
+          inputString = this.model.boolean || '';
+        }else{
+          inputString = this.model.keyword || '';
         }
-        this.loading = true;
-        this.service.getMonsterCandidateDetails(req).subscribe((x: any) => {
-            this.loading = false;
-            if (x.status == "fail") {
-                this.messageService.add({ severity: 'warning', summary: 'No Resume Found' });
-                return;
-            }
-            let profileDetails = x;
-            let emailID = profileDetails.identity.emailAddress;
-            this.divcandidateemail = profileDetails.identity.emailAddress;
-            let name = profileDetails.identity.name.split(" ");
-            let firstName = name[0];
-            let lastName = name[1];
-            let title = profileDetails.targetJobTitle;
-            let CurrentLocation = profileDetails.location.state;
-            let YearsOfExpInMonths = (profileDetails.yearsOfExperience * 12).toString();
-            let skilllist: any = profileDetails.relevance.skills;
-            let skills: any = [];
-            skilllist.forEach((itm: any) => {
-                skills.push(itm.name);
-            });
-            let HtmlResume = profileDetails.resume;
-            let source = "Monster";
-            let ATSID = params.textResumeID;
-            this.currentResumeID = emailID;
-            let req1: MonsterProfileRequestItem = {
-                emailID: emailID
-            }
-            this.service.checkIfResumeExists(req1).subscribe((y: any) => {
-                if (y.length > 0) {
-                    this.objUrl = this.sanitizer.bypassSecurityTrustHtml(y[0].HtmlResume);
+        console.log(this.model.boolean);
+        var keywords: any[] = [];
+        if (inputString.trim() !== '') {
+          keywords = inputString.match(/"[^"]+"|\S+/g);
+          if (keywords !== null) {
+            keywords = keywords
+              .map((keyword: string) => keyword.replace(/(^"|"$|\(|\))/g, ''))
+              .filter(
+                (keyword: string) =>
+                  !['and', 'or', 'not'].includes(keyword.toLowerCase())
+              );
+            keywords = keywords.filter((keyword) => keyword !== '');
+            keywords = keywords.map((keyword) => keyword.replace(/^"|"$/g, ''));
+          } else {
+            keywords = [];
+          }
+        }
+
+        console.log(keywords);
+        let req1 = {
+            md5emailID: params.textResumeID
+        };
+        this.service.checkmd5resume(req1).subscribe((y: any) => {
+            if (y.length > 0) {
+                this.isPDFSrc = false;
+                this.objUrl = this.highlightSkills(y[0].HtmlResume, keywords);
+                this.Htmlresumetopdf = y[0].HtmlResume;
+                this.loading = false;
+                this.fileReady = true;
+                this.visibleSidebar2 = true;
+                this.cfullname = (y[0].FirstName ?? '') + ' ' + (y[0].LastName ?? '');
+                this.clocation = y[0].CurrentLocation ?? '';
+                this.cyearsofExperience = ((y[0].YearsOfExpInMonths ?? 0) / 12).toString();
+                this.cemail = y[0].UserName ?? '';
+                this.cphone = y[0].PhoneNumber ?? '';
+                this.cjobtitle = y[0].Title ?? '';
+                const skillsString = y[0].Skill || '';
+                const skillsArray = skillsString.split(',');
+                const skillsObject = skillsArray.map((skill: any) => ({ skill }));
+                console.log(skillsObject);
+                this.cskill = skillsObject;
+                this.migratedResumeID = y[0].UserName ?? '';
+            } else {
+                let req2 = {
+                    resumeID: params.textResumeID,
+                    token: this.accessToken
+                };
+                this.loading = true;
+                this.service.getMonsterCandidateDetails(req2).subscribe((x: any) => {
                     this.loading = false;
-                    this.isPDFSrc = false;
-                    this.fileReady = true;
-                    this.visibleSidebar2 = true;
-                    this.isMigratedProfile = true;
-                }
-                else {
+                    if (x.status == 'fail') {
+                        this.messageService.add({ severity: 'warning', summary: 'No Resume Found' });
+                        return;
+                    }
+                    let profileDetails = x;
+                    let emailID = profileDetails.identity.emailAddress;
+                    this.divcandidateemail = emailID;
+                    let name = profileDetails.identity.name.split(' ');
+                    let firstName = name[0];
+                    let lastName = name[1] || '';
+                    let title = profileDetails.targetJobTitle;
+                    let CurrentLocation = profileDetails.location.state || '';
+                    let YearsOfExpInMonths = (profileDetails.yearsOfExperience * 12).toString();
+                    let skilllist: any[] = profileDetails.relevance.skills || [];
+                    let skills: string[] = [];
+                    skilllist.forEach((itm: any) => {
+                        skills.push(itm.name);
+                    });
+                    let HtmlResume = profileDetails.resume;
+                    let source = 'Monster';
+                    let ATSID = params.textResumeID;
+    
+                    this.cfullname = firstName + ' ' + lastName;
+                    this.clocation = CurrentLocation;
+                    this.cphone = '';
+                    this.cemail = emailID;
+                    this.cworkpermit = '';
+                    this.cyearsofExperience = profileDetails.yearsOfExperience;
+                    this.cjobtitle = title;
+                    this.csocialsource = '';
+                    this.ceducation = '';
+                    this.cskill = skills;
+    
                     let b64Data: any = x.resumeDocument.file;
                     this.fileBlob = b64Data;
                     let contentType = x.resumeDocument.fileContentType;
-                    this.isPDFSrc = (contentType === "application/pdf") ? true : false;
+                    this.isPDFSrc = contentType === 'application/pdf';
                     this.currentResumeResp = x.resumeDocument;
                     const blob = b64toBlob(b64Data, contentType);
                     if (!this.isPDFSrc) {
@@ -391,28 +449,83 @@ export class SearchResumesMonsterComponent implements OnInit {
                         source: source,
                         ATSID: ATSID,
                         traineeId: this.traineeId
-                    }
+                    };
                     this.service.createJobSeekerProfile(createRequest).subscribe(z => {
-                        console.log('z', z)
+                        console.log('z', z);
                         let saveResumeReq = {
                             Filename: x.resumeDocument.fileName,
                             Content: this.fileBlob,
                             userName: this.traineeId,
                             emailID: emailID
-                        }
-                        this.service.saveResume(saveResumeReq).subscribe(x => {
-
+                        };
+                        this.service.saveResume(saveResumeReq).subscribe(() => {
+                            // Handle success if needed
                         });
-
                     });
                     this.adddivisionaudit();
-
-                }
-            });
+                });
+            }
         });
-
-
     }
+    highlightSkills(htmlContent: string, skills: string[]): string {
+        skills.forEach((skill) => {
+          // Constructing regex pattern to match all variations of the skill
+          var htmltagslist = [
+            'data',
+            'big',
+            'center',
+            'embed',
+            'form',
+            'meta',
+            'input',
+            'select',
+            'menu',
+            'style',
+            'strike',
+            'border',
+            'disc',
+            'type',
+            'circle',
+          ];
+          if (!htmltagslist.includes(skill.toLowerCase())) {
+            const regex = new RegExp(
+              `\\b${skill
+                .split('')
+                .map((c) => `[${c}${c.toUpperCase()}]`)
+                .join('')}+\\b`,
+              'g'
+            );
+            console.log(regex);
+            htmlContent = htmlContent.replace(
+              regex,
+              `<span style="background-color: yellow;font-weight: bold;">$&</span>`
+            );
+          }
+        });
+        return htmlContent;
+      }
+    
+      sanitizeHtml(htmlContent: string): SafeHtml {
+        return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+      }
+    
+      public downloadhtmlPdf(){
+        setTimeout(() => {
+          const options = {
+            margin: [5, 5, 5, 5], // Optional margin settings
+            filename: this.cfullname+'.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+    
+          html2pdf()
+            .from(document.getElementById('printpdf')!)
+            .set(options)
+            .save();
+        });
+      }
+    
 
     public downloadDoc() {
         if (this.isMigratedProfile) {
@@ -821,7 +934,7 @@ export interface MonsterProfileRequestItem {
     title?: string;
     currentLocation?: string;
     yearsOfExpInMonths?: string;
-    skills?: string;
+    skills?: string[];
     htmlResume?: string;
     source?: string;
     ATSID?: string;
