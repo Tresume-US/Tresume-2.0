@@ -827,7 +827,7 @@ export class ReviewTresumeComponent implements OnChanges {
       }else{
         var tinfo = x.tresumeInfo
         tinfo.forEach((item: { TresumeNodeTypeID?: any; Title?: string; Org?: string; NodeDate?: string; NodeDateTo?: string; 
-          Location?: string; TresumeNodeID?: string; TresumeID?: string; Skill?: string; }) => {
+          Location?: any; TresumeNodeID?: string; TresumeID?: string; Skill?: string; }) => {
           // Check the value of TresumeNodeTypeID
           if (item.TresumeNodeTypeID === 1) {
             this.educations.push(item);
@@ -1142,6 +1142,7 @@ this.loading = true;
           Org: '',
           NodeDate: '',
           NodeDateTo: '',
+          Location: '',
           TresumeNodeID:x.TresumeNodeID,
           TresumeID:x.TresumeID,
           Skill:''
@@ -1159,7 +1160,7 @@ this.loading = true;
   UpdateTresumeNode(type:any,data:any){
     console.log(data);
     let req = {
-      data:data,  
+      data:data,
     };
     this.service.UpdateTresumeNode(req).subscribe(
       (x: any) => {

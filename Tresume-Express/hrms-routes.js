@@ -1831,8 +1831,9 @@ VALUES ('${TresumeID}' ,'${req.body.TraineeID}' ,'' ,'' ,1 ,GETDATE() ,'${req.bo
     }
 
     var query = `INSERT INTO [dbo].[TresumeNode] ([TresumeNodeID] ,[TresumeID] ,[ParentTresumeNodeID] ,[NodeDate] ,[Title] ,[Description] ,[TresumeNodeTypeID] ,[SortOrder] ,[Active] ,[CreateTime] ,[CreateBy] ,[LastUpdateTime] ,[LastUpdateBy] ,[NodeDateTo] ,[Org] ,[Location] ,[Tools] ,[Skill])
-         VALUES ('${TresumeNodeID}' ,'${TresumeID}' ,'' ,GETDATE() ,'' ,'' ,'${req.body.type}' ,'' ,1 ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'' ,'' ,'' ,'')`;
-    console.log(query);
+         VALUES ('${TresumeNodeID}' ,'${TresumeID}' ,'' ,GETDATE() ,'' ,'' ,'${req.body.type}' ,'' ,1 ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'' ,'${req.body.Location}' ,'' ,'')`;
+    
+         console.log(query);
     await sql.query(query);
 
     await sql.close();
@@ -1907,10 +1908,11 @@ router.post("/UpdateTresumeNode", async (req, res) => {
       ? `'${req.body.data.NodeDateTo}'`
       : "NULL";
     const skill = req.body.data.Skill ? `'${req.body.data.Skill}'` : "NULL";
+    const Location = req.body.data.Location ? `'${req.body.data.Location}'` : "NULL";
 
     var query = `UPDATE TresumeNode 
                  SET Title = ${title}, Org = ${org}, NodeDate = ${nodeDate}, 
-                     NodeDateTo = ${nodeDateTo}, Skill = ${skill}
+                     NodeDateTo = ${nodeDateTo}, Skill = ${skill}, Location = ${Location}
                  WHERE TresumeNodeID = ${req.body.data.TresumeNodeID}`;
 
     await sql.query(query);
