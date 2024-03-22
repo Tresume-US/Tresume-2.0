@@ -5,7 +5,7 @@
   </div>
   <div class="content pl-3 pt-1 pb-1 dropdown" *ngFor="let item of timesheetrole">
     <div class="row mt-3">
-      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.timesheetrole === 1">
+      <!-- <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.timesheetrole === 1">
         <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem" id="selectedItem"
           placeholder="Who's time are you tracking?" aria-describedby="searchIcon">
         <div class="input-group-append">
@@ -18,6 +18,19 @@
                 </a>
               </ng-container>
             </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.timesheetrole === 1">
+        <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem" placeholder="Who's time are you tracking?">
+        <div class="input-group-append">
+          <div class="input-group-text" data-toggle="dropdown">
+            <i class="fas fa-caret-down"></i>
+          </div>
+          <div class="dropdown-menu dropdown-menu-scrollable">
+            <a class="dropdown-item" *ngFor="let option of getDropdownOption1()" (click)="onChangesDropdown(option)">
+              {{ option.FirstName }} {{ option.LastName }}
+            </a>
           </div>
         </div>
       </div>
@@ -142,7 +155,7 @@
               <div class="checkbox-group">
                 <input type="checkbox" class="checkbox" id="myCheckbox" [(ngModel)]="row.billable">
                 <label for="myCheckbox" class="mt-2">Billable(/hr) $</label>
-                <input *ngIf="row.billable" id="billAmount" class="bill-Amt ml-1" type="number"
+                <input *ngIf="row.billable" id="billAmount" class="bill-Amt ml-1" type="text"
                   style="width: 60px; padding: 5px;" [(ngModel)]="row.hourlyRate" (ngModelChange)="updateTotalAmount()">
               </div>
             </div>
@@ -160,13 +173,13 @@
             </div>
           </div>
         </td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.mon" id="mon"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.tues" id="tues"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.wed" id="wed"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.thu" id="thu"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.fri" id="fri"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.sat" id="sat"></td>
-        <td> <input type="number" style="width: 50px;padding: 5px;" [(ngModel)]="row.sun" id="sun"></td>
+        <td> <input type="text" id="day1" style="width: 50px;padding: 5px;" [(ngModel)]="row.mon" id="mon"></td>
+        <td> <input type="text" id="day2" style="width: 50px;padding: 5px;" [(ngModel)]="row.tues" id="tues"></td>
+        <td> <input type="text" id="day3" style="width: 50px;padding: 5px;" [(ngModel)]="row.wed" id="wed"></td>
+        <td> <input type="text" id="day4" style="width: 50px;padding: 5px;" [(ngModel)]="row.thu" id="thu"></td>
+        <td> <input type="text" id="day5" style="width: 50px;padding: 5px;" [(ngModel)]="row.fri" id="fri"></td>
+        <td> <input type="text" id="day6" style="width: 50px;padding: 5px;" [(ngModel)]="row.sat" id="sat"></td>
+        <td> <input type="text" id="day7" style="width: 50px;padding: 5px;" [(ngModel)]="row.sun" id="sun"></td>
         <td class="text-right">
           <i> hrs </i><br>
           <span [(ngModel)]="row.totalHours">{{ formatTotalHours(calculateTotalHours(row)) }}</span><br>

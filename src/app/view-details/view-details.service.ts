@@ -27,6 +27,10 @@ export class ViewDetailsService {
   Candidateviewdetails(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'Candidateviewdetails', request);
   }
+  updatetimesheet(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'updatetimesheet', request);
+  }
+
 }
 export interface ResponseDetails {
   flag?: any;

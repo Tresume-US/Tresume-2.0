@@ -1,29 +1,29 @@
 <div class="header p-4">
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row main pt-3">
       <h2 class="pl-2">Details</h2>
     </div>
     <div class="row mt-2 pl-2">
       <a href="#" [routerLink]="['/alltimelist']" class="btn">Back to main view</a>
     </div>
-  <div class="mt-3 d-flex">
-  <table style="width: 60%;">
-    <thead>
-      <tr>
-        <th>Candidate ID</th>
-        <th>Project</th>
-        <th>MON</th>
-        <th>TUE</th>
-        <th>WED</th>
-        <th>THU</th>
-        <th>FRI</th>
-        <th>SAT</th>
-        <th>SUN</th>
-        <th>Total</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
+    <div class="mt-3 d-flex">
+      <table style="width: 60%;">
+        <thead>
+          <tr>
+            <th>Candidate ID</th>
+            <th>Project ID</th>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            <th>SAT</th>
+            <th>SUN</th>
+            <th>Total Hours</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <!-- <tbody>
       <tr  *ngFor="let row of rowdata">
         <td [(ngModel)]="id">{{row.id}}</td>
         <td>{{row.projectid}}</td>
@@ -37,45 +37,94 @@
         <td>{{row.totalhrs}}</td>
         <td>{{row.details}}</td>
       </tr>
-    </tbody>
-</table>
-<div class="pl-4">
+    </tbody> -->
+        <tbody>
+          <ng-container *ngFor="let row of rowdata; let i = index">
+            <tr (click)="startEditingRow(i)" [class.editable]="isRowEditable(i)">
+              <ng-container *ngIf="!isRowEditable(i); else displayEditable">
+                <td>{{ row.id }}</td>
+                <td>{{ row.projectid }}</td>
+                <td>{{ row.day1 }}</td>
+                <td>{{ row.day2 }}</td>
+                <td>{{ row.day3 }}</td>
+                <td>{{ row.day4 }}</td>
+                <td>{{ row.day5 }}</td>
+                <td>{{ row.day6 }}</td>
+                <td>{{ row.day7 }}</td>
+                <td>{{ row.totalhrs }}</td>
+                <td>{{ row.details }}</td>
+              </ng-container>
+              <ng-template #displayEditable>
+                <td>{{ row.id }}</td>
+                <td>{{ row.projectid }}</td>
+                <td><input type="text" id="day1" [(ngModel)]="row.day1" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day2" [(ngModel)]="row.day2" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day3" [(ngModel)]="row.day3" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day4" [(ngModel)]="row.day4" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day5" [(ngModel)]="row.day5" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day6" [(ngModel)]="row.day6" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text" id="day7" [(ngModel)]="row.day7" (ngModelChange)="calculateTotalHoursForRow(row)" class="editable-input" /></td>
+                <td><input type="text"  [(ngModel)]="row.totalhrs" class="editable-input" readonly /></td>
+                <td>{{ row.details }}</td>
+                <input type="hidden" [(ngModel)]="row.billableamt" readonly>
+            </ng-template> 
+                   
+              
+            </tr>
+          </ng-container>
 
-  <div class="card mt-3" *ngIf="this.document">
-    <div class="card-body">
-      <a href="https://tresume.us/Content/Timesheet/{{this.document}}"></a><label for="fileInput" class="card-title" style="cursor: pointer;">Client Approved Timesheet</label> &nbsp;&nbsp;<i class="fas fa-download" id="uploadIcon"></i>
-    </div>
-  </div>
-  <div *ngFor="let row of rowdata">
-    <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-    <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="row.admincomment" [ngModelOptions]="{standalone: true}" #comment="ngModel" required></textarea>
-    <!-- <div *ngIf="comment.invalid && (comment.dirty || comment.touched)">
-      <div *ngIf="comment.errors.required">
-        <div class="alert alert-danger" role="alert">
-          Please fill the comment field
+          <!-- Display save button only when a row is being edited -->
+          <!-- <tr *ngIf="editableRowIndex !== null">
+        <td colspan="12">   -->
+          <!-- <div class="float-right" *ngIf="editableRowIndex !== null">
+          <button type="button" class="btn" (click)="saveChanges()" [disabled]="!isRowEditable(editableRowIndex)">Save</button>
+          <button type="button" class="btn" (click)="cancelEditing()">Cancel</button>
+        </div> -->
+          <!-- </td>
+      </tr> -->
+        </tbody>
+      </table>
+      <div class="pl-4">
+
+        <div class="card mt-3" *ngIf="this.document">
+          <div class="card-body">
+            <a href="https://tresume.us/Content/Timesheet/{{this.document}}"></a><label for="fileInput"
+              class="card-title" style="cursor: pointer;">Client Approved Timesheet</label> &nbsp;&nbsp;<i
+              class="fas fa-download" id="uploadIcon"></i>
+          </div>
+        </div>
+        <div *ngFor="let row of rowdata">
+          <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+          <!-- <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="row.admincomment" [ngModelOptions]="{standalone: true}" #comment="ngModel" required></textarea> -->
+          <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments"
+            [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+
         </div>
       </div>
-    </div> -->
-  </div>
-</div>
-<div>
-</div>
-</div>
-  <div class="float-right">
-    <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal"> Approve </button>
-    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1"> Reject </button>
-    
-  </div>
+      <div>
+      </div>
+    </div>
+    <div class="float-right" *ngIf="editableRowIndex === null">
+      <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal"> Approve </button>
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1"> Reject </button>
+    </div>
+
+    <div class="float-right" *ngIf="editableRowIndex !== null">
+      <button type="button" class="btn mr-2" (click)="saveChanges()"
+        [disabled]="!isRowEditable(editableRowIndex)">Save</button>
+      <button type="button" class="btn" (click)="cancelEditing()">Cancel</button>
+    </div>
     <!-- <button class="btn" (click)="rejectAllProjects()">Reject</button> -->
 
-  <div *ngIf="!isAdmin">
-    <p>Status: Approved</p>
+    <div *ngIf="!isAdmin">
+      <p>Status: Approved</p>
+    </div>
   </div>
 </div>
-</div>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,17 +134,18 @@
         </button>
       </div>
       <div class="modal-body">
-     <h3>Are you sure want to approve the project?</h3>
+        <h3>Are you sure want to approve the project?</h3>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Accept()">Approve</button>
-        <button type="button" class="btn btn-primary"  data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -105,7 +155,7 @@
         </button>
       </div>
       <div class="modal-body">
-     <h3>Are you sure want to Reject the project?</h3>
+        <h3>Are you sure want to Reject the project?</h3>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="reject()">Reject</button>
