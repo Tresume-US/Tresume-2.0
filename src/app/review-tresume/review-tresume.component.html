@@ -157,7 +157,8 @@
               <div class="col-md-4">
                 <label for="legalStatusVal">Legal Status Validity Start
                   Date</label>
-                <input type="text" class="form-control" id="legalStatusVal"
+                <input type="text" class="form-control" id="legalStatusVal" [(bsValue)]="legalStatusVal"
+                bsDatepicker
                   name="assistedBy"
                   placeholder="Legal Status Validity Start Date"
                   [(ngModel)]="legalStatusVal"
@@ -168,7 +169,8 @@
                   Date</label>
                 <input type="text" class="form-control" id="legalStatusValend"
                   name="legalStatusValend"
-                  placeholder="Legal Status Validity End Date"
+                  placeholder="Legal Status Validity End Date" [(bsValue)]="legalStatusValend"
+                  bsDatepicker
                   [(ngModel)]="legalStatusValend"
                   [ngModelOptions]="{standalone: true}">
               </div>

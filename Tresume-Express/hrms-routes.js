@@ -2116,32 +2116,112 @@ router.post("/Sendplacementmail", async (req, res) => {
     console.error("Error handling placement notification:", error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
-});
+}); 
 
+async function emailFinanicialTracker(candidateID, OrgID, placementList) {
+  try {
+    // Create a workbook and add a worksheet
+    // const workbook = new excel.Workbook();
+    // const worksheet = workbook.addWorksheet('Financial Data');
+    
+    // // Define table headers
+    // const headers = ['Work Start Date', 'Work End Date', 'Position Title', 'Marketer', 'End Client Name', 'Vendor', 'End Client Address'];
+
+    // // Add headers to the worksheet
+    // worksheet.addRow(headers);
+
+    // // Add data to the worksheet
+    // placementList.forEach(placement => {
+    //   const rowData = [
+    //     placement.POStartDate,
+    //     placement.POEndDate,
+    //     placement.PositionTitle,
+    //     placement.MarketerFirstName,
+    //     placement.ClientName,
+    //     placement.VendorName,
+    //     placement.ClientAddress
+    //   ];
+    //   worksheet.addRow(rowData);
+    // });
+
+    // // Generate a temporary file to save the workbook
+    // const tempFilePath = './Financial_data.xlsx';
+    // await workbook.xlsx.writeFile(tempFilePath);
+
+    // // Create nodemailer transporter
+    // const transporter = nodemailer.createTransport({
+    //   port: 465,
+    //   host: "smtp.mail.yahoo.com",
+    //   auth: {
+    //     user: "support@tresume.us",
+    //     pass: "xzkmvglehwxeqrpd",
+    //   },
+    //   secure: true,
+    // });
+
+    // Construct email options
+    const mailOptions = {
+      from: 'support@tresume.us',
+      to: 'venkat@tresume.us',
+      subject: 'Financial Tracker',
+      html: '<p><em>This is to notify you that the payroll process for the candidate can now commence as their financial details have been securely stored within the HRMS.</em></p>',
+      // attachments: [
+      //   {
+      //     filename: '',
+      //     path: tempFilePath
+      //   }
+      // ]
+    };
+
+    // Send email with placement data
+    await transporter.sendMail(mailOptions);
+
+    console.log("Financial-Data email sent successfully.");
+
+    // Delete the temporary Excel file after sending email
+    fs.unlinkSync(tempFilePath);
+  } catch (error) {
+    console.error("Error while sending Financial Tracker email:", error);
+    throw error;
+  }
+}
 
 router.post("/insertRecruitmentTracker", async (req, res) => {
   try {
-    var query = ``;
+    const { candidateID, OrgID, placementList } = req.body;
 
-    console.log(query);
-    const pool = await sql.connect(config);
-    const request = new sql.Request(pool);
-    const recordset = await request.query(query);
+    await emailFinanicialTracker(candidateID, OrgID, placementList);
 
-    const result = {
-      flag: 1,
-      message: "data inserted successfully!",
-    };
-    res.status(200).json(result);
+    res.status(200).json({ success: true, message: 'Financial-Data notification email sent successfully' });
   } catch (error) {
-    console.error("Error inserting data:", error);
-    const result = {
-      flag: 0,
-      error: "An error occurred while inserting data!",
-    };
-    res.status(500).json(result);
+    console.error("Error handling Financial notification:", error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
+// router.post("/insertRecruitmentTracker", async (req, res) => {
+//   try {
+//     var query = ``;
+
+//     console.log(query);
+//     const pool = await sql.connect(config);
+//     const request = new sql.Request(pool);
+//     const recordset = await request.query(query);
+
+//     const result = {
+//       flag: 1,
+//       message: "data inserted successfully!",
+//     };
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error("Error inserting data:", error);
+//     const result = {
+//       flag: 0,
+//       error: "An error occurred while inserting data!",
+//     };
+//     res.status(500).json(result);
+//   }
+// });
 
 // Helper function to format values
 function formatValue(value) {
