@@ -403,7 +403,7 @@ router.post("/Candidateviewdetails", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT TM.id,TM.admincomment,TM.billableamt, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
+      var query = "SELECT TM.id,TM.admincomment,TM.billableamt, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs,TM.status, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
 
 
       console.log(query);
@@ -1475,12 +1475,19 @@ router.post("/updatetimesheet", async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
+    var data = req.body.rowdata;
+    let successCount = 0;
 
-    const query = "UPDATE timesheet_Master SET totalhrs = '"+req.body.totalhrs+"', comments ='"+req.body.comments+"', day1 = '"+req.body.day1+"',  day2 = '"+req.body.day2+"', day3 = '"+req.body.day3+"',  day4 = '"+req.body.day4+"', day5 = '"+req.body.day5+"', day6 = '"+req.body.day6+"', day7 = '"+req.body.day7+"', totalamt = '"+req.body.totalamt+"'  WHERE id = '"+req.body.id+"' AND projectid = '"+req.body.projectid+"';"
+    for (var i = 0; i < data.length; i++) {
+      const query = "UPDATE timesheet_Master SET totalhrs = '" + data[i].totalhrs + "', comments ='" + data[i].comments + "', day1 = '" + data[i].day1 + "',  day2 = '" + data[i].day2 + "', day3 = '" + data[i].day3 + "',  day4 = '" + data[i].day4 + "', day5 = '" + data[i].day5 + "', day6 = '" + data[i].day6 + "', day7 = '" + data[i].day7 + "', totalamt = '" + data[i].totalamt + "'  WHERE id = '" + data[i].id + "' AND projectid = '" + data[i].projectid + "';";
 
-    const result = await request.query(query);
+      const result = await request.query(query);
+      if (result.rowsAffected[0] > 0) {
+        successCount++;
+      }
+    }
 
-    if (result.rowsAffected[0] > 0) {
+    if (successCount === data.length) {
       const response = {
         flag: 1,
       };
@@ -1488,10 +1495,12 @@ router.post("/updatetimesheet", async (req, res) => {
     } else {
       const response = {
         flag: 0,
-        error: "No records were Updated.",
+        error: "Some records were not updated.",
       };
       res.send(response);
     }
+
+    console.log(query);
   } catch (error) {
     console.error("Error Update status:", error);
     const response = {
@@ -1499,5 +1508,23 @@ router.post("/updatetimesheet", async (req, res) => {
       error: "An error occurred while Update!",
     };
     res.status(500).send(response);
+  }
+});
+
+router.post('/autofillDetails', async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = `SELECT * timesheet_Master  WHERE tm.status <> 0;`;
+    request.input('traineeID', sql.NVarChar, req.body.traineeID);
+    const result = await request.query(query);
+
+    res.json({
+      flag: 1,
+      result: result.recordset,
+    });
+  } catch (err) {
+    console.error('Error occurred:', err);
+    res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });

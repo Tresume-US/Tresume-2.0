@@ -10,11 +10,12 @@ import { ChangeDetectionStrategy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Directive, HostListener } from '@angular/core';
+import { HttpClient,HttpParams  } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-all-time-list',
   templateUrl: './create-all-time-list.component.html',
-  providers: [DatePipe, CookieService, CreateAllTimeListService, MessageService],
+  providers: [CookieService, CreateAllTimeListService, MessageService],
   styleUrls: ['./create-all-time-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
@@ -30,10 +31,10 @@ export class CreateAllTimeListComponent implements OnInit {
   selectedSunday: string = '';
   isSundaySelected: boolean = false;
   CAselectedFile: File | null = null;
-  // SRselectedFile: File | null = null;
   [key: string]: any;
   file1: File | null = null;
-  // file2: File | null = null;
+  endDateFormatted:string = '12';
+  startDateFormatted:string = '12';
   username:any = '';
   traineeID:any = '';
   candidateid:any = ''; 
@@ -42,6 +43,7 @@ export class CreateAllTimeListComponent implements OnInit {
   totalAmount: number = 0;
   loading:boolean = false;
   isBillable:boolean;
+  autofillData: any;
   updateTotalAmount() {
     setTimeout(() => {
       let totalAmount = 0;
@@ -98,7 +100,6 @@ export class CreateAllTimeListComponent implements OnInit {
       hourlyRate: 0,
       billable: false,
       file1: null,
-      // file2: null,
       mon: '',
       tues: '',
       wed: '',
@@ -130,7 +131,6 @@ export class CreateAllTimeListComponent implements OnInit {
       this.file1 = file;
       this.loading = false;
     }
-    // You can extend this method to handle other file inputs similarly if needed
   }
 
 
@@ -177,22 +177,31 @@ export class CreateAllTimeListComponent implements OnInit {
     return `${hours} hr ${minutes} mins`;
   }
   
-  // Update the calculateTotalHours function to handle decimal values
+  // calculateTotalHours(row: any): number {
+  //   const mon = row.mon || 0;
+  //   const tues = row.tues || 0;
+  //   const wed = row.wed || 0;
+  //   const thu = row.thu || 0;
+  //   const fri = row.fri || 0;
+  //   const sat = row.sat || 0;
+  //   const sun = row.sun || 0;
+  //   const totalHours = mon + tues + wed + thu + fri + sat + sun;
+  //   return totalHours;
+  // }
+
   calculateTotalHours(row: any): number {
-    const mon = row.mon || 0;
-    const tues = row.tues || 0;
-    const wed = row.wed || 0;
-    const thu = row.thu || 0;
-    const fri = row.fri || 0;
-    const sat = row.sat || 0;
-    const sun = row.sun || 0;
-  
-    // Calculate total hours
+    const mon = parseFloat(row.mon) || 0;
+    const tues = parseFloat(row.tues) || 0;
+    const wed = parseFloat(row.wed) || 0;
+    const thu = parseFloat(row.thu) || 0;
+    const fri = parseFloat(row.fri) || 0;
+    const sat = parseFloat(row.sat) || 0;
+    const sun = parseFloat(row.sun) || 0;
     const totalHours = mon + tues + wed + thu + fri + sat + sun;
-  
     return totalHours;
   }
 
+  
   addDefaultRows() {
     this.timesheetRows.push({
       projectName:'',
@@ -203,7 +212,6 @@ export class CreateAllTimeListComponent implements OnInit {
       hourlyRate: '',
       billable: false,
       clientAproved: null,
-      // statusReport: null,
       mon: '',
       tues: '',
       wed: '',
@@ -226,14 +234,22 @@ export class CreateAllTimeListComponent implements OnInit {
   }
 
 
-  constructor(private zone: NgZone, private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private Service: CreateAllTimeListService, private messageService: MessageService, private cookieService: CookieService, private fm: FormsModule) {
-    this.OrgID = this.cookieService.get('OrgID');
-    this.traineeID = this.cookieService.get('TraineeID');
-    this.username = this.cookieService.get('userName1'); 
-    this.candidateid = this.traineeID;
-    // this.traineeID = this.cookieService.get('timesheet_admin');
+  constructor(private zone: NgZone, 
+    private cdr: ChangeDetectorRef, 
+    private fb: FormBuilder, 
+    private router: Router, 
+    private Service: CreateAllTimeListService, 
+    private messageService: MessageService, 
+    private cookieService: CookieService, 
+    private fm: FormsModule, 
+    private datePipe: DatePipe,
+    private http: HttpClient) {
+this.OrgID = this.cookieService.get('OrgID');
+this.traineeID = this.cookieService.get('TraineeID');
+this.username = this.cookieService.get('userName1'); 
+this.candidateid = this.traineeID;
+}
 
-  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -248,6 +264,7 @@ export class CreateAllTimeListComponent implements OnInit {
     this.getLocation();
     this.getpayItem();
     this.getTimesheetRole();
+    this.autofillDetailscreate();
 
     // if(item.timesheetrole === '3'){
     //   this.candidateid = this.traineeID;
@@ -263,7 +280,6 @@ export class CreateAllTimeListComponent implements OnInit {
     currentWeekEnd.setDate(currentWeekEnd.getDate() + 6); 
     this.selectedWeek = `${this.formatDate(currentWeekStart)} to ${this.formatDate(currentWeekEnd)}`;
 
-    // Generate weeks
     this.dynamicDays = this.generateWeeks();
   }
 
@@ -303,6 +319,16 @@ export class CreateAllTimeListComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+//   formatDate(date: Date): string {
+//     const options: Intl.DateTimeFormatOptions = { 
+//         month: 'numeric', 
+//         day: 'numeric', 
+//         year: 'numeric',
+//         timeZone: 'UTC' 
+//     };
+//     return date.toLocaleDateString('en-US', options);
+// }
+
   updateDynamicDays(selectedWeek: string): void {
     this.dynamicDays = this.getWeekData(selectedWeek).days;
   }
@@ -340,6 +366,7 @@ getCandidateList() {
 // getDropdownOption1() { 
 //   return this.dropdownOptions;
 // }
+
 getDropdownOption1() {
   if (!this.selectedItem) {
     return this.dropdownOptions; 
@@ -394,10 +421,8 @@ onChangesDropdown(selectedOption: any, row: any) {
       this.loading = false;
     }),
     (error: any) => {
-      // Error callback
       console.error('Error occurred:', error);
-      // Handle error here
-      this.loading = false; // Set loading to false on error
+      this.loading = false;
     };
   }
   getDropdownOption() {
@@ -441,58 +466,17 @@ onChangesDropdown(selectedOption: any, row: any) {
     row.service = selectedOption;
   }
 
-  // SaveRow() {
-  //   let Req = {
-  //     data: this.timesheetRows,
-  //   };
-  //   console.log(Req);
-  //   this.Service.createTimesheet(Req).subscribe(
-  //     (x: any) => {
-  //           this.handleSuccess(x);
-  //         },
-  //         (error: any) => {
-  //           this.handleError(error);
-  //         }
-  //   );
-  // }
 
- // Individual row value 
-  // SaveRow(): void {
-  //   console.log("Timesheet Rows:");
-  //   this.timesheetRows.forEach((row, index) => {
-  //     console.log(`Row ${index + 1}:`);
-  //     Object.keys(row).forEach(key => {
-  //       console.log(`${key}: ${row[key]}`);
-  //     });
-  //   });
-  // }
-
-  // SaveRow(): void {
-  //   const currentWeek = this.getCurrentWeekDates();
-  //   const startDate = this.formatDate(currentWeek.start);
-  //   const endDate = this.formatDate(currentWeek.end);
-  //   console.log('Start Date of Current Week:', startDate);
-  //   console.log('End Date of Current Week:', endDate);
-
-  //   if (this.timesheetRows.length > 1) {
-  //     console.log("Timesheet Rows:");
-  //     this.timesheetRows.forEach((row, index) => {
-  //       console.log(`Row ${index + 1}:`, row);
-  //     });
-  //   } else {
-  //     console.log("Only one row value is present in the table.");
-  //     console.log("Value:", this.timesheetRows[0]);
-  //   }
-  // }
 
   SaveRow() {
     const selectedWeek = this.selectedWeek.split(' to ');
+    console.log(selectedWeek);
     const startDateSelectedWeek = new Date(selectedWeek[0]);
     const endDateSelectedWeek = new Date(selectedWeek[1]);
   
-    const startDateFormatted = startDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
-    const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
-  
+    const startDateFormatted = startDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+    console.log(startDateFormatted);
     this.timesheetRows.forEach((row, index) => {
       if (row.projectName != '') {
         const formData = new FormData();
@@ -516,8 +500,8 @@ onChangesDropdown(selectedOption: any, row: any) {
         formData.append('projectid', row.projectid);
         formData.append('totalhrs', totalHours);
         formData.append('details', row.description);
-        formData.append('fromdate', startDateFormatted);
-        formData.append('todate', endDateFormatted);
+        formData.append('fromdate', selectedWeek[0]);
+        formData.append('todate', selectedWeek[1]);
         if (row.billable) {
           formData.append('isBillable', '1');
         } else {
@@ -551,7 +535,74 @@ onChangesDropdown(selectedOption: any, row: any) {
         );
       }       
     });
-  }   
+  }
+  
+
+  // SaveRow() {
+  //   const selectedWeek = this.selectedWeek.split(' to ');
+  //   const startDateSelectedWeek = new Date(selectedWeek[0]);
+  //   const endDateSelectedWeek = new Date(selectedWeek[1]);
+  
+  //   const startDateFormatted = startDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
+  //   const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
+  
+  //   this.timesheetRows.forEach((row, index) => {
+  //     if (row.projectName != '') {
+  //       const formData = new FormData();
+  
+  //       if (row.billable && !row.file1) {
+  //         alert('Please Upload Client Approved File.');
+  //       }
+  
+  //       if (row.file1) {
+  //         formData.append('file1', row.file1);
+  //       } else {
+  //         formData.append('file1', ''); 
+  //       }
+  //       const totalHours = this.calculateTotalHours(row).toFixed(2);
+  //       // console.log('Total Hours:', totalHours); 
+  //       formData.append('traineeid', this.candidateid);
+  //       formData.append('projectid', row.projectid);
+  //       formData.append('totalhrs', totalHours);
+  //       formData.append('details', row.description);
+  //       formData.append('fromdate', startDateFormatted);
+  //       // formData.append('fromdate', this.datePipe.transform(this.startDateFormatted));
+  //       formData.append('todate', endDateFormatted);
+  //       // formData.append('todate', this.datePipe.transform(this.endDateFormatted));
+  //       if (row.billable) {
+  //         formData.append('isBillable', '1');
+  //       } else {
+  //         formData.append('isBillable', '0');
+  //       }
+  //       formData.append('payterm', '1');
+  //       formData.append('service', '1');
+  //       formData.append('location', row.locationid);
+  //       formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
+  //       formData.append('day1', row.mon);
+  //       formData.append('day2', row.tues);
+  //       formData.append('day3', row.wed);
+  //       formData.append('day4', row.thu);
+  //       formData.append('day5', row.fri);
+  //       formData.append('day6', row.sat);
+  //       formData.append('day7', row.sun);
+  //       formData.append('totalamt', parseFloat(row.totalAmount).toFixed(2));
+  //       formData.append('admin', this.traineeID);
+  //       formData.append('orgid', this.OrgID);
+  //       formData.append('create_by', this.username);
+  
+  //       this.Service.createTimesheet(formData).subscribe(
+  //         (x: any) => {
+  //           this.handleSuccess(x);
+  //           this.loading = false;
+  //         },
+  //         (error: any) => {
+  //           this.handleError(error);
+  //           this.loading = false;
+  //         }
+  //       );
+  //     }       
+  //   });
+  // }   
 
 private handleSuccess(response: any): void {
   this.messageService.add({ severity: 'success', summary: response.message });
@@ -564,9 +615,6 @@ private handleError(response: any): void {
   this.messageService.add({ severity: 'error', summary: response.message });
   this.loading = false;
 }
-  
-  
-  
   selectedWeek: string = '';
   // selectedWeekStartDate: Date;
 // selectedWeekEndDate: Date;
@@ -582,28 +630,80 @@ private handleError(response: any): void {
   //   console.log('End Date:', endDate);
   // }
 
-  
-  
-  generateWeeks(): string[] {
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const startDate = new Date(today);
-    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // Start from the beginning of the current week
+  //My code
+//   generateWeeks(): string[] {
+//     const today = new Date();
+//     const currentYear = today.getFullYear();
+//     const startDate = new Date(today);
+//     startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // Start from the beginning of the current week
 
-    const weeks: string[] = [];
+//     const weeks: string[] = [];
 
-    for (let i = -52; i <= 52; i++) { // Display 52 weeks before and after the current week
-        const startWeek = new Date(startDate);
-        startWeek.setDate(startWeek.getDate() + i * 7); // Move to the next or previous week
+//     for (let i = -52; i <= 52; i++) { // Display 52 weeks before and after the current week
+//         const startWeek = new Date(startDate);
+//         startWeek.setDate(startWeek.getDate() + i * 7); // Move to the next or previous week
 
-        const endDate = new Date(startWeek);
-        endDate.setDate(endDate.getDate() + 6);
+//         const endDate = new Date(startWeek);
+//         endDate.setDate(endDate.getDate() + 6);
 
-        const weekString = `${this.formatDate(startWeek)} to ${this.formatDate(endDate)}`;
-        weeks.push(weekString);
-    }
+//         const weekString = `${this.formatDate(startWeek)} to ${this.formatDate(endDate)}`;
+//         weeks.push(weekString);
+//     }
 
-    return weeks;
+//     return weeks;
+// }
+
+
+//Wilson Bro code
+// generateWeeks(): string[] {
+//   const weeks: string[] = [];
+//   const today = new Date();
+//   const currentYear = today.getFullYear();
+//   const startDate = new Date(today);
+//   startDate.setDate(startDate.getDate() - startDate.getDay() + 1); 
+
+//   const startWeek = new Date(startDate);
+//   startWeek.setDate(startWeek.getDate() - 52 * 7); 
+
+//   const endWeek = new Date(startDate);
+//   endWeek.setDate(endWeek.getDate() + 52 * 7); 
+
+//   let currentDate = new Date(startWeek);
+
+//   while (currentDate <= endWeek) {
+//     const endDate = new Date(currentDate);
+//     endDate.setDate(endDate.getDate() + 6);
+//     const weekString = `${this.formatDate(currentDate)} to ${this.formatDate(endDate)}`;
+//     weeks.push(weekString);
+//     currentDate.setDate(currentDate.getDate() + 7); 
+//   }
+
+//   return weeks;
+// }
+
+generateWeeks(currentWeekIndex: number = 0): string[] {
+  const today = new Date();
+  const currentWeekStart = new Date(today);
+  currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay() + 1); 
+  const currentWeekEnd = new Date(currentWeekStart);
+  currentWeekEnd.setDate(currentWeekEnd.getDate() + 6); 
+
+  const weeks: string[] = [];
+  const startIndex = currentWeekIndex - 15; 
+  const endIndex = currentWeekIndex + 15;
+
+  for (let i = startIndex; i <= endIndex; i++) {
+    const startWeek = new Date(currentWeekStart);
+    startWeek.setDate(startWeek.getDate() + i * 7); 
+
+    const endDate = new Date(startWeek);
+    endDate.setDate(endDate.getDate() + 6);
+
+    const weekString = `${this.formatDate(startWeek)} to ${this.formatDate(endDate)}`;
+    weeks.push(weekString);
+  }
+
+  return weeks;
 }
 
 
@@ -629,7 +729,6 @@ private handleError(response: any): void {
 
     return dates;
   }
-
 
   removeRow(index: number) {
     const row = this.timesheetRows[index];
@@ -686,6 +785,54 @@ private handleError(response: any): void {
           }
       }
   }
+  getDefaultWeekDays(selectedWeek?: string): { label: string, date: string }[] {
+    let startDate: Date;
+    if (selectedWeek) {
+      startDate = new Date(selectedWeek.split(' to ')[0]);
+    } else {
+      const today = new Date();
+      startDate = new Date(today);
+      startDate.setDate(today.getDate() - today.getDay() + 1); // Adjust to Monday
+    }
+  
+    const defaultWeekDays = [];
+  
+    let currentDate = new Date(startDate);
+    currentDate.setDate(startDate.getDate() + (1 - startDate.getDay())); // Adjust to Monday
+  
+    for (let i = 0; i < 7; i++) {
+      const label = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+      
+      const date = currentDate.getDate();
+  
+      defaultWeekDays.push({ label, date: `${label} ${date}` });
+  
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return defaultWeekDays;
+  }
+  
 
-   }
+
+  candidateId: number;
+  fromDate: Date;
+  toDate: Date;
+
+
+  autofillDetails(): void {
+    const request = { candidateId: this.candidateId, fromDate: this.fromDate, toDate: this.toDate };
+    this.http.post<any>('http://localhost:4200//autofillDetails', request)
+      .subscribe(
+        response => {
+          this.autofillData = response;
+        },
+        error => {
+          console.error('Error occurred while autofilling details:', error);
+        }
+      );
+  }
+
+
+}
 

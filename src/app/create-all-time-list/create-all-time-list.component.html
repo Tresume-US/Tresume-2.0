@@ -61,18 +61,31 @@
   
   <table>
     <thead>
-      <tr>
-        <th>#</th>
-        <th style="width: 700px;">DETAILS</th>
-        <ng-container *ngFor="let date of getWeekDates(selectedWeek)">
-          <th>
-            {{ date.toLocaleDateString('en-US', { weekday: 'short' }) }}
-            <span class="date">{{ date.getDate() }}</span>
-          </th>
-        </ng-container>
-        <th style="width: 70px">TOTAL</th>
-        <th>Action</th>
-      </tr>
+       <!-- <tr>
+      <th>#</th>
+      <th style="width: 700px;">DETAILS</th>
+      <ng-container *ngFor="let date of getWeekDates(selectedWeek)">
+        <th>
+          {{ date.toLocaleDateString('en-US', { weekday: 'short' }) }}
+          <span class="date">{{ date.getDate() }}</span>
+        </th>
+      </ng-container>
+      <th style="width: 70px">TOTAL</th>
+      <th>Action</th>
+    </tr> -->
+    <tr>
+      <th>#</th>
+      <th style="width: 700px;">DETAILS</th>
+      <!-- Display default day labels with corresponding dates -->
+      <ng-container *ngFor="let day of getDefaultWeekDays(selectedWeek)">
+        <th>
+          <!-- <div>{{ day.label }}</div> -->
+          <div class="days">{{ day.date }}</div> <!-- Display the date -->
+        </th>
+      </ng-container>
+      <th style="width: 70px" class="days">TOTAL</th>
+      <th class="days">Action</th>
+    </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of timesheetRows; let i = index">

@@ -40,6 +40,10 @@ export class CreateAllTimeListService {
   gettimesheetrole(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'gettimesheetrole', request);
   }
+
+  autofillDetails(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'autofillDetails', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;
