@@ -9,7 +9,7 @@ import { NgZone } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import { Directive, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-create-all-time-list',
@@ -337,8 +337,16 @@ getCandidateList() {
   });
 }
 
-getDropdownOption1() { 
-  return this.dropdownOptions;
+// getDropdownOption1() { 
+//   return this.dropdownOptions;
+// }
+getDropdownOption1() {
+  if (!this.selectedItem) {
+    return this.dropdownOptions; 
+  }
+  return this.dropdownOptions.filter(option =>
+    (`${option.FirstName} ${option.LastName}`).toLowerCase().includes(this.selectedItem.toLowerCase())
+  );
 }
 
 onChangesDropdown(selectedOption: any, row: any) {
@@ -543,11 +551,7 @@ onChangesDropdown(selectedOption: any, row: any) {
         );
       }       
     });
-  }
-  
-  
-  
-  
+  }   
 
 private handleSuccess(response: any): void {
   this.messageService.add({ severity: 'success', summary: response.message });
@@ -648,77 +652,40 @@ private handleError(response: any): void {
       row[key] = '';
     });
   }
+
   
-}
 
-// calculateTotalAmount(row: any): number | string {
-//   const mon = row.mon || 0;
-//   const tues = row.tues || 0;
-//   const wed = row.wed || 0;
-//   const thu = row.thu || 0;
-//   const fri = row.fri || 0;
-//   const sat = row.sat || 0;
-//   const sun = row.sun || 0;
-//   const totalHours = +mon + +tues + +wed + +thu + +fri + +sat + +sun;
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      const targetElement = event.target as HTMLElement;
+      
+      const allowedInputIds = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7']; 
+      if (
+          targetElement.tagName === 'INPUT' &&
+          (targetElement as HTMLInputElement).type === 'text' &&
+          allowedInputIds.includes(targetElement.id)
+      ) {
+          if (
+              [46, 8, 9, 27, 13, 110, 190].indexOf(event.keyCode) !== -1 ||
+              (event.keyCode === 65 && (event.ctrlKey || event.metaKey)) ||
+              (event.keyCode >= 35 && event.keyCode <= 40)
+          ) {
+              return;
+          }
+  
+          if (
+              (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57)) &&
+              (event.keyCode < 96 || event.keyCode > 105)
+          ) {
+              event.preventDefault();
+          }
+          
+          const input = (event.target as HTMLInputElement).value + event.key;
+          if (parseInt(input, 10) > 24) {
+              event.preventDefault();
+          }
+      }
+  }
 
-//   const hourlyRate = row.checkbox ? +row.input : 0;
+   }
 
-//   const totalAmount = totalHours * hourlyRate;
-
-//   return isNaN(totalAmount) ? 'N/A' : totalAmount;
-// }
-
-
-// Add the second default row
-// this.timesheetRows.push({
-//   selectedOption2: null,
-//   detailsDropdown2: null,
-//   dropdownId2: 2,
-//   textarea2: '',
-//   checkbox2: false,
-//   file2_1: null,
-//   file2_2: null,
-//   mon2: 0,
-//   tues2: 0,
-//   wed2: 0,
-//   thu2: 0,
-//   fri2: 0,
-//   sat2: 0,
-//   sun2: 0
-// });
-
-
-// selectSunday(selectedDate: string) {
-//   const selectedDateObj = new Date(selectedDate);
-//   const dayOfWeek = selectedDateObj.getDay();
-//   if (dayOfWeek === 0) {
-//     this.selectedSunday = selectedDate;
-//     this.isSundaySelected = true;
-//   } else {
-//     const previousSunday = new Date(selectedDateObj);
-//     previousSunday.setDate(selectedDateObj.getDate() - dayOfWeek);
-//     const formattedDate = previousSunday.toISOString().split('T')[0];
-//     this.selectedSunday = formattedDate;
-//     this.isSundaySelected = true;
-//   }
-// }
-
-
-// Its Important for showing the weeks, only current month
-// --------------------------------------------------
-// generateWeeks(): string[] {
-//   const today = new Date();
-//   const currentDay = today.getDay();
-//   const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - currentDay + (currentDay === 0 ? -6 : 1)); // Start from the beginning of the current or next week
-
-//   const weeks: string[] = [];
-
-//   for (let i = 0; i < 5; i++) { // Display 5 weeks ahead
-//     const endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6);
-//     const weekString = `${this.formatDate(startDate)} to ${this.formatDate(endDate)}`;
-//     weeks.push(weekString);
-//     startDate.setDate(startDate.getDate() + 7); // Move to the next week
-//   }
-
-//   return weeks;
-// }

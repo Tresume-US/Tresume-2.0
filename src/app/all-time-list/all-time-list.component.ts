@@ -103,6 +103,14 @@ export class AllTimeListComponent implements OnChanges {
     });
     this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
   }
+  sortDataByCandidate1(): void {
+    this.rejectedData.sort((a, b) => {
+      if (a.Candidate < b.Candidate) return this.sortByCandidateAsc ? -1 : 1;
+      if (a.Candidate > b.Candidate) return this.sortByCandidateAsc ? 1 : -1;
+      return 0;
+    });
+    this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
+  }
 
   // timesheetroles: number[] = []
   getTimesheetRole() {
