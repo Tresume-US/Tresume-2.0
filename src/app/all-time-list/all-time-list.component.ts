@@ -111,6 +111,123 @@ export class AllTimeListComponent implements OnChanges {
     });
     this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
   }
+  sortDataByFromDate1(): void {
+    this.rejectedData.sort((a, b) => {
+      const dateA = new Date(a.fromdate).getTime();
+      const dateB = new Date(b.fromdate).getTime();
+      return this.sortByFromDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByFromDateRecent = !this.sortByFromDateRecent; // toggle sorting direction
+  }
+
+  sortDataByToDate1(): void {
+    this.rejectedData.sort((a, b) => {
+      const dateA = new Date(a.todate).getTime();
+      const dateB = new Date(b.todate).getTime();
+      return this.sortByToDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByToDateRecent = !this.sortByToDateRecent; // toggle sorting direction
+  }
+
+
+  sortDataByTotalHours1(): void {
+    this.rejectedData.sort((a, b) => {
+      return this.sortByTotalHoursAsc ? a.totalhrs - b.totalhrs : b.totalhrs - a.totalhrs;
+    });
+    this.sortByTotalHoursAsc = !this.sortByTotalHoursAsc; // toggle sorting direction
+  }
+  sortDataByCreatedOn1(): void {
+    this.rejectedData.sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return this.sortByCreatedOnRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByCreatedOnRecent = !this.sortByCreatedOnRecent; // toggle sorting direction
+  }
+
+  sortDataByCandidate2(): void {
+    this.completedData.sort((a, b) => {
+      if (a.Candidate < b.Candidate) return this.sortByCandidateAsc ? -1 : 1;
+      if (a.Candidate > b.Candidate) return this.sortByCandidateAsc ? 1 : -1;
+      return 0;
+    });
+    this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
+  }
+  sortDataByFromDate2(): void {
+    this.completedData.sort((a, b) => {
+      const dateA = new Date(a.fromdate).getTime();
+      const dateB = new Date(b.fromdate).getTime();
+      return this.sortByFromDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByFromDateRecent = !this.sortByFromDateRecent; // toggle sorting direction
+  }
+
+  sortDataByToDate2(): void {
+    this.completedData.sort((a, b) => {
+      const dateA = new Date(a.todate).getTime();
+      const dateB = new Date(b.todate).getTime();
+      return this.sortByToDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByToDateRecent = !this.sortByToDateRecent; // toggle sorting direction
+  }
+
+
+  sortDataByTotalHours2(): void {
+    this.completedData.sort((a, b) => {
+      return this.sortByTotalHoursAsc ? a.totalhrs - b.totalhrs : b.totalhrs - a.totalhrs;
+    });
+    this.sortByTotalHoursAsc = !this.sortByTotalHoursAsc; // toggle sorting direction
+  }
+  sortDataByCreatedOn2(): void {
+    this.completedData.sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return this.sortByCreatedOnRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByCreatedOnRecent = !this.sortByCreatedOnRecent; // toggle sorting direction
+  }
+  sortDataByCandidate3(): void {
+    this.nonBillableData.sort((a, b) => {
+      if (a.Candidate < b.Candidate) return this.sortByCandidateAsc ? -1 : 1;
+      if (a.Candidate > b.Candidate) return this.sortByCandidateAsc ? 1 : -1;
+      return 0;
+    });
+    this.sortByCandidateAsc = !this.sortByCandidateAsc; // toggle sorting direction
+  }
+  sortDataByFromDate3(): void {
+    this.nonBillableData.sort((a, b) => {
+      const dateA = new Date(a.fromdate).getTime();
+      const dateB = new Date(b.fromdate).getTime();
+      return this.sortByFromDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByFromDateRecent = !this.sortByFromDateRecent; // toggle sorting direction
+  }
+
+  sortDataByToDate3(): void {
+    this.nonBillableData.sort((a, b) => {
+      const dateA = new Date(a.todate).getTime();
+      const dateB = new Date(b.todate).getTime();
+      return this.sortByToDateRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByToDateRecent = !this.sortByToDateRecent; // toggle sorting direction
+  }
+
+
+  sortDataByTotalHours3(): void {
+    this.nonBillableData.sort((a, b) => {
+      return this.sortByTotalHoursAsc ? a.totalhrs - b.totalhrs : b.totalhrs - a.totalhrs;
+    });
+    this.sortByTotalHoursAsc = !this.sortByTotalHoursAsc; // toggle sorting direction
+  }
+  sortDataByCreatedOn3(): void {
+    this.nonBillableData.sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime();
+      const dateB = new Date(b.created_at).getTime();
+      return this.sortByCreatedOnRecent ? dateB - dateA : dateA - dateB;
+    });
+    this.sortByCreatedOnRecent = !this.sortByCreatedOnRecent; // toggle sorting direction
+  }
+  
 
   // timesheetroles: number[] = []
   getTimesheetRole() {

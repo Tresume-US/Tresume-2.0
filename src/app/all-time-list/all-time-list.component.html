@@ -99,10 +99,10 @@
                                   <th>ID</th>
                                     <th (click)="sortDataByCandidate1()">Candidate <i class="fa fa-sort"></i></th>
                                     <th>Project Name</th>
-                                    <th (click)="sortDataByFromDate()">From Date<i class="fa fa-sort"></i></th>
-                                    <th (click)="sortDataByToDate()">To Date<i class="fa fa-sort"></i></th>
-                                    <th (click)="sortDataByTotalHours()">Total Hours<i class="fa fa-sort"></i></th>
-                                    <th (click)="sortDataByCreatedOn()">CreatedOn<i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByFromDate1()">From Date<i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByToDate1()">To Date<i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByTotalHours1()">Total Hours<i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByCreatedOn1()">CreatedOn<i class="fa fa-sort"></i></th>
                                     <th>Comments</th>
                                     <th>Details</th>
                                     <th>Action</th>
@@ -140,19 +140,17 @@
                         </table>
                     </div>
                    
-                    <div id="completed" class="tab-pane fade">
-                       
+                    <div id="completed" class="tab-pane fade"> 
                         <table class="table">
-                         
                             <thead>
                                 <tr>
                                   <th>ID</th>
-                                    <th>Candidate</th>
+                                    <th (click)="sortDataByCandidate2()">Candidate <i class="fa fa-sort"></i></th>
                                     <th>Project Name</th>
-                                    <th>From Date</th>
-                                    <th>To Date</th>
-                                    <th>Total Hours</th>
-                                    <th>CreatedOn</th>
+                                    <th (click)="sortDataByFromDate2()">From Date <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByToDate2()">To Date <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByTotalHours2()">Total Hours <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByCreatedOn2()">CreatedOn <i class="fa fa-sort"></i></th>
                                     <th>Comments</th>
                                     <th>Details</th>
                                     <th>Action</th>
@@ -197,12 +195,12 @@
                             <thead>
                                 <tr>
                                   <th>ID</th>
-                                    <th>Candidate</th>
+                                    <th (click)="sortDataByCandidate3()">Candidate <i class="fa fa-sort"></i></th>
                                     <th>Project Name</th>
-                                    <th>From Date</th>
-                                    <th>To Date</th>
-                                    <th>Total Hours</th>
-                                    <th>CreatedOn</th>
+                                    <th (click)="sortDataByFromDate3()">From Date <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByToDate3()">To Date <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByTotalHours3()">Total Hours <i class="fa fa-sort"></i></th>
+                                    <th (click)="sortDataByCreatedOn3()">CreatedOn <i class="fa fa-sort"></i></th>
                                     <th>Status</th>
                                     <th>Comments</th>
                                     <th>Details</th>
@@ -210,29 +208,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let row of nonBillableData">
-                                  <td>{{ row.id}}</td>
-                                    <td>{{ row.Candidate }}</td>
-                                    <td>{{ row.projectname}}</td>
-                                    <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
-                                    <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
-                                    <td>{{ row.totalhrs }}</td>
-                                    <td>{{ row.created_at | date : "MM/dd/y" : "UTC" }}</td>
-                                    <td>{{ row.status }}</td>
-                                    <td>{{ row.comments }}</td>
-                                    <td>
-                                        <div>
-                                            <i class="fa fa-eye fa-fw fa-lg ml-4 text-center"
-                                            [routerLink]="['/viewtimesheet',row.id]"></i>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            
-                                          <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
-                                        </div>
-                                    </td>
-                                </tr>
+                              <tr *ngFor="let row of nonBillableData">
+                                <td>{{ row.id}}</td>
+                                <td>{{ row.Candidate }}</td>
+                                <td>{{ row.projectname}}</td>
+                                <td>{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</td>
+                                <td>{{ row.todate | date : "MM/dd/y" : "UTC" }}</td>
+                                <td>{{ row.totalhrs }}</td>
+                                <td>{{ row.created_at | date : "MM/dd/y" : "UTC" }}</td>
+                                <td>
+                                    <ng-container *ngIf="row.status === 1; else elseBlock">
+                                        <span>Pending</span>
+                                    </ng-container>
+                                    <ng-template #elseBlock>
+                                        <ng-container *ngIf="row.status === 2; else elseBlock2">
+                                            <span>Rejected</span>
+                                        </ng-container>
+                                        <ng-template #elseBlock2>
+                                            <span>Completed</span>
+                                        </ng-template>
+                                    </ng-template>
+                                </td>
+                                <td>{{ row.comments }}</td>
+                                <td>
+                                    <div>
+                                        <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                                    </div>
+                                </td>
+                            </tr>
                                 <tr *ngIf="nonBillableData.length === 0">
                                   <td colspan="10" class="text-center">
                                       No results found.

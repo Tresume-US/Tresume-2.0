@@ -84,6 +84,7 @@ export class ViewDetailsComponent {
   }
 
   fetchResult(){
+  
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
@@ -99,6 +100,11 @@ export class ViewDetailsComponent {
 
   
   reject(){
+    if (!this.comments) {
+      alert('Please fill in comments before approving.');
+      return;
+    }
+    
     let Req = {
       traineeID: this.TraineeID,
       id:this.idFromUrl,
@@ -118,6 +124,11 @@ export class ViewDetailsComponent {
   }
 
   Accept() {
+    if (!this.comments) {
+      alert('Please fill in comments before approving.');
+      return;
+    }
+    
     let Req = {
       traineeID: this.TraineeID,
       comments: this.comments,
@@ -173,7 +184,12 @@ export class ViewDetailsComponent {
 
 
   startEditingRow(index: number) {
-    this.editableRowIndex = index;
+    // this.editableRowIndex = index;
+
+    const row = this.rowdata[index];
+    if (row.status === 1) {
+      this.editableRowIndex = index;
+    }
   }
 
   // saveChanges() {
@@ -197,6 +213,7 @@ export class ViewDetailsComponent {
   }
 
   saveChanges() {
+
     this.rowdata.forEach(row => {
         const dayValues = [
             parseFloat(row.day1) || 0,
@@ -238,12 +255,14 @@ export class ViewDetailsComponent {
       rowdata: this.rowdata  
     };
 
-    // this.service.updatetimesheet(Req).subscribe((response: any) => {
-    //     console.log('Values Updated:', response);
-    //     this.editableRowIndex = null;
-    // }, error => {
-    //     console.error('Error updating values:', error);
-    // });
+    this.service.updatetimesheet(Req).subscribe((response: any) => {
+        console.log('Values Updated:', response);
+        this.messageService.add({ severity: 'success', summary: 'Updated' });
+        this.editableRowIndex = null;
+    }, error => {
+        console.error('Error updating values:', error);
+        
+    });
 
     this.editableRowIndex = null;
 
