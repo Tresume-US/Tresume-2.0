@@ -98,7 +98,7 @@
           <!-- <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="row.admincomment" [ngModelOptions]="{standalone: true}" #comment="ngModel" required></textarea> -->
           <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments"
             [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
-
+          <span>Last Updated By : {{row.lastUpdated_by}}</span>
         </div>
       </div>
       <div>
