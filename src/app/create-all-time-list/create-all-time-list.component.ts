@@ -548,8 +548,8 @@ export class CreateAllTimeListComponent implements OnInit {
         } else {
           formData.append('isBillable', '0');
         }
-        formData.append('payterm', row.payItem);
-        formData.append('service', row.service);
+        formData.append('payterm', '1');
+        formData.append('service', '1');
         formData.append('location', row.location);
         formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
         formData.append('day1', row.mon);
