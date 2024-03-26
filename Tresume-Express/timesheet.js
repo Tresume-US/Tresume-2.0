@@ -1479,7 +1479,7 @@ router.post("/updatetimesheet", async (req, res) => {
     let successCount = 0;
 
     for (var i = 0; i < data.length; i++) {
-      const query = "UPDATE timesheet_Master SET totalhrs = '" + data[i].totalhrs + "', comments ='" + data[i].comments + "', day1 = '" + data[i].day1 + "',  day2 = '" + data[i].day2 + "', day3 = '" + data[i].day3 + "',  day4 = '" + data[i].day4 + "', day5 = '" + data[i].day5 + "', day6 = '" + data[i].day6 + "', day7 = '" + data[i].day7 + "', totalamt = '" + data[i].totalamt + "'  WHERE id = '" + data[i].id + "' AND projectid = '" + data[i].projectid + "';";
+      const query = "UPDATE timesheet_Master SET lastUpdated_by= '" + data[i].username + "', totalhrs = '" + data[i].totalhrs + "', comments ='" + data[i].comments + "', day1 = '" + data[i].day1 + "',  day2 = '" + data[i].day2 + "', day3 = '" + data[i].day3 + "',  day4 = '" + data[i].day4 + "', day5 = '" + data[i].day5 + "', day6 = '" + data[i].day6 + "', day7 = '" + data[i].day7 + "', totalamt = '" + data[i].totalamt + "'  WHERE id = '" + data[i].id + "' AND projectid = '" + data[i].projectid + "';";
 
       const result = await request.query(query);
       if (result.rowsAffected[0] > 0) {

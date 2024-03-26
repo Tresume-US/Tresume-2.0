@@ -192,3 +192,16 @@ th span.date {
 .days{
   font-weight: 500;
 }
+// .weekoptions{
+//   height: 10px;
+// }
+
+.weekly-datepicker select {
+  padding: 5px; 
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+.weekly-datepicker select option {
+  padding: 5px 10px; 
+  height: 30px; 
+}

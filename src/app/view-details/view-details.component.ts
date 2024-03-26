@@ -32,6 +32,7 @@ export class ViewDetailsComponent {
   document: any;
   row: any;
   commentContainer: any;
+  username:any = '';
  
   
   @HostListener('keydown', ['$event'])
@@ -75,6 +76,8 @@ export class ViewDetailsComponent {
     this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
+this.username = this.cookieService.get('userName1'); 
+
 
     this.route.paramMap.subscribe(params => {
       this.idFromUrl = params.get('id');
@@ -101,7 +104,7 @@ export class ViewDetailsComponent {
   
   reject(){
     if (!this.comments) {
-      alert('Please fill in comments before approving.');
+      alert('Please fill in comments before Rejecting.');
       return;
     }
     
@@ -125,7 +128,7 @@ export class ViewDetailsComponent {
 
   Accept() {
     if (!this.comments) {
-      alert('Please fill in comments before approving.');
+      alert('Please fill in comments before Approving.');
       return;
     }
     
@@ -252,6 +255,7 @@ export class ViewDetailsComponent {
       traineeID: this.TraineeID,
       comments: this.comments,
       id: this.idFromUrl,
+      username:this.username,
       rowdata: this.rowdata  
     };
 

@@ -104,10 +104,22 @@
       <div>
       </div>
     </div>
-    <div class="float-right" *ngIf="editableRowIndex === null">
+    <!-- <div class="float-right" *ngIf="editableRowIndex === null">
       <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal"> Approve </button>
       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1"> Reject </button>
+    </div> -->
+    <div class="float-right" *ngIf="editableRowIndex === null">
+      <ng-container *ngFor="let row of rowdata">
+        <ng-container *ngIf="row.status === 1">
+          <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal">Approve</button>
+          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1">Reject</button>
+          <!-- Break the loop after finding the first row with status === 1 -->
+          <ng-container *ngIf="editableRowIndex === null; else breakLoop"></ng-container>
+        </ng-container>
+        <ng-template #breakLoop></ng-template>
+      </ng-container>
     </div>
+    
 
     <div class="float-right" *ngIf="editableRowIndex !== null">
       <button type="button" class="btn mr-2" (click)="saveChanges()"
