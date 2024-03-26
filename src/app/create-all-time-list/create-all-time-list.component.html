@@ -59,9 +59,9 @@
         </div> -->
         <mat-form-field>
           <mat-label>Choose Week</mat-label>
-          <mat-select [(value)]="selectedWeek"  (change)="onWeekSelect($event.target.value)">
+          <mat-select [(value)]="selectedWeek" (change)="onWeekSelect($event.target.value)">
             <mat-option *ngFor="let week of generateWeeks()" [value]="week">{{ week }}</mat-option>
-           
+
           </mat-select>
         </mat-form-field>
       </div>
@@ -152,7 +152,7 @@
             </div>
             <div class="col-md-5 dropdown">
               <div class="input-group" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <input type="text" class="form-control custom-input" id="selectedItem4" [(ngModel)]="row.location"
+                <!-- <input type="text" class="form-control custom-input" id="selectedItem4" [(ngModel)]="row.location"
                   placeholder="Choose the location" aria-describedby="searchIcon4">
                 <div class="input-group-append">
                   <div class="input-group-text">
@@ -163,9 +163,26 @@
                         option.state }}</a>
                     </div>
                   </div>
+                </div> -->
+                <input type="text" class="form-control custom-input" id="selectedItem4" [(ngModel)]="row.location"
+                  placeholder="Choose the location" aria-describedby="searchIcon4"
+                  (input)="onLocationInputChange($event)">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <i class="fas fa-caret-down"></i>
+                    <div class="dropdown-menu dropdown-menu-scrollable">
+                      <a class="dropdown-item" *ngFor="let option of filteredOptions"
+                        (click)="onDropdownChanges(option, row)">
+                        {{ option.state }}
+                      </a>
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
+
+
           </div>
           <div class="row">
             <div class="col-md-5 mr-5">
