@@ -1215,8 +1215,7 @@ router.post('/deletetimesheetdata', async (req, res) => {
 
 router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
   try {
-
-    const { traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
+    const { id, traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
     let filename = '';
 
     const isBillableBool = isBillable === 'true' ? true : false;
@@ -1227,111 +1226,115 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
 
     const pool = await sql.connect(config);
 
-    await pool.request()
-      .input('traineeid', sql.Int, traineeid)
-      .input('totalhrs', sql.Float, parseFloat(totalhrs))
-      .input('comments', sql.Text, '')
-      .input('projectid', sql.Int, projectid)
-      .input('details', sql.Text, details)
-      .input('approvalstatus', sql.Int, '1')
-      .input('statusreport', sql.VarChar(sql.MAX), '')
-      .input('clientapproved', sql.VarChar(sql.MAX), filename)
-      .input('approvedby', sql.Int, '')
-      .input('admincomment', sql.Text, '')
-      .input('created_at', sql.DateTime, new Date())
-      .input('status', sql.Int, 1)
-      .input('fromdate', sql.DateTime, fromdate)
-      .input('todate', sql.DateTime, todate)
-      .input('isBillable', sql.Bit, isBillableBool)
-      .input('payterm', sql.Int, payterm)
-      .input('service', sql.Int, service)
-      .input('location', sql.Int, '1')
-      .input('billableamt', sql.VarChar(50), billableamt)
-      .input('day1', sql.VarChar(10), day1)
-      .input('day2', sql.VarChar(10), day2)
-      .input('day3', sql.VarChar(10), day3)
-      .input('day4', sql.VarChar(10), day4)
-      .input('day5', sql.VarChar(10), day5)
-      .input('day6', sql.VarChar(10), day6)
-      .input('day7', sql.VarChar(10), day7)
-      .input('totalamt', sql.Float, parseFloat(totalamt))
-      .input('admin', sql.Int, admin)
-      .input('orgid', sql.Int, orgid)
-      .input('create_by', sql.VarChar(50), create_by)
-      .query(`INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, projectid, details, clientapproved,created_at,status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @projectid, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`);
+    let query;
+    let inputParams = {
+      'traineeid': sql.Int,
+      'totalhrs': sql.Float,
+      'details': sql.Text,
+      'clientapproved': sql.VarChar(sql.MAX),
+      'created_at': sql.DateTime,
+      'status': sql.Int,
+      'fromdate': sql.DateTime,
+      'todate': sql.DateTime,
+      'isBillable': sql.Bit,
+      'payterm': sql.Int,
+      'service': sql.Int,
+      'location': sql.Int,
+      'billableamt': sql.VarChar(50),
+      'day1': sql.VarChar(10),
+      'day2': sql.VarChar(10),
+      'day3': sql.VarChar(10),
+      'day4': sql.VarChar(10),
+      'day5': sql.VarChar(10),
+      'day6': sql.VarChar(10),
+      'day7': sql.VarChar(10),
+      'totalamt': sql.Float,
+      'admin': sql.Int,
+      'orgid': sql.Int,
+      'create_by': sql.VarChar(50)
+    };
 
+    if (id) {
+      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at = @created_at, status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, create_by = @create_by WHERE id = @id`;
 
-    res.status(200).json({ message: 'Timesheet Created successfully', filename });
+      inputParams['id'] = sql.Int;
+    } else {
+      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`;
+    }
+
+    const request = pool.request();
+
+    for (const paramName in inputParams) {
+      if (req.body.hasOwnProperty(paramName)) {
+        request.input(paramName, inputParams[paramName], req.body[paramName]);
+      }
+    }
+
+    const result = await request.query(query);
+
+    res.status(200).json({ message: id ? 'Timesheet Updated successfully' : 'Timesheet Created successfully', filename });
   } catch (error) {
-    console.error('Error creating timesheet:', error);
+    console.error('Error creating/updating timesheet:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 
-// router.post('/createTimesheet', async (req, res) => {
-//   sql.connect(config, function (err) {
-//     if (err) console.log(err);
-//     var request = new sql.Request();
-//     var query = "SELECT t.firstname,t.lastname,TM.fromdate, TM.todate, TM.totalhrs, TM.approvalstatus, TM.comments FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE T.timesheet_admin ='" + req.body.traineeID +"' ";
-//     console.log(query);
-//     request.query(query,
-//       function (err, recordset) {
-//         if (err) console.log(err);
-
-//         var result = {
-//           flag: 1,
-//           result: recordset.recordsets[0],
-//         };
-//         res.send(result);
-//       }
-//     );
-//   });
-// })
-
-// router.post('/deleteUserAccount', async (req, res) => {
-//   const email = req.body.email;
+// router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
 //   try {
-//     const dtrainee = await deactivatetrainee(email);
-//     const dmemberdetails = await deactivatememberdetails(email);
 
-//     if (dtrainee && dmemberdetails) {
-//       const result = {
-//         flag: 1,
-//       };
-//       res.send(result);
-//     } else {
-//       const result = {
-//         flag: 0,
-//       };
-//       res.send(result);
+//     const { traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
+//     let filename = '';
+
+//     const isBillableBool = isBillable === 'true' ? true : false;
+
+//     if (req.file) {
+//       filename = req.file.filename;
 //     }
+
+//     const pool = await sql.connect(config);
+
+//     await pool.request()
+//       .input('traineeid', sql.Int, traineeid)
+//       .input('totalhrs', sql.Float, parseFloat(totalhrs))
+//       .input('comments', sql.Text, '')
+//       .input('projectid', sql.Int, projectid)
+//       .input('details', sql.Text, details)
+//       .input('approvalstatus', sql.Int, '1')
+//       .input('statusreport', sql.VarChar(sql.MAX), '')
+//       .input('clientapproved', sql.VarChar(sql.MAX), filename)
+//       .input('approvedby', sql.Int, '')
+//       .input('admincomment', sql.Text, '')
+//       .input('created_at', sql.DateTime, new Date())
+//       .input('status', sql.Int, 1)
+//       .input('fromdate', sql.DateTime, fromdate)
+//       .input('todate', sql.DateTime, todate)
+//       .input('isBillable', sql.Bit, isBillableBool)
+//       .input('payterm', sql.Int, payterm)
+//       .input('service', sql.Int, service)
+//       .input('location', sql.Int, '1')
+//       .input('billableamt', sql.VarChar(50), billableamt)
+//       .input('day1', sql.VarChar(10), day1)
+//       .input('day2', sql.VarChar(10), day2)
+//       .input('day3', sql.VarChar(10), day3)
+//       .input('day4', sql.VarChar(10), day4)
+//       .input('day5', sql.VarChar(10), day5)
+//       .input('day6', sql.VarChar(10), day6)
+//       .input('day7', sql.VarChar(10), day7)
+//       .input('totalamt', sql.Float, parseFloat(totalamt))
+//       .input('admin', sql.Int, admin)
+//       .input('orgid', sql.Int, orgid)
+//       .input('create_by', sql.VarChar(50), create_by)
+//       .query(`INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, projectid, details, clientapproved,created_at,status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @projectid, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`);
+
+
+//     res.status(200).json({ message: 'Timesheet Created successfully', filename });
 //   } catch (error) {
-//     const result = {
-//       flag: 0,
-//     };
-//     res.send(result);
+//     console.error('Error creating timesheet:', error);
+//     res.status(500).json({ error: 'Internal server error' });
 //   }
+// });
 
-// })
-
-// async function deactivatetrainee(email){
-//   const pool = await sql.connect(config);
-//   const request = pool.request();
-//   const queryResult = await request.query(
-//     `update trainee set active = 0 where username = '${email}'`
-//   );
-//   return queryResult;
-// }
-
-// async function deactivatememberdetails(email){
-//   const pool = await sql.connect(config);
-//   const request = pool.request();
-//   const queryResult = await request.query(
-//     `update memberdetails set active = 0 where  useremail ='${email}'`
-//   );
-//   return queryResult;
-// }
 
 router.post('/gettimesheetrole', async (req, res) => {
   try {
@@ -1515,10 +1518,16 @@ router.post('/autofillDetails', async (req, res) => {
   try {
     await sql.connect(config);
     const request = new sql.Request();
-    const query = `SELECT * timesheet_Master  WHERE tm.status <> 0;`;
-    request.input('traineeID', sql.NVarChar, req.body.traineeID);
+    const fromDate = new Date(req.body.fromdate).toISOString().split('T')[0];
+    const toDate = new Date(req.body.fromdate);
+    toDate.setDate(toDate.getDate() + 1);
+    const toDateFormatted = toDate.toISOString().split('T')[0];
+    const query = `SELECT TM.*,TP.projectname from timesheet_Master TM LEFT JOIN timesheet_project TP ON TP.projectid = TM.projectid
+    WHERE fromdate between '${fromDate}' and '${toDateFormatted}' and traineeid = '${req.body.traineeID}'`;
+    
+    console.log(query);
     const result = await request.query(query);
-
+   
     res.json({
       flag: 1,
       result: result.recordset,
