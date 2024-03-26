@@ -1125,7 +1125,8 @@ router.post('/getPayItemList', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
 
-    const query = "Select Text from PayType";
+    // const query = "Select Text from PayType";
+    const query = "Select Text from PayType where Text = 'Hourly'";
 
     console.log(query);
 
