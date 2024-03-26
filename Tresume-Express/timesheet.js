@@ -403,7 +403,7 @@ router.post("/Candidateviewdetails", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT TM.id,TM.lastUpdated_by,TM.admincomment,TM.billableamt, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs,TM.status, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
+      var query = "SELECT TM.id,TM.lastUpdated_by as updatedBy,TM.admincomment,TM.billableamt, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs,TM.status, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
 
 
       console.log(query);
@@ -1515,6 +1515,63 @@ router.post("/UpdateRejectStatus", async (req, res) => {
 //   }
 // });
 
+// router.post("/updatetimesheet", async (req, res) => {
+//   try {
+//     const pool = await sql.connect(config);
+//     const request = pool.request();
+//     const data = req.body.rowdata;
+//     let successCount = 0;
+
+//     for (let i = 0; i < data.length; i++) {
+//       const query = `
+//         UPDATE timesheet_Master 
+//         SET 
+//           lastUpdated_by = @username,
+//           totalhrs = @totalhrs,
+//           comments = @comments,
+//           day1 = @day1,
+//           day2 = @day2,
+//           day3 = @day3,
+//           day4 = @day4,
+//           day5 = @day5,
+//           day6 = @day6,
+//           day7 = @day7,
+//           totalamt = @totalamt
+//         WHERE 
+//           id = @id AND projectid = @projectid;
+//       `;
+
+//       const result = await request
+//         .input('username', data[i].username)
+//         .input('totalhrs', data[i].totalhrs)
+//         .input('comments', data[i].comments)
+//         .input('day1', data[i].day1)
+//         .input('day2', data[i].day2)
+//         .input('day3', data[i].day3)
+//         .input('day4', data[i].day4)
+//         .input('day5', data[i].day5)
+//         .input('day6', data[i].day6)
+//         .input('day7', data[i].day7)
+//         .input('totalamt', data[i].totalamt)
+//         .input('id', data[i].id)
+//         .input('projectid', data[i].projectid)
+//         .query(query);
+
+//       if (result.rowsAffected[0] > 0) {
+//         successCount++;
+//       }
+//     }
+
+//     if (successCount === data.length) {
+//       res.send({ flag: 1 });
+//     } else {
+//       res.send({ flag: 0, error: "Some records were not updated." });
+//     }
+//   } catch (error) {
+//     console.error("Error updating timesheet:", error);
+//     res.status(500).send({ flag: 0, error: "An error occurred while updating timesheet." });
+//   }
+// });
 router.post("/updatetimesheet", async (req, res) => {
   try {
     const pool = await sql.connect(config);
@@ -1542,7 +1599,7 @@ router.post("/updatetimesheet", async (req, res) => {
       `;
 
       const result = await request
-        .input('username', data[i].username)
+        .input('username', req.body.username) // Use req.body.username as the value for lastUpdated_by
         .input('totalhrs', data[i].totalhrs)
         .input('comments', data[i].comments)
         .input('day1', data[i].day1)
@@ -1572,6 +1629,7 @@ router.post("/updatetimesheet", async (req, res) => {
     res.status(500).send({ flag: 0, error: "An error occurred while updating timesheet." });
   }
 });
+
 
 
 router.post('/autofillDetails', async (req, res) => {
