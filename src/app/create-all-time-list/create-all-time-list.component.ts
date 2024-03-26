@@ -477,7 +477,7 @@ onChangesDropdown(selectedOption: any, row: any) {
     const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
     console.log(startDateFormatted);
     this.loading = true;
-    
+
     this.timesheetRows.forEach((row, index) => {
       if (row.projectName != '') {
         const formData = new FormData();
@@ -510,7 +510,7 @@ onChangesDropdown(selectedOption: any, row: any) {
         }
         formData.append('payterm', '1');
         formData.append('service', '1');
-        formData.append('location', row.locationid);
+        formData.append('location', row.location);
         formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
         formData.append('day1', row.mon);
         formData.append('day2', row.tues);
@@ -523,6 +523,8 @@ onChangesDropdown(selectedOption: any, row: any) {
         formData.append('admin', this.traineeID);
         formData.append('orgid', this.OrgID);
         formData.append('create_by', this.username);
+        const status = row.status ? row.status : '1';
+      formData.append('status', status);
   
         this.Service.createTimesheet(formData).subscribe(
           (x: any) => {
@@ -856,7 +858,8 @@ generateWeeks(currentWeekIndex: number = 0): string[] {
          totalHours: itm.totalhrs,
          totalAmount: itm.totalamt,
          file1: {name:itm.clientapproved},
-         id:itm.id
+         id:itm.id,
+         status:itm.status,
        };
       
        this.timesheetRows.push(row);
