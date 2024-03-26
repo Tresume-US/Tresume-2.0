@@ -88,16 +88,18 @@
 
         <div class="card mt-3" *ngIf="this.document">
           <div class="card-body">
-            <a href="https://tresume.us/Content/Timesheet/{{this.document}}"></a><label for="fileInput"
-              class="card-title" style="cursor: pointer;">Client Approved Timesheet</label> &nbsp;&nbsp;<i
-              class="fas fa-download" id="uploadIcon"></i>
-          </div>
+            <a href="https://tresume.us/Content/Timesheet/{{this.document}}" target="_blank" class="card-title" style="cursor: pointer;">Client Approved Timesheet</a>
+            &nbsp;&nbsp;<i class="fas fa-download" id="uploadIcon"></i>
         </div>
-        <div *ngFor="let row of rowdata">
-          <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-          <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
-          <span>Last Updated By : {{ row.updatedBy }}</span>
+        
         </div>
+ 
+<div *ngFor="let row of rowdata">
+  <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+  <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+  <span>Last Updated By : {{ row.lastUpdatedBy }}</span>
+</div>
+
       </div>
       <div>
       </div>
