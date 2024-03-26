@@ -50,11 +50,18 @@
           </div> -->
   
       <div class="col-md-3 gray-theme">
-        <div class="weekly-datepicker">
+        <!-- <div class="weekly-datepicker">
           <select id="weekPicker" [(ngModel)]="selectedWeek" (change)="onWeekSelect($event.target.value)">
             <option *ngFor="let week of generateWeeks()" [value]="week" value="">{{ week }}</option>
           </select>
-        </div>
+        </div> -->
+        <mat-form-field>
+          <mat-label>Choose Week</mat-label>
+          <mat-select [(value)]="selectedWeek"  (change)="onWeekSelect($event.target.value)">
+            <mat-option *ngFor="let week of generateWeeks()" [value]="week">{{ week }}</mat-option>
+           
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
   </div>
