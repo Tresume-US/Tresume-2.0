@@ -21,8 +21,10 @@
           </div>
         </div>
       </div> -->
-      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.timesheetrole === 1">
-        <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem" placeholder="Who's time are you tracking?">
+      <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        *ngIf="item.timesheetrole === 1">
+        <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem"
+          placeholder="Who's time are you tracking?">
         <div class="input-group-append">
           <div class="input-group-text" data-toggle="dropdown">
             <i class="fas fa-caret-down"></i>
@@ -35,9 +37,9 @@
         </div>
       </div>
       <div class="col-md-3" *ngIf="item.timesheetrole === 3">
-        <div class="mt-2 username" >
-         <!-- Candidate Name: {{ username }} -->
-         {{ item.Name }}
+        <div class="mt-2 username">
+          <!-- Candidate Name: {{ username }} -->
+          {{ item.Name }}
         </div>
       </div>
       <!-- <div class="col-md-4">
@@ -48,11 +50,11 @@
       <!-- <div *ngIf="selectedWeek" class="selected-week">
             You selected: {{ selectedWeek }}
           </div> -->
-  
+
       <div class="col-md-3 gray-theme">
         <!-- <div class="weekly-datepicker">
           <select id="weekPicker" [(ngModel)]="selectedWeek" (change)="onWeekSelect($event.target.value)">
-            <option *ngFor="let week of generateWeeks()" [value]="week" value="">{{ week }}</option>
+            <option class="weekoptions" *ngFor="let week of generateWeeks()" [value]="week">{{ week }}</option>
           </select>
         </div> -->
         <mat-form-field>
@@ -65,10 +67,9 @@
       </div>
     </div>
   </div>
-  
   <table>
     <thead>
-       <!-- <tr>
+      <!-- <tr>
       <th>#</th>
       <th style="width: 700px;">DETAILS</th>
       <ng-container *ngFor="let date of getWeekDates(selectedWeek)">
@@ -80,19 +81,19 @@
       <th style="width: 70px">TOTAL</th>
       <th>Action</th>
     </tr> -->
-    <tr>
-      <th>#</th>
-      <th style="width: 700px;">DETAILS</th>
-      <!-- Display default day labels with corresponding dates -->
-      <ng-container *ngFor="let day of getDefaultWeekDays(selectedWeek)">
-        <th>
-          <!-- <div>{{ day.label }}</div> -->
-          <div class="days">{{ day.date }}</div> <!-- Display the date -->
-        </th>
-      </ng-container>
-      <th style="width: 70px" class="days">TOTAL</th>
-      <th class="days">Action</th>
-    </tr>
+      <tr>
+        <th>#</th>
+        <th style="width: 700px;">DETAILS</th>
+        <!-- Display default day labels with corresponding dates -->
+        <ng-container *ngFor="let day of getDefaultWeekDays(selectedWeek)">
+          <th>
+            <!-- <div>{{ day.label }}</div> -->
+            <div class="days">{{ day.date }}</div> <!-- Display the date -->
+          </th>
+        </ng-container>
+        <th style="width: 70px" class="days">TOTAL</th>
+        <th class="days">Action</th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of timesheetRows; let i = index">
@@ -182,24 +183,24 @@
           </div>
           <div class="row">
             <div class="col-md-5 mr-5 ml-2">
-              <label for="file{{i}}" class="file-label" style="width: 9rem;" >
+              <label for="file{{i}}" class="file-label" style="width: 9rem;">
                 <i class="fa fa-upload"></i> Client Approved
-              </label >
+              </label>
               <input type="file" id="file{{i}}" class="form-control-file visually-hidden"
-              (change)="onFileChange($event, 'file1', row)">
+                (change)="onFileChange($event, 'file1', row)">
             </div>
             <div class="col-md-5 mt-2">
               <div *ngIf="row.file1" class="file-name">{{ row.file1.name }}</div>
             </div>
           </div>
         </td>
-        <td> <input type="text" id="day1" style="width: 50px;padding: 5px;" [(ngModel)]="row.mon" id="mon"></td>
-        <td> <input type="text" id="day2" style="width: 50px;padding: 5px;" [(ngModel)]="row.tues" id="tues"></td>
-        <td> <input type="text" id="day3" style="width: 50px;padding: 5px;" [(ngModel)]="row.wed" id="wed"></td>
-        <td> <input type="text" id="day4" style="width: 50px;padding: 5px;" [(ngModel)]="row.thu" id="thu"></td>
-        <td> <input type="text" id="day5" style="width: 50px;padding: 5px;" [(ngModel)]="row.fri" id="fri"></td>
-        <td> <input type="text" id="day6" style="width: 50px;padding: 5px;" [(ngModel)]="row.sat" id="sat"></td>
-        <td> <input type="text" id="day7" style="width: 50px;padding: 5px;" [(ngModel)]="row.sun" id="sun"></td>
+        <td> <input type="text" id="day1" style="width: 50px;padding: 5px;" [(ngModel)]="row.mon"></td>
+        <td> <input type="text" id="day2" style="width: 50px;padding: 5px;" [(ngModel)]="row.tues"></td>
+        <td> <input type="text" id="day3" style="width: 50px;padding: 5px;" [(ngModel)]="row.wed"></td>
+        <td> <input type="text" id="day4" style="width: 50px;padding: 5px;" [(ngModel)]="row.thu"></td>
+        <td> <input type="text" id="day5" style="width: 50px;padding: 5px;" [(ngModel)]="row.fri"></td>
+        <td> <input type="text" id="day6" style="width: 50px;padding: 5px;" [(ngModel)]="row.sat"></td>
+        <td> <input type="text" id="day7" style="width: 50px;padding: 5px;" [(ngModel)]="row.sun"></td>
         <td class="text-right">
           <i> hrs </i><br>
           <span [(ngModel)]="row.totalHours">{{ formatTotalHours(calculateTotalHours(row)) }}</span><br>
