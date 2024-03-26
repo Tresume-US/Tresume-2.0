@@ -71,6 +71,7 @@
                    
               
             </tr>
+            <tr><td colspan="11"><span>Last Updated By : {{ row.lastUpdatedBy }}</span></td></tr>
           </ng-container>
 
           <!-- Display save button only when a row is being edited -->
@@ -93,12 +94,14 @@
         </div>
         
         </div>
- 
-<div *ngFor="let row of rowdata">
-  <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-  <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
-  <span>Last Updated By : {{ row.lastUpdatedBy }}</span>
-</div>
+ <div *ngIf="timesheetrole != 3">
+  <div *ngFor="let row of rowdata" >
+    <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+    <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+    
+  </div>
+ </div>
+
 
       </div>
       <div>
@@ -108,17 +111,20 @@
       <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal"> Approve </button>
       <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1"> Reject </button>
     </div> -->
-    <div class="float-right" *ngIf="editableRowIndex === null">
-      <ng-container *ngFor="let row of rowdata">
-        <ng-container *ngIf="row.status === 1">
-          <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal">Approve</button>
-          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1">Reject</button>
-          <!-- Break the loop after finding the first row with status === 1 -->
-          <ng-container *ngIf="editableRowIndex === null; else breakLoop"></ng-container>
+    <div *ngIf="timesheetrole != 3">
+      <div class="float-right" *ngIf="editableRowIndex === null" >
+        <ng-container *ngFor="let row of rowdata">
+          <ng-container *ngIf="row.status === 1">
+            <button type="button" class="btn mr-2" data-toggle="modal" data-target="#exampleModal">Approve</button>
+            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1">Reject</button>
+            <!-- Break the loop after finding the first row with status === 1 -->
+            <ng-container *ngIf="editableRowIndex === null; else breakLoop"></ng-container>
+          </ng-container>
+          <ng-template #breakLoop></ng-template>
         </ng-container>
-        <ng-template #breakLoop></ng-template>
-      </ng-container>
+      </div>
     </div>
+    
     
 
     <div class="float-right" *ngIf="editableRowIndex !== null">

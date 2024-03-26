@@ -45,6 +45,7 @@ export class CreateAllTimeListComponent implements OnInit {
   loading: boolean = false;
   isBillable: boolean;
   autofillData: any;
+  timesheet_role:any;
 
 
   updateTotalAmount() {
@@ -250,6 +251,7 @@ export class CreateAllTimeListComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.traineeID = this.cookieService.get('TraineeID');
     this.username = this.cookieService.get('userName1');
+     this.timesheet_role = this.cookieService.get('timesheet_role'); 
     this.candidateid = this.traineeID;
   }
 
@@ -269,11 +271,7 @@ export class CreateAllTimeListComponent implements OnInit {
     this.getpayItem();
     this.getTimesheetRole();
 
-    // if(item.timesheetrole === '3'){
-    //   this.candidateid = this.traineeID;
-    //   this.traineeID = this.cookieService.get('timesheet_admin');
-    //   this.username = this.cookieService.get('userName1');
-    // }
+    
 
 
     const today = new Date();
@@ -284,6 +282,9 @@ export class CreateAllTimeListComponent implements OnInit {
     this.selectedWeek = `${this.formatDate(currentWeekStart)} to ${this.formatDate(currentWeekEnd)}`;
 
     this.dynamicDays = this.generateWeeks();
+    if(this.timesheet_role === '3'){
+      this.autofillDetails();
+    }
   }
 
   timesheetrole: number[] = []
@@ -864,6 +865,7 @@ export class CreateAllTimeListComponent implements OnInit {
 
 
   autofillDetails(): void {
+    this.loading = true;
     const selectedWeek = this.selectedWeek.split(' to ');
     console.log(selectedWeek);
     let Req = {
@@ -872,7 +874,7 @@ export class CreateAllTimeListComponent implements OnInit {
     };
 
     this.Service.autofillDetails(Req).subscribe((x: any) => {
-
+      this.loading = false;
       var data = x.result;
       if (data.length > 0) {
         this.timesheetRows = [];
@@ -906,6 +908,10 @@ export class CreateAllTimeListComponent implements OnInit {
         });
       }
 
+    },
+    (error: any) => {
+      console.error('Error occurred:', error);
+      this.loading = false;
     });
   }
 

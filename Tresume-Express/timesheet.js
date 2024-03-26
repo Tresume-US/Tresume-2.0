@@ -1230,6 +1230,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     let query;
     let inputParams = {
       'traineeid': sql.Int,
+      'projectid': sql.Int,
       'totalhrs': sql.Float,
       'details': sql.Text,
       'clientapproved': sql.VarChar(sql.MAX),
@@ -1238,8 +1239,8 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       'fromdate': sql.DateTime,
       'todate': sql.DateTime,
       'isBillable': sql.Bit,
-      'payterm': sql.Int,
-      'service': sql.Int,
+      'payterm': sql.VarChar(20),
+      'service': sql.VarChar(20),
       'location': sql.VarChar(50),
       'billableamt': sql.VarChar(50),
       'day1': sql.VarChar(10),
@@ -1256,11 +1257,11 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     };
 
     if (id) {
-      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at = @created_at, status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, create_by = @create_by WHERE id = @id`;
+      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lasstUpdated_at = GETDATE() WHERE id = @id`;
 
       inputParams['id'] = sql.Int;
     } else {
-      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid, totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by) VALUES (@traineeid, @totalhrs, @details, @clientapproved, @created_at, @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by)`;
+      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, @clientapproved, GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
     }
 
     const request = pool.request();

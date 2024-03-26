@@ -75,13 +75,8 @@ export class ViewDetailsComponent {
     this.loading = true;
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
-
-    this.username = this.cookieService.get('userName1'); 
-
-
-
-
-
+    this.username = this.cookieService.get('userName1');
+    this.timesheetrole = this.cookieService.get('timesheet_role'); 
     this.route.paramMap.subscribe(params => {
       this.idFromUrl = params.get('id');
     });
