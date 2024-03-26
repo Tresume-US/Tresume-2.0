@@ -476,6 +476,8 @@ onChangesDropdown(selectedOption: any, row: any) {
     const startDateFormatted = startDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
     const endDateFormatted = endDateSelectedWeek.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
     console.log(startDateFormatted);
+    this.loading = true;
+    
     this.timesheetRows.forEach((row, index) => {
       if (row.projectName != '') {
         const formData = new FormData();
