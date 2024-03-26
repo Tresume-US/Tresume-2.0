@@ -264,7 +264,6 @@ this.candidateid = this.traineeID;
     this.getLocation();
     this.getpayItem();
     this.getTimesheetRole();
-    this.autofillDetailscreate();
 
     // if(item.timesheetrole === '3'){
     //   this.candidateid = this.traineeID;
@@ -379,7 +378,7 @@ getDropdownOption1() {
 onChangesDropdown(selectedOption: any, row: any) {
   this.selectedItem = `${selectedOption.FirstName} ${selectedOption.LastName}`;
   this.candidateid = `${selectedOption.TraineeID}`;
-  
+  this.autofillDetails();
 }
  
   selectedItem1: string;
@@ -621,6 +620,7 @@ private handleError(response: any): void {
 
   onWeekSelect(week: string): void {
     this.selectedWeek = week;
+    this.autofillDetails();
   }
   // onWeekSelect(selectedWeek: string): void {
   //   const [startDateString, endDateString] = selectedWeek.split(' to ');
@@ -821,18 +821,49 @@ generateWeeks(currentWeekIndex: number = 0): string[] {
 
 
   autofillDetails(): void {
-    const request = { candidateId: this.candidateId, fromDate: this.fromDate, toDate: this.toDate };
-    this.http.post<any>('http://localhost:4200//autofillDetails', request)
-      .subscribe(
-        response => {
-          this.autofillData = response;
-        },
-        error => {
-          console.error('Error occurred while autofilling details:', error);
-        }
-      );
-  }
+    const selectedWeek = this.selectedWeek.split(' to ');
+    console.log(selectedWeek);
+    let Req = {
+      fromdate: selectedWeek[0],
+      traineeID: this.candidateid
+    };
 
+    this.Service.autofillDetails(Req).subscribe((x: any) => {
+
+     var data = x.result;
+     if(data.length>0){
+      this.timesheetRows = [];
+      data.forEach((itm: any) => {
+       console.log(itm)
+       var row = {
+         projectName:itm.projectname,
+         payItem: 'Hourly',
+         service: 'Service',
+         location: itm.location,
+         description: itm.details,
+         hourlyRate: itm.billableamt,
+         billable: itm.isBillable,
+         clientAproved: '',
+         mon: itm.day1,
+         tues: itm.day2,
+         wed: itm.day3,
+         thu: itm.day4,
+         fri: itm.day5,
+         sat: itm.day6,
+         sun: itm.day7,
+         totalHours: itm.totalhrs,
+         totalAmount: itm.totalamt,
+         file1: {name:itm.clientapproved},
+         id:itm.id
+       };
+      
+       this.timesheetRows.push(row);
+       
+     });
+     }
+     
+  });
+  }
 
 }
 

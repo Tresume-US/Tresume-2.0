@@ -136,7 +136,7 @@ select {
 }
 .gray-theme select {
   width: 100%;
-  padding: 8px;
+  padding: 4px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -192,7 +192,7 @@ th span.date {
 .days{
   font-weight: 500;
 }
-// .weekoptions{
+/* // .weekoptions{
 //   height: 10px;
 // }
 
@@ -205,3 +205,40 @@ th span.date {
   padding: 5px 10px; 
   height: 30px; 
 }
+
+.weekly-datepicker {
+  position: relative;
+  width: 200px; /* Adjust width as needed */
+} */
+
+.weekly-datepicker select {
+  padding: 6px;
+  width: 260px;
+  font-size: 18px;
+  border: 3px solid #340842;
+  border-radius: 4px;
+}
+
+.weekly-datepicker select::after {
+  content: '\25BC'; /* Downward arrow character */
+  position: absolute;
+  top: calc(50% - 4px);
+  right: 10px;
+  font-size: 14px; /* Adjust font size as needed */
+}
+
+/* Style dropdown options */
+.weekly-datepicker select option {
+  padding: 8px 10px; /* Adjust padding as needed */
+}
+
+/* Style selected option */
+.weekly-datepicker select option:checked {
+  background-color: #f0f0f0; /* Background color when option is selected */
+  transform: scale(1.1); /* Zoom effect when option is selected */
+}
+.input-group-append{
+  height: 37px;
+}
+
+
