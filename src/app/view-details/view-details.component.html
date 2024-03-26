@@ -93,16 +93,13 @@
         </div>
         
         </div>
-        <div *ngFor="let row of rowdata">
-          <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-          <!-- <textarea name="" id="" cols="40" rows="3"  [(ngModel)]="row.admincomment" [ngModelOptions]="{standalone: true}" #comment="ngModel" required></textarea> -->
-          <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments"
-            [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+ 
+<div *ngFor="let row of rowdata">
+  <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+  <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+  <span>Last Updated By : {{ row.lastUpdatedBy }}</span>
+</div>
 
-            <ng-container *ngIf="row.status === 1">
-          <span>Last Updated By : {{row.lastUpdated_by}}</span>
-        </ng-container>
-        </div>
       </div>
       <div>
       </div>
