@@ -256,7 +256,7 @@ router.post("/gettimesheetlist", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT tm.id, tm.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS candidatename, tm.totalhrs, tm.details, tm.totalamt, tm.billableamt, tm.projectid, tm.fromdate FROM timesheet_master AS tm JOIN timesheet_project AS tp ON tm.projectid = tp.projectid JOIN trainee AS t ON tm.traineeid = t.traineeid WHERE tp.clientid = '" + req.body.orgID + "' AND tm.status = 1 AND tm.isbillable = 1";
+      var query = "SELECT tm.id, tm.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS candidatename, tm.totalhrs, tm.details, tm.totalamt, tm.billableamt, tm.projectid, tm.fromdate FROM timesheet_master AS tm JOIN timesheet_project AS tp ON tm.projectid = tp.projectid JOIN trainee AS t ON tm.traineeid = t.traineeid WHERE tp.clientid = '" + req.body.orgID + "' AND tm.status = 3 AND tm.isbillable = 1";
 
       if (req.body.startdate) {
         query += " AND tm.fromdate >= '" + req.body.startdate + "'";

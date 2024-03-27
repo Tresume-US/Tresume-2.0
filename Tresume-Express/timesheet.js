@@ -1219,7 +1219,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     const { id, traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
     let filename = '';
 
-    const isBillableBool = isBillable === 'true' ? true : false;
+    // const isBillableBool = isBillable === '1' ? true : false;
 
     if (req.file) {
       filename = req.file.filename;
@@ -1238,7 +1238,7 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
       'status': sql.Int,
       'fromdate': sql.DateTime,
       'todate': sql.DateTime,
-      'isBillable': sql.Bit,
+      'isBillable': sql.Int,
       'payterm': sql.VarChar(20),
       'service': sql.VarChar(20),
       'location': sql.VarChar(50),
@@ -1257,13 +1257,13 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     };
 
     if (id) {
-      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lasstUpdated_at = GETDATE() WHERE id = @id`;
+      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() WHERE id = @id`;
 
       inputParams['id'] = sql.Int;
     } else {
       query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, @clientapproved, GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
     }
-
+console.log(query)
     const request = pool.request();
 
     for (const paramName in inputParams) {
@@ -1642,7 +1642,7 @@ router.post('/autofillDetails', async (req, res) => {
     toDate.setDate(toDate.getDate() + 1);
     const toDateFormatted = toDate.toISOString().split('T')[0];
     const query = `SELECT TM.*,TP.projectname from timesheet_Master TM LEFT JOIN timesheet_project TP ON TP.projectid = TM.projectid
-    WHERE fromdate between '${fromDate}' and '${toDateFormatted}' and traineeid = '${req.body.traineeID}'`;
+    WHERE fromdate between '${fromDate}' and '${toDateFormatted}' and traineeid = '${req.body.traineeID}' and TM.status in (1,3)`;
     
     console.log(query);
     const result = await request.query(query);
