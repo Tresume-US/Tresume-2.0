@@ -403,7 +403,13 @@ router.post("/Candidateviewdetails", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT TM.id,TM.lastUpdated_by,TM.admincomment,TM.billableamt, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, TM.day5, TM.day6, TM.day7, TM.totalamt,TM.totalhrs,TM.status, TM.details,TM.clientapproved FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid WHERE TM.id='" + req.body.tid + "'";
+      var query = "SELECT TM.id, TM.lastUpdated_by AS updatedBy, TM.admincomment, TM.billableamt, TM.fromdate, TM.todate, " +
+      "CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, " +
+      "TM.day5, TM.day6, TM.day7, TM.totalamt, TM.totalhrs, TM.status, TM.details, TM.clientapproved " +
+      "FROM Timesheet_Master TM " +
+      "INNER JOIN Trainee T ON TM.traineeid = T.traineeid " +
+      "WHERE TM.id = '" + req.body.tid + "'";
+
 
 
       console.log(query);
@@ -1125,7 +1131,8 @@ router.post('/getPayItemList', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
 
-    const query = "Select Text from PayType";
+    // const query = "Select Text from PayType";
+    const query = "SELECT Text FROM PayType WHERE Text IN ('Hourly', 'Daily')";
 
     console.log(query);
 
