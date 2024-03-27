@@ -34,7 +34,6 @@ export class ViewDetailsComponent {
   commentContainer: any;
   username: any = '';
 
-
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     const targetElement = event.target as HTMLElement;
@@ -77,8 +76,7 @@ export class ViewDetailsComponent {
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.username = this.cookieService.get('userName1');
-
-
+    this.timesheetrole = this.cookieService.get('timesheet_role'); 
     this.route.paramMap.subscribe(params => {
       this.idFromUrl = params.get('id');
     });
@@ -96,6 +94,7 @@ export class ViewDetailsComponent {
     this.service.Candidateviewdetails(Req).subscribe((x: any) => {
       this.rowdata = x.result;
       this.document = this.rowdata[0].clientapproved;
+      this.rowdata[0].username = this.username;
       // this.noResultsFound = this.rowdata.length === 0;
     });
     this.loading = false;
@@ -256,7 +255,9 @@ export class ViewDetailsComponent {
       comments: this.comments,
       id: this.idFromUrl,
       username: this.username,
-      rowdata: this.rowdata
+      rowdata: this.rowdata  
+
+
     };
 
     this.service.updatetimesheet(Req).subscribe((response: any) => {
