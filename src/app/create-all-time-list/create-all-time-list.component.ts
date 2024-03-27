@@ -922,11 +922,7 @@ export class CreateAllTimeListComponent implements OnInit {
     });
   }
 
-  isStatus3(): boolean {
-    return this.timesheetRows.some(row => row.status === 3);
-  }
 
- 
 
 }
 
