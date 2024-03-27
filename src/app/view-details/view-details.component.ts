@@ -85,7 +85,6 @@ export class ViewDetailsComponent {
   }
 
   fetchResult() {
-
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole: this.timesheetrole,
@@ -112,6 +111,7 @@ export class ViewDetailsComponent {
       id: this.idFromUrl,
       comments: this.comments,
     };
+    this.loading = true;
     this.service.UpdateRejectStatus(Req).subscribe((x: any) => {
       this.rowdata = x.result;
 
@@ -120,9 +120,16 @@ export class ViewDetailsComponent {
       setTimeout(() => {
         this.router.navigate(['/alltimelist']);
       }, 3000);
+
+    this.loading = false;
+
     }, error => {
+      console.error('Error updating status:', error);
+
+      this.loading = false;
 
     });
+
   }
 
   Accept() {
@@ -136,6 +143,7 @@ export class ViewDetailsComponent {
       comments: this.comments,
       id: this.idFromUrl,
     };
+    this.loading = true;
     this.service.UpdateAcceptStatus(Req).subscribe((x: any) => {
       this.rowdata = x.result;
       this.messageService.add({ severity: 'success', summary: 'Approved' });
@@ -143,7 +151,14 @@ export class ViewDetailsComponent {
       setTimeout(() => {
         this.router.navigate(['/alltimelist']);
       }, 3000);
+
+    this.loading = false;
+
     }, error => {
+      console.error('Error updating status:', error);
+
+    this.loading = false;
+
     });
   }
   // Accept() {
@@ -259,14 +274,17 @@ export class ViewDetailsComponent {
 
 
     };
+    this.loading = true;
 
     this.service.updatetimesheet(Req).subscribe((response: any) => {
       console.log('Values Updated:', response);
       this.messageService.add({ severity: 'success', summary: 'Updated' });
       this.editableRowIndex = null;
+    this.loading = false;
+
     }, error => {
       console.error('Error updating values:', error);
-
+      this.loading = false;
     });
 
     this.editableRowIndex = null;

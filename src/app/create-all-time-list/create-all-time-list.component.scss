@@ -242,3 +242,7 @@ th span.date {
 }
 
 
+.btn-block.fbtn:hover:disabled {
+  background-color: #cccccc; 
+  cursor: not-allowed; 
+}
