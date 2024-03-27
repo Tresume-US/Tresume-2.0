@@ -267,10 +267,10 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
 
       var query;
       if (timesheetrole === 1) {
-        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0";
-      } else if (timesheetrole === 3) {
-        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid LEFT JOIN Timesheet_Project TP ON TM.projectid = TP.projectid  WHERE T.username = '" + req.body.username + "' AND TM.isBillable = 0";
-      }
+        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
+    } else if (timesheetrole === 3) {
+        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid LEFT JOIN Timesheet_Project TP ON TM.projectid = TP.projectid  WHERE T.username = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
+    }
 
       console.log(query);
       request.query(query, async function (err, recordset) {

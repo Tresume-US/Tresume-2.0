@@ -326,7 +326,7 @@ export class AllTimeListComponent implements OnChanges {
     });
   }
 
-  deleteItem(id: any): void {
+  deleteItem(id: any, tab: string): void {
     let Req = {
       Id: id,
     };
@@ -338,14 +338,31 @@ export class AllTimeListComponent implements OnChanges {
           severity: 'success',
           summary: 'Timesheet Deleted Successfully',
         });
-        this.fetchPendingResult();
+        switch(tab) {
+          case 'pending':
+            this.fetchPendingResult();
+            break;
+          case 'rejected':
+            this.fetchRejectedData();
+            break;
+          case 'completed':
+            this.fetchCompletedData();
+            break;
+          case 'non-billable':
+            this.fetchNonBillableData();
+            break;
+          default:
+            break;
+        }
       } else {
         this.messageService.add({
           severity: 'error',
           summary: 'Please try again later',
         });
       }
-    });    
+    });
   }
+  
+  
   
 }
