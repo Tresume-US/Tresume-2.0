@@ -102,16 +102,14 @@
           <div class="card-body">
             <a href="https://tresume.us/Content/Timesheet/{{this.document}}" target="_blank" class="card-title" style="cursor: pointer;">Client Approved Timesheet</a>
             &nbsp;&nbsp;<i class="fas fa-download" id="uploadIcon"></i>
+        </div>        
         </div>
-        
-        </div>
- <div *ngIf="timesheetrole != 3">
-  <div *ngFor="let row of rowdata" >
-    <span style="font-weight: 500;font-size: 16px;">Comment : </span><br>
-    <textarea class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
-    
-  </div>
- </div>
+   <div *ngIf="timesheetrole != 3">
+   <div *ngFor="let row of rowdata" >
+    <span  *ngIf="row.status === 1" style="font-weight: 500;font-size: 16px;">Comment : </span><br>
+    <textarea  *ngIf="row.status === 1" class="textarea" name="admincomment" id="admincomment" [(ngModel)]="comments" [ngModelOptions]="{standalone: true}" (input)="onInput($event)" rows="4" cols="50"></textarea>
+    </div>
+   </div>
 
 
       </div>
