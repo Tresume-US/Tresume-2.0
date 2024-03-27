@@ -536,6 +536,9 @@ export class CreateAllTimeListComponent implements OnInit {
         const totalHours = this.calculateTotalHours(row).toFixed(2);
 
         // console.log('Total Hours:', totalHours); 
+        if(row.id){
+          formData.append('id', row.id);
+        }
 
         formData.append('traineeid', this.candidateid);
         formData.append('projectid', row.projectid);
@@ -543,7 +546,7 @@ export class CreateAllTimeListComponent implements OnInit {
         formData.append('details', row.description);
         formData.append('fromdate', selectedWeek[0]);
         formData.append('todate', selectedWeek[1]);
-        if (row.billable) {
+        if (row.billable==true) {
           formData.append('isBillable', '1');
         } else {
           formData.append('isBillable', '0');
@@ -876,8 +879,9 @@ export class CreateAllTimeListComponent implements OnInit {
     this.Service.autofillDetails(Req).subscribe((x: any) => {
       this.loading = false;
       var data = x.result;
+      this.timesheetRows = [];
       if (data.length > 0) {
-        this.timesheetRows = [];
+        
         data.forEach((itm: any) => {
           console.log(itm)
           var row = {
@@ -901,11 +905,14 @@ export class CreateAllTimeListComponent implements OnInit {
             file1: { name: itm.clientapproved },
             id: itm.id,
             status: itm.status,
+            projectid:itm.projectid
           };
 
           this.timesheetRows.push(row);
 
         });
+      }else{
+        this.addRow();
       }
 
     },
