@@ -105,3 +105,21 @@ tbody{
 .editable-input {
   width: 60px;
 }
+
+.date-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.date-label {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.date {
+  flex: 0 0 auto;
+}
+

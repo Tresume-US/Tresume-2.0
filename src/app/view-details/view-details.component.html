@@ -4,8 +4,17 @@
       <h2 class="pl-2">Details</h2>
     </div>
     <div class="row mt-2 pl-2">
-      <a href="#" [routerLink]="['/alltimelist']" class="btn">Back to main view</a>
+      <a href="#" [routerLink]="['/alltimelist']" class="btn mr-2">Back to main view</a>
+      <ng-container *ngFor="let row of rowdata; let i = index">
+        <div class="date-container">
+          <span class="date-label mr-2">Week Start Date:</span>
+          <span class="date mr-4">{{row.fromdate | date : "MMMM d, y"}}</span>
+          <span class="date-label">Week End Date:</span>
+          <span class="date">{{row.todate | date : "MMMM d, y"}}</span>
+        </div>
+      </ng-container>
     </div>
+    
     <div class="mt-3 d-flex">
       <table style="width: 60%;">
         <thead>
@@ -71,7 +80,9 @@
                    
               
             </tr>
+
             <tr><td colspan="11"><span>Last Updated By : {{ row.updatedBy }}</span></td></tr>
+
           </ng-container>
 
           <!-- Display save button only when a row is being edited -->
