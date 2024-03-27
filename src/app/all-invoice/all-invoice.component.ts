@@ -305,7 +305,7 @@ export class AllInvoiceComponent implements OnInit {
 }
 applyPaidFilter() {
   this.filteredPaidInvoices = this.paidInvoices.filter(invoice =>
-      invoice.projectname.toLowerCase().includes(this.searchPaidQuery.toLowerCase())
+      invoice.clientname.toLowerCase().includes(this.searchPaidQuery.toLowerCase())
     );
     this.noResultsFound = this.filteredPaidInvoices.length === 0 && this.searchPaidQuery !== '';
   }
@@ -330,7 +330,7 @@ applyPaidFilter() {
 
   applyUnpaidFilter() {
     this.filteredUnpaidInvoices = this.unpaidInvoices.filter(invoice =>
-      invoice.projectname.toLowerCase().includes(this.searchUnpaidQuery.toLowerCase())
+      invoice.clientname.toLowerCase().includes(this.searchUnpaidQuery.toLowerCase())
     );
     this.noResultsFound = this.filteredUnpaidInvoices.length === 0 && this.searchUnpaidQuery !== '';
   }
@@ -355,7 +355,7 @@ applyPaidFilter() {
 
   applyFilter() {
     this.filteredInvoices = this.allInvoices.filter(invoice =>
-      invoice.projectname.toLowerCase().includes(this.searchQuery.toLowerCase())
+      invoice.clientname.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.noResultsFound = this.filteredInvoices.length === 0 && this.searchQuery !== '';
   }

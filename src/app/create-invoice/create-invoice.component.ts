@@ -62,6 +62,7 @@ export class CreateInvoiceComponent implements OnInit {
   clientid: any;
   selectedclient:any;
   username: any;
+  newrows: boolean = false;
 
 
 
@@ -74,6 +75,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.fetchclientlist();
     this.calculateSubtotal();
     this.addDefaultRows(2);
+    this.newrows = true;
   }
 
   constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute) {
@@ -349,6 +351,9 @@ getcurrenttimesheetlist() {
 
 
 addservice(timesheet:any){
+  if(this.newrows){
+    this.invoiceLines = [];
+  }
   var data = {
     sno: '',
     serviceDate: timesheet.fromdate,
@@ -361,6 +366,7 @@ addservice(timesheet:any){
   }
   this.invoiceLines.push(data);
   this.updateAmount(data);
+  this.newrows = false;
 }
 
   addinvoice() {
@@ -374,7 +380,6 @@ addservice(timesheet:any){
         rate: line.rate,
         timesheetid:line.timesheetid
       });
-      this.messageService.add({ severity: 'success', summary:  'Data Updated' });
     });
 
   const formData = new FormData();
@@ -388,7 +393,7 @@ addservice(timesheet:any){
   formData.append('DueDate', this.selectedDueDate); 
   formData.append('Terms', this.selectedTerm);
   formData.append('invoiceNo', this.InvoiceNo);
-  formData.append('location', this.selectedState.toString());
+  formData.append('location', this.selectedState);
   formData.append('subtotal', this.subtotal.toString());
   formData.append('discount', this.discountPercentage.toString());
   formData.append('discountAmount', this.discountAmount.toString());
@@ -398,7 +403,6 @@ addservice(timesheet:any){
   formData.append('statement', this.messageOnStatement);
   formData.append('newTermName', this.newTermName);
   formData.append('dueType', this.dueType.toString());
-  formData.append('duedate', this.dueDays.toString());
   formData.append('status', '1');
   formData.append('created_by', this.username);
 

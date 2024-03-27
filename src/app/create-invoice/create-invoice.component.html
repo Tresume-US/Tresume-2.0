@@ -4,7 +4,7 @@
   </div>
 
   <body style="font-size: 14px">
-    <form #invoiceForm="ngForm" (ngSubmit)="addinvoice()" novalidate>
+    <form #invoiceForm="ngForm" novalidate>
       <div class="row mt-4">
         <div class="col-md-12 d-flex p-2">
           <!-- <div class="dropdown-container" style="margin-left: 16px;">
@@ -331,7 +331,7 @@
                     </div>
                     <div class="row mt-3">
                       <div class="col d-flex justify-content-between">
-                        <button class="btn" (click)="addservice(timesheet)">Add</button>
+                        <div class="btn" (click)="addservice(timesheet)">Add</div>
                         <!-- <button class="btn ">Open</button> -->
                       </div>
                     </div>
@@ -731,7 +731,7 @@
             <div class="dropdown-menu" aria-labelledby="saveAndNewDropdown">
               <button class="save-close-btn" [ngClass]="{'disabled-style': invoiceForm.invalid}" (click)="addinvoice()"
                 [disabled]="!invoiceForm.valid">Save and close</button><br>
-              <a class="save-close-btn" href="#">Save and send</a>
+              <!-- <a class="save-close-btn" href="#">Save and send</a> -->
 
               <!-- <a class="dropdown-item" (click)="addinvoice()">Save and close</a> -->
               <!-- <a class="dropdown-item" href="#">Save and send</a> -->

@@ -404,7 +404,7 @@
                       <td>{{ invoice.date | date: "MM/dd/y" : "UTC" }}</td>
                       <td>Invoice</td>
                       <td>{{ invoice.invoiceNo }}</td>
-                      <td>{{ invoice.projectname }}</td>
+                      <td>{{ invoice.clientname }}</td>
                       <td>{{ invoice.messageOnStatement | date: "MM/dd/y" : "UTC" }}</td>
                       <td>{{ invoice.total }}</td>
                       <td [ngClass]="{
@@ -490,7 +490,7 @@
                         <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
                         <td>Invoice</td>
                         <td>{{ invoice.invoiceNo }}</td>
-                        <td>{{ invoice.projectname }}</td>
+                        <td>{{ invoice.clientname }}</td>
                         <td>{{ invoice.memo | date : "MM/dd/y" : "UTC" }}</td>
                         <td>{{ invoice.total }}</td>
                         <td [ngClass]="{
@@ -575,7 +575,7 @@
                           <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
                           <td>Invoice</td>
                           <td>{{ invoice.invoiceNo }}</td>
-                          <td>{{ invoice.projectname }}</td>
+                          <td>{{ invoice.clientname }}</td>
                           <td>{{ invoice.memo | date : "MM/dd/y" : "UTC" }}</td>
                           <td>{{ invoice.total }}</td>
                           <td [ngClass]="{
