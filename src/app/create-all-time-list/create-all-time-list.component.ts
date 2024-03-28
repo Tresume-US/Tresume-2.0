@@ -519,67 +519,69 @@ export class CreateAllTimeListComponent implements OnInit {
     this.loading = true;
 
     this.timesheetRows.forEach((row, index) => {
-      if (row.projectName != '') {
-        const formData = new FormData();
-
-        if (row.billable && !row.file1) {
-          alert('Please Upload Client Approved File.');
-        }
-
-        if (row.file1) {
-          formData.append('file1', row.file1);
-        } else {
-          formData.append('file1', '');
-        }
-
-
-        const totalHours = this.calculateTotalHours(row).toFixed(2);
-
-        // console.log('Total Hours:', totalHours); 
-        if(row.id){
-          formData.append('id', row.id);
-        }
-
-        formData.append('traineeid', this.candidateid);
-        formData.append('projectid', row.projectid);
-        formData.append('totalhrs', totalHours);
-        formData.append('details', row.description);
-        formData.append('fromdate', selectedWeek[0]);
-        formData.append('todate', selectedWeek[1]);
-        if (row.billable==true) {
-          formData.append('isBillable', '1');
-        } else {
-          formData.append('isBillable', '0');
-        }
-        formData.append('payterm', '1');
-        formData.append('service', '1');
-        formData.append('location', row.location);
-        formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
-        formData.append('day1', row.mon);
-        formData.append('day2', row.tues);
-        formData.append('day3', row.wed);
-        formData.append('day4', row.thu);
-        formData.append('day5', row.fri);
-        formData.append('day6', row.sat);
-        formData.append('day7', row.sun);
-        formData.append('totalamt', parseFloat(row.totalAmount).toFixed(2));
-        formData.append('admin', this.traineeID);
-        formData.append('orgid', this.OrgID);
-        formData.append('create_by', this.username);
-        const status = row.status ? row.status : '1';
-        formData.append('status', status);
-
-        this.Service.createTimesheet(formData).subscribe(
-          (x: any) => {
-            this.handleSuccess(x);
-            this.loading = false;
-          },
-          (error: any) => {
-            this.handleError(error);
-            this.loading = false;
+      if (row.billable && !row.file1) {
+        alert('Please Upload Client Approved File.');
+        this.loading = false;
+      }else{
+        if (row.projectName != '') {
+          const formData = new FormData();
+  
+          if (row.file1) {
+            formData.append('file1', row.file1);
+          } else {
+            formData.append('file1', '');
           }
-        );
+  
+  
+          const totalHours = this.calculateTotalHours(row).toFixed(2);
+  
+          // console.log('Total Hours:', totalHours); 
+          if(row.id){
+            formData.append('id', row.id);
+          }
+  
+          formData.append('traineeid', this.candidateid);
+          formData.append('projectid', row.projectid);
+          formData.append('totalhrs', totalHours);
+          formData.append('details', row.description);
+          formData.append('fromdate', selectedWeek[0]);
+          formData.append('todate', selectedWeek[1]);
+          if (row.billable==true) {
+            formData.append('isBillable', '1');
+          } else {
+            formData.append('isBillable', '0');
+          }
+          formData.append('payterm', row.payItem);
+          formData.append('service', row.service);
+          formData.append('location', row.location);
+          formData.append('billableamt', parseFloat(row.hourlyRate).toFixed(2));
+          formData.append('day1', row.mon);
+          formData.append('day2', row.tues);
+          formData.append('day3', row.wed);
+          formData.append('day4', row.thu);
+          formData.append('day5', row.fri);
+          formData.append('day6', row.sat);
+          formData.append('day7', row.sun);
+          formData.append('totalamt', parseFloat(row.totalAmount).toFixed(2));
+          formData.append('admin', this.traineeID);
+          formData.append('orgid', this.OrgID);
+          formData.append('create_by', this.username);
+          const status = row.status ? row.status : '1';
+          formData.append('status', status);
+  
+          this.Service.createTimesheet(formData).subscribe(
+            (x: any) => {
+              this.handleSuccess(x);
+              this.loading = false;
+            },
+            (error: any) => {
+              this.handleError(error);
+              this.loading = false;
+            }
+          );
+        }
       }
+    
     });
   }
 
@@ -886,8 +888,8 @@ export class CreateAllTimeListComponent implements OnInit {
           console.log(itm)
           var row = {
             projectName: itm.projectname,
-            payItem: 'Hourly',
-            service: 'Service',
+            payItem: itm.payterm,
+            service: itm.service,
             location: itm.location,
             description: itm.details,
             hourlyRate: itm.billableamt,
@@ -922,9 +924,9 @@ export class CreateAllTimeListComponent implements OnInit {
     });
   }
 
-  // isStatus3(): boolean {
-  //   return this.timesheetRows.some(row => row.status === 3);
-  // }
+  isStatus3(): boolean {
+    return this.timesheetRows.some(row => row.status === 3);
+  }
  
 
 }

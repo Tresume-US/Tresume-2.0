@@ -1263,11 +1263,11 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     };
 
     if (id) {
-      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = @clientapproved, created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() WHERE id = @id`;
+      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = '${filename}', created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() WHERE id = @id`;
 
       inputParams['id'] = sql.Int;
     } else {
-      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, @clientapproved, GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
+      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, '${filename}', GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
     }
 console.log(query)
     const request = pool.request();
