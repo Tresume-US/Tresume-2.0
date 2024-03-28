@@ -91,6 +91,7 @@ export class ViewDetailsComponent {
       timesheetrole: this.timesheetrole,
       tid: this.idFromUrl
     };
+    this.loading = true;
     this.service.Candidateviewdetails(Req).subscribe((x: any) => {
       this.rowdata = x.result;
       this.document = this.rowdata[0].clientapproved;
@@ -112,6 +113,7 @@ export class ViewDetailsComponent {
       id: this.idFromUrl,
       comments: this.comments,
     };
+    this.loading = true;
     this.service.UpdateRejectStatus(Req).subscribe((x: any) => {
       this.rowdata = x.result;
 
@@ -120,8 +122,11 @@ export class ViewDetailsComponent {
       setTimeout(() => {
         this.router.navigate(['/alltimelist']);
       }, 3000);
+      this.loading = false;
     }, error => {
+      console.error('Error updating status:', error);
 
+      this.loading = false;
     });
   }
 
@@ -136,6 +141,7 @@ export class ViewDetailsComponent {
       comments: this.comments,
       id: this.idFromUrl,
     };
+    this.loading = true;
     this.service.UpdateAcceptStatus(Req).subscribe((x: any) => {
       this.rowdata = x.result;
       this.messageService.add({ severity: 'success', summary: 'Approved' });
@@ -143,7 +149,13 @@ export class ViewDetailsComponent {
       setTimeout(() => {
         this.router.navigate(['/alltimelist']);
       }, 3000);
+      this.loading = false;
+
     }, error => {
+      console.error('Error updating status:', error);
+
+      this.loading = false;
+
     });
   }
   // Accept() {
