@@ -824,7 +824,7 @@ router.post('/getInvoiceClientList', async (req, res) => {
     // const request = new sql.Request();
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "SELECT tp.projectid AS projectid, tp.projectname AS ProjectName, c.clientid AS ClientID, c.clientname AS ClientName, c.emailid AS EmailID, c.Address AS Address FROM timesheet_project AS tp JOIN clients AS c ON tp.clientid = c.clientid WHERE tp.orgid = '" + req.body.orgID + "' AND tp.status = 1";
+    const query = "SELECT tp.projectid AS projectid, tp.projectname AS ProjectName, c.clientid AS ClientID, c.clientname AS ClientName, c.PaymentTerms, c.emailid AS EmailID, c.Address AS Address FROM timesheet_project AS tp JOIN clients AS c ON tp.clientid = c.clientid WHERE tp.orgid = '" + req.body.orgID + "' AND tp.status = 1";
 
     console.log(query);
 
