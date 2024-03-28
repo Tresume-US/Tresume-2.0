@@ -108,8 +108,8 @@
               <th><span>Fri</span></th>
               <th><span>Sat</span></th>
               <th><span>Sun</span></th>
-              <th><span>Duration</span></th>
-              <th><span>Rate</span> <i class="fas fa-filter" style="vertical-align: middle;"></i></th>
+              <th><span>Total Hours</span></th>
+              <th><span>Rate</span></th>
             </tr>
           </thead>
           <tbody>
@@ -130,9 +130,9 @@
               <td>{{ row.totalamt }}</td>
             </tr>
             <tr>
-              <td colspan="12"></td>
-              <td colspan="1">{{ sumOfHours }}</td>
-              <td colspan="1">{{ sumOfRate }}</td>
+              <td colspan="12" style="text-align: right;">Total</td>
+              <td colspan="1">{{ sumOfHours }} hrs</td>
+              <td colspan="1">${{ sumOfRate }}</td>
             </tr>
           </tbody>
         </table>
