@@ -33,7 +33,7 @@ export class CreateInvoiceComponent implements OnInit {
   selectedInvoiceDate: string = '';
   selectedDueDate: string = '';
   selectedTerm: any;
-  InvoiceNo: any;
+  invoiceno: any;
   routeType: any;
   productService: string[] = ["Service"];
   ccEmails: any;
@@ -75,6 +75,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.fetchclientlist();
     this.calculateSubtotal();
     this.addDefaultRows(2);
+    this.fetchInvoiceNo();
     this.newrows = true;
   }
 
@@ -370,6 +371,8 @@ addservice(timesheet:any){
 }
 
   addinvoice() {
+   
+    
     this.loading = true;
     let invoiceLinesData: { serviceDate: any, description: any, qty: any, rate: any,timesheetid:any }[] = [];
     this.invoiceLines.forEach((line, index) => {
@@ -392,7 +395,7 @@ addservice(timesheet:any){
   formData.append('InvoiceDate', this.selectedInvoiceDate); 
   formData.append('DueDate', this.selectedDueDate); 
   formData.append('Terms', this.selectedTerm);
-  formData.append('invoiceNo', this.InvoiceNo);
+  formData.append('invoiceNo', this.invoiceno);
   formData.append('location', this.selectedState);
   formData.append('subtotal', this.subtotal.toString());
   formData.append('discount', this.discountPercentage.toString());
@@ -474,4 +477,60 @@ addservice(timesheet:any){
     });
     console.log(Req);
   }
+
+
+
+fetchInvoiceNo() {
+  let Req = {
+    orgId: this.OrgID,
+  };
+  this.Service.GetlastInvoice(Req).subscribe(
+    (response: any) => {
+      this.invoiceno = response.invoiceNo;
+    },
+    (error: any) => {
+      console.error('Error fetching invoice number:', error);
+    }
+  );
+}
+
+invoicedata: any[];
+// getExistingInvoiceNo() {
+
+//     let Req = {
+//       orgId: this.OrgID,
+//       InvoiceNo: this.invoiceno,
+//     };
+//     this.Service.checkExistInvoiceNo(Req).subscribe(
+//       (response: any) => {
+//         this.invoicedata = response.result;
+//       },
+//       (error: any) => {
+//         console.error('Error fetching invoice data:', error);
+//       }
+//     );
+
+// }
+
+getExistingInvoiceNo() {
+  let req = {
+    orgId: this.OrgID,
+    InvoiceNo: this.invoiceno,
+  };
+
+  this.Service.checkExistInvoiceNo(req).subscribe(
+    (response: any) => {
+      if (response.invoiceExists) {
+        alert('Invoice number already exists.');
+      } else {
+        this.addinvoice();
+      }
+    },
+    (error: any) => {
+      console.error('Error fetching invoice data:', error);
+    }
+  );
+}
+
+
 }

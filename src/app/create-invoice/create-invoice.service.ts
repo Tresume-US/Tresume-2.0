@@ -44,5 +44,12 @@ export class CreateInvoiceService {
   gettimesheetlist(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'gettimesheetlist', request);
   }
+  GetlastInvoice(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'GetlastInvoice', request);
+  }
+  checkExistInvoiceNo(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'checkExistInvoiceNo', request);
+  }
+
 
 }

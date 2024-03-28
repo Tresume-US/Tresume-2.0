@@ -42,7 +42,7 @@ router.post("/getPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname, im.mail_sent_on as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -113,7 +113,7 @@ router.post("/getunPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname, im.mail_sent_on as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -147,7 +147,7 @@ router.post("/getAllInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname, im.mail_sent_on as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "'";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "'";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -336,5 +336,57 @@ console.log(query);
     sql.close();
   }
 });
+
+
+router.post('/GetlastInvoice', async (req, res) => {
+  const orgId = req.query.orgId;
+  var query = "SELECT ISNULL(MAX(invoiceno), 0) AS last_invoiceno FROM invoice_master WHERE orgid ="+req.body.orgId;
+  console.log(query);
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool.request()
+      .query(query);
+      console.log(result.recordset[0].last_invoiceno);
+    const nextInvoiceNo = parseInt(result.recordset[0].last_invoiceno) + 1;
+    const data = {
+      flag: 1,
+      invoiceNo: nextInvoiceNo,
+    };
+    res.json(data); 
+
+  } catch (err) {
+    console.error('SQL error:', err.message);
+    res.status(500).send('Internal Server Error');
+  }
+
+});
+
+
+
+router.post('/checkExistInvoiceNo', async (req, res) => {
+  const { orgid, invoiceno } = req.body;
+
+  try {
+    let pool = await sql.connect(config);
+
+    let result = await pool.request()
+      .input('OrgId', sql.Int, orgid)
+      .input('InvoiceNo', sql.Int, invoiceno)
+      .query('SELECT TOP 1 invoiceno FROM invoice_master WHERE orgid = @OrgId AND invoiceno = @InvoiceNo');
+
+    const invoiceExists = result.recordset.length > 0;
+    var data = {
+      flag: 1,
+      invoiceExists:invoiceExists ,
+    };
+
+    res.send(data);
+
+  } catch (err) {
+    console.error('SQL error:', err.message);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 module.exports = router;

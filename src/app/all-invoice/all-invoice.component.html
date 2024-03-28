@@ -13,7 +13,7 @@
           <ul class="nav nav-tabs" style="justify-content: flex-start; position: relative;">
             <li class="nav-item">
               <a class="nav-link active" id="allinvoices-tab" data-toggle="tab" href="#allinvoices"
-                style="margin-left: 12px">
+               >
                 All Invoices
               </a>
             </li>
@@ -376,7 +376,7 @@
                 </div> -->
               <!-- </div> -->
 
-              <div class="action-icons icons-container float-right mt-3" style="border: none;    padding: 10px;">
+              <div class="action-icons icons-container float-right mt-3">
                 <i class="material-icons" onclick="exportAsPDF()">print</i>
                 <i class="fas fa-upload" onclick="downloadExcel()"></i>
                 <!-- <i class="fas fa-cog" onclick="openSettings()"></i> -->
@@ -389,10 +389,12 @@
                           <th>Invoice ID</th>
                           <th>Date</th>
                           <th>Type</th>
-                          <th>No.</th>
+                          <th>Invoice No</th>
                           <th>Client/Project</th>
                           <th>Memo</th>
-                          <th>Amount</th>
+                          <th>Total Amount</th>
+                       <th>Received Amount</th>
+                       <th>Balance Amount</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -405,8 +407,10 @@
                       <td>Invoice</td>
                       <td>{{ invoice.invoiceNo }}</td>
                       <td>{{ invoice.clientname }}</td>
-                      <td>{{ invoice.messageOnStatement | date: "MM/dd/y" : "UTC" }}</td>
-                      <td>{{ invoice.total }}</td>
+                      <td>{{ invoice.memo }}</td>
+                      <td>{{ invoice.total}}</td>
+                      <td>{{ invoice.receivedamt }}</td>
+                      <td>{{ invoice.total - invoice.receivedamt }}</td>
                       <td [ngClass]="{
                         'paid': invoice.status,
                         'unpaid': !invoice.status,
@@ -475,10 +479,12 @@
                     <th>Invoice ID</th>
                     <th>Date</th>
                     <th>Type</th>
-                    <th>No</th>
+                    <th>Invoice No</th>
                     <th>Client/Project</th>
                     <th>Memo</th>
-                    <th>Amount</th>
+                    <th>Total Amount</th>
+                      <th>Received Amount</th>
+                      <th>Balance Amount</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -491,8 +497,10 @@
                         <td>Invoice</td>
                         <td>{{ invoice.invoiceNo }}</td>
                         <td>{{ invoice.clientname }}</td>
-                        <td>{{ invoice.memo | date : "MM/dd/y" : "UTC" }}</td>
-                        <td>{{ invoice.total }}</td>
+                        <td>{{ invoice.memo }}</td>
+                        <td>{{ invoice.total}}</td>
+                        <td>{{ invoice.receivedamt }}</td>
+                        <td>{{ invoice.total - invoice.receivedamt }}</td>
                         <td [ngClass]="{
                           'paid': invoice.status,
                           'unpaid': !invoice.status,
@@ -557,15 +565,15 @@
                       <th>Invoice ID</th>
                       <th>Date</th>
                       <th>Type</th>
-                      <th>No</th>
+                      <th>Invoice No</th>
                       <th>Client/Project</th>
                       <th>Memo</th>
-                      <th>Amount</th>
+                      <th>Total Amount</th>
+                      <th>Received Amount</th>
+                      <th>Balance Amount</th>
                       <th>Status</th>
                       <th>Action</th>
-
                     </tr>
-
                   </thead>
 
                   <tbody>
@@ -576,8 +584,10 @@
                           <td>Invoice</td>
                           <td>{{ invoice.invoiceNo }}</td>
                           <td>{{ invoice.clientname }}</td>
-                          <td>{{ invoice.memo | date : "MM/dd/y" : "UTC" }}</td>
-                          <td>{{ invoice.total }}</td>
+                          <td>{{ invoice.memo }}</td>
+                          <td>{{ invoice.total}}</td>
+                          <td>{{ invoice.receivedamt }}</td>
+                          <td>{{ invoice.total - invoice.receivedamt }}</td>
                           <td [ngClass]="{
                             'paid': invoice.status,
                             'unpaid': !invoice.status,
@@ -766,7 +776,8 @@
 <div *ngIf="showPopup" class="popup-overlay">
   <div class="popup">
     <input type="number" [(ngModel)]="receivedamt" placeholder="Enter amount">
-    <button (click)="saveAmount()">Save</button>
+    <button (click)="saveAmount()" [disabled]="!receivedamt && receivedamt !== 0">Save</button>    
+    <button (click)="cancel()">Cancel</button>
   </div>
 </div>
 

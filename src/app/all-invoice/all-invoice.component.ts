@@ -120,6 +120,7 @@ export class AllInvoiceComponent implements OnInit {
     this.service.updateReceivedPayment(req).subscribe(
       (response: any) => {
         this.handleSuccess(response);
+        this.fetchAllInvoiceList();
       },
       (error: any) => {
         this.handleError(error);
@@ -400,4 +401,10 @@ applyPaidFilter() {
     const currentDate = new Date();
     return date < currentDate;
   }
+
+  cancel() {
+    this.showPopup = false; // This hides the popup
+    // Any other cancellation logic can go here
+  }
+  
 }
