@@ -17,7 +17,7 @@
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
             </div>
         </div> -->
-          
+
           <div class="dropdown-container">
             <!-- <label for="client" class="dropdown-label">Client</label>
             <select class="form-control custom-select" style="width: 100%;" name="client" required #client="ngModel"
@@ -31,9 +31,11 @@
             <mat-form-field>
               <label for="client" class="dropdown-label">Client</label>
               <!-- <mat-label>Client</mat-label> -->
-              <mat-select [(value)]="selectedclient" #client="ngModel"  [(ngModel)]="selectedclient" (selectionChange)="onclientChanges()">
-                <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}-{{client.ProjectName}}</mat-option>
-    
+              <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
+                (selectionChange)="onclientChanges()">
+                <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName
+                  }}-{{client.ProjectName}}</mat-option>
+
               </mat-select>
             </mat-form-field>
             <div *ngIf="client.invalid && client.touched">
@@ -137,8 +139,8 @@
           <div class="invoiceDate mt-0 ml-3">
             <div class="form-group">
               <label for="InvoiceDate" class="ml-0">Invoice Date</label>
-              <input type="date" name="selectedInvoiceDate" id="selectedInvoiceDate" class="form-control ml-0"
-                [(ngModel)]="selectedInvoiceDate" required>
+<input type="date" name="selectedInvoiceDate" id="selectedInvoiceDate" class="form-control ml-0"
+  [(ngModel)]="selectedInvoiceDate" required>
               <div
                 *ngIf="invoiceForm.controls.selectedInvoiceDate.touched && invoiceForm.controls.selectedInvoiceDate.invalid">
                 <div *ngIf="invoiceForm.controls.selectedInvoiceDate.errors.required" class="text-danger">Invoice date
@@ -181,16 +183,18 @@
 
       <div class="col-md-12 d-flex ml-2 mt-3">
         <div class="clientemail mt-0 ml-3">
-          <!-- <div class="form-group">
-          <label for="dropdown" class="ml-0">Terms</label>
-          <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
-            style="width: 9rem">
-            <option *ngFor="let option of termsOptions" [value]="option.value">{{ option.label }}</option>
-          </select>
-        </div> -->
+          <div class="form-group">
+            <label for="dropdown" class="ml-0">Terms</label>
+            <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
+              style="width: 9rem" [ngModelOptions]="{standalone: true}">
+              <option value="0">Select Terms</option>
+              <option *ngFor="let term of PaymentTerms" value="{{term.value}}" [value]="term.value">{{ term.option }}
+              </option>
+            </select>
+          </div>
         </div>
 
-        <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
+        <!-- <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
           <div class="modal5-dialog" role="document">
             <div class="modal-content" style="height: 27rem; width: 18rem;  position: absolute; z-index: 999;">
               <div class="modal-header">
@@ -216,7 +220,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
 
         <!-- <div class="ml-3">
@@ -322,6 +326,7 @@
                 </div>
                 <div *ngIf="selectedFilter === 'option3'">
                 </div>
+
                 <div class="card mb-3" *ngFor="let timesheet of timesheetlist">
                   <div class="card-body">
                     <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
@@ -350,6 +355,7 @@
                     </div>
                   </div>
                 </div>
+                
                 <!-- <p style="color: #999; font-style: italic;"
                 *ngIf="selectedFilter == 'option1' || selectedFilter == 'option2' || selectedFilter == 'option3'">There
                 aren't any billable items for that date range.</p> -->
@@ -665,8 +671,8 @@
 
       <div class="row mt-1 ml-4">
         <div class="col">
-          <a class="btn  mr-2" (click)="addLine()">Add Line</a>
-          <a class="btn " (click)="clearLines()">Clear All Lines</a>
+          <button class="btn  mr-2" (click)="addLine()">Add Line</button>
+          <button class="btn " (click)="clearLines()">Clear All Lines</button>
           <!-- Add Subtotal Button -->
           <!-- <button class="btn mr-2 " style="margin-left: 8px;" (click)="calculateSubtotal()">Add Subtotal</button> -->
         </div>
