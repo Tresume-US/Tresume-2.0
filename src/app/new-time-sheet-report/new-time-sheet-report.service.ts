@@ -15,6 +15,10 @@ export class NewTimeSheetReportService {
     getTimesheetReport(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getTimesheetReport', request);
     }
+    
+    reportCandidatetList(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'reportCandidatetList', request);
+    }
 
 }
 export interface ResponseDetails {

@@ -82,24 +82,24 @@ router.post("/getTimesheetReport", async (req, res) => {
         throw err;
       }
       var request = new sql.Request();
-  //     var query = `SELECT 
-  //     CONCAT(t.FirstName, ' ', t.LastName) AS TraineeName,
-  //     tm.*, -- Selecting all columns from timesheet_master
-  //     o.organizationname
-  // FROM 
-  //     Memberdetails md
-  // JOIN 
-  //     timesheet_master tm ON md.traineeid = tm.traineeid
-  // JOIN 
-  //     organization o ON tm.orgid IN (SELECT value FROM STRING_SPLIT(md.accessorg, ','))
-  // JOIN 
-  //     Trainee t ON tm.traineeid = t.traineeid
-  // WHERE 
-  //     md.useremail = 'kumarsaravana1821@gmail.com'`;
+      //     var query = `SELECT 
+      //     CONCAT(t.FirstName, ' ', t.LastName) AS TraineeName,
+      //     tm.*, -- Selecting all columns from timesheet_master
+      //     o.organizationname
+      // FROM 
+      //     Memberdetails md
+      // JOIN 
+      //     timesheet_master tm ON md.traineeid = tm.traineeid
+      // JOIN 
+      //     organization o ON tm.orgid IN (SELECT value FROM STRING_SPLIT(md.accessorg, ','))
+      // JOIN 
+      //     Trainee t ON tm.traineeid = t.traineeid
+      // WHERE 
+      //     md.useremail = 'kumarsaravana1821@gmail.com'`;
 
 
 
-  var query =  `SELECT 
+      var query = `SELECT 
                       t1.*, 
                       CONCAT(t2.FirstName, ' ', t2.LastName) AS TraineeName
                   FROM 
@@ -108,12 +108,15 @@ router.post("/getTimesheetReport", async (req, res) => {
                       Trainee AS t2 ON t1.TraineeID = t2.TraineeID
                   WHERE 
                       t1.orgid = '${req.body.OrgID}'`;
+              if (req.body.candidateid) {
+                query += ` AND t1.traineeid = '${req.body.candidateid}'`;
+              }
+              // Check if startdate and enddate are provided
+              if (req.body.startdate && req.body.enddate) {
+                query += ` AND t1.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
+              }
 
-      // Check if startdate and enddate are provided
-      if (req.body.startdate && req.body.enddate) {
-        query += ` AND fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
-      }
-
+    
       console.log(query);
       request.query(query, function (err, recordset) {
         if (err) {
@@ -268,9 +271,9 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
       var query;
       if (timesheetrole === 1) {
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
-    } else if (timesheetrole === 3) {
+      } else if (timesheetrole === 3) {
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid LEFT JOIN Timesheet_Project TP ON TM.projectid = TP.projectid  WHERE T.username = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
-    }
+      }
 
       console.log(query);
       request.query(query, async function (err, recordset) {
@@ -404,11 +407,11 @@ router.post("/Candidateviewdetails", async (req, res) => {
       var request = new sql.Request();
 
       var query = "SELECT TM.id, TM.lastUpdated_by AS updatedBy, TM.admincomment, TM.billableamt, TM.fromdate, TM.todate, " +
-      "CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, " +
-      "TM.day5, TM.day6, TM.day7, TM.totalamt, TM.totalhrs, TM.status, TM.details, TM.clientapproved " +
-      "FROM Timesheet_Master TM " +
-      "INNER JOIN Trainee T ON TM.traineeid = T.traineeid " +
-      "WHERE TM.id = '" + req.body.tid + "'";
+        "CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.projectid, TM.day1, TM.day2, TM.day3, TM.day4, " +
+        "TM.day5, TM.day6, TM.day7, TM.totalamt, TM.totalhrs, TM.status, TM.details, TM.clientapproved " +
+        "FROM Timesheet_Master TM " +
+        "INNER JOIN Trainee T ON TM.traineeid = T.traineeid " +
+        "WHERE TM.id = '" + req.body.tid + "'";
 
 
 
@@ -1088,6 +1091,51 @@ router.post('/getTimesheetCandidatetList', async (req, res) => {
   }
 });
 
+router.post('/reportCandidatetList', async (req, res) => {
+  let recordset; // Declare recordset outside the try block
+
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+//1 and 3 as per status
+    const query = `
+      SELECT traineeid, CONCAT(firstname, ' ', lastname) AS name 
+      FROM trainee 
+      WHERE istimesheet = 1 
+        AND active = 1 
+        AND timesheet_role = 3 
+        AND userorganizationid = '${req.body.OrgId}' 
+      ORDER BY name;
+    `;
+
+
+    console.log(query);
+
+    recordset = await request.query(query);
+
+    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+        error: "No active results found!",
+      };
+      res.send(result);
+    }
+  }
+  catch (error) {
+    console.error("Error fetching candidate data:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while fetching candidate data!",
+    };
+    res.status(500).send(result);
+  }
+});
 
 
 router.post('/getCreateProjectList', async (req, res) => {
@@ -1269,12 +1317,12 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     } else {
       query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, @clientapproved, GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
     }
-console.log(query)
+    console.log(query)
     const request = pool.request();
 
     for (const paramName in inputParams) {
       // if (req.body.hasOwnProperty(paramName)) {
-        request.input(paramName, inputParams[paramName], req.body[paramName]);
+      request.input(paramName, inputParams[paramName], req.body[paramName]);
       // }
     }
 
@@ -1649,10 +1697,10 @@ router.post('/autofillDetails', async (req, res) => {
     const toDateFormatted = toDate.toISOString().split('T')[0];
     const query = `SELECT TM.*,TP.projectname from timesheet_Master TM LEFT JOIN timesheet_project TP ON TP.projectid = TM.projectid
     WHERE fromdate between '${fromDate}' and '${toDateFormatted}' and traineeid = '${req.body.traineeID}' and TM.status in (1,3)`;
-    
+
     console.log(query);
     const result = await request.query(query);
-   
+
     res.json({
       flag: 1,
       result: result.recordset,
