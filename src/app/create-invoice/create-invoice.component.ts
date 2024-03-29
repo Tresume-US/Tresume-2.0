@@ -32,7 +32,7 @@ export class CreateInvoiceComponent implements OnInit {
   selectedBillingaddress: string = '';
   selectedInvoiceDate: string = '';
   selectedDueDate: string = '';
-  selectedTerm: any;
+  selectedTerm: any = 0;
   InvoiceNo: any;
   routeType: any;
   productService: string[] = ["Service"];
@@ -48,12 +48,25 @@ export class CreateInvoiceComponent implements OnInit {
   states: any[] = [];
   
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
-  termsOptions = [
-    { value: '10 days', label: '10 days' },
-    { value: '20 days', label: '20 days' },
-    { value: 'Net 15', label: 'Net 15' },
-    { value: 'addNew', label: 'Add New' }
-  ];
+ //PaymentTerms: any;
+  PaymentTerms: any = [
+    {
+    value:"10",
+    option:'Net 10'
+    },
+    {
+      value:"20",
+      option:'Net 20'
+      },
+      {
+        value:"30",
+        option:'Net 30'
+        },
+        {
+          value:"40",
+          option:'Net 40'
+          },
+];
   messageOnStatement: any;
   newTermName: string = '';
   dueType: string = '';
@@ -194,6 +207,7 @@ export class CreateInvoiceComponent implements OnInit {
    this.clientEmail = this.selectedclient.EmailID
    this.selectedBillingaddress = this.selectedclient.Address
    this.ClientName = this.selectedclient.ClientName
+   this.selectedTerm = this.selectedclient.PaymentTerms 
    console.log(this.selectedclient);
    this.getalltimesheetlist();
   }
@@ -206,9 +220,9 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   onDropdownChange(event: any) {
-    if (event.target.value === 'addNew') {
-      this.showModal = true;
-    }
+    // if (event.target.value === 'addNew') {
+    //   this.showModal = true;
+    // }
   }
 
   closeModal2() {
@@ -392,7 +406,7 @@ addservice(timesheet:any){
   formData.append('billing_address', this.selectedBillingaddress);
   formData.append('InvoiceDate', this.selectedInvoiceDate); 
   formData.append('DueDate', this.selectedDueDate); 
-  formData.append('Terms', this.selectedTerm);
+  formData.append('PaymentTerms', this.selectedTerm);
   formData.append('invoiceNo', this.InvoiceNo);
   formData.append('location', this.selectedState);
   formData.append('subtotal', this.subtotal.toString());
@@ -402,7 +416,7 @@ addservice(timesheet:any){
   formData.append('balanceDue', this.balanceDue.toString());
   formData.append('invoice_message', this.messageOnInvoice);
   formData.append('statement', this.messageOnStatement);
-  formData.append('newTermName', this.newTermName);
+  //formData.append('PaymentTerms', this.PaymentTerms);
   formData.append('dueType', this.dueType.toString());
   formData.append('status', '1');
   formData.append('created_by', this.username);
