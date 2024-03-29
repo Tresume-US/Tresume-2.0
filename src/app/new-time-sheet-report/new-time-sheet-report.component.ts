@@ -56,6 +56,7 @@ export class NewTimeSheetReportComponent implements OnInit {
 
 
   ngOnInit(): void { 
+    this.candidatelist();
     this.fromDate = this.getFirstDayOfMonthUTC();
     this.toDate = this.getLastDayOfMonthUTC();
     this.fetchtimesheetreport();
@@ -72,7 +73,18 @@ export class NewTimeSheetReportComponent implements OnInit {
     this.timesheetrole = this.cookieService.get('timesheet_role');
    }
 
- 
+   selectedItem:any;
+   candidatelistname:any;
+   candidateid:any =0;
+   
+   candidatelist(){
+     let Req = {
+      OrgId : this.OrgID,
+     };
+     this.service.reportCandidatetList(Req).subscribe((x: any) => {
+       this.candidatelistname = x.result;
+     });
+   }
    
 fetchtimesheetreport(){
   let Req = {
@@ -188,7 +200,8 @@ fetchtimesheetreport(){
     let Req: any = {
       OrgID: this.OrgID,
       startdate: '',
-      enddate: ''
+      enddate: '',
+      candidateid:this.candidateid
     };
   
     if (this.isCustomizeSelected() && this.fromDate && this.toDate) {
@@ -213,7 +226,6 @@ fetchtimesheetreport(){
       this.loading = false;
     });
   }
-  
-  
-  
+
 }
+
