@@ -513,7 +513,7 @@ fetchInvoiceNo() {
   };
   this.Service.GetlastInvoice(Req).subscribe(
     (response: any) => {
-      this.invoiceno = response.invoiceNo;
+      this.InvoiceNo = response.invoiceNo;
     },
     (error: any) => {
       console.error('Error fetching invoice number:', error);
@@ -542,7 +542,7 @@ invoicedata: any[];
 getExistingInvoiceNo() {
   let req = {
     orgId: this.OrgID,
-    InvoiceNo: this.invoiceno,
+    InvoiceNo: this.InvoiceNo,
   };
 
   this.Service.checkExistInvoiceNo(req).subscribe(

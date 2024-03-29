@@ -238,7 +238,7 @@
           <div class="form-group">
             <label for="invoiceNo">Invoice No.</label>
             <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
-              [(ngModel)]="invoiceno" style="width: 9rem; height: 40px;" required>
+              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
             <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
               <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required</div>
             </div>
