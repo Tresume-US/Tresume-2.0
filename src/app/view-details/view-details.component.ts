@@ -5,6 +5,7 @@ import { ViewDetailsService } from './view-details.service';
 import { MessageService } from 'primeng/api';
 import { ChangeDetectorRef } from '@angular/core';
 import { Directive, HostListener } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-details',
@@ -69,7 +70,16 @@ export class ViewDetailsComponent {
 
 
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router, private cookieService: CookieService, private service: ViewDetailsService, private messageService: MessageService, private route: ActivatedRoute, private renderer: Renderer2) { }
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private cookieService: CookieService, private service: ViewDetailsService, private messageService: MessageService, private route: ActivatedRoute, private renderer: Renderer2,private datePipe: DatePipe) { }
+
+  getFormattedDate(date: Date | null): string {
+    return date ? this.datePipe.transform(date, 'dd/MM') || '' : '';
+  }
+  getNextDay(date: Date, daysToAdd: number): Date {
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + daysToAdd);
+    return nextDay;
+}
 
   ngOnInit(): void {
     this.loading = true;

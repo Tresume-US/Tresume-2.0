@@ -32,7 +32,8 @@ export class NewTimeSheetReportComponent implements OnInit {
   noResultsFound:boolean = true;
   timesheetrole: any;
   sortbyoptions = ['Activity Date', 'Client', 'product', 'Description', 'Rate', 'Duration', 'Billable'];
-
+  sumOfHours: number = 0;
+  sumOfRate: number = 0;
 
   options = ['All','This week','This Month','Customize'];
 
@@ -49,14 +50,13 @@ export class NewTimeSheetReportComponent implements OnInit {
   
   
   
-  tableData = [
-    { activeDate: '', client: '', product: '', description: '', rates: '', duration: '', billable: '' },
-    ];
+  tableData: { totalhrs: any ,totalamt:any }[] = [];
 
 
 
   ngOnInit(): void { 
     this.candidatelist();
+    this.calculateSum();
     this.fromDate = this.getFirstDayOfMonthUTC();
     this.toDate = this.getLastDayOfMonthUTC();
     this.fetchtimesheetreport();
@@ -93,6 +93,8 @@ fetchtimesheetreport(){
   this.service.getTimesheetReport(Req).subscribe((x: any) => {
     this.tableData = x.result;
     this.loading = false;
+    this.calculateSum();
+
   });
 }
 
@@ -110,23 +112,64 @@ fetchtimesheetreport(){
     this.showNotes = false;
   }
 
-  getTotalDuration(): string {
-    let totalMinutes = 0;
+  // getTotalDuration(): string {
+  //   let totalMinutes = 0;
 
-    for (const row of this.tableData) {
-      if (row.duration) {
-        const durationParts = row.duration.split(':');
-        const hours = parseInt(durationParts[0], 10);
-        const minutes = parseInt(durationParts[1], 10);
-        totalMinutes += hours * 60 + minutes;
-      }
-    }
+  //   for (const row of this.tableData) {
+  //     if (row.duration) {
+  //       const durationParts = row.duration.split(':');
+  //       const hours = parseInt(durationParts[0], 10);
+  //       const minutes = parseInt(durationParts[1], 10);
+  //       totalMinutes += hours * 60 + minutes;
+  //     }
+  //   }
 
-    const totalHours = Math.floor(totalMinutes / 60);
-    const remainingMinutes = totalMinutes % 60;
+  //   const totalHours = Math.floor(totalMinutes / 60);
+  //   const remainingMinutes = totalMinutes % 60;
 
-    return `${totalHours}:${remainingMinutes}`;
+  //   return `${totalHours}:${remainingMinutes}`;
+  // }
+
+  // getTotalDuration(): string {
+  //   let totalMinutes = 0;
+
+  // //   for (const row of this.tableData) {
+  // //     if (row.duration) {
+  // //       const durationParts = row.duration.split(':');
+  // //       const hours = parseInt(durationParts[0], 10);
+  // //       const minutes = parseInt(durationParts[1], 10);
+  // //       totalMinutes += hours * 60 + minutes;
+  // //     }
+  // //   }
+  //   for (const row of this.tableData) {
+  //     if (row.duration) {
+  //       const durationParts = row.duration.split(':');
+  //       const hours = parseInt(durationParts[0], 10);
+  //       const minutes = parseInt(durationParts[1], 10);
+  //       totalMinutes += hours * 60 + minutes;
+  //     }
+  //   }
+
+  // //   const totalHours = Math.floor(totalMinutes / 60);
+  // //   const remainingMinutes = totalMinutes % 60;
+  //   const totalHours = Math.floor(totalMinutes / 60);
+  //   const remainingMinutes = totalMinutes % 60;
+
+  // //   return `${totalHours}:${remainingMinutes}`;
+  // // }
+  //   return `${totalHours}:${remainingMinutes}`;
+  // }
+  calculateSum() {
+    this.sumOfHours = 0;
+    this.sumOfRate = 0;
+
+    this.tableData.forEach(row => {
+      this.sumOfHours += parseFloat(row.totalhrs) || 0;
+      this.sumOfRate += parseFloat(row.totalamt) || 0;
+    });
   }
+
+
 
   toggleExportOptions() {
     this.showExportOptions = !this.showExportOptions;
