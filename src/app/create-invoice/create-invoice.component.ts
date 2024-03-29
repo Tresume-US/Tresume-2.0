@@ -76,6 +76,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.calculateSubtotal();
     this.addDefaultRows(2);
     this.newrows = true;
+    this.selectedInvoiceDate = this.getCurrentDate();
   }
 
   constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute) {
@@ -432,6 +433,16 @@ addservice(timesheet:any){
   }
 
 
+
+
+  getCurrentDate(): string {
+    // Get current date in format YYYY-MM-DD
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
   private handleSuccess(response: any): void {
     this.messageService.add({ severity: 'success', summary: response.message });
     console.log(response);
