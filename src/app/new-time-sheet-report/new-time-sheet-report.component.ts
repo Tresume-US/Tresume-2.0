@@ -3,7 +3,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { formatDate } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
-import { NewTimeSheetReportService } from './new-time-sheet-report.service';
+import { NewTimeSheetReportService} from './new-time-sheet-report.service';
 import * as html2pdf from 'html2pdf.js';
 import * as XLSX from 'xlsx';
 
@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
   selector: 'app-new-time-sheet-report',
   templateUrl: './new-time-sheet-report.component.html',
   styleUrls: ['./new-time-sheet-report.component.scss'],
-  providers: [NewTimeSheetReportService, CookieService, MessageService],
+  providers: [ NewTimeSheetReportService, CookieService,MessageService],
 })
 export class NewTimeSheetReportComponent implements OnInit {
 
@@ -21,22 +21,20 @@ export class NewTimeSheetReportComponent implements OnInit {
   sortOptionsList: any;
   sort_by: any;
   showSortingOptions = false;
-  OrgID: string = '';
-  TraineeID: string = '';
-  startdate: Date;
-  enddate: Date;
+  OrgID:string = '';
+  TraineeID:string = '';
+  startdate:Date;
+  enddate:Date;
   maxSelectableDays: number;
   showExportOptions: boolean = false;
   selectedDateRange: Date[] = [];
-  loading: boolean = false;
-  noResultsFound: boolean = true;
+  loading:boolean = false;
+  noResultsFound:boolean = true;
   timesheetrole: any;
   sortbyoptions = ['Activity Date', 'Client', 'product', 'Description', 'Rate', 'Duration', 'Billable'];
 
-  sumOfHours: number = 0;
-  sumOfRate: number = 0;
 
-  options = ['All', 'This week', 'This Month', 'Customize'];
+  options = ['All','This week','This Month','Customize'];
 
 
 
@@ -47,48 +45,56 @@ export class NewTimeSheetReportComponent implements OnInit {
   isCustomizeSelected(): boolean {
     return this.selection === 'Customize';
   }
-  tableData: { totalhrs: any ,totalamt:any }[] = [];
 
-  ngOnInit(): void {
+  
+  
+  
+  tableData = [
+    { activeDate: '', client: '', product: '', description: '', rates: '', duration: '', billable: '' },
+    ];
+
+
+
+  ngOnInit(): void { 
     this.candidatelist();
     this.fromDate = this.getFirstDayOfMonthUTC();
     this.toDate = this.getLastDayOfMonthUTC();
     this.fetchtimesheetreport();
 
+    
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.timesheetrole = this.cookieService.get('timesheet_role');
   }
 
-  constructor(private cookieService: CookieService, private service: NewTimeSheetReportService, private messageService: MessageService) {
+  constructor(private cookieService: CookieService, private service:NewTimeSheetReportService,private messageService: MessageService) {
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.timesheetrole = this.cookieService.get('timesheet_role');
-  }
+   }
 
-  selectedItem: any;
-  candidatelistname: any;
-  candidateid: any = 0;
-
-  candidatelist() {
-    let Req = {
-      OrgId: this.OrgID,
-    };
-    this.service.reportCandidatetList(Req).subscribe((x: any) => {
-      this.candidatelistname = x.result;
-    });
-  }
-
-  fetchtimesheetreport() {
-    let Req = {
-      OrgID: this.OrgID,
-    };
-    this.service.getTimesheetReport(Req).subscribe((x: any) => {
-      this.tableData = x.result;
-      this.loading = false;
-      this.calculateSum();
-    });
-  }
+   selectedItem:any;
+   candidatelistname:any;
+   candidateid:any =0;
+   
+   candidatelist(){
+     let Req = {
+      OrgId : this.OrgID,
+     };
+     this.service.reportCandidatetList(Req).subscribe((x: any) => {
+       this.candidatelistname = x.result;
+     });
+   }
+   
+fetchtimesheetreport(){
+  let Req = {
+    OrgID: this.OrgID,
+  };
+  this.service.getTimesheetReport(Req).subscribe((x: any) => {
+    this.tableData = x.result;
+    this.loading = false;
+  });
+}
 
   toggleSortingOptions(event: Event) {
     event.preventDefault();
@@ -96,7 +102,7 @@ export class NewTimeSheetReportComponent implements OnInit {
   }
 
   toggleNotes(event: Event) {
-    event.preventDefault();
+    event.preventDefault(); 
     this.showNotes = !this.showNotes;
   }
 
@@ -104,23 +110,23 @@ export class NewTimeSheetReportComponent implements OnInit {
     this.showNotes = false;
   }
 
-  // getTotalDuration(): string {
-  //   let totalMinutes = 0;
+  getTotalDuration(): string {
+    let totalMinutes = 0;
 
-  //   for (const row of this.tableData) {
-  //     if (row.duration) {
-  //       const durationParts = row.duration.split(':');
-  //       const hours = parseInt(durationParts[0], 10);
-  //       const minutes = parseInt(durationParts[1], 10);
-  //       totalMinutes += hours * 60 + minutes;
-  //     }
-  //   }
+    for (const row of this.tableData) {
+      if (row.duration) {
+        const durationParts = row.duration.split(':');
+        const hours = parseInt(durationParts[0], 10);
+        const minutes = parseInt(durationParts[1], 10);
+        totalMinutes += hours * 60 + minutes;
+      }
+    }
 
-  //   const totalHours = Math.floor(totalMinutes / 60);
-  //   const remainingMinutes = totalMinutes % 60;
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
 
-  //   return `${totalHours}:${remainingMinutes}`;
-  // }
+    return `${totalHours}:${remainingMinutes}`;
+  }
 
   toggleExportOptions() {
     this.showExportOptions = !this.showExportOptions;
@@ -132,39 +138,39 @@ export class NewTimeSheetReportComponent implements OnInit {
     html2pdf().from(htmlContent).save();
     this.showExportOptions = false;
   }
-
-
+  
+  
   exportAsExcel(): void {
     const element = document.getElementById('export-content');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
-
+  
     // Get notes content
     const notesContent = this.notes ? `Notes: ${this.notes}` : '';
-
+  
     // Decode range if !ref is defined, otherwise set a default range
     let range = ws['!ref'] ? XLSX.utils.decode_range(ws['!ref']) : { s: { r: 0, c: 0 }, e: { r: 0, c: 0 } };
-
+  
     // Calculate the next row for the notes
     const nextRow = range.e.r + 2;
-
+  
     // Add notes content to the Excel sheet
     ws[`A${nextRow}`] = { t: 's', v: notesContent };
-
+  
     // Update range to include the new notes row
     range.e.r++;
-
+  
     // Update !ref property with the new range
     ws['!ref'] = XLSX.utils.encode_range(range);
-
+  
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'export.xlsx');
     this.showExportOptions = false;
-
+    
   }
-
-
-
+  
+  
+  
 
   fromDate: Date;
   toDate: Date;
@@ -174,7 +180,7 @@ export class NewTimeSheetReportComponent implements OnInit {
 
   formatDate(date: Date): string {
     const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
+                        "July", "August", "September", "October", "November", "December"];
     return `${monthNames[date.getMonth()]} ${date.getDate()}-${this.toDate.getDate()}, ${date.getFullYear()}`;
   }
 
@@ -182,22 +188,24 @@ export class NewTimeSheetReportComponent implements OnInit {
     let today = new Date();
     return new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
   }
-
+  
   // Function to get the last day of the month in UTC
   getLastDayOfMonthUTC(): Date {
     let today = new Date();
     return new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 0));
   }
+
+
   runReport(): void {
     let Req: any = {
       OrgID: this.OrgID,
       startdate: '',
       enddate: '',
-      candidateid: this.candidateid
+      candidateid:this.candidateid
     };
-
+  
     if (this.isCustomizeSelected() && this.fromDate && this.toDate) {
-      Req.startdate = this.fromDate.toISOString();
+      Req.startdate = this.fromDate.toISOString(); // Convert to ISO string to ensure UTC format
       Req.enddate = this.toDate.toISOString();
     } else if (this.selection === 'This week') {
       let today = new Date();
@@ -212,23 +220,12 @@ export class NewTimeSheetReportComponent implements OnInit {
       Req.startdate = startOfMonth.toISOString();
       Req.enddate = endOfMonth.toISOString();
     }
-
+  
     this.service.getTimesheetReport(Req).subscribe((x: any) => {
       this.tableData = x.result;
       this.loading = false;
-      this.calculateSum();
-
     });
   }
 
-  calculateSum() {
-    this.sumOfHours = 0;
-    this.sumOfRate = 0;
-    
-    this.tableData.forEach(row => {
-      this.sumOfHours += parseFloat(row.totalhrs) || 0;
-      this.sumOfRate += parseFloat(row.totalamt) || 0;
-    });
-  }
-  
 }
+
