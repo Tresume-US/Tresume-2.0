@@ -228,43 +228,58 @@ app.get(
   "/adminBenchByMarketer/:traineeId/:startDate/:endDate",
   function (req, res) {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      try {
+        if (err) throw err;
 
-      var request = new sql.Request();
+        var request = new sql.Request();
 
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
-        function (err, recordset) {
-          if (err) console.log(err);
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.params.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          var startDate = req.params.startDate;
-          var endDate = req.params.endDate;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var startDate = req.params.startDate;
+              var endDate = req.params.endDate;
 
-          request.query(
-            "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.TBID) FROM TalentBench cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
-              startDate +
-              "' AND '" +
-              endDate +
-              "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-              OrgID +
-              "WHERE md.OrgId=" +
-              OrgID +
-              " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
-            function (err, recordset) {
-              if (err) console.log(err);
+              request.query(
+                "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.TBID) FROM TalentBench cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
+                  startDate +
+                  "' AND '" +
+                  endDate +
+                  "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                  OrgID +
+                  "WHERE md.OrgId=" +
+                  OrgID +
+                  " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
+                function (err, recordset) {
+                  try {
+                    if (err) throw err;
 
-              var result = {
-                flag: 1,
-                result: recordset.recordsets[0],
-              };
+                    var result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                    };
 
-              res.send(result);
+                    res.send(result);
+                  } catch (err) {
+                    console.log("Error in inner query:", err);
+                    res.status(500).send("Internal Server Error");
+                  }
+                }
+              );
+            } catch (err) {
+              console.log("Error in second query:", err);
+              res.status(500).send("Internal Server Error");
             }
-          );
-        }
-      );
+          }
+        );
+      } catch (err) {
+        console.log("Error in database connection:", err);
+        res.status(500).send("Internal Server Error");
+      }
     });
   }
 );
@@ -273,43 +288,58 @@ app.get(
   "/adminPlacementByMarketer/:traineeId/:startDate/:endDate",
   function (req, res) {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      try {
+        if (err) throw err;
 
-      var request = new sql.Request();
+        var request = new sql.Request();
 
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
-        function (err, recordset) {
-          if (err) console.log(err);
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.params.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          var startDate = req.params.startDate;
-          var endDate = req.params.endDate;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var startDate = req.params.startDate;
+              var endDate = req.params.endDate;
 
-          request.query(
-            "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.PID) FROM Placements cs WHERE cs.Active=1 AND cs.RecuiterID=t.TraineeID AND (cs.CreatedTime BETWEEN '" +
-              startDate +
-              "' AND '" +
-              endDate +
-              "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-              OrgID +
-              "WHERE md.OrgId=" +
-              OrgID +
-              " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
-            function (err, recordset) {
-              if (err) console.log(err);
+              request.query(
+                "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.PID) FROM Placements cs WHERE cs.Active=1 AND cs.RecuiterID=t.TraineeID AND (cs.CreatedTime BETWEEN '" +
+                  startDate +
+                  "' AND '" +
+                  endDate +
+                  "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                  OrgID +
+                  "WHERE md.OrgId=" +
+                  OrgID +
+                  " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
+                function (err, recordset) {
+                  try {
+                    if (err) throw err;
 
-              var result = {
-                flag: 1,
-                result: recordset.recordsets[0],
-              };
+                    var result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                    };
 
-              res.send(result);
+                    res.send(result);
+                  } catch (err) {
+                    console.log("Error in inner query:", err);
+                    res.status(500).send("Internal Server Error");
+                  }
+                }
+              );
+            } catch (err) {
+              console.log("Error in second query:", err);
+              res.status(500).send("Internal Server Error");
             }
-          );
-        }
-      );
+          }
+        );
+      } catch (err) {
+        console.log("Error in database connection:", err);
+        res.status(500).send("Internal Server Error");
+      }
     });
   }
 );
@@ -318,43 +348,58 @@ app.get(
   "/adminInterviewByMarketer/:traineeId/:startDate/:endDate",
   function (req, res) {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      try {
+        if (err) throw err;
 
-      var request = new sql.Request();
+        var request = new sql.Request();
 
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
-        function (err, recordset) {
-          if (err) console.log(err);
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.params.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          var startDate = req.params.startDate;
-          var endDate = req.params.endDate;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var startDate = req.params.startDate;
+              var endDate = req.params.endDate;
 
-          request.query(
-            "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.TraineeInterviewID) FROM TraineeInterview cs WHERE cs.Active=1 AND cs.RecruiterID=t.TraineeID AND (cs.CreateTime BETWEEN '" +
-              startDate +
-              "' AND '" +
-              endDate +
-              "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-              OrgID +
-              "WHERE md.OrgId=" +
-              OrgID +
-              " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
-            function (err, recordset) {
-              if (err) console.log(err);
+              request.query(
+                "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.TraineeInterviewID) FROM TraineeInterview cs WHERE cs.Active=1 AND cs.RecruiterID=t.TraineeID AND (cs.CreateTime BETWEEN '" +
+                  startDate +
+                  "' AND '" +
+                  endDate +
+                  "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                  OrgID +
+                  " WHERE md.OrgId=" +
+                  OrgID +
+                  " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
+                function (err, recordset) {
+                  try {
+                    if (err) throw err;
 
-              var result = {
-                flag: 1,
-                result: recordset.recordsets[0],
-              };
+                    var result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                    };
 
-              res.send(result);
+                    res.send(result);
+                  } catch (err) {
+                    console.log("Error in inner query:", err);
+                    res.status(500).send("Internal Server Error");
+                  }
+                }
+              );
+            } catch (err) {
+              console.log("Error in second query:", err);
+              res.status(500).send("Internal Server Error");
             }
-          );
-        }
-      );
+          }
+        );
+      } catch (err) {
+        console.log("Error in database connection:", err);
+        res.status(500).send("Internal Server Error");
+      }
     });
   }
 );
@@ -363,43 +408,58 @@ app.get(
   "/adminSubmissionByMarketer/:traineeId/:startDate/:endDate",
   function (req, res) {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      try {
+        if (err) throw err;
 
-      var request = new sql.Request();
+        var request = new sql.Request();
 
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
-        function (err, recordset) {
-          if (err) console.log(err);
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.params.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          var startDate = req.params.startDate;
-          var endDate = req.params.endDate;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var startDate = req.params.startDate;
+              var endDate = req.params.endDate;
 
-          request.query(
-            "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.SubmissionID) FROM Submission cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
-              startDate +
-              "' AND '" +
-              endDate +
-              "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-              OrgID +
-              "WHERE md.OrgId=" +
-              OrgID +
-              " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
-            function (err, recordset) {
-              if (err) console.log(err);
+              request.query(
+                "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.SubmissionID) FROM Submission cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
+                  startDate +
+                  "' AND '" +
+                  endDate +
+                  "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                  OrgID +
+                  " WHERE md.OrgId=" +
+                  OrgID +
+                  " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
+                function (err, recordset) {
+                  try {
+                    if (err) throw err;
 
-              var result = {
-                flag: 1,
-                result: recordset.recordsets[0],
-              };
+                    var result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                    };
 
-              res.send(result);
+                    res.send(result);
+                  } catch (err) {
+                    console.log("Error in inner query:", err);
+                    res.status(500).send("Internal Server Error");
+                  }
+                }
+              );
+            } catch (err) {
+              console.log("Error in second query:", err);
+              res.status(500).send("Internal Server Error");
             }
-          );
-        }
-      );
+          }
+        );
+      } catch (err) {
+        console.log("Error in database connection:", err);
+        res.status(500).send("Internal Server Error");
+      }
     });
   }
 );
@@ -408,155 +468,231 @@ app.get(
   "/adminFtcByMarketer/:traineeId/:startDate/:endDate",
   function (req, res) {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      try {
+        if (err) throw err;
 
-      var request = new sql.Request();
+        var request = new sql.Request();
 
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
-        function (err, recordset) {
-          if (err) console.log(err);
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.params.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          var startDate = req.params.startDate;
-          var endDate = req.params.endDate;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var startDate = req.params.startDate;
+              var endDate = req.params.endDate;
 
-          request.query(
-            "select (t.FirstName + ' ' + t.LastName) as RecruiterName, (SELECT COUNT(cs.TraineeID) FROM Trainee cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND cs.Collab=1 AND cs.RecruiterName=t.TraineeID AND cs.UserOrganizationID=t.OrganizationID AND (cs.CreateTime BETWEEN '" +
-              startDate +
-              "' AND '" +
-              endDate +
-              "')) as FTCCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID = " +
-              OrgID +
-              " WHERE md.OrgId=" +
-              OrgID +
-              " AND md.Active=1 AND t.Active=1 ORDER BY FTCCount desc  ",
-            function (err, recordset) {
-              if (err) console.log(err);
+              request.query(
+                "select (t.FirstName + ' ' + t.LastName) as RecruiterName, (SELECT COUNT(cs.TraineeID) FROM Trainee cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND cs.Collab=1 AND cs.RecruiterName=t.TraineeID AND cs.UserOrganizationID=t.OrganizationID AND (cs.CreateTime BETWEEN '" +
+                  startDate +
+                  "' AND '" +
+                  endDate +
+                  "')) as FTCCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID = " +
+                  OrgID +
+                  " WHERE md.OrgId=" +
+                  OrgID +
+                  " AND md.Active=1 AND t.Active=1 ORDER BY FTCCount desc  ",
+                function (err, recordset) {
+                  try {
+                    if (err) throw err;
 
-              var result = {
-                flag: 1,
-                result: recordset.recordsets[0],
-              };
+                    var result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                    };
 
-              res.send(result);
+                    res.send(result);
+                  } catch (err) {
+                    console.log("Error in inner query:", err);
+                    res.status(500).send("Internal Server Error");
+                  }
+                }
+              );
+            } catch (err) {
+              console.log("Error in second query:", err);
+              res.status(500).send("Internal Server Error");
             }
-          );
-        }
-      );
+          }
+        );
+      } catch (err) {
+        console.log("Error in database connection:", err);
+        res.status(500).send("Internal Server Error");
+      }
     });
   }
 );
 
 app.get("/getTraineeDetails/:traineeId", function (req, res) {
   sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select * from Trainee (nolock) where TraineeID = '" +
-        req.params.traineeId +
-        "' and Active = 1",
-      function (err, recordset) {
-        if (err) console.log(err);
+    try {
+      if (err) throw err;
+      
+      var request = new sql.Request();
+      request.query(
+        "select * from Trainee (nolock) where TraineeID = '" +
+          req.params.traineeId +
+          "' and Active = 1",
+        function (err, recordset) {
+          try {
+            if (err) throw err;
 
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
 
-        res.send(result);
-      }
-    );
+            res.send(result);
+          } catch (err) {
+            console.log("Error in query execution:", err);
+            res.status(500).send("Internal Server Error");
+          }
+        }
+      );
+    } catch (err) {
+      console.log("Error in database connection:", err);
+      res.status(500).send("Internal Server Error");
+    }
   });
 });
 
 app.get("/getLegalStatus/:traineeId", function (req, res) {
   sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.params.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
+    try {
+      if (err) throw err;
 
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.query(
-          "SELECT b.LegalText AS LegalStatus, COUNT(TraineeID) AS Total, b.LegalStatusID FROM Trainee a JOIN LegalStatus b ON b.LegalValue=a.LegalStatus WHERE a.Active=1 AND a.UserOrganizationID=" +
-            OrgID +
-            "  AND a.CandidateStatus IN (2,4,6,7,13) GROUP BY b.LegalText, b.LegalStatusID",
-          function (err, recordset) {
-            if (err) console.log(err);
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.params.traineeId,
+        function (err, recordset) {
+          try {
+            if (err) throw err;
 
-            var result = {
-              flag: 1,
-              result: recordset.recordsets[0],
-            };
+            var OrgID = recordset.recordsets[0][0].OrganizationID;
+            request.query(
+              "SELECT b.LegalText AS LegalStatus, COUNT(TraineeID) AS Total, b.LegalStatusID FROM Trainee a JOIN LegalStatus b ON b.LegalValue=a.LegalStatus WHERE a.Active=1 AND a.UserOrganizationID=" +
+                OrgID +
+                "  AND a.CandidateStatus IN (2,4,6,7,13) GROUP BY b.LegalText, b.LegalStatusID",
+              function (err, recordset) {
+                try {
+                  if (err) throw err;
 
-            res.send(result);
+                  var result = {
+                    flag: 1,
+                    result: recordset.recordsets[0],
+                  };
+
+                  res.send(result);
+                } catch (err) {
+                  console.log("Error in inner query:", err);
+                  res.status(500).send("Internal Server Error");
+                }
+              }
+            );
+          } catch (err) {
+            console.log("Error in fetching OrganizationID:", err);
+            res.status(500).send("Internal Server Error");
           }
-        );
-      }
-    );
+        }
+      );
+    } catch (err) {
+      console.log("Error in database connection:", err);
+      res.status(500).send("Internal Server Error");
+    }
   });
 });
 
 app.get("/getAllRecruiters/:traineeId", function (req, res) {
   sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.params.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
+    try {
+      if (err) throw err;
 
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.query(
-          "SELECT distinct r.TraineeID, r.FirstName + ' ' + ISNULL(r.LastName, '') as Name FROM MemberDetails orgR (nolock) JOIN Trainee r (nolock) ON r.UserName=orgR.UserEmail WHERE r.Active=1 AND orgR.Active=1 AND orgR.OrgID=" +
-            OrgID,
-          function (err, recordset) {
-            if (err) console.log(err);
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.params.traineeId,
+        function (err, recordset) {
+          try {
+            if (err) throw err;
 
-            var result = {
-              flag: 1,
-              result: recordset.recordsets[0],
-            };
+            var OrgID = recordset.recordsets[0][0].OrganizationID;
+            request.query(
+              "SELECT distinct r.TraineeID, r.FirstName + ' ' + ISNULL(r.LastName, '') as Name FROM MemberDetails orgR (nolock) JOIN Trainee r (nolock) ON r.UserName=orgR.UserEmail WHERE r.Active=1 AND orgR.Active=1 AND orgR.OrgID=" +
+                OrgID,
+              function (err, recordset) {
+                try {
+                  if (err) throw err;
 
-            res.send(result);
+                  var result = {
+                    flag: 1,
+                    result: recordset.recordsets[0],
+                  };
+
+                  res.send(result);
+                } catch (err) {
+                  console.log("Error in inner query:", err);
+                  res.status(500).send("Internal Server Error");
+                }
+              }
+            );
+          } catch (err) {
+            console.log("Error in fetching OrganizationID:", err);
+            res.status(500).send("Internal Server Error");
           }
-        );
-      }
-    );
+        }
+      );
+    } catch (err) {
+      console.log("Error in database connection:", err);
+      res.status(500).send("Internal Server Error");
+    }
   });
 });
 
 app.post("/getFTCReport", function (req, res) {
   sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.fromDate);
-        request.input("endDate", sql.VarChar, req.body.toDate);
-        request.input("recruiterId", sql.VarChar, req.body.recruiterId);
-        request.input("candidateStatus", sql.VarChar, req.body.candidateStatus);
-        request.execute("getFTCReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
-      }
-    );
+    try {
+      if (err) throw err;
+      
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          try {
+            if (err) throw err;
+
+            var OrgID = recordset.recordsets[0][0].OrganizationID;
+            request.input("OrgID", sql.Int, OrgID);
+            request.input("startDate", sql.VarChar, req.body.fromDate);
+            request.input("endDate", sql.VarChar, req.body.toDate);
+            request.input("recruiterId", sql.VarChar, req.body.recruiterId);
+            request.input("candidateStatus", sql.VarChar, req.body.candidateStatus);
+            request.execute("getFTCReport", function (err, recordset) {
+              try {
+                if (err) throw err;
+
+                var result = {
+                  flag: 1,
+                  result: recordset.recordsets[0],
+                };
+                res.send(result);
+              } catch (err) {
+                console.log("Error executing stored procedure:", err);
+                res.status(500).send("Internal Server Error");
+              }
+            });
+          } catch (err) {
+            console.log("Error fetching OrganizationID:", err);
+            res.status(500).send("Internal Server Error");
+          }
+        }
+      );
+    } catch (err) {
+      console.log("Error in database connection:", err);
+      res.status(500).send("Internal Server Error");
+    }
   });
 });
 
@@ -599,106 +735,178 @@ app.post("/getCandidateDocuments", function (req, res) {
 });
 
 app.post("/getLoggedUser", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select TraineeID from Trainee (nolock) where Username = '" +
-        req.body.userName +
-        "' and Active = 1",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "select TraineeID from Trainee (nolock) where Username = '" +
+            req.body.userName +
+            "' and Active = 1",
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+              
+              var result = {
+                flag: 1,
+                result: recordset.recordsets[0],
+              };
+              res.send(result);
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.get("/deleteDocument/:docId", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "UPDATE CandidateDocument_New SET Active = 0 WHERE CandidateDocumentID =" +
-        req.params.docId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(result);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "UPDATE CandidateDocument_New SET Active = 0 WHERE CandidateDocumentID =" +
+            req.params.docId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+              
+              var result = {
+                flag: 1,
+                result: recordset.recordsets[0],
+              };
+              res.send(result);
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.post("/uploadDocument/:traineeID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    upload1(req, res, function (err) {
-      if (err) {
-        return res.json(err);
-      }
-      let FileName = req.file.originalname.split(".")[0];
-      console.log("FileName", FileName);
-      let FilePath = req.file.path;
-      console.log("FilePath", FilePath);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        upload1(req, res, function (err) {
+          try {
+            if (err) throw err;
 
-      var request = new sql.Request();
-      request.query(
-        "Select UserName from Trainee where TraineeID=" + req.body.loggedUserId,
-        function (err, recordset) {
-          if (err) console.log(err);
-          var loggedUserEmail = recordset.recordsets[0][0].UserName;
-          var result = {
-            flag: 1,
-            loggedUserEmail: loggedUserEmail,
-            FileName: FileName,
-            FilePath: FilePath,
-          };
-          res.send(result);
-          console.log("result", result);
-        }
-      );
+            let FileName = req.file.originalname.split(".")[0];
+            console.log("FileName", FileName);
+            let FilePath = req.file.path;
+            console.log("FilePath", FilePath);
+
+            var request = new sql.Request();
+            request.query(
+              "Select UserName from Trainee where TraineeID=" + req.body.loggedUserId,
+              function (err, recordset) {
+                try {
+                  if (err) throw err;
+
+                  var loggedUserEmail = recordset.recordsets[0][0].UserName;
+                  var result = {
+                    flag: 1,
+                    loggedUserEmail: loggedUserEmail,
+                    FileName: FileName,
+                    FilePath: FilePath,
+                  };
+                  res.send(result);
+                  console.log("result", result);
+                } catch (error) {
+                  console.log("Error fetching logged user email:", error);
+                  res.status(500).send("Error fetching logged user email");
+                }
+              }
+            );
+          } catch (error) {
+            console.log("Error uploading file:", error);
+            res.status(500).send("Error uploading file");
+          }
+        });
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
     });
-  });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.post("/uploadinsert", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    var otherinfo = Object.values(req.body.otherInfo).join(",");
-    request.query(
-      "INSERT INTO CandidateDocument_New(TraineeID,DocumentName,DocumentPath,Active,CreateTime,CreateBy,LastUpdateTime,LastUpdateBy,DocumentTypeID,DocStartDate,DocExpiryDate,OtherInfo) VALUES (" +
-        req.body.loggedUserId +
-        ",'" +
-        req.body.FileName +
-        "','" +
-        req.body.FilePath +
-        "',1,GETUTCDATE(),'" +
-        req.body.loggedUserEmail +
-        "',NULL,NULL," +
-        req.body.docType +
-        ",'" +
-        req.body.startDate +
-        "','" +
-        req.body.expiryDate +
-        "','" +
-        otherinfo +
-        "' )",
-      function (err, recordset) {
-        if (err) console.log(err);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+
+        var request = new sql.Request();
+        var otherinfo = Object.values(req.body.otherInfo).join(",");
+        request.query(
+          "INSERT INTO CandidateDocument_New(TraineeID,DocumentName,DocumentPath,Active,CreateTime,CreateBy,LastUpdateTime,LastUpdateBy,DocumentTypeID,DocStartDate,DocExpiryDate,OtherInfo) VALUES (" +
+            req.body.loggedUserId +
+            ",'" +
+            req.body.FileName +
+            "','" +
+            req.body.FilePath +
+            "',1,GETUTCDATE(),'" +
+            req.body.loggedUserEmail +
+            "',NULL,NULL," +
+            req.body.docType +
+            ",'" +
+            req.body.startDate +
+            "','" +
+            req.body.expiryDate +
+            "','" +
+            otherinfo +
+            "' )",
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-    res.json(true);
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
+
 
 app.get("/sitevisit/:traineeID", async function (req, res) {
   try {
@@ -725,63 +933,118 @@ app.get("/sitevisit/:traineeID", async function (req, res) {
 });
 
 app.post("/updateJobDuties", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "UPDATE Placements SET JobDuties='" +
-        req.body.jd +
-        "' WHERE TraineeID=" +
-        req.body.traineeID,
-      function (err, recordset) {
-        if (err) console.log(err);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "UPDATE Placements SET JobDuties='" +
+            req.body.jd +
+            "' WHERE TraineeID=" +
+            req.body.traineeID,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-    res.json(true);
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.get("/getEducationDetails/:traineeID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.input("TraineeID", sql.VarChar, req.params.traineeID);
-    request.execute("GetTraineeEduDetails", function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.input("TraineeID", sql.VarChar, req.params.traineeID);
+        request.execute("GetTraineeEduDetails", function (err, recordset) {
+          try {
+            if (err) throw err;
+
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          } catch (error) {
+            console.log("Error executing stored procedure:", error);
+            res.status(500).send("Error executing stored procedure");
+          }
+        });
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
     });
-  });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.post("/getResumes", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.body.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.VarChar, OrgID);
-        request.input("Keyword", sql.VarChar, req.body.keyword);
-        request.input("Location", sql.VarChar, req.body.location);
-        request.execute("GetJBResumes", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              request.input("OrgID", sql.VarChar, OrgID);
+              request.input("Keyword", sql.VarChar, req.body.keyword);
+              request.input("Location", sql.VarChar, req.body.location);
+              request.execute("GetJBResumes", function (err, recordset) {
+                try {
+                  if (err) throw err;
+
+                  var result = {
+                    flag: 1,
+                    result: recordset.recordsets[0],
+                  };
+                  res.send(result);
+                } catch (error) {
+                  console.log("Error executing stored procedure:", error);
+                  res.status(500).send("Error executing stored procedure");
+                }
+              });
+            } catch (error) {
+              console.log("Error fetching OrganizationID:", error);
+              res.status(500).send("Error fetching OrganizationID");
+            }
+          }
+        );
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
 
 app.post("/getResumes1", function (req, res) {
@@ -796,110 +1059,140 @@ app.post("/getResumes1", function (req, res) {
     res.status(504).send(result);
   });
 
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      const result = {
-        flag: 0,
-        error: "An error occurred while connecting to the database",
-      };
-      res.status(500).send(result);
-      return;
-    }
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) {
-          console.log(err);
-          const result = {
-            flag: 0,
-            error: "An error occurred while querying the database",
-          };
-          res.status(500).send(result);
-          return;
-        }
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "select OrganizationID from Trainee where TraineeID=" +
+            req.body.traineeId,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
 
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        var sqlQuery =
-          `SELECT TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy, YearsOfExpInMonths,
-                  ISNULL(YearsOfExpInMonths,0) [YRSEXP],Skill,
-                  LegalStatus, UserOrganizationID, CurrentLocation, Title as [TraineeTitle], ISNULL(LegalStatus,'') ,
-                  ISNULL(CONVERT(NVARCHAR(10),CreateTime,101), '1900-01-01T00:00:00') as LastUpdateTime,
-                  ISNULL(YearsOfExpInMonths,0), Source, Collab, Notes,
-                  ( SELECT TOP 1 (R.FirstName + ' ' + R.LastName) FROM Trainee R WHERE R.UserName = T.CreateBy) AS Recruiter
-                  FROM Trainee T (NOLOCK)
-                  WHERE (T.Talentpool IS NULL OR T.Talentpool = 0) AND T.UserOrganizationID = '` +
-          OrgID +
-          `' AND T.active =1
-                  AND T.Role='TRESUMEUSER' AND T.ProfileStatus = 'READY'
-                  AND (T.Skill LIKE '%` +
-          req.body.keyword +
-          `%' OR T.Title LIKE '%` +
-          req.body.keyword +
-          `%')`;
-        if (req.body.location) {
-          sqlQuery +=
-            `AND ((CurrentLocation IN (Select distinct Stateabbr FROM USAZipCodeNew WHERE State ='` +
-            req.body.location +
-            `' OR City = '` +
-            req.body.location +
-            `' OR ZipCode = '` +
-            req.body.location +
-            `')) OR (CurrentLocation IN (Select distinct State FROM USAZipCodeNew WHERE State = '` +
-            req.body.location +
-            `' OR City = '` +
-            req.body.location +
-            `' OR ZipCode = '` +
-            req.body.location +
-            `')))`;
-        }
-        sqlQuery += `ORDER BY ISNULL(T.CreateTime, '1900-01-01T00:00:00') DESC`;
+              var OrgID = recordset.recordsets[0][0].OrganizationID;
+              var sqlQuery =
+                `SELECT TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy, YearsOfExpInMonths,
+                        ISNULL(YearsOfExpInMonths,0) [YRSEXP],Skill,
+                        LegalStatus, UserOrganizationID, CurrentLocation, Title as [TraineeTitle], ISNULL(LegalStatus,'') ,
+                        ISNULL(CONVERT(NVARCHAR(10),CreateTime,101), '1900-01-01T00:00:00') as LastUpdateTime,
+                        ISNULL(YearsOfExpInMonths,0), Source, Collab, Notes,
+                        ( SELECT TOP 1 (R.FirstName + ' ' + R.LastName) FROM Trainee R WHERE R.UserName = T.CreateBy) AS Recruiter
+                        FROM Trainee T (NOLOCK)
+                        WHERE (T.Talentpool IS NULL OR T.Talentpool = 0) AND T.UserOrganizationID = '` +
+                OrgID +
+                `' AND T.active =1
+                        AND T.Role='TRESUMEUSER' AND T.ProfileStatus = 'READY'
+                        AND (T.Skill LIKE '%` +
+                req.body.keyword +
+                `%' OR T.Title LIKE '%` +
+                req.body.keyword +
+                `%')`;
+              if (req.body.location) {
+                sqlQuery +=
+                  `AND ((CurrentLocation IN (Select distinct Stateabbr FROM USAZipCodeNew WHERE State ='` +
+                  req.body.location +
+                  `' OR City = '` +
+                  req.body.location +
+                  `' OR ZipCode = '` +
+                  req.body.location +
+                  `')) OR (CurrentLocation IN (Select distinct State FROM USAZipCodeNew WHERE State = '` +
+                  req.body.location +
+                  `' OR City = '` +
+                  req.body.location +
+                  `' OR ZipCode = '` +
+                  req.body.location +
+                  `')))`;
+              }
+              sqlQuery += `ORDER BY ISNULL(T.CreateTime, '1900-01-01T00:00:00') DESC`;
 
-        console.log(sqlQuery);
-        request.query(sqlQuery, function (err, recordset) {
-          if (err) {
-            console.log(err);
-            const result = {
-              flag: 0,
-              error: "An error occurred while querying the database",
-            };
-            res.status(500).send(result);
-            return;
+              console.log(sqlQuery);
+              request.query(sqlQuery, function (err, recordset) {
+                try {
+                  if (err) throw err;
+
+                  var resultData = {
+                    flag: 1,
+                    result: recordset.recordsets[0],
+                  };
+                  res.send(resultData);
+                } catch (error) {
+                  console.log("Error executing query:", error);
+                  const result = {
+                    flag: 0,
+                    error: "An error occurred while querying the database",
+                  };
+                  res.status(500).send(result);
+                }
+              });
+            } catch (error) {
+              console.log("Error fetching OrganizationID:", error);
+              const result = {
+                flag: 0,
+                error: "An error occurred while fetching OrganizationID",
+              };
+              res.status(500).send(result);
+            }
           }
-          var resultData = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(resultData);
-        });
+        );
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        const result = {
+          flag: 0,
+          error: "An error occurred while connecting to the database",
+        };
+        res.status(500).send(result);
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while connecting to the database",
+    };
+    res.status(500).send(result);
+  }
 });
-
-
 
 app.post("/getResumeDetails", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select HtmlResume from Trainee (nolock) where TraineeID = '" +
-        req.body.traineeID +
-        "' and Active = 1",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "select HtmlResume from Trainee (nolock) where TraineeID = '" +
+            req.body.traineeID +
+            "' and Active = 1",
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+
+              var result = {
+                flag: 1,
+                result: recordset.recordsets[0],
+              };
+              res.send(recordset.recordsets[0]);
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
 });
+
 
 // app.post("/getOnboardingList", function (req, res) {
 //   sql.connect(config, function (err) {
@@ -921,46 +1214,51 @@ app.post("/getResumeDetails", function (req, res) {
 // });
 
 app.post("/getOnboardingList", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error connecting to database");
-      return;
-    }
-
-    var useremail = req.body.useremail;
-    var startDate = req.body.startDate;
-    var endDate = req.body.endDate;
-    var query = `SELECT ISNULL(CONVERT(NVARCHAR(10), CO.createdate, 101), '1900-01-01T00:00:00') AS Date,
-                        CO.FirstName + ' ' + CO.LastName AS 'EmployeeName', 
-                        ISNULL(CONVERT(NVARCHAR(10), CO.startdate, 101), '1900-01-01T00:00:00') AS 'StartDate',
-                        CO.status,
-                        CO.PercentComplete AS Completed,
-                        CO.ID
-                 FROM CurrentOnboardings CO
-                 INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(CO.OrgID AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
-                 INNER JOIN Organization O ON CO.OrgID = O.organizationid
-                 WHERE M.useremail = '${useremail}' 
-                   AND CO.Active = 1 
-                   AND CO.CreateDate BETWEEN '${startDate}' AND '${endDate}'
-                 ORDER BY CO.createdate DESC;`;
-
-    console.log("Query:", query);
-
-    var request = new sql.Request();
-    request.query(query, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error executing query");
+        res.status(500).send("Error connecting to database");
         return;
       }
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
+
+      var useremail = req.body.useremail;
+      var startDate = req.body.startDate;
+      var endDate = req.body.endDate;
+      var query = `SELECT ISNULL(CONVERT(NVARCHAR(10), CO.createdate, 101), '1900-01-01T00:00:00') AS Date,
+                          CO.FirstName + ' ' + CO.LastName AS 'EmployeeName', 
+                          ISNULL(CONVERT(NVARCHAR(10), CO.startdate, 101), '1900-01-01T00:00:00') AS 'StartDate',
+                          CO.status,
+                          CO.PercentComplete AS Completed,
+                          CO.ID
+                   FROM CurrentOnboardings CO
+                   INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(CO.OrgID AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
+                   INNER JOIN Organization O ON CO.OrgID = O.organizationid
+                   WHERE M.useremail = '${useremail}' 
+                     AND CO.Active = 1 
+                     AND CO.CreateDate BETWEEN '${startDate}' AND '${endDate}'
+                   ORDER BY CO.createdate DESC;`;
+
+      console.log("Query:", query);
+
+      var request = new sql.Request();
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error executing query");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // app.post("/getCandidatesbyStatus", function (req, res) {
@@ -984,969 +1282,1525 @@ app.post("/getOnboardingList", function (req, res) {
 // });
 
 app.post("/getCandidatesbyStatus", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error connecting to database");
-      return;
-    }
-
-    var useremail = req.body.useremail;
-
-    var query = `SELECT T.FirstName, 
-                        T.LastName, 
-                        (T.FirstName + ' ' + T.LastName) as CandidateName, 
-                        T.TraineeID,
-                        O.Organizationname,
-                        O.organizationid
-                 FROM Trainee T
-                 INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(T.userorganizationid AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
-                 INNER JOIN Organization O ON T.userorganizationid = O.organizationid
-                 WHERE M.useremail = '${useremail}'
-                 AND (T.CandidateStatus = 7 OR T.CandidateStatus = 6) 
-                 AND T.TraineeID NOT IN (SELECT TraineeID FROM CurrentOnboardings);`;
-
-    console.log("Query:", query);
-
-    var request = new sql.Request();
-    request.query(query, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error executing query");
+        res.status(500).send("Error connecting to database");
         return;
       }
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(recordset.recordsets[0]);
+
+      var useremail = req.body.useremail;
+
+      var query = `SELECT T.FirstName, 
+                          T.LastName, 
+                          (T.FirstName + ' ' + T.LastName) as CandidateName, 
+                          T.TraineeID,
+                          O.Organizationname,
+                          O.organizationid
+                   FROM Trainee T
+                   INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(T.userorganizationid AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
+                   INNER JOIN Organization O ON T.userorganizationid = O.organizationid
+                   WHERE M.useremail = '${useremail}'
+                   AND (T.CandidateStatus = 7 OR T.CandidateStatus = 6) 
+                   AND T.TraineeID NOT IN (SELECT TraineeID FROM CurrentOnboardings);`;
+
+      console.log("Query:", query);
+
+      var request = new sql.Request();
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error executing query");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getChecklists", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select CL.ListID, CL.OrgID, CL.ListName, CL.ListType, CL.DocTypeID, CL.Position, DT.DocTypeName from Checklists CL JOIN DocType DT on CL.DocTypeID=DT.DTID where CL.OrgID = '" +
-        req.body.OrgID +
-        "'",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "select CL.ListID, CL.OrgID, CL.ListName, CL.ListType, CL.DocTypeID, CL.Position, DT.DocTypeName from Checklists CL JOIN DocType DT on CL.DocTypeID=DT.DTID where CL.OrgID = '" +
+          req.body.OrgID +
+          "'",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(recordset.recordsets[0]);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/getDocTypes", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select DTID, DocTypeName from DocType where Active=1",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "select DTID, DocTypeName from DocType where Active=1",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/getNewChecklistID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select isnull(max(ListID),0) + 1 as ID from Checklists",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "select isnull(max(ListID),0) + 1 as ID from Checklists",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/saveChecklist", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "insert into Checklists (ID,ListID,OrgID,ListName,ListType,DocTypeID,Position) values((select isnull(max(ID),0) + 1 from Checklists), " +
-        req.body.ListID +
-        ", " +
-        req.body.OrgID +
-        ", '" +
-        req.body.ListName +
-        "', 'Employee', " +
-        req.body.docTypeID +
-        "," +
-        req.body.Position +
-        ")",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "insert into Checklists (ID,ListID,OrgID,ListName,ListType,DocTypeID,Position) values((select isnull(max(ID),0) + 1 from Checklists), " +
+          req.body.ListID +
+          ", " +
+          req.body.OrgID +
+          ", '" +
+          req.body.ListName +
+          "', 'Employee', " +
+          req.body.docTypeID +
+          "," +
+          req.body.Position +
+          ")",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/deleteChecklist/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "delete from Checklists where ListID=" + req.params.ID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "delete from Checklists where ListID=" + req.params.ID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/getChecklistNames/:OrgID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select distinct ListID, ListName  from Checklists where OrgID=" +
-        req.params.OrgID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "select distinct ListID, ListName from Checklists where OrgID=" +
+          req.params.OrgID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getWizardSteps", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select a.ListID,a.ListName,a.ListType,a.DocTypeID,a.Position,b.DocTypeName from Checklists a inner join DocType b on a.DocTypeID=b.DTID where a.OrgID=" +
-        req.body.OrgID +
-        " and a.ListID=" +
-        req.body.ListID +
-        " order by a.Position",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "select a.ListID,a.ListName,a.ListType,a.DocTypeID,a.Position,b.DocTypeName from Checklists a inner join DocType b on a.DocTypeID=b.DTID where a.OrgID=" +
+          req.body.OrgID +
+          " and a.ListID=" +
+          req.body.ListID +
+          " order by a.Position",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/createOnboarding", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "Insert into CurrentOnboardings (ID,OrgID,CreateDate,TraineeID,FirstName,LastName, StartDate, Status,PercentComplete,Active) OUTPUT Inserted.ID Values((select isnull(max(ID),0) + 1 from CurrentOnboardings)," +
-        req.body.OrgID +
-        ",(SELECT CAST(GETDATE() AS DATE))," +
-        req.body.traineeID +
-        ",'" +
-        req.body.FirstName +
-        "','" +
-        req.body.LastName +
-        "',(SELECT CAST(GETDATE() AS DATE)),1,0,1)",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+
+      var request = new sql.Request();
+      request.query(
+        "Insert into CurrentOnboardings (ID,OrgID,CreateDate,TraineeID,FirstName,LastName, StartDate, Status,PercentComplete,Active) OUTPUT Inserted.ID Values((select isnull(max(ID),0) + 1 from CurrentOnboardings)," +
+          req.body.OrgID +
+          ",(SELECT CAST(GETDATE() AS DATE))," +
+          req.body.traineeID +
+          ",'" +
+          req.body.FirstName +
+          "','" +
+          req.body.LastName +
+          "',(SELECT CAST(GETDATE() AS DATE)),1,0,1)",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/uploadOnboardDocument/:onboardID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    upload1(req, res, function (err) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
-        return res.json(err);
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-      let FileName = req.file.originalname.split(".")[0];
-      console.log("FileName", FileName);
-      let FilePath = req.file.path;
-      console.log("FilePath", FilePath);
-
-      var request = new sql.Request();
-      request.query(
-        "Select UserName from Trainee where TraineeID=" + req.body.loggedUserId,
-        function (err, recordset) {
-          if (err) console.log(err);
-          var loggedUserEmail = recordset.recordsets[0][0].UserName;
-          var result = {
-            flag: 1,
-            loggedUserEmail: loggedUserEmail,
-            FileName: FileName,
-            FilePath: FilePath,
-          };
-          res.send(result);
-          console.log("result", result);
+      upload1(req, res, function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json(err);
         }
-      );
+        let FileName = req.file.originalname.split(".")[0];
+        console.log("FileName", FileName);
+        let FilePath = req.file.path;
+        console.log("FilePath", FilePath);
+
+        var request = new sql.Request();
+        request.query(
+          "Select UserName from Trainee where TraineeID=" + req.body.loggedUserId,
+          function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing query");
+              return;
+            }
+            var loggedUserEmail = recordset.recordsets[0][0].UserName;
+            var result = {
+              flag: 1,
+              loggedUserEmail: loggedUserEmail,
+              FileName: FileName,
+              FilePath: FilePath,
+            };
+            res.send(result);
+            console.log("result", result);
+          }
+        );
+      });
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/uploadReqOnboardDocument/:onboardID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    upload1(req, res, function (err) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
-        return res.json(err);
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-      let FileName = req.file.originalname.split(".")[0];
-      console.log("FileName", FileName);
-      let FilePath = req.file.path;
-      console.log("FilePath", FilePath);
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        FileName: FileName,
-        FilePath: FilePath,
-      };
-      res.send(result);
-      console.log("result", result);
+      upload1(req, res, function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json(err);
+        }
+        let FileName = req.file.originalname.split(".")[0];
+        console.log("FileName", FileName);
+        let FilePath = req.file.path;
+        console.log("FilePath", FilePath);
+        var result = {
+          flag: 1,
+          FileName: FileName,
+          FilePath: FilePath,
+        };
+        res.send(result);
+        console.log("result", result);
+      });
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/getOnboardingDetails/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select * from CurrentOnboardings where ID=" + req.params.ID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
-      }
-    );
-  });
-});
-
-app.get("/getOnboardingRequest/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select * from OnboardingDocRequest where OnboardID=" +
-        req.params.ID +
-        "and isRequested=1",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
-      }
-    );
-  });
-});
-
-app.post("/saveOnboardingRequest", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.input("FileName", sql.VarChar, req.body.fileName);
-    request.input("OnBoardID", sql.Int, req.body.onboardID);
-    request.input("DocTypeName", sql.VarChar, req.body.docTypeName);
-    request.input("DocTypeID", sql.Int, req.body.docTypeID);
-    request.input("isRequested", sql.Int, req.body.requested);
-    request.input("DocNotes", sql.VarChar, req.body.docNote);
-    request.execute("InsertOnboardingDocRequest", function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(recordset.recordsets[0]);
-    });
-  });
-});
-
-app.get("/updateOnboardStatus/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "update CurrentOnboardings set Status=2 where ID=" + req.params.ID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
-      }
-    );
-  });
-});
-
-app.get("/updateOnboardStatus1/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "update CurrentOnboardings set Status=0 where ID=" + req.params.ID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
-      }
-    );
-  });
-});
-
-app.get("/onboardSession/:ID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select * from OnboardingSession where SessionID='" +
-        req.params.ID +
-        " ' ",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
-      }
-    );
-  });
-});
-
-app.post("/approveFiles", function (req, res) {
-  const path =
-    `C:/inetpub/vhosts/tresume.us/httpdocs/Content/Resume/` +
-    req.body.traineeID;
-  fs.mkdirSync(path, { recursive: true });
-  fs.copyFile(req.body.oldPath, req.body.newPath, function (err) {
-    if (err) throw err;
+  try {
     sql.connect(config, function (err) {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
       var request = new sql.Request();
-      var otherinfo = Object.values(req.body.otherInfo).join(",");
       request.query(
-        "INSERT INTO CandidateDocument_New(TraineeID, DocumentName, DocumentPath, Active, CreateTime, CreateBy, LastUpdateTime, LastUpdateBy, DocumentTypeID, DocStartDate, DocExpiryDate, OtherInfo) VALUES(" +
-          req.body.traineeID +
-          ", '" +
-          req.body.FileName +
-          "', '" +
-          req.body.FilePath +
-          "', 1, GETUTCDATE(), '" +
-          req.body.loggedUserEmail +
-          "', NULL, NULL, " +
-          req.body.docType +
-          ", '" +
-          req.body.startDate +
-          "', '" +
-          req.body.expiryDate +
-          "', '" +
-          otherinfo +
-          "')",
+        "select * from CurrentOnboardings where ID=" + req.params.ID,
         function (err, recordset) {
-          if (err) console.log(err);
-          var request = new sql.Request();
-          request.query(
-            "update OnboardingDocRequest set Status=1 where OnboardID=" +
-              req.body.onboardID +
-              " and DocTypeID=" +
-              req.body.docType,
-            function (err, recordset) {
-              if (err) console.log(err);
-              res.send("Success");
-            }
-          );
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
         }
       );
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/getOnboardingRequest/:ID", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "select * from OnboardingDocRequest where OnboardID=" +
+          req.params.ID +
+          " and isRequested=1",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.post("/saveOnboardingRequest", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input("FileName", sql.VarChar, req.body.fileName);
+      request.input("OnBoardID", sql.Int, req.body.onboardID);
+      request.input("DocTypeName", sql.VarChar, req.body.docTypeName);
+      request.input("DocTypeID", sql.Int, req.body.docTypeID);
+      request.input("isRequested", sql.Int, req.body.requested);
+      request.input("DocNotes", sql.VarChar, req.body.docNote);
+      request.execute("InsertOnboardingDocRequest", function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error executing query");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/updateOnboardStatus/:ID", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "update CurrentOnboardings set Status=2 where ID=" + req.params.ID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/updateOnboardStatus1/:ID", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "update CurrentOnboardings set Status=0 where ID=" + req.params.ID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/onboardSession/:ID", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "select * from OnboardingSession where SessionID='" +
+          req.params.ID +
+          " ' ",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.post("/approveFiles", function (req, res) {
+  try {
+    const path =
+      `C:/inetpub/vhosts/tresume.us/httpdocs/Content/Resume/` +
+      req.body.traineeID;
+    fs.mkdirSync(path, { recursive: true });
+    fs.copyFile(req.body.oldPath, req.body.newPath, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error copying file");
+        return;
+      }
+      sql.connect(config, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error connecting to database");
+          return;
+        }
+        var request = new sql.Request();
+        var otherinfo = Object.values(req.body.otherInfo).join(",");
+        request.query(
+          "INSERT INTO CandidateDocument_New(TraineeID, DocumentName, DocumentPath, Active, CreateTime, CreateBy, LastUpdateTime, LastUpdateBy, DocumentTypeID, DocStartDate, DocExpiryDate, OtherInfo) VALUES(" +
+            req.body.traineeID +
+            ", '" +
+            req.body.FileName +
+            "', '" +
+            req.body.FilePath +
+            "', 1, GETUTCDATE(), '" +
+            req.body.loggedUserEmail +
+            "', NULL, NULL, " +
+            req.body.docType +
+            ", '" +
+            req.body.startDate +
+            "', '" +
+            req.body.expiryDate +
+            "', '" +
+            otherinfo +
+            "')",
+          function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error inserting document into database");
+              return;
+            }
+            var request = new sql.Request();
+            request.query(
+              "update OnboardingDocRequest set Status=1 where OnboardID=" +
+                req.body.onboardID +
+                " and DocTypeID=" +
+                req.body.docType,
+              function (err, recordset) {
+                if (err) {
+                  console.log(err);
+                  res.status(500).send("Error updating onboarding document request status");
+                  return;
+                }
+                res.send("Success");
+              }
+            );
+          }
+        );
+      });
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/generateonboardSession", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.input("OnBoardID", sql.Int, req.body.onboardID);
-    request.input("OrgID", sql.Int, req.body.orgID);
-    request.input("TraineeID", sql.Int, req.body.traineeID);
-    request.execute("GenerateOnboardingSession", function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input("OnBoardID", sql.Int, req.body.onboardID);
+      request.input("OrgID", sql.Int, req.body.orgID);
+      request.input("TraineeID", sql.Int, req.body.traineeID);
+      request.execute("GenerateOnboardingSession", function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error executing stored procedure");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(recordset.recordsets[0]);
+      });
     });
-  });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getDocPath", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select filepath from OnboardingDocRequest where OnboardID=" +
-        req.body.onboardID +
-        "and DocTypeID=" +
-        req.body.docTypeID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select filepath from OnboardingDocRequest where OnboardID=" +
+          req.body.onboardID +
+          "and DocTypeID=" +
+          req.body.docTypeID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(recordset.recordsets[0]);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/insertUploadFilepath", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    let filepath = req.body.filepath ? req.body.filepath : "";
-    request.query(
-      "INSERT INTO OnboardingDocRequest (ID, OnboardID, DocTypeName, DocTypeID, isRequested, Status, isViewed, isUpload, filepath, DocNotes, AdditionalChecklistID, AdditionalChecklistName) VALUES ((SELECT ISNULL(MAX(ID),0) + 1 FROM OnboardingDocRequest), " +
-      req.body.onboardID +
-      ", '" +
-      req.body.docTypeName +
-      "', " +
-      req.body.docTypeID +
-      ", " +
-      req.body.requested +
-      ", 0, 0, 0, '" +
-      filepath +
-      "', '" +
-      req.body.docNote +
-      "', '" +
-      req.body.additionalChecklistID +
-      "', '" +
-      req.body.additionalChecklistName +
-      "')",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      let filepath = req.body.filepath ? req.body.filepath : "";
+      request.query(
+        "INSERT INTO OnboardingDocRequest (ID, OnboardID, DocTypeName, DocTypeID, isRequested, Status, isViewed, isUpload, filepath, DocNotes, AdditionalChecklistID, AdditionalChecklistName) VALUES ((SELECT ISNULL(MAX(ID),0) + 1 FROM OnboardingDocRequest), " +
+          req.body.onboardID +
+          ", '" +
+          req.body.docTypeName +
+          "', " +
+          req.body.docTypeID +
+          ", " +
+          req.body.requested +
+          ", 0, 0, 0, '" +
+          filepath +
+          "', '" +
+          req.body.docNote +
+          "', '" +
+          req.body.additionalChecklistID +
+          "', '" +
+          req.body.additionalChecklistName +
+          "')",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(recordset.recordsets[0]);
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
-
-
 app.get("/download/:ID/:DocID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select filepath from OnboardingDocRequest where OnboardID=" +
-        req.params.ID +
-        "and DocTypeID=" +
-        req.params.DocID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-
-        let formattedPath = recordset.recordsets[0][0].filepath.replace(
-          /\\/g,
-          "/"
-        );
-
-        var file = formattedPath;
-        var filename = path.basename(file);
-        var mimetype = mime.getType(file);
-
-        res.setHeader(
-          "Content-disposition",
-          "attachment; filename=" + filename
-        );
-        res.setHeader("Content-type", mimetype);
-
-        var filestream = fs.createReadStream(file);
-        filestream.pipe(res);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select filepath from OnboardingDocRequest where OnboardID=" +
+          req.params.ID +
+          "and DocTypeID=" +
+          req.params.DocID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          // Check if the recordset contains data
+          if (recordset && recordset.recordsets && recordset.recordsets[0] && recordset.recordsets[0][0]) {
+            let formattedPath = recordset.recordsets[0][0].filepath.replace(
+              /\\/g,
+              "/"
+            );
+            var file = formattedPath;
+            var filename = path.basename(file);
+            var mimetype = mime.getType(file);
+            // Set the headers for file download
+            res.setHeader(
+              "Content-disposition",
+              "attachment; filename=" + filename
+            );
+            res.setHeader("Content-type", mimetype);
+            // Stream the file to the response
+            var filestream = fs.createReadStream(file);
+            filestream.pipe(res);
+          } else {
+            // If no file found in database, send 404
+            res.status(404).send("File not found");
+          }
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/reviewdownload/:ID/:DocID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
-        req.params.ID +
-        "and DocTypeID=" +
-        req.params.DocID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        console.log("result", result);
-        let formattedPath = recordset.recordsets[0][0].SignedFilepath.replace(
-          /\\/g,
-          "/"
-        );
-        var file = formattedPath;
-        var filename = path.basename(file);
-        var mimetype = mime.getType(file);
-
-        res.setHeader(
-          "Content-disposition",
-          "attachment; filename=" + filename
-        );
-        res.setHeader("Content-type", mimetype);
-
-        var filestream = fs.createReadStream(file);
-        filestream.pipe(res);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
+          req.params.ID +
+          " and DocTypeID=" +
+          req.params.DocID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          // Check if the recordset contains data
+          if (
+            recordset &&
+            recordset.recordsets &&
+            recordset.recordsets[0] &&
+            recordset.recordsets[0][0]
+          ) {
+            let formattedPath = recordset.recordsets[0][0].SignedFilepath.replace(
+              /\\/g,
+              "/"
+            );
+            var file = formattedPath;
+            var filename = path.basename(file);
+            var mimetype = mime.getType(file);
+            // Set the headers for file download
+            res.setHeader(
+              "Content-disposition",
+              "attachment; filename=" + filename
+            );
+            res.setHeader("Content-type", mimetype);
+            // Stream the file to the response
+            var filestream = fs.createReadStream(file);
+            filestream.pipe(res);
+          } else {
+            // If no file found in database, send 404
+            res.status(404).send("File not found");
+          }
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.get("/reviewFile/:ID/:DocID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
-        req.params.ID +
-        "and DocTypeID=" +
-        req.params.DocID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        let formattedPath = recordset.recordsets[0][0].SignedFilepath.replace(
-          /\\/g,
-          "/"
-        );
-        var file = formattedPath;
-        var filename = path.basename(file);
-        var mimetype = mime.getType(file);
-
-        res.setHeader(
-          "Content-disposition",
-          "attachment; filename=" + filename
-        );
-        res.setHeader("Content-type", mimetype);
-
-        var buffer = fs.readFileSync(file);
-        const blob = new Blob([buffer], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        res.send(url);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
+          req.params.ID +
+          "and DocTypeID=" +
+          req.params.DocID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          if (
+            !recordset ||
+            !recordset.recordsets[0] ||
+            !recordset.recordsets[0][0]
+          ) {
+            res.status(404).send("File not found");
+            return;
+          }
+          let formattedPath = recordset.recordsets[0][0].SignedFilepath.replace(
+            /\\/g,
+            "/"
+          );
+          var file = formattedPath;
+          var filename = path.basename(file);
+          var mimetype = mime.getType(file);
+
+          res.setHeader(
+            "Content-disposition",
+            "attachment; filename=" + filename
+          );
+          res.setHeader("Content-type", mimetype);
+
+          var buffer = fs.readFileSync(file);
+          const blob = new Blob([buffer], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          res.send(url);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/updateDocStatus", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "update OnboardingDocRequest set isUpload=1 where OnboardID=" +
-        req.body.onboardID +
-        "and DocTypeID=" +
-        req.body.docTypeID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        var request = new sql.Request();
-        request.input("OnBoardID", sql.Int, req.body.onboardID);
-        request.execute("setOnboardingPercent", function (err, recordset) {});
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "update OnboardingDocRequest set isUpload=1 where OnboardID=" +
+          req.body.onboardID +
+          " and DocTypeID=" +
+          req.body.docTypeID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error updating document status");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          var request = new sql.Request();
+          request.input("OnBoardID", sql.Int, req.body.onboardID);
+          request.execute("setOnboardingPercent", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+          });
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/updateSignFilepath", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "update OnboardingDocRequest set SignedFilePath='" +
-        req.body.filepath +
-        "' where OnboardID=" +
-        req.body.onboardID +
-        " and DocTypeID=" +
-        req.body.docTypeID,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "update OnboardingDocRequest set SignedFilePath='" +
+          req.body.filepath +
+          "' where OnboardID=" +
+          req.body.onboardID +
+          " and DocTypeID=" +
+          req.body.docTypeID,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error updating signed file path");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getInterviewsReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getInterviewsReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getInterviewsReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getBenchTrackerReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getBenchTrackerReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getBenchTrackerReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getPlacementsReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getPlacementsReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getPlacementsReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getLegalStatusReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getLegalStatusReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getLegalStatusReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getH1BExpiryReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getH1BExpiryReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getH1BExpiryReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getBillableEmployeeReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getBillableEmployeeReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getBillableEmployeeReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getNonH1BReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getNonH1BReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getNonH1BReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getDSRReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getDSRReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getDSRReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-app.post("/getSiteVistReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.execute("GetTraineeDetailsCopy", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+app.post("/getSiteVisitReport", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.execute("GetTraineeDetailsCopy", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getPFAReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.execute("GetPFAReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.execute("GetPFAReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getDocumentExpiryReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("GetDocumentExpiryReport", function (err, recordset) {
-          if (err) console.log(err);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "select OrganizationID from Trainee where TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("GetDocumentExpiryReport", function (err, recordset) {
+            if (err) {
+              console.log(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/checkIfJobSeekerResumeExists", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.query(
+        "SELECT * FROM Trainee (nolock) WHERE Username = '" +
+          req.body.emailID +
+          "' AND Active = 1",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
           var result = {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
-        });
-      }
-    );
-  });
-});
-
-app.post("/checkIfJobSeekerResumeExists", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      " select * from Trainee (nolock) where Username = '" +
-        req.body.emailID +
-        "' and Active = 1",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(result.result);
-      }
-    );
-  });
+          res.send(result.result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/createJobSeekerDetails", function (req, res) {
@@ -2054,26 +2908,40 @@ app.post("/createJobSeekerDetails", function (req, res) {
 
 
 app.post("/checkIfProfileMigrated", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select ATSID,MigrateProfileID,CreateBy,CreateTime from Trainee (nolock) where Role='TRESUMEUSER' AND Source='" +
-        req.body.source +
-        "' AND UserOrganizationID=(Select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId +
-        ") AND Active=1 order by CreateTime desc; ",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(result.result);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "SELECT ATSID, MigrateProfileID, CreateBy, CreateTime FROM Trainee (nolock) WHERE Role = 'TRESUMEUSER' AND Source = '" +
+          req.body.source +
+          "' AND UserOrganizationID = (SELECT OrganizationID FROM Trainee WHERE TraineeID = " +
+          req.body.traineeId +
+          ") AND Active = 1 ORDER BY CreateTime DESC;",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error querying Trainee table");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result.result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
+
 
 /* app.post("/getCBAuthToken", function (req, res) {
   axios
@@ -2095,305 +2963,388 @@ app.post("/checkIfProfileMigrated", function (req, res) {
 }); */
 
 app.post("/getCBAuthToken", function (req, res) {
-  console.log('CB');
-  const requestData = {
-    grant_type: "refresh_token",
-    client_id: "Cd2543bf6",
-    client_secret:
-      "mmYQ7+pkLk1VQq+to5Pc1t+4agJ8f/WhyhSccR5yHdhfZhdFgYdI6mLyZhmNmWZCxg6D7PAWXuS5VaJENtlVvw==",
-    refresh_token:
-      "puseyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhHQ00ifQ.Ek_TJrIRQk9oWne9buNBNkkLzCBNBfRLHG1JTAI6gIfexIOBfy2RgEWgZO9czfpS24P5D8DZqYxFp1Tajb0mmgHCCE_hPb4frfU4J_9V6lvlpVIPSlRwN0AsXFeGxj-qy2Z2RFcWEfybStQ2vKDLSzea-QqwqNZcI9nv9EmSuOkFSmSoAjAqrqXkPF25LyPNtA4ECILprqdmDJLBui801_KOlR2g5u9tVHmkokC0uW7ABdmgC9fC0m6IzOeEAZWIDBcr5I-aqAvHXF-FHEcCoc0FRxLoPDdLxJ5h_BpZXIu76JBd2ezfEXLhVUWcABgHfFizcG4UwPeYiEVOX66ncg.WEeXQIWyg0en_ZH2.UbE44XnFrmKcBvMJY2cWJ0Ij7m4gzYMGhuSvsi_5bbStG2-9hPvjltlwhUD6idQkB3Qpsc_HA8VstQzAw0mv5a4Ca8kRrvVaqh-0-FF-_etwfDFJDxoX6phdQO-X75cr8EptxnFbcemCiPLyFP1TVgf_LEB6pCwVeztZDFO72aNpP8U54hKKPSlrDuSGFEXU1ki0jstvcjMmYInT1zXVRTWk53jN_7zROciAv2KkrqzWkpQ0THKWO0G7KtRnEwRevyMpcojO6rnHtsw1XeFGun8v2P7A3n9sDDeZPkXXOrOhA025tRqF4PgNQnGOEA9XG9Dw5NqtpPyyP6ez8cIM01M.OzLjpp1Um-ov5PZHqFxw-Q",
-    scope: "offline_access",
-  };
+  try {
+    console.log('CB');
+    const requestData = {
+      grant_type: "refresh_token",
+      client_id: "Cd2543bf6",
+      client_secret:
+        "mmYQ7+pkLk1VQq+to5Pc1t+4agJ8f/WhyhSccR5yHdhfZhdFgYdI6mLyZhmNmWZCxg6D7PAWXuS5VaJENtlVvw==",
+      refresh_token:
+        "puseyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhHQ00ifQ.Ek_TJrIRQk9oWne9buNBNkkLzCBNBfRLHG1JTAI6gIfexIOBfy2RgEWgZO9czfpS24P5D8DZqYxFp1Tajb0mmgHCCE_hPb4frfU4J_9V6lvlpVIPSlRwN0AsXFeGxj-qy2Z2RFcWEfybStQ2vKDLSzea-QqwqNZcI9nv9EmSuOkFSmSoAjAqrqXkPF25LyPNtA4ECILprqdmDJLBui801_KOlR2g5u9tVHmkokC0uW7ABdmgC9fC0m6IzOeEAZWIDBcr5I-aqAvHXF-FHEcCoc0FRxLoPDdLxJ5h_BpZXIu76JBd2ezfEXLhVUWcABgHfFizcG4UwPeYiEVOX66ncg.WEeXQIWyg0en_ZH2.UbE44XnFrmKcBvMJY2cWJ0Ij7m4gzYMGhuSvsi_5bbStG2-9hPvjltlwhUD6idQkB3Qpsc_HA8VstQzAw0mv5a4Ca8kRrvVaqh-0-FF-_etwfDFJDxoX6phdQO-X75cr8EptxnFbcemCiPLyFP1TVgf_LEB6pCwVeztZDFO72aNpP8U54hKKPSlrDuSGFEXU1ki0jstvcjMmYInT1zXVRTWk53jN_7zROciAv2KkrqzWkpQ0THKWO0G7KtRnEwRevyMpcojO6rnHtsw1XeFGun8v2P7A3n9sDDeZPkXXOrOhA025tRqF4PgNQnGOEA9XG9Dw5NqtpPyyP6ez8cIM01M.OzLjpp1Um-ov5PZHqFxw-Q",
+      scope: "offline_access",
+    };
 
-  const formData = qs.stringify(requestData);
+    const formData = qs.stringify(requestData);
 
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
+    const config = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
 
-  axios
-    .post("https://api.careerbuilder.com/oauth/token", formData, config)
-    .then((result) => {
-      res.send(result.data);
-    })
-    .catch((error) => {
-      res.send(error);
-    });
+    axios
+      .post("https://api.careerbuilder.com/oauth/token", formData, config)
+      .then((result) => {
+        res.send(result.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send("Error fetching CareerBuilder access token");
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/CBSearch", function (req, res) {
-  let response = null;
-  const options = {
-    url: "https://api.careerbuilder.com/consumer/edge/search",
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "accept-encoding": "gzip, deflate",
-      "accept-language": "en-US,en;q=0.8",
-      "content-encoding": "gzip",
-      Authorization: `Bearer ${req.body.token}`,
-    },
-    qs: {
-      Query: req.body.query,
-      Page: req.body.page,
-      ResultsPerPage: req.body.resultsPerPage,
-      Locations: req.body.locations,
-      LocationRadius: req.body.locationRadius,
-      JobTitle: req.body.jobTitle,
-      Filter: req.body.filters,
-      FacetFilter: req.body.facetFilter,
-    },
-    gzip: true,
-  };
+  try {
+    let response = null;
+    const options = {
+      url: "https://api.careerbuilder.com/consumer/edge/search",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "accept-encoding": "gzip, deflate",
+        "accept-language": "en-US,en;q=0.8",
+        "content-encoding": "gzip",
+        Authorization: `Bearer ${req.body.token}`,
+      },
+      qs: {
+        Query: req.body.query,
+        Page: req.body.page,
+        ResultsPerPage: req.body.resultsPerPage,
+        Locations: req.body.locations,
+        LocationRadius: req.body.locationRadius,
+        JobTitle: req.body.jobTitle,
+        Filter: req.body.filters,
+        FacetFilter: req.body.facetFilter,
+      },
+      gzip: true,
+    };
 
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    response = JSON.parse(res1.body);
-    res.send(response);
-  });
+    request(options, (err, res1, body) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error performing CareerBuilder search");
+        return;
+      }
+      response = JSON.parse(res1.body);
+      res.send(response);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/GetCBProfileDetails", function (req, res) {
-  let response = null;
-  const options = {
-    url:
-      "https://api.careerbuilder.com/consumer/edge/profiles?EdgeID=" +
-      req.body.edgeID,
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "accept-encoding": "gzip, deflate",
-      "accept-language": "en-US,en;q=0.8",
-      "content-encoding": "gzip",
-      Authorization: `Bearer ${req.body.token}`,
-    },
-    gzip: true,
-  };
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    response = JSON.parse(res1.body);
-    res.send(response.data);
-  });
+  try {
+    let response = null;
+    const options = {
+      url:
+        "https://api.careerbuilder.com/consumer/edge/profiles?EdgeID=" +
+        req.body.edgeID,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "accept-encoding": "gzip, deflate",
+        "accept-language": "en-US,en;q=0.8",
+        "content-encoding": "gzip",
+        Authorization: `Bearer ${req.body.token}`,
+      },
+      gzip: true,
+    };
+    request(options, (err, res1, body) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error fetching CareerBuilder profile details");
+        return;
+      }
+      response = JSON.parse(res1.body);
+      res.send(response.data);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/GetCBResumePreview", function (req, res) {
-  let response = null;
-  const options = {
-    url:
-      "https://api.careerbuilder.com/consumer/edge/profiles/" +
-      req.body.edgeID +
-      "/Resumes",
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "accept-encoding": "gzip, deflate",
-      "accept-language": "en-US,en;q=0.8",
-      "content-encoding": "gzip",
-      Authorization: `Bearer ${req.body.token}`,
-    },
-    gzip: true,
-  };
+  try {
+    let response = null;
+    const options = {
+      url:
+        "https://api.careerbuilder.com/consumer/edge/profiles/" +
+        req.body.edgeID +
+        "/Resumes",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "accept-encoding": "gzip, deflate",
+        "accept-language": "en-US,en;q=0.8",
+        "content-encoding": "gzip",
+        Authorization: `Bearer ${req.body.token}`,
+      },
+      gzip: true,
+    };
 
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    response = JSON.parse(res1.body);
-    console.log(response);
-    if (response.data) {
-      const options2 = {
-        url:
-          "https://api.careerbuilder.com/consumer/edge/profiles/" +
-          req.body.edgeID +
-          "/Resumes/RDB/" +
-          response.data[0].ResumeDID +
-          "/Preview",
-        method: "GET",
-        headers: {
-          Accept: "text/html",
-          /* 'Access-Control-Allow-Origin': "*",
-                    "accept-encoding": 'gzip, deflate',
-                    'accept-language': 'en-US,en;q=0.8',
-                    'content-encoding': 'gzip', */
-          Authorization: `Bearer ${req.body.token}`,
-        },
-        gzip: true,
-      };
-      request(options2, (err2, res2, body) => {
-        if (err) {
-          return console.log(err2);
-        }
-        res.send({ text: res2.body });
-      });
-    }
-  });
+    request(options, (err, res1, body) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error fetching CareerBuilder resume details");
+        return;
+      }
+      response = JSON.parse(res1.body);
+      console.log(response);
+      if (response.data) {
+        const options2 = {
+          url:
+            "https://api.careerbuilder.com/consumer/edge/profiles/" +
+            req.body.edgeID +
+            "/Resumes/RDB/" +
+            response.data[0].ResumeDID +
+            "/Preview",
+          method: "GET",
+          headers: {
+            Accept: "text/html",
+            Authorization: `Bearer ${req.body.token}`,
+          },
+          gzip: true,
+        };
+        request(options2, (err2, res2, body) => {
+          if (err2) {
+            console.error(err2);
+            res.status(500).send("Error fetching CareerBuilder resume preview");
+            return;
+          }
+          res.send({ text: res2.body });
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/downloadCBResume", function (req, res) {
-  let response = null;
-  const options = {
-    url:
-      "https://api.careerbuilder.com/consumer/edge/profiles/" +
-      req.body.edgeID +
-      "/Resumes",
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "accept-encoding": "gzip, deflate",
-      "accept-language": "en-US,en;q=0.8",
-      "content-encoding": "gzip",
-      Authorization: `Bearer ${req.body.token}`,
-    },
-    gzip: true,
-  };
+  try {
+    let response = null;
+    const options = {
+      url:
+        "https://api.careerbuilder.com/consumer/edge/profiles/" +
+        req.body.edgeID +
+        "/Resumes",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "accept-encoding": "gzip, deflate",
+        "accept-language": "en-US,en;q=0.8",
+        "content-encoding": "gzip",
+        Authorization: `Bearer ${req.body.token}`,
+      },
+      gzip: true,
+    };
 
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    response = JSON.parse(res1.body);
-    if (response.data) {
-      const options2 = {
-        url:
-          "https://api.careerbuilder.com/consumer/edge/profiles/" +
-          req.body.edgeID +
-          "/Resumes/RDB/" +
-          response.data[0].ResumeDID +
-          "/Document",
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${req.body.token}`,
-        },
-        gzip: true,
-      };
-      request(options2, (err2, res2, body) => {
-        if (err) {
-          return console.log(err2);
-        }
-        response = JSON.parse(res2.body);
-        const base64File = response.data.Content;
-        const buffer = Buffer.from(base64File, "base64");
-        //fs.writeFile('D:/Code/SV Report/' + response.data.Filename, buffer, (error) => {
-        fs.writeFile(
-          "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" +
-            response.data.Filename,
-          buffer,
-          (error) => {
-            if (error) {
-              console.error(error);
-              res.status(500).send("Error saving file");
-              return;
-            }
+    request(options, (err, res1, body) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error fetching CareerBuilder resume details");
+        return;
+      }
+      response = JSON.parse(res1.body);
+      if (response.data) {
+        const options2 = {
+          url:
+            "https://api.careerbuilder.com/consumer/edge/profiles/" +
+            req.body.edgeID +
+            "/Resumes/RDB/" +
+            response.data[0].ResumeDID +
+            "/Document",
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${req.body.token}`,
+          },
+          gzip: true,
+        };
+        request(options2, (err2, res2, body) => {
+          if (err2) {
+            console.error(err2);
+            res.status(500).send("Error fetching CareerBuilder resume document");
+            return;
           }
-        );
-        sql.connect(config, function (err) {
-          var request = new sql.Request();
-          request.input("FileName", sql.VarChar, response.data.Filename);
-          request.input(
-            "FileLocation",
-            sql.VarChar,
-            "Content/" + response.data.Filename
+          response = JSON.parse(res2.body);
+          const base64File = response.data.Content;
+          const buffer = Buffer.from(base64File, "base64");
+          fs.writeFile(
+            "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" +
+              response.data.Filename,
+            buffer,
+            (error) => {
+              if (error) {
+                console.error(error);
+                res.status(500).send("Error saving file");
+                return;
+              }
+              // File saved successfully
+              sql.connect(config, function (err) {
+                if (err) {
+                  console.error(err);
+                  res.status(500).send("Error connecting to the database");
+                  return;
+                }
+                var request = new sql.Request();
+                request.input("FileName", sql.VarChar, response.data.Filename);
+                request.input(
+                  "FileLocation",
+                  sql.VarChar,
+                  "Content/" + response.data.Filename
+                );
+                request.input("UserName", sql.VarChar, req.body.userName);
+                request.input("Email", sql.VarChar, req.body.emailID);
+                request.execute("InsertJobBoardResume", function (err, recordset) {
+                  if (err) {
+                    console.error(err);
+                    res.status(500).send("Error inserting record into the database");
+                    return;
+                  }
+                  res.send(response.data);
+                });
+              });
+            }
           );
-          request.input("UserName", sql.VarChar, req.body.userName);
-          request.input("Email", sql.VarChar, req.body.emailID);
-          request.execute("InsertJobBoardResume", function (err, recordset) {
-            if (err) console.log(err);
-            res.send(response.data);
-          });
         });
-      });
-    }
-  });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/saveResume", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.input("FileName", sql.VarChar, req.body.Filename);
-    request.input("FileLocation", sql.VarChar, "Content/" + req.body.Filename);
-    request.input("UserName", sql.VarChar, req.body.userName);
-    request.input("Email", sql.VarChar, req.body.emailID);
-    request.execute("InsertJobBoardResume", function (err, recordset) {
-      const base64File = req.body.Content;
-      const buffer = Buffer.from(base64File, "base64");
-      const writeStream = fs.createWriteStream(
-        "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" + req.body.Filename
-      );
-      writeStream.write(buffer);
-      writeStream.end();
-      if (err) console.log(err);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error connecting to the database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input("FileName", sql.VarChar, req.body.Filename);
+      request.input("FileLocation", sql.VarChar, "Content/" + req.body.Filename);
+      request.input("UserName", sql.VarChar, req.body.userName);
+      request.input("Email", sql.VarChar, req.body.emailID);
+      request.execute("InsertJobBoardResume", function (err, recordset) {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error inserting record into the database");
+          return;
+        }
+        const base64File = req.body.Content;
+        const buffer = Buffer.from(base64File, "base64");
+        const writeStream = fs.createWriteStream(
+          "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" + req.body.Filename
+        );
+        writeStream.write(buffer);
+        writeStream.end();
+        res.send("Resume saved successfully");
+      });
     });
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/jobBoardAuditLog", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    let filepath = req.body.filepath ? req.body.filepath : "";
-    request.query(
-      "insert into JobBoardAudit (JobBoardSource,Query,DateLogged,UserName) Values ('" +
-        req.body.jobBoard +
-        "','" +
-        req.body.query +
-        "','" +
-        req.body.dateTime +
-        "','" +
-        req.body.userName +
-        "')",
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        res.send(recordset.recordsets[0]);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error connecting to the database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      let filepath = req.body.filepath ? req.body.filepath : "";
+      request.query(
+        "INSERT INTO JobBoardAudit (JobBoardSource, Query, DateLogged, UserName) VALUES ('" +
+          req.body.jobBoard +
+          "','" +
+          req.body.query +
+          "','" +
+          req.body.dateTime +
+          "','" +
+          req.body.userName +
+          "')",
+        function (err, recordset) {
+          if (err) {
+            console.error(err);
+            res.status(500).send("Error executing SQL query");
+            return;
+          }
+          res.send(recordset.recordsets[0]);
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getJobBoardAuditReport", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "select OrganizationID from Trainee where TraineeID=" +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var OrgID = recordset.recordsets[0][0].OrganizationID;
-        request.input("OrgID", sql.Int, OrgID);
-        request.input("startDate", sql.VarChar, req.body.startDate);
-        request.input("endDate", sql.VarChar, req.body.endDate);
-        request.execute("getJobBoardAuditReport", function (err, recordset) {
-          if (err) console.log(err);
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(result);
-        });
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error connecting to the database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        "SELECT OrganizationID FROM Trainee WHERE TraineeID=" +
+          req.body.traineeId,
+        function (err, recordset) {
+          if (err) {
+            console.error(err);
+            res.status(500).send("Error executing SQL query");
+            return;
+          }
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          request.input("OrgID", sql.Int, OrgID);
+          request.input("startDate", sql.VarChar, req.body.startDate);
+          request.input("endDate", sql.VarChar, req.body.endDate);
+          request.execute("getJobBoardAuditReport", function (err, recordset) {
+            if (err) {
+              console.error(err);
+              res.status(500).send("Error executing stored procedure");
+              return;
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getJobBoards", function (req, res) {
@@ -2412,69 +3363,99 @@ app.post("/getJobBoards", function (req, res) {
   });
 });
 
-app.post("/getJobBoardsUsage", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      `SELECT JobboardSource, count(JobboardSource) as count
-                        FROM JobBoardAudit
-                        GROUP BY JobboardSource;`,
-      function (err, recordset) {
-        if (err) console.log(err);
+app.post("/getJobBoards", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error connecting to the database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input("TraineeID", sql.Int, req.body.traineeID);
+      request.execute("getJobBoards", function (err, recordset) {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error executing stored procedure");
+          return;
+        }
         var result = {
           flag: 1,
           result: recordset.recordsets[0],
         };
         res.send(result);
-      }
-    );
-  });
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getResumePath", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      `SELECT ResumePath, ResumeName
-                        FROM Resumes
-                        WHERE EmailID='` +
-        req.body.userName +
-        `'`,
-      function (err, recordset) {
-        if (err) console.log(err);
-        var result = recordset.recordsets[0];
-        res.send(result);
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error connecting to the database");
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        `SELECT ResumePath, ResumeName
+         FROM Resumes
+         WHERE EmailID='` +
+          req.body.userName +
+          `'`,
+        function (err, recordset) {
+          if (err) {
+            console.error(err);
+            res.status(500).send("Error executing SQL query");
+            return;
+          }
+          var result = recordset.recordsets[0];
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.post("/getCBQuota", function (req, res) {
-  let response = null;
-  const options = {
-    url: "https://api.careerbuilder.com/consumer/edge/Auth/Quota",
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "accept-encoding": "gzip, deflate",
-      "accept-language": "en-US,en;q=0.8",
-      "content-encoding": "gzip",
-      Authorization: `Bearer ${req.body.token}`,
-    },
-    gzip: true,
-  };
+  try {
+    const options = {
+      url: "https://api.careerbuilder.com/consumer/edge/Auth/Quota",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${req.body.token}`,
+      },
+    };
 
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    response = JSON.parse(res1.body);
-    res.send(response);
-  });
+    request(options, (error, response, body) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Error fetching CB quota data");
+        return;
+      }
+
+      if (response.statusCode !== 200) {
+        console.error(`Error: ${response.statusCode} - ${response.statusMessage}`);
+        res.status(response.statusCode).send("Failed to fetch CB quota data");
+        return;
+      }
+
+      const quotaData = JSON.parse(body);
+      res.send(quotaData);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 /* app.post('/getMonsterAuthToken', function (req, res) {
@@ -2505,7 +3486,6 @@ app.post("/getMonsterSearch", function (req, res) {
       "accept-encoding": "gzip, deflate",
       "accept-language": "en-US,en;q=0.8",
       "content-encoding": "gzip",
-      /* 'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJianNBdmk1MmtqRDFybl9qaG5ZUFVoanBjcyIsImtpZCI6IjJianNBdmk1MmtqRDFybl9qaG5ZUFVoanBjcyJ9.eyJpc3MiOiJodHRwczovL3Nzby5tb25zdGVyLmNvbSIsImF1ZCI6Imh0dHBzOi8vc3NvLm1vbnN0ZXIuY29tL3Jlc291cmNlcyIsImV4cCI6MTY2Nzg4MzM4MSwibmJmIjoxNjY3Nzk2OTgxLCJjbGllbnRfaWQiOiJ4dHJlc3VtZV9tcHN4MDEiLCJjbGllbnRfQ2xpZW50QXV0aG9yaXplZEVuZHBvaW50cyI6IkNhbmRpZGF0ZVNlYXJjaCIsImNsaWVudF9Nb25zdGVyVXNlcklkIjoiMzE5NTU3MzI0Iiwic2NvcGUiOiJHYXRld2F5QWNjZXNzIn0.2IaOlqPRkkQ10fQvy5mmIwsNH_8nReCsVh4Ka2KwxqeeXJHY1Lnr_WB0RStotrhuj9Rb701GgcU8AGSQ6bcf48QHOm61tdJv5vlSjQVxHRk0XAlODqk5_D-VvyK_WgQdemXhex0XeiMs9rpKK7xRadNfdQth23SZs77R-0mQKO1bwnGtlLe731Q5St-f5OVA7u0fhpXs22afVNDhq5Y_8XszXvhJrelVuUecvMMXLJrV3jNttoKDkUL8KiitLOntFMoooQS7tbWuQyNG4acRf32b8mRBt5Rm7EJo7sbm3dTaW-QPrM3Ub1jyuuI3UwlHRtCRQKkNOaJbXLyLYqgFrQ' */
       Authorization: `Bearer ${req.body.token}`,
     },
     gzip: true,
@@ -2532,21 +3512,27 @@ app.post("/getMonsterSearch", function (req, res) {
     });
   } else {
     options.body = JSON.stringify(req.body.searchRequest);
-    //console.log('options.body', options.body)
   }
 
-  request(options, (err, res1, body) => {
+  request(options, (err, responseFromAPI, body) => {
     if (err) {
-      return console.log(err);
+      console.error("Error sending request:", err);
+      return res.status(500).send({ error: "Internal Server Error" });
     }
+
+    if (responseFromAPI.statusCode !== 200) {
+      console.error("Error response from API:", responseFromAPI.statusCode);
+      return res.status(responseFromAPI.statusCode).send({ error: "API Error" });
+    }
+
     try {
-      console.log("res1.body", res1.body);
-      response = JSON.parse(res1.body);
+      console.log("Response body from API:", body);
+      response = JSON.parse(body);
       res.send(response);
     } catch (error) {
       console.error("Error parsing JSON:", error);
+      return res.status(500).send({ error: "Error parsing JSON" });
     }
-    //res.send(options.body);
   });
 });
 
@@ -2571,59 +3557,93 @@ app.post("/getMonsterCandidateResume", function (req, res) {
     },
   };
 
-  request(options, (err, res1, body) => {
+  request(options, (err, responseFromAPI, body) => {
     if (err) {
-      return console.log(err);
+      console.error("Error sending request:", err);
+      return res.status(500).send({ error: "Internal Server Error" });
     }
-    response = JSON.parse(res1.body);
-    res.send(response);
+
+    if (responseFromAPI.statusCode !== 200) {
+      console.error("Error response from API:", responseFromAPI.statusCode);
+      return res.status(responseFromAPI.statusCode).send({ error: "API Error" });
+    }
+
+    try {
+      console.log("Response body from API:", body);
+      response = JSON.parse(body);
+      res.send(response);
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return res.status(500).send({ error: "Error parsing JSON" });
+    }
   });
 });
 
 app.post("/getNotSubmittedReport", function (req, res) {
   sql1.connect(config1, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     console.log(req.body);
-    request.query(
-      "select tsm.FromDate,tsm.ToDate,r.Username, tsm.UserID from TimeSheetMaster tsm inner join Registration r on tsm.userID = r.RegistrationID where tsm.FromDate BETWEEN '" +
-        req.body.fromDate +
-        "' AND '" +
-        req.body.endDate +
-        "' and r.OrganizationId=" +
-        req.body.OrganizationId,
-      function (err, recordset) {
-        if (err) console.log(err);
-        const fromDate = req.body.fromDate;
-        const endDate = req.body.endDate;
-        const filteredResult = checkTimeSheetSubmission(
-          fromDate,
-          endDate,
-          recordset.recordsets[0]
-        );
-        request.query(
-          "select * from Registration where RegistrationID  NOT IN " +
-            "(" +
-            filteredResult +
-            ") and OrganizationId=" +
-            req.body.OrganizationId,
-          function (err, recordSet) {
-            if (err) console.log(err);
-            var result = {
-              flag: 1,
-              result: recordSet.recordsets[0],
-            };
-            res.send(result);
+    try {
+      request.query(
+        "select tsm.FromDate,tsm.ToDate,r.Username, tsm.UserID from TimeSheetMaster tsm inner join Registration r on tsm.userID = r.RegistrationID where tsm.FromDate BETWEEN '" +
+          req.body.fromDate +
+          "' AND '" +
+          req.body.endDate +
+          "' and r.OrganizationId=" +
+          req.body.OrganizationId,
+        function (err, recordset) {
+          if (err) {
+            console.error("Error executing SQL query:", err);
+            return res.status(500).send({ error: "Query Execution Error" });
           }
-        );
-      }
-    );
+
+          const fromDate = req.body.fromDate;
+          const endDate = req.body.endDate;
+          const filteredResult = checkTimeSheetSubmission(
+            fromDate,
+            endDate,
+            recordset.recordsets[0]
+          );
+
+          request.query(
+            "select * from Registration where RegistrationID  NOT IN " +
+              "(" +
+              filteredResult +
+              ") and OrganizationId=" +
+              req.body.OrganizationId,
+            function (err, recordSet) {
+              if (err) {
+                console.error("Error executing SQL query:", err);
+                return res.status(500).send({ error: "Query Execution Error" });
+              }
+              var result = {
+                flag: 1,
+                result: recordSet.recordsets[0],
+              };
+              res.send(result);
+            }
+          );
+        }
+      );
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/getSubmittedRatio", function (req, res) {
   sql1.connect(config1, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     console.log(req.body);
     var request = new sql1.Request();
     const now = new Date(); // the date to start counting from
@@ -2633,37 +3653,51 @@ app.post("/getSubmittedRatio", function (req, res) {
     )
       .toISOString()
       .slice(0, 10);
-    request.query(
-      "select tsm.FromDate,tsm.ToDate,tsm.UserID from TimeSheetMaster tsm  where tsm.FromDate='" +
-        previousSunday +
-        "'",
-      function (err, recordset) {
-        if (err) console.log(err);
-        const filteredResult =
-          recordset == undefined ? recordset.recordsets[0].length : 0;
-        request.query(
-          "select Name,LegalStatus,EmailID from Registration where RoleID=1 and CreatedOn <'" +
-            previousSunday +
-            "' and OrganizationId=" +
-            req.body.OrganizationId,
-          function (err, rex) {
-            if (err) console.log(err);
-            var result = {
-              flag: 1,
-              result: {
-                completed: (filteredResult / rex.recordsets[0].length) * 100,
-                incomplete:
-                  ((rex.recordsets[0].length - filteredResult) /
-                    rex.recordsets[0].length) *
-                  100,
-              },
-            };
-
-            res.send(result);
+    try {
+      request.query(
+        "select tsm.FromDate,tsm.ToDate,tsm.UserID from TimeSheetMaster tsm  where tsm.FromDate='" +
+          previousSunday +
+          "'",
+        function (err, recordset) {
+          if (err) {
+            console.error("Error executing SQL query:", err);
+            return res.status(500).send({ error: "Query Execution Error" });
           }
-        );
-      }
-    );
+
+          const filteredResult =
+            recordset == undefined ? recordset.recordsets[0].length : 0;
+
+          request.query(
+            "select Name,LegalStatus,EmailID from Registration where RoleID=1 and CreatedOn <'" +
+              previousSunday +
+              "' and OrganizationId=" +
+              req.body.OrganizationId,
+            function (err, rex) {
+              if (err) {
+                console.error("Error executing SQL query:", err);
+                return res.status(500).send({ error: "Query Execution Error" });
+              }
+
+              var result = {
+                flag: 1,
+                result: {
+                  completed: (filteredResult / rex.recordsets[0].length) * 100,
+                  incomplete:
+                    ((rex.recordsets[0].length - filteredResult) /
+                      rex.recordsets[0].length) *
+                    100,
+                },
+              };
+
+              res.send(result);
+            }
+          );
+        }
+      );
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
@@ -2671,7 +3705,11 @@ app.post("/getSubmittedRatio", function (req, res) {
 
 app.post("/createdivision", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     const now = new Date(); // the date to start counting from
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -2692,17 +3730,31 @@ app.post("/createdivision", function (req, res) {
       req.body.type +
       "')";
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record inserted");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+
+        res.send(result);
+        console.log("1 record inserted");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/updatedivision", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql =
       "UPDATE Org_Division SET dice = '" +
@@ -2715,51 +3767,97 @@ app.post("/updatedivision", function (req, res) {
       req.body.id +
       "'";
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record Updated");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+
+        res.send(result);
+        console.log("1 record Updated");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/deletedivision", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql = "DELETE FROM Org_Division WHERE id = '" + req.body.id + "'";
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record Deleted");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+
+        res.send(result);
+        console.log("1 record Deleted");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 //Division and audit
 app.post("/fetchrecruiter", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql1.Request();
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
 
-    var sql =
-      "INSERT INTO Org_Division(Orgid,DivisionName,dice,cb,monster,clearancejob,active,createtime,createby,type)VALUES( '" +
-      req.body.OrgID +
-      "','" +
-      req.body.DivisionName +
-      "',0,0,0,0,1,'','" +
-      req.body.userName +
-      "',0)";
+    var request = new sql1.Request();
+    
+    try {
+      var sql =
+        "INSERT INTO Org_Division(Orgid,DivisionName,dice,cb,monster,clearancejob,active,createtime,createby,type)VALUES( '" +
+        req.body.OrgID +
+        "','" +
+        req.body.DivisionName +
+        "',0,0,0,0,1,'','" +
+        req.body.userName +
+        "',0)";
+      
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        
+        res.send(result);
+        console.log("1 record inserted");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/addrectodivision", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
-    const now = new Date(); // the date to start counting from
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const now = new Date();
     var sql =
       "INSERT INTO Org_Division(Orgid,DivisionName,dice,cb,monster,clearancejob,active,createtime,createby,type)VALUES( '" +
       req.body.OrgID +
@@ -2769,77 +3867,127 @@ app.post("/addrectodivision", function (req, res) {
       req.body.userName +
       "',0)";
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record inserted");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        res.send(result);
+        console.log("1 record inserted");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/fetchrecruiterfordivision", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
-    const now = new Date(); // the date to start counting from
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const now = new Date();
     var sql =
       "SELECT * FROM Trainee ud JOIN MemberDetails m ON m.useremail = ud.UserName WHERE m.orgid =" +
       req.body.OrgID;
     console.log(sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
+
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/fetchrecruiterbyorg", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
-    const now = new Date(); // the date to start counting from
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const now = new Date();
     var sql = "select * from Org_Division WHERE Orgid =" + req.body.OrgID;
     console.log(sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
+
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/fetchdivisionbyorg", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql =
       "SELECT  T.FirstName, T.LastName, T.Traineeid, OD.DivisionName, T.UserName, COALESCE(T.monster, 0) AS monster, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS monsterused, COALESCE(T.cb, 0) AS cb, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 4 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS cbused, COALESCE(T.dice, 0) AS dice, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS diceused FROM Trainee AS T INNER JOIN org_division AS OD ON T.Org_Div = OD.id WHERE T.organizationid = " +
       req.body.OrgID +
       " ORDER BY OD.DivisionName;";
     console.log(sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
+
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/addrecruitertodiv", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql =
       "update Trainee set Org_Div = " +
@@ -2847,11 +3995,20 @@ app.post("/addrecruitertodiv", function (req, res) {
       " where TraineeID =" +
       req.body.recID;
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record updated");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        res.send(result);
+        console.log("1 record updated");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
@@ -2859,27 +4016,44 @@ app.post("/addrecruitertodiv", function (req, res) {
 
 app.post("/fetchdvisioncredit", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql =
       "select od.*,ud.cb as ucb,ud.dice as udice,ud.monster as umonster,ud.OptNation as uOptNation from Org_Division od JOIN Trainee ud ON ud.Org_Div = od.id where ud.UserName ='" +
       req.body.userName +
       "'";
     console.log(sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
+
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/adddivisionaudit", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql1.Request();
     var sql =
       "INSERT INTO Division_audit(divisionid,jobboardid,username,ipaddress,candidateemail,status,CreateTime)VALUES('" +
@@ -2894,40 +4068,60 @@ app.post("/adddivisionaudit", function (req, res) {
       req.body.candidateemail +
       "',1,GETDATE())";
     console.log(sql);
-    request.query(sql, function (err, result) {
-      if (err) throw err;
-      res.send(result);
-      console.log("1 record updated");
-    });
+
+    try {
+      request.query(sql, function (err, result) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        res.send(result);
+        console.log("1 record updated");
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/getclientipaddress", function (req, res) {
-  let response = null;
   const options = {
     url: "https://api.ipify.org/",
     method: "GET",
   };
 
-  request(options, (err, res1, body) => {
-    if (err) {
-      return console.log(err);
-    }
-    res.send(res1);
-  });
+  try {
+    request(options, (err, response, body) => {
+      if (err) {
+        console.error("Error sending request:", err);
+        return res.status(500).send({ error: "Request Error" });
+      }
+      
+      res.send(response);
+    });
+  } catch (error) {
+    console.error("Error sending request:", error);
+    return res.status(500).send({ error: "Request Error" });
+  }
 });
 
 app.post("/fetchusage", function (req, res) {
   sql1.connect(config, function (err) {
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     const today = new Date();
-    var enddate = "";
+    let enddate = "";
     if (req.body.type == 1) {
-      var enddate = "DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)";
+      enddate = "DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)";
     } else {
-      var enddate = "DATEFROMPARTS(YEAR(GETDATE()), 1, 1)";
+      enddate = "DATEFROMPARTS(YEAR(GETDATE()), 1, 1)";
     }
     console.log(enddate);
-    if (err) console.log(err);
+
     var request = new sql1.Request();
     var sql =
       "SELECT COUNT(*) AS row_count FROM Division_audit WHERE Jobboardid = " +
@@ -2937,42 +4131,44 @@ app.post("/fetchusage", function (req, res) {
       " AND username ='" +
       req.body.userName +
       "'";
-    console.log("Fetch Ussage:" + sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
+    console.log("Fetch Usage: " + sql);
+
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/addPlacement", function (req, res) {
   sql.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
+
     var request = new sql.Request();
     const billType = req.body.BillType ? 1 : 0;
-    let poEndDate = req.body.POEndDate;
-    if (poEndDate === "") {
-      poEndDate = null;
-    }
-    let poStartDate = req.body.POStartDate;
-    if (poStartDate === "") {
-      poStartDate = null;
-    }
-    let datePlaced = req.body.DatePlaced;
-    if (datePlaced === "") {
-      datePlaced = null;
-    }
+    let poEndDate = req.body.POEndDate === "" ? null : req.body.POEndDate;
+    let poStartDate = req.body.POStartDate === "" ? null : req.body.POStartDate;
+    let datePlaced = req.body.DatePlaced === "" ? null : req.body.DatePlaced;
+
     request.input("PlacementId", sql.Int, req.body.PlacementID);
     request.input("TraineeID", sql.Int, req.body.TraineeID);
     request.input("Notes", sql.NVarChar(sql.MAX), req.body.Notes);
-    // request.input("BillRate", sql.Float(50), req.body.BillRate);
     request.input("BillRate", sql.NVarChar(50), req.body.BillRate.toString());
-    // request.input("BillRate", sql.Float(50), `${req.body.BillRate}`);
-    // request.input("BillRate", sql.VarChar(50),`${req.body.BillRate}`);
     request.input("BillType", sql.Int, billType);
     request.input("CreateBy", sql.NVarChar(100), req.body.CreateBy);
     request.input("MarketerName", sql.Int, req.body.MarketerName);
@@ -3012,69 +4208,82 @@ app.post("/addPlacement", function (req, res) {
       req.body.SubVendorAddress
     );
     request.input("PrimaryPlacement", sql.Int, req.body.PrimaryPlacement);
-    request.execute("UpdatePlacement", function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset,
-      };
-      res.send(result);
-    });
+
+    try {
+      request.execute("UpdatePlacement", function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
+        var result = {
+          flag: 1,
+          result: recordset,
+        };
+        res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
   });
 });
 
 app.post("/getMarketerNames", async (req, res) => {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
     request.input("orgID", sql.Int, req.body.orgID);
     request.input("keyword", sql.NVarChar(100), req.body.keyword);
-    request.execute("sp_SearchMarketerNames", function (err, recordset) {
-      if (err) console.log(err);
-      console.log(recordset);
-      if (recordset.recordsets.length == 0) {
-        var result = {
-          flag: 2,
-          result: [],
-        };
-      } else {
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-      }
-
-      res.send(result);
-    });
-  });
+    
+    const recordset = await request.execute("sp_SearchMarketerNames");
+    
+    if (recordset.recordsets.length === 0) {
+      var result = {
+        flag: 2,
+        result: [],
+      };
+    } else {
+      var result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+    }
+    res.send(result);
+  } catch (err) {
+    console.error("Error fetching marketer names:", err);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 });
 
 app.post("/getTresumedata", function (req, res) {
   sql1.connect(config, function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.error("Error connecting to database:", err);
+      return res.status(500).send({ error: "Database Connection Error" });
+    }
     var request = new sql1.Request();
-
     var sql =
       `SELECT TOP 100 TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy,YearsOfExpInMonths, skill, LegalStatus, UserOrganizationID, CurrentLocation, Title as [TraineeTitle], ISNULL(LegalStatus,'') as LegalStatus , ISNULL(CONVERT(NVARCHAR(10),CreateTime,101), '1900-01-01T00:00:00') as LastUpdateTime
-            FROM Trainee (NOLOCK)
-            WHERE (Talentpool IS NULL OR Talentpool = 0)  AND active =1
-            AND Role='TRESUMEUSER' AND ProfileStatus = 'READY'
-            AND (Skill LIKE '%` +
+      FROM Trainee (NOLOCK)
+      WHERE (Talentpool IS NULL OR Talentpool = 0)  AND active =1
+      AND Role='TRESUMEUSER' AND ProfileStatus = 'READY'
+      AND (Skill LIKE '%` +
       req.body.keyword +
       `%' OR Title LIKE '%` +
       req.body.keyword +
       `%')`;
+    
     if (req.body.location) {
       sql +=
         `AND
-                ((CurrentLocation IN (Select distinct Stateabbr FROM USAZipCodeNew WHERE State ='` +
+        ((CurrentLocation IN (Select distinct Stateabbr FROM USAZipCodeNew WHERE State ='` +
         req.body.location +
         `' OR City = '` +
         req.body.location +
         `' OR ZipCode = '` +
         req.body.location +
         `')) or
-                (CurrentLocation IN (Select distinct State FROM USAZipCodeNew WHERE State = '` +
+        (CurrentLocation IN (Select distinct State FROM USAZipCodeNew WHERE State = '` +
         req.body.location +
         `' OR City = '` +
         req.body.location +
@@ -3082,34 +4291,60 @@ app.post("/getTresumedata", function (req, res) {
         req.body.location +
         `')))`;
     }
+    
     sql += `ORDER BY ISNULL(CreateTime, '1900-01-01T00:00:00') DESC`;
-    request.query(sql, function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
-    });
-  });
-});
-
-app.post("/atsmigrateprofile", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      "update Trainee set Collab = 1 , CandidateStatus = 8 where TraineeID = " +
-        req.body.traineeId,
-      function (err, recordset) {
-        if (err) console.log(err);
+    
+    try {
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          return res.status(500).send({ error: "Query Execution Error" });
+        }
         var result = {
           flag: 1,
           result: recordset.recordsets[0],
         };
         res.send(result);
+      });
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      return res.status(500).send({ error: "Query Execution Error" });
+    }
+  });
+});
+
+app.post("/atsmigrateprofile", function (req, res) {
+  sql.connect(config, function (err) {
+    try {
+      if (err) {
+        console.error("Error connecting to database:", err);
+        throw new Error("Database Connection Error");
       }
-    );
+      var request = new sql.Request();
+      request.query(
+        "UPDATE Trainee SET Collab = 1, CandidateStatus = 8 WHERE TraineeID = " +
+          req.body.traineeId,
+        function (err, recordset) {
+          try {
+            if (err) {
+              console.error("Error executing SQL query:", err);
+              throw new Error("Query Execution Error");
+            }
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+            res.send(result);
+          } catch (queryError) {
+            console.error("Error executing SQL query:", queryError);
+            res.status(500).send({ error: queryError.message });
+          }
+        }
+      );
+    } catch (connectionError) {
+      console.error("Error connecting to database:", connectionError);
+      res.status(500).send({ error: connectionError.message });
+    }
   });
 });
 
@@ -3200,87 +4435,121 @@ app.post("/senddivisionerrormail", async (req, res) => {
   //   res.status(500).send("Internal Server Error");
   // }
 });
+const axios = require('axios');
 
-app.post("/getJoobleSearch", function (req, res) {
-  console.log("req.keywords", req.keywords);
+app.post("/getJoobleSearch", async function (req, res) {
+  try {
+    console.log("req.keywords", req.keywords);
 
-  axios
-    .post("https://jooble.org/api/adde971d-e417-460d-bac2-057246c5993f", {
+    const response = await axios.post("https://jooble.org/api/adde971d-e417-460d-bac2-057246c5993f", {
       keywords: req.body.keywords,
       location: req.body.location,
-    })
-    .then((result) => {
-      res.send(result.data);
-    })
-    .catch((error) => {
-      res.send(error);
     });
+
+    res.send(response.data);
+  } catch (error) {
+    console.error("Error occurred while fetching data from Jooble:", error);
+    res.status(500).send({ error: "Failed to fetch data from Jooble" });
+  }
 });
 
 app.post("/checkmd5resume", function (req, res) {
-  const timeoutDuration = 60000; // Timeout duration in milliseconds (15 seconds)
+  const timeoutDuration = 60000; // Timeout duration in milliseconds (60 seconds)
 
   // Set a timeout for the database query
   const timeout = setTimeout(() => {
-      const result = {
-          flag: 0,
-          error: "Request timed out",
-      };
-      res.status(504).send(result);
+    const result = {
+      flag: 0,
+      error: "Request timed out",
+    };
+    res.status(504).send(result);
   }, timeoutDuration);
 
-  sql.connect(config, function (err) {
+  try {
+    sql.connect(config, async function (err) {
+      clearTimeout(timeout); // Clear the timeout regardless of connection status
       if (err) {
-          clearTimeout(timeout); // Clear the timeout if an error occurs
+        console.log(err);
+        const result = {
+          flag: 0,
+          error: "An error occurred while connecting to the database",
+        };
+        res.status(500).send(result);
+        return;
+      }
+
+      var request = new sql.Request();
+      request.query(
+        "SELECT * FROM Trainee (nolock) WHERE ats_md5email = '" +
+          req.body.md5emailID +
+          "' AND Active = 1",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            const result = {
+              flag: 0,
+              error: "An error occurred while querying the database",
+            };
+            res.status(500).send(result);
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(result.result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    const result = {
+      flag: 0,
+      error: "An unexpected error occurred",
+    };
+    res.status(500).send(result);
+  }
+});
+
+app.post("/getOnboardingCount", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        const result = {
+          flag: 0,
+          error: "An error occurred while connecting to the database",
+        };
+        res.status(500).send(result);
+        return;
+      }
+      var request = new sql.Request();
+      request.input("OrgID", sql.Int, req.body.OrgID);
+      request.execute("GetOnboardingCounts", function (err, recordset) {
+        if (err) {
           console.log(err);
           const result = {
-              flag: 0,
-              error: "An error occurred while connecting to the database",
+            flag: 0,
+            error: "An error occurred while executing the query",
           };
           res.status(500).send(result);
           return;
-      }
-      var request = new sql.Request();
-      request.query(
-          " select * from Trainee (nolock) where ats_md5email = '" +
-          req.body.md5emailID +
-          "' and Active = 1",
-          function (err, recordset) {
-              clearTimeout(timeout); // Clear the timeout since the query has completed
-              if (err) {
-                  console.log(err);
-                  const result = {
-                      flag: 0,
-                      error: "An error occurred while querying the database",
-                  };
-                  res.status(500).send(result);
-                  return;
-              }
-              var result = {
-                  flag: 1,
-                  result: recordset.recordsets[0],
-              };
-              res.send(result.result);
-          }
-      );
-  });
-});
-
-
-app.post("/getOnboardingCount", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.input("OrgID", sql.Int, req.body.OrgID);
-    request.execute("GetOnboardingCounts", function (err, recordset) {
-      if (err) console.log(err);
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(recordset.recordsets[0]);
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    const result = {
+      flag: 0,
+      error: "An unexpected error occurred",
+    };
+    res.status(500).send(result);
+  }
 });
 
 function parsePhraseToQuery(phrase) {
@@ -3560,66 +4829,91 @@ app.post("/getResumes3", function (req, res) {
 });
 
 app.post("/getcandidatelocation", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql.Request();
-    request.query(
-      " SELECT DISTINCT currentlocation from trainee ORDER BY currentlocation",
-      function (err, recordset) {
-        if (err) console.log(err);
-
-        var location = recordset.recordsets[0];
-        const transformedArray = location
-          .filter(
-            (item) =>
-              item?.currentlocation &&
-              item.currentlocation !== "NULL" &&
-              item.currentlocation.trim() !== ""
-          )
-          .map((item) => item.currentlocation);
-        var result = {
-          flag: 1,
-          result: transformedArray,
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        const result = {
+          flag: 0,
+          error: "An error occurred while connecting to the database",
         };
-        res.send(result);
+        res.status(500).send(result);
+        return;
       }
-    );
-  });
+      var request = new sql.Request();
+      request.query(
+        " SELECT DISTINCT currentlocation from trainee ORDER BY currentlocation",
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            const result = {
+              flag: 0,
+              error: "An error occurred while querying the database",
+            };
+            res.status(500).send(result);
+            return;
+          }
+
+          var location = recordset.recordsets[0];
+          const transformedArray = location
+            .filter(
+              (item) =>
+                item?.currentlocation &&
+                item.currentlocation !== "NULL" &&
+                item.currentlocation.trim() !== ""
+            )
+            .map((item) => item.currentlocation);
+          var result = {
+            flag: 1,
+            result: transformedArray,
+          };
+          res.send(result);
+        }
+      );
+    });
+  } catch (error) {
+    console.log(error);
+    const result = {
+      flag: 0,
+      error: "An unexpected error occurred",
+    };
+    res.status(500).send(result);
+  }
 });
 
 app.post("/getorganizationLogo", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Database connection error");
-    }
-
-    var request = new sql.Request();
-    var sqlQuery =
-      "SELECT logo,organizationName FROM Organization WHERE OrganizationID =" +
-      req.body.OrgID;
-
-    request.query(sqlQuery, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Database query error");
+        return res.status(500).send("Database connection error");
       }
 
-      var data = recordset.recordsets[0];
+      var request = new sql.Request();
+      var sqlQuery =
+        "SELECT logo,organizationName FROM Organization WHERE OrganizationID =" +
+        req.body.OrgID;
 
-      // console.log(logo[0].logo);
-      // if (!logo || logo[0].logo === 'null' || logo[0].logo === undefined) {
-      //   logo = [{ logo: 'tresume.png' }];
-      // }
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
 
-      var result = {
-        flag: 1,
-        result: data,
-      };
+        var data = recordset.recordsets[0];
 
-      res.send(result);
+        var result = {
+          flag: 1,
+          result: data,
+        };
+
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An unexpected error occurred");
+  }
 });
 
 app.post("changeDocStatus", function (req, res) {
@@ -3643,168 +4937,189 @@ app.post("changeDocStatus", function (req, res) {
 });
 
 app.post("/FetchRecruiterList", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Database connection error");
-    }
-
-    var request = new sql.Request();
-    var sqlQuery =
-      "SELECT username as value, CONCAT(Firstname, ' ', LastName) AS name FROM trainee WHERE organizationid = " +
-      req.body.OrgID +
-      " AND Active = 1 AND Role = 'RECRUITER' AND AccountStatus = 'ACTIVE' ORDER BY Firstname ASC";
-
-    request.query(sqlQuery, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Database query error");
+        return res.status(500).send("Database connection error");
       }
 
-      var data = recordset.recordsets[0];
+      var request = new sql.Request();
+      var sqlQuery =
+        "SELECT username as value, CONCAT(Firstname, ' ', LastName) AS name FROM trainee WHERE organizationid = " +
+        req.body.OrgID +
+        " AND Active = 1 AND Role = 'RECRUITER' AND AccountStatus = 'ACTIVE' ORDER BY Firstname ASC";
 
-      // console.log(logo[0].logo);
-      // if (!logo || logo[0].logo === 'null' || logo[0].logo === undefined) {
-      //   logo = [{ logo: 'tresume.png' }];
-      // }
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
 
-      var result = {
-        flag: 1,
-        result: data,
-      };
+        var data = recordset.recordsets[0];
 
-      res.send(result);
+        var result = {
+          flag: 1,
+          result: data,
+        };
+
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/updateCandidateNotes", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Database connection error");
-    }
-
-    var request = new sql.Request();
-    var sqlQuery =
-      "Update Trainee Set Notes='" +
-      req.body.Notes +
-      "' where traineeid = " +
-      req.body.traineeID;
-    console.log(sqlQuery);
-    request.query(sqlQuery, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Database query error");
+        return res.status(500).send("Database connection error");
       }
 
-      // console.log(logo[0].logo);
-      // if (!logo || logo[0].logo === 'null' || logo[0].logo === undefined) {
-      //   logo = [{ logo: 'tresume.png' }];
-      // }
+      var request = new sql.Request();
+      var sqlQuery =
+        "Update Trainee Set Notes='" +
+        req.body.Notes +
+        "' where traineeid = " +
+        req.body.traineeID;
+      console.log(sqlQuery);
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
 
-      var result = {
-        flag: 1,
-      };
+        var result = {
+          flag: 1,
+        };
 
-      res.send(result);
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getRecriterUsage", function (req, res) {
-  var startdate = req.body.startDate;
-  var enddate = req.body.endDate;
-  sql1.connect(config, function (err) {
-    if (err) console.log(err);
-    var request = new sql1.Request();
-    var sql =
-      "SELECT  T.FirstName + ' ' + T.LastName AS recruiterName, COALESCE(T.monster, 0) AS monster, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= '" +
-      startdate +
-      "' AND createtime <= '" +
-      enddate +
-      "') AS monsterused, COALESCE(T.cb, 0) AS cb, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 4 AND createtime >= '" +
-      startdate +
-      "' AND createtime <= '" +
-      enddate +
-      "') AS cbused, COALESCE(T.dice, 0) AS dice, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND createtime >= '" +
-      startdate +
-      "' AND createtime <= '" +
-      enddate +
-      "') AS diceused FROM Trainee AS T INNER JOIN org_division AS OD ON T.Org_Div = OD.id WHERE T.organizationid = " +
-      req.body.OrgID +
-      " ORDER BY OD.DivisionName";
-    console.log(sql);
-    request.query(sql, function (err, recordset) {
-      if (err) throw err;
-      var result = {
-        flag: 1,
-        result: recordset.recordsets[0],
-      };
-      res.send(result);
+  try {
+    var startdate = req.body.startDate;
+    var enddate = req.body.endDate;
+    sql1.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Database connection error");
+      }
+      var request = new sql1.Request();
+      var sql =
+        "SELECT  T.FirstName + ' ' + T.LastName AS recruiterName, COALESCE(T.monster, 0) AS monster, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= '" +
+        startdate +
+        "' AND createtime <= '" +
+        enddate +
+        "') AS monsterused, COALESCE(T.cb, 0) AS cb, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 4 AND createtime >= '" +
+        startdate +
+        "' AND createtime <= '" +
+        enddate +
+        "') AS cbused, COALESCE(T.dice, 0) AS dice, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND createtime >= '" +
+        startdate +
+        "' AND createtime <= '" +
+        enddate +
+        "') AS diceused FROM Trainee AS T INNER JOIN org_division AS OD ON T.Org_Div = OD.id WHERE T.organizationid = " +
+        req.body.OrgID +
+        " ORDER BY OD.DivisionName";
+      console.log(sql);
+      request.query(sql, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getplacementsBytID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Database connection error");
-    }
-    const traineeId = req.body.TraineeID;
-    var request = new sql.Request();
-    var sqlQuery =
-      "SELECT * FROM placements WHERE traineeid =" +
-      traineeId +
-      " ORDER BY PlacedDate";
-    console.log(sqlQuery);
-    request.query(sqlQuery, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Database query error");
+        return res.status(500).send("Database connection error");
       }
-
-      var data = recordset.recordsets[0];
-      var result = {
-        flag: 1,
-        result: data,
-      };
-
-      res.send(result);
+      const traineeId = req.body.TraineeID;
+      var request = new sql.Request();
+      var sqlQuery =
+        "SELECT * FROM placements WHERE traineeid =" +
+        traineeId +
+        " ORDER BY PlacedDate";
+      console.log(sqlQuery);
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
+  
+        var data = recordset.recordsets[0];
+        var result = {
+          flag: 1,
+          result: data,
+        };
+  
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/UpdateplacementsBytID", function (req, res) {
-  sql.connect(config, function (err) {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Database connection error");
-    }
-    const PlacementID = req.body.PID ? req.body.PID : "''";
-    const CandidateDocumentID = req.body.CID;
-    var request = new sql.Request();
-    var sqlQuery =
-      "update CandidateDocument_New set PlacementID = " +
-      PlacementID +
-      " where CandidateDocumentID = " +
-      CandidateDocumentID;
-    console.log(sqlQuery);
-    request.query(sqlQuery, function (err, recordset) {
+  try {
+    sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Database query error");
+        return res.status(500).send("Database connection error");
       }
-
-      var result = {
-        flag: 1,
-        Message: "Placement Updated Successfully",
-      };
-
-      res.send(result);
+      const PlacementID = req.body.PID ? req.body.PID : "''";
+      const CandidateDocumentID = req.body.CID;
+      var request = new sql.Request();
+      var sqlQuery =
+        "update CandidateDocument_New set PlacementID = " +
+        PlacementID +
+        " where CandidateDocumentID = " +
+        CandidateDocumentID;
+      console.log(sqlQuery);
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
+  
+        var result = {
+          flag: 1,
+          Message: "Placement Updated Successfully",
+        };
+  
+        res.send(result);
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/getDiceAuthToken", async (req, res) => {
