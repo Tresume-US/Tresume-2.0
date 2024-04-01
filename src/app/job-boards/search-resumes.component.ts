@@ -197,7 +197,9 @@ export class SearchResumesComponent implements OnInit {
         this.sizeToFit();
         console.log(this.rowData);
         this.loading = false;
-      });
+      }),(error: any) => {
+        this.loading = false;
+      };
     } else {
       let req = {
         userName: this.cookieValue,

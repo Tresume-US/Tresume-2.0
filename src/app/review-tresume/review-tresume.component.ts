@@ -777,7 +777,9 @@ export class ReviewTresumeComponent implements OnChanges {
     this.referedby = x.result;
     this.recruiterName = x.result;
     this.loading = false;
-    });
+    }),(error: any) => {
+      this.loading = false;
+    };
   }
   
   fetchCandidateInfo() {

@@ -201,7 +201,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             return `(T.FirstName LIKE '%${searchterm}%' OR T.LastName LIKE '%${searchterm}%' OR T.UserName LIKE '%${searchterm}%')`;
           }
         }
-
+//INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
         // Build the SQL query based on user role (admin or recruiter)
         if (admin) {
           query = `
@@ -209,7 +209,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
             T.followupon, T.notes, T.CreateTime AS DateCreated
             FROM Trainee T
-            INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
+            INNER JOIN Memberdetails M ON T.userorganizationid = M.PrimaryOrgID
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
             LEFT JOIN Trainee CreatedBy ON T.createby = CreatedBy.username
             INNER JOIN Organization O ON T.userorganizationid = O.organizationid
@@ -2227,6 +2227,6 @@ router.post("/insertRecruitmentTracker", async (req, res) => {
 
 // Helper function to format values
 function formatValue(value) {
-  return value !== undefined ? `'${value}'` : "";
+  return typeof value === 'string' ? `'${value}'` : value;
 }
 module.exports = router;
