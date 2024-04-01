@@ -42,7 +42,7 @@ router.post("/getPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -113,7 +113,7 @@ router.post("/getunPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -147,7 +147,7 @@ router.post("/getAllInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.status FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "'";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "'";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -363,27 +363,53 @@ router.post('/GetlastInvoice', async (req, res) => {
 
 
 
+// router.post('/checkExistInvoiceNo', async (req, res) => {
+//   const { orgid, invoiceno } = req.body;
+
+//   try {
+//     let pool = await sql.connect(config);
+
+//     let result = await pool.request()
+//       .input('OrgId', sql.Int, orgid)
+//       .input('InvoiceNo', sql.Int, invoiceno)
+//       .query('SELECT TOP 1 invoiceno FROM invoice_master WHERE orgid = @OrgId AND invoiceno = @InvoiceNo');
+
+//     const invoiceExists = result.recordset.length > 0;
+//     var data = {
+//       flag: 1,
+//       invoiceExists:invoiceExists ,
+//     };
+
+//     res.send(data);
+
+//   } catch (err) {
+//     console.error('SQL error:', err.message);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+
 router.post('/checkExistInvoiceNo', async (req, res) => {
-  const { orgid, invoiceno } = req.body;
+  const { orgId, InvoiceNo } = req.body;
+  // console.log(`Checking existence for OrgID: ${orgid}, InvoiceNo: ${invoiceno}`);
 
   try {
-    let pool = await sql.connect(config);
-
-    let result = await pool.request()
-      .input('OrgId', sql.Int, orgid)
-      .input('InvoiceNo', sql.Int, invoiceno)
+    await sql.connect(config);
+    const result = await new sql.Request()
+      .input('OrgId', sql.Int, orgId)
+      .input('InvoiceNo', sql.Int, InvoiceNo)
       .query('SELECT TOP 1 invoiceno FROM invoice_master WHERE orgid = @OrgId AND invoiceno = @InvoiceNo');
 
     const invoiceExists = result.recordset.length > 0;
-    var data = {
-      flag: 1,
-      invoiceExists:invoiceExists ,
-    };
+    console.log(`Invoice exists: ${invoiceExists}`);
 
-    res.send(data);
+    res.send({
+      flag: 1,
+      invoiceExists,
+    });
 
   } catch (err) {
-    console.error('SQL error:', err.message);
+    console.error('SQL error:', err);
     res.status(500).send('Internal Server Error');
   }
 });
