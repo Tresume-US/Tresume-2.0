@@ -412,17 +412,17 @@
                       <td>{{ invoice.receivedamt }}</td>
                       <td>{{ invoice.total - invoice.receivedamt }}</td>
                       <td [ngClass]="{
-                        'paid': invoice.status,
-                        'unpaid': !invoice.status,
+                        'paid': invoice.ispaid,
+                        'unpaid': !invoice.ispaid,
                         'overdue': isOverdue(invoice.date)
-                      }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
+                      }">{{ invoice.ispaid ? 'Paid' : 'Unpaid' }}</td>
                       <td>
                         <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                       </td>
                     </tr>
 
-                    <tr *ngIf="noResultsFound">
-                      <td colspan="10" class="text-center" style="font-size: 16px;">
+                    <tr *ngIf="filteredInvoices.length === 0">
+                      <td colspan="12" class="text-center" style="font-size: 16px;">
                         No results found.
                       </td>
                     </tr>
@@ -485,7 +485,7 @@
                     <th>Total Amount</th>
                       <th>Received Amount</th>
                       <th>Balance Amount</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -501,19 +501,20 @@
                         <td>{{ invoice.total}}</td>
                         <td>{{ invoice.receivedamt }}</td>
                         <td>{{ invoice.total - invoice.receivedamt }}</td>
-                        <td [ngClass]="{
+                        <!-- <td [ngClass]="{
                           'paid': invoice.status,
                           'unpaid': !invoice.status,
                           'overdue': isOverdue(invoice.date)
-                        }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
+                        }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>-->
                         <td>
                           <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                         </td>
-                        <tr *ngIf="noResultsFound">
-                          <td colspan="10" class="text-center" style="font-size: 16px;">
-                            No results found.
-                          </td>
-                        </tr>
+                      
+                    <tr *ngIf="filteredPaidInvoices.length === 0">
+                      <td colspan="12" class="text-center" style="font-size: 16px;">
+                        No results found.
+                      </td>
+                    </tr>
                         <!-- <td>
                             <button class="btn btn-" (click)="editAction()">Edit</button>
                             <div class="btn-group received" style="margin-left: 5px;">
@@ -571,7 +572,7 @@
                       <th>Total Amount</th>
                       <th>Received Amount</th>
                       <th>Balance Amount</th>
-                      <th>Status</th>
+                      <!-- <th>Status</th> -->
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -588,16 +589,16 @@
                           <td>{{ invoice.total}}</td>
                           <td>{{ invoice.receivedamt }}</td>
                           <td>{{ invoice.total - invoice.receivedamt }}</td>
-                          <td [ngClass]="{
+                          <!-- <td [ngClass]="{
                             'paid': invoice.status,
                             'unpaid': !invoice.status,
                             'overdue': isOverdue(invoice.date)
-                          }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>
+                          }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td> -->
                           <td>
                             <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                           </td>
-                          <tr *ngIf="noResultsFound">
-                            <td colspan="10" class="text-center" style="font-size: 16px;">
+                          <tr *ngIf="filteredUnpaidInvoices.length === 0">
+                            <td colspan="12" class="text-center" style="font-size: 16px;">
                               No results found.
                             </td>
                           </tr>
