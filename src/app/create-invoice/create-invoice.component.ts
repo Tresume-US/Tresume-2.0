@@ -46,7 +46,7 @@ export class CreateInvoiceComponent implements OnInit {
   balanceDue: number = 0;
   selectedState: any;
   states: any[] = [];
-  
+
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
  //PaymentTerms: any;
   PaymentTerms: any = [
@@ -76,7 +76,8 @@ export class CreateInvoiceComponent implements OnInit {
   selectedclient:any;
   username: any;
   newrows: boolean = false;
-
+  candidatelistname:any;
+  candidateid:any =0;
 
 
   ngOnInit(): void {
@@ -91,6 +92,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.fetchInvoiceNo();
     this.newrows = true;
     this.selectedInvoiceDate = this.getCurrentDate();
+    this.getreportcandidatelist();
   }
 
   constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute) {
@@ -98,6 +100,15 @@ export class CreateInvoiceComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.routeType = this.route.snapshot.params["routeType"];
     // this.addDefaultRows(2);
+  }
+
+  getreportcandidatelist() {
+    let Req = {
+      OrgId : this.OrgID,
+     };
+     this.Service.reportCandidatetList(Req).subscribe((x: any) => {
+       this.candidatelistname = x.result;
+     });
   }
 
   toggleEditable(index: number) {
@@ -160,7 +171,7 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-  
+
 
   removeFile(index: number): void {
     this.files.splice(index, 1);
@@ -200,7 +211,7 @@ export class CreateInvoiceComponent implements OnInit {
     }else if(value === 'option3'){
       this.getlasttimesheetlist();
     }
-    
+
   }
 
   onclientChanges(){
@@ -208,7 +219,7 @@ export class CreateInvoiceComponent implements OnInit {
    this.clientEmail = this.selectedclient.EmailID
    this.selectedBillingaddress = this.selectedclient.Address
    this.ClientName = this.selectedclient.ClientName
-   this.selectedTerm = this.selectedclient.PaymentTerms 
+   this.selectedTerm = this.selectedclient.PaymentTerms
    console.log(this.selectedclient);
    this.getalltimesheetlist();
   }
@@ -236,7 +247,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.dueDays = 0;
     this.closeModal2();
   }
-  
+
   confirmDelete() {
     this.showConfirmationModal = true;
   }
@@ -386,8 +397,8 @@ addservice(timesheet:any){
 }
 
   addinvoice() {
-   
-    
+
+
     this.loading = true;
     let invoiceLinesData: { serviceDate: any, description: any, qty: any, rate: any,timesheetid:any }[] = [];
     this.invoiceLines.forEach((line, index) => {
@@ -407,8 +418,8 @@ addservice(timesheet:any){
   formData.append('ccEmails', this.ccEmails);
   formData.append('bccEmails', this.bccEmails);
   formData.append('billing_address', this.selectedBillingaddress);
-  formData.append('InvoiceDate', this.selectedInvoiceDate); 
-  formData.append('DueDate', this.selectedDueDate); 
+  formData.append('InvoiceDate', this.selectedInvoiceDate);
+  formData.append('DueDate', this.selectedDueDate);
 
   formData.append('PaymentTerms', this.selectedTerm);
   formData.append('invoiceNo', this.InvoiceNo);

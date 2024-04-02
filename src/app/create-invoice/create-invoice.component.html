@@ -244,8 +244,8 @@
             </div>
           </div>
         </div>
-        
-        
+
+
 
         <!-- <div class="ml-3">
         <div class="form-group">
@@ -308,6 +308,14 @@
               <div class="modal-body" style="max-height: 1000px; overflow-y: auto;">
                 <h2>Add to invoice</h2>
                 <div class="form-group">
+                  <label for="candidates">Candidate Name:</label>
+                  <select class="form-control"  id="candidates" [(ngModel)]="candidateid">
+                    <option value="0">Select the Candidate</option>
+                    <option *ngFor="let candidatelistnames of candidatelistname" value="{{candidatelistnames.traineeid}}" [value]="candidatelistnames.traineeid">{{ candidatelistnames.name }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
                   <label for="filterBy">Filter by:</label>
                   <select class="form-control" id="filterBy" (change)="onFilterChanges($event.target.value)">
                     <option value="option1">All dates</option>
@@ -355,7 +363,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- <p style="color: #999; font-style: italic;"
                 *ngIf="selectedFilter == 'option1' || selectedFilter == 'option2' || selectedFilter == 'option3'">There
                 aren't any billable items for that date range.</p> -->
