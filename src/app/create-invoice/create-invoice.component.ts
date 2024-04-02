@@ -50,22 +50,35 @@ export class CreateInvoiceComponent implements OnInit {
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
  //PaymentTerms: any;
   PaymentTerms: any = [
+    
     {
+      value:"7",
+      option:'Net 7'
+      },
+      {
     value:"10",
     option:'Net 10'
     },
     {
-      value:"20",
-      option:'Net 20'
+      value:"15",
+      option:'Net 15'
       },
       {
         value:"30",
         option:'Net 30'
         },
         {
-          value:"40",
-          option:'Net 40'
+          value:"45",
+          option:'Net 45'
           },
+          {
+            value:"60",
+            option:'Net 60'
+            },
+            {
+              value:"90",
+              option:'Net 90'
+              },
 ];
   messageOnStatement: any;
   newTermName: string = '';
