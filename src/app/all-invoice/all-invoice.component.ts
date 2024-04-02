@@ -120,12 +120,19 @@ export class AllInvoiceComponent implements OnInit {
     this.service.updateReceivedPayment(req).subscribe(
       (response: any) => {
         this.handleSuccess(response);
+        this.fetchPaidInvoiceList();
+        this.fetchUnpaidInvoiceList();
         this.fetchAllInvoiceList();
       },
       (error: any) => {
         this.handleError(error);
+        this.fetchPaidInvoiceList();
+        this.fetchUnpaidInvoiceList();
+        this.fetchAllInvoiceList();
       }
+      
     );
+    
     this.showPopup = false;
   }
 

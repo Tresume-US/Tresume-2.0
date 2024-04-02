@@ -237,7 +237,7 @@
         <div class="ml-3">
           <div class="form-group">
             <label for="invoiceNo">Invoice No.</label>
-            <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
+            <input type="text" id="InvoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
               [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
             <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
               <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required</div>
@@ -754,6 +754,7 @@
 
               <!-- <a class="dropdown-item" (click)="addinvoice()">Save and close</a> -->
               <!-- <a class="dropdown-item" href="#">Save and send</a> -->
+              <!-- <button (click)="getExistingInvoiceNo()" class="btn">save</button> -->
 
             </div>
           </div>
