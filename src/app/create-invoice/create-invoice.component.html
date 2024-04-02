@@ -150,19 +150,16 @@
             </div>
           </div>
 
+         
           <div class="dueDate mt-0 ml-3">
             <div class="form-group">
               <label for="DueDate" class="ml-0">Due Date</label>
-              <input type="date" class="form-control ml-0" name="selectedDueDate" id="selectedDueDate"
-                [(ngModel)]="selectedDueDate" required>
+              <input type="date" class="form-control ml-0" name="selectedDueDate" id="selectedDueDate" [(ngModel)]="selectedDueDate" required>
               <div *ngIf="invoiceForm.controls.selectedDueDate.touched && invoiceForm.controls.selectedDueDate.invalid">
-                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">Due date is
-                  required
-                </div>
+                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">Due date is required</div>
               </div>
             </div>
           </div>
-
           <!-- <div class="ml-3">
           <h4>Online Payments <button type="button" class="btn btn-sm btn-outline-secondary ml-2">Edit</button></h4>
         </div> -->
@@ -181,321 +178,14 @@
         </div>
       </div>
 
-      <div class="col-md-12 d-flex ml-2 mt-3">
-        <div class="clientemail mt-0 ml-3">
-          <div class="form-group">
-            <label for="dropdown" class="ml-0">Terms</label>
-            <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
-              style="width: 9rem" [ngModelOptions]="{standalone: true}">
-              <option value="0">Select Terms</option>
-              <option *ngFor="let term of PaymentTerms" value="{{term.value}}" [value]="term.value">{{ term.option }}
-              </option>
-            </select>
-          </div>
-        </div>
-
-        <!-- <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
-          <div class="modal5-dialog" role="document">
-            <div class="modal-content" style="height: 27rem; width: 18rem;  position: absolute; z-index: 999;">
-              <div class="modal-header">
-                <h5 class="modal-title">New Term</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal2()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body" style="height: 300px; overflow-y: auto;">
-                <label for="nameInput">*Name:</label><br>
-                <input type="text" id="name" name="name" [(ngModel)]="newTermName"><br><br>
-
-                <input type="radio" id="dueFixed" name="dueType" value="fixed" [(ngModel)]="dueType">
-                <label for="dueFixed">Due in fixed number of days</label><br><br>
-
-                <input type="number" id="dueDays" name="dueDays" class="larger-checkbox" style="margin-left: 34px;"
-                  [(ngModel)]="dueDays" *ngIf="dueType === 'fixed'">
-                <label for="dueDays" style="margin-left: 4px;">Days</label><br><br>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal" (click)="clearSelection()">Close</button>
-                <button type="button" class="btn" (click)="closeModal2()">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-
-        <!-- <div class="ml-3">
-          <div class="form-group">
-            <label for="invoiceNo">Invoice No.</label>
-            <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
-              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
-            <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
-              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div class="ml-3">
-          <div class="form-group">
-            <label for="invoiceNo">Invoice No.</label>
-            <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
-              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
-            <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
-              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required</div>
-            </div>
-          </div>
-        </div>
-        
-        
-
-        <!-- <div class="ml-3">
+      <div class="clientemail mt-0 ml-3">
         <div class="form-group">
-          <label for="location">Location</label>
-          <select class="form-control custom-select" name="location" [(ngModel)]="selectedState" [ngModelOptions]="{standalone: true}"
-            style="height: 40px; width: 9rem;" required #location="ngModel">
-            <option value="0" selected>Select Location</option>
-            <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
+          <label for="dropdown" class="ml-0">Terms</label>
+          <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
+            style="width: 9rem" [ngModelOptions]="{standalone: true}">
+            <option value="0">Select Terms</option>
+            <option *ngFor="let term of PaymentTerms" [value]="term.value">{{ term.option }}</option>
           </select>
-          <div *ngIf="location.invalid && location.touched">
-            <div *ngIf="location.errors.required" class="text-danger">Location selection is required</div>
-          </div>
-        </div>
-      </div> -->
-
-        <div class="ml-3">
-          <div class="form-group">
-            <label for="location">Location</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text custom-bg-purple text-light"><i class="fas fa-map-marker-alt"></i></span>
-              </div>
-              <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
-                [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
-                <option value="0" selected>Select Location</option>
-                <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
-              </select>
-            </div>
-            <div *ngIf="location.invalid && location.touched">
-              <div *ngIf="location.errors.required" class="text-danger">Location selection is required</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="ml-3">
-        <div class="input-group col-md-5">
-          <input type="text" class="form-control custom-input" id="selectedItem" [(ngModel)]="state"
-            placeholder="Choose a location" aria-describedby="searchIcon" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <i class="fas fa-caret-down"></i>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" *ngFor="let option of getDropdownOption()" (click)="onDropdownChanges(option)">{{ option.city }}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-          style="height: 300px; overflow-y: auto;">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
-              </div>
-              <div class="modal-body" style="max-height: 1000px; overflow-y: auto;">
-                <h2>Add to invoice</h2>
-                <div class="form-group">
-                  <label for="filterBy">Filter by:</label>
-                  <select class="form-control" id="filterBy" (change)="onFilterChanges($event.target.value)">
-                    <option value="option1">All dates</option>
-                    <option value="option2">This month</option>
-                    <option value="option3">Last month</option>
-                    <!-- <option value="option1">Custom</option> -->
-                  </select>
-                </div>
-                <div *ngIf="timesheetlist.length === 0" class="alert alert-info">
-                  No result found.
-                </div>
-                <hr>
-                <div *ngIf="selectedFilter === 'option1'">
-                </div>
-                <div *ngIf="selectedFilter === 'option2'">
-                </div>
-                <div *ngIf="selectedFilter === 'option3'">
-                </div>
-
-                <div class="card mb-3" *ngFor="let timesheet of timesheetlist">
-                  <div class="card-body">
-                    <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                    <div class="row">
-                      <div class="col mt-3 d-flex justify-content-between">
-                        <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
-                          "UTC"}}</p>
-                        <p>{{timesheet.totalhrs}} hrs</p>
-                      </div>
-                    </div>
-                    <div class="row" style="margin-top: -11px;">
-                      <div class="col">
-                        <p class="card-text">${{timesheet.totalamt}}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <p class="card-text">{{timesheet.candidatename}}</p>
-                      </div>
-                    </div>
-                    <div class="row mt-3">
-                      <div class="col d-flex justify-content-between">
-                        <div class="btn" (click)="addservice(timesheet)">Add</div>
-                        <!-- <button class="btn ">Open</button> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- <p style="color: #999; font-style: italic;"
-                *ngIf="selectedFilter == 'option1' || selectedFilter == 'option2' || selectedFilter == 'option3'">There
-                aren't any billable items for that date range.</p> -->
-                <!-- <div *ngIf="selectedFilter === 'option3'">
-                <div class="form-group mb-3">
-                  <select class="form-control" (change)="onOptionChanges($event)" [(ngModel)]="selectedOption">
-                    <option value="" disabled selected>--Select--</option>
-                    <ng-container *ngIf="selectedFilter === 'option3'">
-                      <option value="example1" *ngIf="selectedOption !== 'example2' || showAdditionalInputs">Don't group
-                        time</option>
-                    </ng-container>
-                    <option value="example2">Group time by service</option>
-                  </select>
-                </div>
-
-                <div *ngIf="selectedOption === 'example1' || showAdditionalInputs">
-
-                  <button class="btn " (click)="addAll()">Add all</button>
-                  <div *ngIf="showAdditionalInputs" class="mb-3">
-
-                  </div>
-                  <div class="card-display mt-3">
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 11, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn btn-">Add</button>
-                            <button class="btn btn-">Open</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 12, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn ">Add</button>
-                            <button class="btn ">Open</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card mb-3">
-                      <div class="card-body">
-                        <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                        <div class="row">
-                          <div class="col mt-3 d-flex justify-content-between">
-                            <p class="card-text" style="margin-left: -6rem;">Dec 13, 2023</p>
-                            <p>8:00</p>
-                          </div>
-                        </div>
-                        <div class="row" style="margin-top: -11px;">
-                          <div class="col">
-                            <p class="card-text">$360.00</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <p class="card-text">Kivani kotecha</p>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col d-flex justify-content-between">
-                            <button class="btn">Add</button>
-                            <button class="btn">Open</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div *ngIf="selectedOption === 'example2' && !showAdditionalInputs">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h3 class="card-title" style="text-decoration: underline;">Time services</h3> <br>
-                      <div class="row">
-                        <div class="col mt-3 d-flex justify-content-between">
-                          <p class="card-text" style="margin-left: -6rem;">Dec 11 - Dec 22,<br> 2023</p>
-                          <p>8:00</p>
-                        </div>
-                      </div>
-                      <div class="row" style="margin-top: -11px;">
-                        <div class="col">
-                          <p class="card-text" style="margin-left: 9px;">$360.00</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <p class="card-text" style="margin-left: 9px;">Kivani kotecha</p>
-                        </div>
-                      </div>
-                      <div class="row mt-3">
-                        <div class="col d-flex justify-content-between">
-                          <button class="btn" style=" margin-left: 11rem;">Add</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn mt-3" (click)="goToPreviousOption()">Back</button>
-                </div>
-              </div> -->
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -553,18 +243,25 @@
               <td><ng-container *ngFor="let service of productService">{{ service }}</ng-container></td>
 
               <td *ngIf="!line.editable">{{ line.description }}</td>
-              <td *ngIf="line.editable"><input type="text" [(ngModel)]="line.description" class="form-control" /></td>
+              <td *ngIf="line.editable">
+                <input type="text" [(ngModel)]="line.description" class="form-control"
+                  (keydown.enter)="$event.preventDefault()" />
+              </td>
+                            
 
               <td *ngIf="!line.editable">{{ line.qty }}</td>
               <td *ngIf="line.editable">
-                <input type="number" [(ngModel)]="line.qty" class="form-control" (ngModelChange)="updateAmount(line)" />
+                <input type="number" [(ngModel)]="line.qty" class="form-control"
+                  (ngModelChange)="updateAmount(line)" (keydown.enter)="$event.preventDefault()" />
               </td>
+              
 
               <td *ngIf="!line.editable">{{ line.rate }}</td>
               <td *ngIf="line.editable">
                 <input type="number" [(ngModel)]="line.rate" class="form-control"
-                  (ngModelChange)="updateAmount(line)" />
+                  (ngModelChange)="updateAmount(line)" (keydown.enter)="$event.preventDefault()" />
               </td>
+              
 
               <!-- <td *ngIf="!line.editable">{{ line.qty * line.rate }}</td> -->
               <!-- <td *ngIf="line.editable"></td> -->
@@ -581,33 +278,33 @@
       <!-- Subtotal Row -->
       <div class="row mt-3">
         <div class="col-md-6 text-right">Subtotal: </div>
-        <div class="col-md-5 text-left">{{ subtotal | currency }}</div>
+        <div class="col-md-6 text-left">{{ subtotal | currency }}</div>
       </div>
 
-      <!-- Discount Percentage Row -->
-      <div class="row mt-3">
-        <div class="col-md-6 text-right">
-          <label for="discountPercentage" class="mb-2 d-block">Discount:</label>
-          <select id="discountPercentage" (change)="updateDiscount($event)">
-            <option value="0">0%</option>
-            <option value="5">5%</option>
-            <option value="10">10%</option>
-          </select>
-        </div>
-        <div class="col-md-6 text-left">{{ discountAmount | currency }}</div>
-      </div>
+<!-- Discount Percentage Row -->
+<div class="row mt-3">
+  <div class="col-md-6 text-right">
+    <label for="discountPercentage" class="mb-2 d-block">Discount:</label>
+    <select id="discountPercentage" (change)="updateDiscount($event)">
+      <option value="0">0%</option>
+      <option value="5">5%</option>
+      <option value="10">10%</option>
+    </select>
+  </div>
+  <div class="col-md-6 text-left">{{ discountAmount | currency }}</div>
+</div>
 
-      <!-- Total Row -->
-      <div class="row mt-3">
-        <div class="col-md-6 text-right">Total: </div>
-        <div class="col-md-6 text-left">{{ total | currency }}</div>
-      </div>
+<!-- Total Row --> 
+<div class="row mt-3">
+  <div class="col-md-6 text-right">Total: </div>
+  <div class="col-md-6 text-left">{{ total | currency }}</div>
+</div>
 
-      <!-- Balance Due Row -->
-      <div class="row mt-3">
-        <div class="col-md-6 text-right">Balance Due: </div>
-        <div class="col-md-6 text-left">{{ balanceDue | currency }}</div>
-      </div>
+<!-- Balance Due Row -->
+<div class="row mt-3">
+  <div class="col-md-6 text-right">Balance Due: </div>
+  <div class="col-md-6 text-left">{{ balanceDue | currency }}</div>
+</div>
 
       <!-- <div class="col-md-4" style="margin-left: 48rem;    margin-top: 12rem;
       ">
