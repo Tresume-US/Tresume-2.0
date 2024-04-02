@@ -23,6 +23,7 @@ export class AllInvoiceComponent implements OnInit {
   @Output() modalClosed = new EventEmitter<void>();
   makeInactiveModal: any;
   isModal3Open: any;
+  totalamt: number;
   // openMakeInactiveModal: any;
   deleteAction() {
     throw new Error('Method not implemented.');
@@ -79,10 +80,15 @@ export class AllInvoiceComponent implements OnInit {
   showPopup = false;
   receivedamt: number;
   invoiceid: number;
-
-  openPopup(invoiceId: number) {
+  total:number;
+  Balanceamt:number;
+  // receivedamt:number;
+  openPopup(invoiceId: number,total: number,receivedamt: number) {
     this.showPopup = true;
     this.invoiceid = invoiceId;
+    this.total=total;
+    this.receivedamt=receivedamt;
+    this.Balanceamt=this.total - this.receivedamt
   }
  
   selectAll(checked: boolean): void {
@@ -108,32 +114,43 @@ export class AllInvoiceComponent implements OnInit {
     invoice.selected = !invoice.selected;
   }
 
-  saveAmount() {
-    // console.log('Invoice ID:', this.invoiceid);
-    // console.log('Received payment amount:', this.receivedamt);
-    const req = {
+
+
+  saveAmount() {   
+    
+    console.log(this.Balanceamt);
+    console.log(this.total + ' ' + this.receivedamt)
+    if (this.Balanceamt <= 0) {
+     const req = {
       id: this.invoiceid,
-      receivedamt: this.receivedamt
+      receivedamt: this.receivedamt,
     };
 
+
     console.log(req);
+    this.loading=true;
     this.service.updateReceivedPayment(req).subscribe(
       (response: any) => {
         this.handleSuccess(response);
         this.fetchPaidInvoiceList();
         this.fetchUnpaidInvoiceList();
         this.fetchAllInvoiceList();
+        this.loading=false;
       },
       (error: any) => {
         this.handleError(error);
         this.fetchPaidInvoiceList();
         this.fetchUnpaidInvoiceList();
         this.fetchAllInvoiceList();
-      }
-      
+        this.loading=false;
+      }      
     );
     
     this.showPopup = false;
+  }
+  else {
+    alert("Received amount exceeds total amount or causes balance to become negative.");
+  }
   }
 
   private handleSuccess(response: any): void {

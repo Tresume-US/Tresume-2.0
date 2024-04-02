@@ -393,8 +393,8 @@
                           <th>Client/Project</th>
                           <th>Memo</th>
                           <th>Total Amount</th>
-                       <th>Received Amount</th>
-                       <th>Balance Amount</th>
+                          <th>Received Amount</th>
+                          <th>Balance Amount</th>
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -417,7 +417,7 @@
                         'overdue': isOverdue(invoice.date)
                       }">{{ invoice.ispaid ? 'Paid' : 'Unpaid' }}</td>
                       <td>
-                        <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
+                        <button class="btn" (click)="openPopup(invoice.id,invoice.receivedamt,invoice.total)">Received Payment</button>
                       </td>
                     </tr>
 
@@ -474,7 +474,6 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <!-- Header cells -->
                     <td><input type="checkbox" (change)="selectAll1($event.target.checked)"></td>
                     <th>Invoice ID</th>
                     <th>Date</th>
@@ -483,8 +482,8 @@
                     <th>Client/Project</th>
                     <th>Memo</th>
                     <th>Total Amount</th>
-                      <th>Received Amount</th>
-                      <th>Balance Amount</th>
+                    <th>Received Amount</th>
+                    <th>Balance Amount</th>
                     <!-- <th>Status</th> -->
                     <th>Action</th>
                   </tr>

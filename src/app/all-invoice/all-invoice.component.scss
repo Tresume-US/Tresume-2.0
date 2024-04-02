@@ -664,18 +664,16 @@ td{
   justify-content: space-around; /* Space out buttons */
 }
 
-/* Adjust button styles if needed */
 .popup button {
-  flex-grow: 1; /* Make buttons fill the space */
-  margin: 0 5px; /* Add space between buttons */
+  flex-grow: 1;
+  margin: 0 5px; 
   padding: none;
 }
 
-/* Adjustments for individual button hover effect */
 .popup button:hover {
   opacity: 0.8;
 }
-button:disabled:hover {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
+// button:disabled:hover {
+//   background-color: #ccc;
+//   cursor: not-allowed;
+// }

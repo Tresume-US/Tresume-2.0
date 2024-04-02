@@ -172,7 +172,12 @@ router.post("/getAllInvoiceList", async (req, res) => {
 
 router.post("/updateReceivedPayment", async function (req, res) {
   try {
-    var query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) + '" + req.body.receivedamt + "' WHERE id = '" + req.body.id + "';";
+    // var query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) + '" + req.body.receivedamt + "' WHERE id = '" + req.body.id + "';";
+   if (req.status === 1) {
+      query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) + '" + req.body.receivedamt + "', status = 1 WHERE id = '" + req.body.id + "';";
+    } else {
+      query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) + '" + req.body.receivedamt + "' WHERE id = '" + req.body.id + "';";
+    }
     console.log(query);
 
     await sql.connect(config);
@@ -300,7 +305,7 @@ router.post('/createInvoice', upload.array('attachments', 10), async (req, res) 
      [invoice_message], [statement], [status], [isviewed], [ispaid], [isdeposited], [created_at], [created_by], [last_updated_at], [last_updated_by], [traineeid], [orgid], [pterms], [receivedamt], [invoicedetails])
     VALUES
     (${req.body.clientid}, '${req.body.clientemail}', '${req.body.billing_address}', '',
-     '${req.body.invoiceNo}', '', '${req.body.subtotal}', '${req.body.discount}', '${req.body.total}',
+     '${req.body.invoiceNo}', '${req.body.location}', '${req.body.subtotal}', '${req.body.discount}', '${req.body.total}',
      '${req.body.invoice_message}', '${req.body.statement}', ${req.body.status},
      '0', '0', '0',  GETDATE(), '${req.body.created_by}', GETDATE(),
      '${req.body.created_by}', ${req.body.traineeid}, ${req.body.orgid}, '', '0', '${req.body.invoicedetails}');
@@ -323,7 +328,7 @@ console.log(query);
       const attachmentRequest = new sql.Request();
       attachmentRequest.input('invoiceid', sql.Int, insertedId);
       attachmentRequest.input('filename', sql.VarChar(255), file.filename);
-      attachmentRequest.input('status', sql.Int, 1); // Adjust status as needed
+      attachmentRequest.input('status', sql.Int, 1); 
 
       await attachmentRequest.query(attachmentQuery);
     }
