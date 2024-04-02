@@ -231,12 +231,6 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-  onDropdownChange(event: any) {
-    // if (event.target.value === 'addNew') {
-    //   this.showModal = true;
-    // }
-  }
-
   closeModal2() {
     this.showModal = false;
   }
@@ -530,6 +524,17 @@ fetchInvoiceNo() {
       console.error('Error fetching invoice number:', error);
     }
   );
+}
+onDropdownChange(event: any) {
+  // Calculate due date based on selected term
+  const termValue = parseInt(this.selectedTerm); // Convert string to number
+  if (termValue > 0) {
+    const currentDate = new Date();
+    const dueDate = new Date(currentDate.getTime() + (termValue * 24 * 60 * 60 * 1000));
+    this.selectedDueDate = dueDate.toISOString().split('T')[0];
+  } else {
+    this.selectedDueDate = ''; // Reset due date if no term is selected
+  }
 }
 
 invoicedata: any[];
