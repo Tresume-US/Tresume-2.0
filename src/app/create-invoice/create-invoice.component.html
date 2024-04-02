@@ -178,7 +178,74 @@
         </div>
       </div>
 
-      <div class="clientemail mt-0 ml-3">
+      <div class="col-md-12 d-flex ml-2 mt-3">
+        <div class="clientemail mt-0 ml-3">
+          <div class="form-group">
+            <label for="dropdown" class="ml-0">Terms</label>
+            <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
+              style="width: 9rem" [ngModelOptions]="{standalone: true}">
+              <option value="0">Select Terms</option>
+              <option *ngFor="let term of PaymentTerms" [value]="term.value">{{ term.option }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
+          <div class="modal5-dialog" role="document">
+            <div class="modal-content" style="height: 27rem; width: 18rem;  position: absolute; z-index: 999;">
+              <div class="modal-header">
+                <h5 class="modal-title">New Term</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal2()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" style="height: 300px; overflow-y: auto;">
+                <label for="nameInput">*Name:</label><br>
+                <input type="text" id="name" name="name" [(ngModel)]="newTermName"><br><br>
+
+                <input type="radio" id="dueFixed" name="dueType" value="fixed" [(ngModel)]="dueType">
+                <label for="dueFixed">Due in fixed number of days</label><br><br>
+
+                <input type="number" id="dueDays" name="dueDays" class="larger-checkbox" style="margin-left: 34px;"
+                  [(ngModel)]="dueDays" *ngIf="dueType === 'fixed'">
+                <label for="dueDays" style="margin-left: 4px;">Days</label><br><br>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal" (click)="clearSelection()">Close</button>
+                <button type="button" class="btn" (click)="closeModal2()">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <!-- <div class="ml-3">
+          <div class="form-group">
+            <label for="invoiceNo">Invoice No.</label>
+            <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
+              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
+            <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
+              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="ml-3">
+          <div class="form-group">
+            <label for="invoiceNo">Invoice No.</label>
+            <input type="text" id="invoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
+              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
+            <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
+              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        
+        
+
+        <!-- <div class="ml-3">
         <div class="form-group">
           <label for="dropdown" class="ml-0">Terms</label>
           <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
