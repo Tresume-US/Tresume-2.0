@@ -199,7 +199,7 @@ const storage = multer.diskStorage({
     } else {
       const path =
         `C:/inetpub/vhosts/tresume.us/httpdocs/Content/Resume/` +
-        req.params.traineeID;
+        req.params.onboardID;
       console.log("path", path);
       fs.mkdirSync(path, { recursive: true });
       cb(null, path);
@@ -753,7 +753,7 @@ app.post("/getLoggedUser", function (req, res) {
                 flag: 1,
                 result: recordset.recordsets[0],
               };
-              res.send(result);
+              res.send(recordset.recordsets[0]);
             } catch (error) {
               console.log("Error executing query:", error);
               res.status(500).send("Error executing query");
@@ -1318,7 +1318,7 @@ app.post("/getCandidatesbyStatus", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {
@@ -1383,7 +1383,7 @@ app.get("/getDocTypes", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1415,7 +1415,7 @@ app.get("/getNewChecklistID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1457,7 +1457,7 @@ app.post("/saveChecklist", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1489,7 +1489,7 @@ app.get("/deleteChecklist/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1522,7 +1522,7 @@ app.get("/getChecklistNames/:OrgID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1558,7 +1558,7 @@ app.post("/getWizardSteps", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1598,7 +1598,7 @@ app.post("/createOnboarding", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1707,7 +1707,7 @@ app.get("/getOnboardingDetails/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1740,7 +1740,7 @@ app.get("/getOnboardingRequest/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1775,7 +1775,7 @@ app.post("/saveOnboardingRequest", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {
@@ -1805,7 +1805,7 @@ app.get("/updateOnboardStatus/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1836,7 +1836,7 @@ app.get("/updateOnboardStatus1/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1869,7 +1869,7 @@ app.get("/onboardSession/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -2255,7 +2255,7 @@ app.post("/updateDocStatus", function (req, res) {
               return;
             }
           });
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -2291,7 +2291,7 @@ app.post("/updateSignFilepath", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -4494,7 +4494,7 @@ app.post("/getOnboardingCount", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {

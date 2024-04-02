@@ -209,7 +209,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
             T.followupon, T.notes, T.CreateTime AS DateCreated
             FROM Trainee T
-            INNER JOIN Memberdetails M ON T.userorganizationid = M.PrimaryOrgID
+            INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
             LEFT JOIN Trainee CreatedBy ON T.createby = CreatedBy.username
             INNER JOIN Organization O ON T.userorganizationid = O.organizationid
