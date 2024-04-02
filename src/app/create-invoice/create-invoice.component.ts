@@ -55,17 +55,33 @@ export class CreateInvoiceComponent implements OnInit {
     option:'Net 10'
     },
     {
-      value:"20",
-      option:'Net 20'
+      value:"15",
+      option:'Net 15'
       },
       {
         value:"30",
         option:'Net 30'
         },
         {
-          value:"40",
-          option:'Net 40'
+          value:"45",
+          option:'Net 45'
           },
+          {
+            value:"60",
+            option:'Net 60'
+            },
+  
+            {
+              value:"7",
+              option:'Net 7'
+              },
+    
+              {
+                value:"90",
+                option:'Net 90'
+                },
+      
+
 ];
   messageOnStatement: any;
   newTermName: string = '';
@@ -142,6 +158,9 @@ export class CreateInvoiceComponent implements OnInit {
     this.calculateSubtotal();
   }
 
+
+
+
   updateDiscount(event: any): void {
     const selectedDiscount = parseInt(event.target.value);
     this.discountPercentage = selectedDiscount;
@@ -160,7 +179,17 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-  
+  onDropdownChange(event: any) {
+    // Calculate due date based on selected term
+    const termValue = parseInt(this.selectedTerm); // Convert string to number
+    if (termValue > 0) {
+      const currentDate = new Date();
+      const dueDate = new Date(currentDate.getTime() + (termValue * 24 * 60 * 60 * 1000));
+      this.selectedDueDate = dueDate.toISOString().split('T')[0];
+    } else {
+      this.selectedDueDate = ''; // Reset due date if no term is selected
+    }
+  }
 
   removeFile(index: number): void {
     this.files.splice(index, 1);
@@ -220,11 +249,11 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-  onDropdownChange(event: any) {
-    // if (event.target.value === 'addNew') {
-    //   this.showModal = true;
-    // }
-  }
+  // onDropdownChange(event: any) {
+  //   // if (event.target.value === 'addNew') {
+  //   //   this.showModal = true;
+  //   // }
+  // }
 
   closeModal2() {
     this.showModal = false;
