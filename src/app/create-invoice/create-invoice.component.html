@@ -153,15 +153,14 @@
           <div class="dueDate mt-0 ml-3">
             <div class="form-group">
               <label for="DueDate" class="ml-0">Due Date</label>
-              <input type="date" class="form-control ml-0" name="selectedDueDate" id="selectedDueDate"
-                [(ngModel)]="selectedDueDate" required>
+              <input type="date" class="form-control ml-0" name="selectedDueDate" id="selectedDueDate" [(ngModel)]="selectedDueDate" required>
               <div *ngIf="invoiceForm.controls.selectedDueDate.touched && invoiceForm.controls.selectedDueDate.invalid">
-                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">Due date is
-                  required
-                </div>
+                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">Due date is required</div>
               </div>
             </div>
           </div>
+          
+          
 
           <!-- <div class="ml-3">
           <h4>Online Payments <button type="button" class="btn btn-sm btn-outline-secondary ml-2">Edit</button></h4>
@@ -188,11 +187,12 @@
             <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
               style="width: 9rem" [ngModelOptions]="{standalone: true}">
               <option value="0">Select Terms</option>
-              <option *ngFor="let term of PaymentTerms" value="{{term.value}}" [value]="term.value">{{ term.option }}
-              </option>
+              <option *ngFor="let term of PaymentTerms" [value]="term.value">{{ term.option }}</option>
             </select>
           </div>
         </div>
+  
+  
 
         <!-- <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
           <div class="modal5-dialog" role="document">
@@ -555,24 +555,31 @@
             <td *ngIf="line.editable"><input type="text" [(ngModel)]="line.sno" class="form-control" /></td> -->
 
               <td *ngIf="!line.editable">{{ line.serviceDate | date: "MM/dd/y" : "UTC"}}</td>
-              <td *ngIf="line.editable"><input type="date" [(ngModel)]="line.serviceDate" class="form-control" /></td>
-
+              <td *ngIf="line.editable">
+                <input type="date" [(ngModel)]="line.serviceDate" class="form-control"
+                  (keydown.enter)="$event.preventDefault()" />
+              </td>
+              
 
               <td><ng-container *ngFor="let service of productService">{{ service }}</ng-container></td>
 
               <td *ngIf="!line.editable">{{ line.description }}</td>
-              <td *ngIf="line.editable"><input type="text" [(ngModel)]="line.description" class="form-control" /></td>
-
+              <td *ngIf="line.editable">
+                <input type="text" [(ngModel)]="line.description" class="form-control"
+                  (keydown.enter)="$event.preventDefault()" />
+              </td>
               <td *ngIf="!line.editable">{{ line.qty }}</td>
               <td *ngIf="line.editable">
-                <input type="number" [(ngModel)]="line.qty" class="form-control" (ngModelChange)="updateAmount(line)" />
+                <input type="number" [(ngModel)]="line.qty" class="form-control"
+                  (ngModelChange)="updateAmount(line)" (keydown.enter)="$event.preventDefault()" />
               </td>
 
               <td *ngIf="!line.editable">{{ line.rate }}</td>
               <td *ngIf="line.editable">
                 <input type="number" [(ngModel)]="line.rate" class="form-control"
-                  (ngModelChange)="updateAmount(line)" />
+                  (ngModelChange)="updateAmount(line)" (keydown.enter)="$event.preventDefault()" />
               </td>
+
 
               <!-- <td *ngIf="!line.editable">{{ line.qty * line.rate }}</td> -->
               <!-- <td *ngIf="line.editable"></td> -->
