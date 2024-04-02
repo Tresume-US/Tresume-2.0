@@ -199,7 +199,7 @@ const storage = multer.diskStorage({
     } else {
       const path =
         `C:/inetpub/vhosts/tresume.us/httpdocs/Content/Resume/` +
-        req.params.traineeID;
+        req.params.onboardID;
       console.log("path", path);
       fs.mkdirSync(path, { recursive: true });
       cb(null, path);
@@ -753,7 +753,7 @@ app.post("/getLoggedUser", function (req, res) {
                 flag: 1,
                 result: recordset.recordsets[0],
               };
-              res.send(result);
+              res.send(recordset.recordsets[0]);
             } catch (error) {
               console.log("Error executing query:", error);
               res.status(500).send("Error executing query");
@@ -1074,7 +1074,7 @@ app.post("/getResumes1", function (req, res) {
 
               var OrgID = recordset.recordsets[0][0].OrganizationID;
               var sqlQuery =
-                `SELECT TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy, YearsOfExpInMonths,
+                `SELECT Top 100 TraineeID, (FirstName + ' ' + LastName) AS FullName, FirstName, LastName, UserName, CreateBy, YearsOfExpInMonths,
                         ISNULL(YearsOfExpInMonths,0) [YRSEXP],Skill,
                         LegalStatus, UserOrganizationID, CurrentLocation, Title as [TraineeTitle], ISNULL(LegalStatus,'') ,
                         ISNULL(CONVERT(NVARCHAR(10),CreateTime,101), '1900-01-01T00:00:00') as LastUpdateTime,
@@ -1318,7 +1318,7 @@ app.post("/getCandidatesbyStatus", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {
@@ -1383,7 +1383,7 @@ app.get("/getDocTypes", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1415,7 +1415,7 @@ app.get("/getNewChecklistID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1457,7 +1457,7 @@ app.post("/saveChecklist", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1489,7 +1489,7 @@ app.get("/deleteChecklist/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1522,7 +1522,7 @@ app.get("/getChecklistNames/:OrgID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1558,7 +1558,7 @@ app.post("/getWizardSteps", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1598,7 +1598,7 @@ app.post("/createOnboarding", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1707,7 +1707,7 @@ app.get("/getOnboardingDetails/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1740,7 +1740,7 @@ app.get("/getOnboardingRequest/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1775,7 +1775,7 @@ app.post("/saveOnboardingRequest", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {
@@ -1805,7 +1805,7 @@ app.get("/updateOnboardStatus/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1836,7 +1836,7 @@ app.get("/updateOnboardStatus1/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -1869,7 +1869,7 @@ app.get("/onboardSession/:ID", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -2255,7 +2255,7 @@ app.post("/updateDocStatus", function (req, res) {
               return;
             }
           });
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -2291,7 +2291,7 @@ app.post("/updateSignFilepath", function (req, res) {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(result);
+          res.send(recordset.recordsets[0]);
         }
       );
     });
@@ -2999,238 +2999,201 @@ app.post("/getCBAuthToken", function (req, res) {
 });
 
 app.post("/CBSearch", function (req, res) {
-  try {
-    let response = null;
-    const options = {
-      url: "https://api.careerbuilder.com/consumer/edge/search",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "accept-encoding": "gzip, deflate",
-        "accept-language": "en-US,en;q=0.8",
-        "content-encoding": "gzip",
-        Authorization: `Bearer ${req.body.token}`,
-      },
-      qs: {
-        Query: req.body.query,
-        Page: req.body.page,
-        ResultsPerPage: req.body.resultsPerPage,
-        Locations: req.body.locations,
-        LocationRadius: req.body.locationRadius,
-        JobTitle: req.body.jobTitle,
-        Filter: req.body.filters,
-        FacetFilter: req.body.facetFilter,
-      },
-      gzip: true,
-    };
+  let response = null;
+  const options = {
+    url: "https://api.careerbuilder.com/consumer/edge/search",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "en-US,en;q=0.8",
+      "content-encoding": "gzip",
+      Authorization: `Bearer ${req.body.token}`,
+    },
+    qs: {
+      Query: req.body.query,
+      Page: req.body.page,
+      ResultsPerPage: req.body.resultsPerPage,
+      Locations: req.body.locations,
+      LocationRadius: req.body.locationRadius,
+      JobTitle: req.body.jobTitle,
+      Filter: req.body.filters,
+      FacetFilter: req.body.facetFilter,
+    },
+    gzip: true,
+  };
 
-    request(options, (err, res1, body) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error performing CareerBuilder search");
-        return;
-      }
-      response = JSON.parse(res1.body);
-      res.send(response);
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+  request(options, (err, res1, body) => {
+    if (err) {
+      return console.log(err);
+    }
+    response = JSON.parse(res1.body);
+    res.send(response);
+  });
 });
 
 app.post("/GetCBProfileDetails", function (req, res) {
-  try {
-    let response = null;
-    const options = {
-      url:
-        "https://api.careerbuilder.com/consumer/edge/profiles?EdgeID=" +
-        req.body.edgeID,
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "accept-encoding": "gzip, deflate",
-        "accept-language": "en-US,en;q=0.8",
-        "content-encoding": "gzip",
-        Authorization: `Bearer ${req.body.token}`,
-      },
-      gzip: true,
-    };
-    request(options, (err, res1, body) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error fetching CareerBuilder profile details");
-        return;
-      }
-      response = JSON.parse(res1.body);
-      res.send(response.data);
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+  let response = null;
+  const options = {
+    url:
+      "https://api.careerbuilder.com/consumer/edge/profiles?EdgeID=" +
+      req.body.edgeID,
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "en-US,en;q=0.8",
+      "content-encoding": "gzip",
+      Authorization: `Bearer ${req.body.token}`,
+    },
+    gzip: true,
+  };
+  request(options, (err, res1, body) => {
+    if (err) {
+      return console.log(err);
+    }
+    response = JSON.parse(res1.body);
+    res.send(response.data);
+  });
 });
 
 app.post("/GetCBResumePreview", function (req, res) {
-  try {
-    let response = null;
-    const options = {
-      url:
-        "https://api.careerbuilder.com/consumer/edge/profiles/" +
-        req.body.edgeID +
-        "/Resumes",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "accept-encoding": "gzip, deflate",
-        "accept-language": "en-US,en;q=0.8",
-        "content-encoding": "gzip",
-        Authorization: `Bearer ${req.body.token}`,
-      },
-      gzip: true,
-    };
+  let response = null;
+  const options = {
+    url:
+      "https://api.careerbuilder.com/consumer/edge/profiles/" +
+      req.body.edgeID +
+      "/Resumes",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "en-US,en;q=0.8",
+      "content-encoding": "gzip",
+      Authorization: `Bearer ${req.body.token}`,
+    },
+    gzip: true,
+  };
 
-    request(options, (err, res1, body) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error fetching CareerBuilder resume details");
-        return;
-      }
-      response = JSON.parse(res1.body);
-      console.log(response);
-      if (response.data) {
-        const options2 = {
-          url:
-            "https://api.careerbuilder.com/consumer/edge/profiles/" +
-            req.body.edgeID +
-            "/Resumes/RDB/" +
-            response.data[0].ResumeDID +
-            "/Preview",
-          method: "GET",
-          headers: {
-            Accept: "text/html",
-            Authorization: `Bearer ${req.body.token}`,
-          },
-          gzip: true,
-        };
-        request(options2, (err2, res2, body) => {
-          if (err2) {
-            console.error(err2);
-            res.status(500).send("Error fetching CareerBuilder resume preview");
-            return;
-          }
-          res.send({ text: res2.body });
-        });
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+  request(options, (err, res1, body) => {
+    if (err) {
+      return console.log(err);
+    }
+    response = JSON.parse(res1.body);
+    console.log(response);
+    if (response.data) {
+      const options2 = {
+        url:
+          "https://api.careerbuilder.com/consumer/edge/profiles/" +
+          req.body.edgeID +
+          "/Resumes/RDB/" +
+          response.data[0].ResumeDID +
+          "/Preview",
+        method: "GET",
+        headers: {
+          Accept: "text/html",
+          /* 'Access-Control-Allow-Origin': "*",
+                    "accept-encoding": 'gzip, deflate',
+                    'accept-language': 'en-US,en;q=0.8',
+                    'content-encoding': 'gzip', */
+          Authorization: `Bearer ${req.body.token}`,
+        },
+        gzip: true,
+      };
+      request(options2, (err2, res2, body) => {
+        if (err) {
+          return console.log(err2);
+        }
+        res.send({ text: res2.body });
+      });
+    }
+  });
 });
 
 app.post("/downloadCBResume", function (req, res) {
-  try {
-    let response = null;
-    const options = {
-      url:
-        "https://api.careerbuilder.com/consumer/edge/profiles/" +
-        req.body.edgeID +
-        "/Resumes",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "accept-encoding": "gzip, deflate",
-        "accept-language": "en-US,en;q=0.8",
-        "content-encoding": "gzip",
-        Authorization: `Bearer ${req.body.token}`,
-      },
-      gzip: true,
-    };
+  let response = null;
+  const options = {
+    url:
+      "https://api.careerbuilder.com/consumer/edge/profiles/" +
+      req.body.edgeID +
+      "/Resumes",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "en-US,en;q=0.8",
+      "content-encoding": "gzip",
+      Authorization: `Bearer ${req.body.token}`,
+    },
+    gzip: true,
+  };
 
-    request(options, (err, res1, body) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error fetching CareerBuilder resume details");
-        return;
-      }
-      response = JSON.parse(res1.body);
-      if (response.data) {
-        const options2 = {
-          url:
-            "https://api.careerbuilder.com/consumer/edge/profiles/" +
-            req.body.edgeID +
-            "/Resumes/RDB/" +
-            response.data[0].ResumeDID +
-            "/Document",
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${req.body.token}`,
-          },
-          gzip: true,
-        };
-        request(options2, (err2, res2, body) => {
-          if (err2) {
-            console.error(err2);
-            res.status(500).send("Error fetching CareerBuilder resume document");
-            return;
-          }
-          response = JSON.parse(res2.body);
-          const base64File = response.data.Content;
-          const buffer = Buffer.from(base64File, "base64");
-          fs.writeFile(
-            "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" +
-              response.data.Filename,
-            buffer,
-            (error) => {
-              if (error) {
-                console.error(error);
-                res.status(500).send("Error saving file");
-                return;
-              }
-              // File saved successfully
-              sql.connect(config, function (err) {
-                if (err) {
-                  console.error(err);
-                  res.status(500).send("Error connecting to the database");
-                  return;
-                }
-                var request = new sql.Request();
-                request.input("FileName", sql.VarChar, response.data.Filename);
-                request.input(
-                  "FileLocation",
-                  sql.VarChar,
-                  "Content/" + response.data.Filename
-                );
-                request.input("UserName", sql.VarChar, req.body.userName);
-                request.input("Email", sql.VarChar, req.body.emailID);
-                request.execute("InsertJobBoardResume", function (err, recordset) {
-                  if (err) {
-                    console.error(err);
-                    res.status(500).send("Error inserting record into the database");
-                    return;
-                  }
-                  res.send(response.data);
-                });
-              });
+  request(options, (err, res1, body) => {
+    if (err) {
+      return console.log(err);
+    }
+    response = JSON.parse(res1.body);
+    if (response.data) {
+      const options2 = {
+        url:
+          "https://api.careerbuilder.com/consumer/edge/profiles/" +
+          req.body.edgeID +
+          "/Resumes/RDB/" +
+          response.data[0].ResumeDID +
+          "/Document",
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${req.body.token}`,
+        },
+        gzip: true,
+      };
+      request(options2, (err2, res2, body) => {
+        if (err) {
+          return console.log(err2);
+        }
+        response = JSON.parse(res2.body);
+        const base64File = response.data.Content;
+        const buffer = Buffer.from(base64File, "base64");
+        //fs.writeFile('D:/Code/SV Report/' + response.data.Filename, buffer, (error) => {
+        fs.writeFile(
+          "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" +
+            response.data.Filename,
+          buffer,
+          (error) => {
+            if (error) {
+              console.error(error);
+              res.status(500).send("Error saving file");
+              return;
             }
+          }
+        );
+        sql.connect(config, function (err) {
+          var request = new sql.Request();
+          request.input("FileName", sql.VarChar, response.data.Filename);
+          request.input(
+            "FileLocation",
+            sql.VarChar,
+            "Content/" + response.data.Filename
           );
+          request.input("UserName", sql.VarChar, req.body.userName);
+          request.input("Email", sql.VarChar, req.body.emailID);
+          request.execute("InsertJobBoardResume", function (err, recordset) {
+            if (err) console.log(err);
+            res.send(response.data);
+          });
         });
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+      });
+    }
+  });
 });
 
 app.post("/saveResume", function (req, res) {
@@ -3425,37 +3388,29 @@ app.post("/getResumePath", function (req, res) {
 });
 
 app.post("/getCBQuota", function (req, res) {
-  try {
-    const options = {
-      url: "https://api.careerbuilder.com/consumer/edge/Auth/Quota",
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${req.body.token}`,
-      },
-    };
+  let response = null;
+  const options = {
+    url: "https://api.careerbuilder.com/consumer/edge/Auth/Quota",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "en-US,en;q=0.8",
+      "content-encoding": "gzip",
+      Authorization: `Bearer ${req.body.token}`,
+    },
+    gzip: true,
+  };
 
-    request(options, (error, response, body) => {
-      if (error) {
-        console.error(error);
-        res.status(500).send("Error fetching CB quota data");
-        return;
-      }
-
-      if (response.statusCode !== 200) {
-        console.error(`Error: ${response.statusCode} - ${response.statusMessage}`);
-        res.status(response.statusCode).send("Failed to fetch CB quota data");
-        return;
-      }
-
-      const quotaData = JSON.parse(body);
-      res.send(quotaData);
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+  request(options, (err, res1, body) => {
+    if (err) {
+      return console.log(err);
+    }
+    response = JSON.parse(res1.body);
+    res.send(response);
+  });
 });
 
 /* app.post('/getMonsterAuthToken', function (req, res) {
@@ -4539,7 +4494,7 @@ app.post("/getOnboardingCount", function (req, res) {
           flag: 1,
           result: recordset.recordsets[0],
         };
-        res.send(result);
+        res.send(recordset.recordsets[0]);
       });
     });
   } catch (error) {

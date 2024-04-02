@@ -303,8 +303,8 @@ export class DashboardComponent implements OnInit {
     this.getSubmissionDetails(this.defaultStartDate, this.defaultEndDate);
     this.getLegalInfo();
     this.getH1BExpiry(this.todayDate, this.next30days);
-    this.getSiteVistReport();
-    this.getJobBoardDetails();
+    // this.getSiteVistReport();
+    // this.getJobBoardDetails();
     this.jobReqChartLabels = ['Rashi', 'Suchita', 'Ram'];
     this.jobBReqChartData = [3, 5, 8];
 
