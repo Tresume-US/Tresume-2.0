@@ -78,7 +78,7 @@ export class CreateInvoiceComponent implements OnInit {
   newrows: boolean = false;
   candidatelistname:any;
   candidateid:any =0;
-
+  daywisetimesheetlist: any = [];
 
   ngOnInit(): void {
     this.loading = true;
@@ -100,6 +100,12 @@ export class CreateInvoiceComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.routeType = this.route.snapshot.params["routeType"];
     // this.addDefaultRows(2);
+  }
+
+  addService() {
+    if (!this.selectedclient) {
+      alert('Please select a client before Adding a Service!');
+    }
   }
 
   getreportcandidatelist() {
@@ -190,9 +196,21 @@ export class CreateInvoiceComponent implements OnInit {
 
 
   onOptionChanges(event: any) {
-    this.previousOption = this.selectedOption;
-    this.selectedOption = event.target.value;
+    if(event == 1){
+      this.showAdditionalInputs = true;
+
+    }else{
+      this.showAdditionalInputs = false;
+      console.log(this.timesheetlist.length);
+      if(this.timesheetlist.length != 0){
+        for (let i = 0; i < this.timesheetlist.length; i++) {
+          console.log(this.timesheetlist[i]);
+        }
+      }
+
+    }
   }
+
 
   goToPreviousOption() {
     if (this.previousOption === 'example1' || this.previousOption === 'example2') {
@@ -211,6 +229,12 @@ export class CreateInvoiceComponent implements OnInit {
     }else if(value === 'option3'){
       this.getlasttimesheetlist();
     }
+  }
+
+  oncandidatechange(value:any) {
+    console.log(value);
+    this.candidateid = value;
+    this.getalltimesheetlist();
 
   }
 
@@ -265,15 +289,13 @@ export class CreateInvoiceComponent implements OnInit {
     this.showPopup = false;
   }
 
-  selectedOption: string = '';
-  showAdditionalInputs: boolean = false;
+  selectedOption: any = '0';
+  showAdditionalInputs: boolean = true;
   showButtons: any;
 
   onFilterChange(value: string) {
     this.selectedOption = value;
-    this.showAdditionalInputs = this.selectedOption === 'option3';
     console.log('Selected Option:', this.selectedOption);
-    console.log('showAdditionalInputs:', this.showAdditionalInputs);
   }
 
   selectedItem: any;
@@ -322,6 +344,7 @@ export class CreateInvoiceComponent implements OnInit {
   getalltimesheetlist() {
     let Req = {
       orgID: this.clientid,
+      candidateid:this.candidateid,
     };
     this.Service.gettimesheetlist(Req).subscribe((x: any) => {
       this.timesheetlist = x.result;
@@ -339,6 +362,7 @@ export class CreateInvoiceComponent implements OnInit {
 
     let Req = {
         orgID: this.clientid,
+        candidateid:this.candidateid,
         startdate: formattedStartDate,
         enddate: formattedEndDate
     };
@@ -361,6 +385,7 @@ getcurrenttimesheetlist() {
 
   let Req = {
       orgID: this.clientid,
+      candidateid:this.candidateid,
       startdate: formattedStartDate,
       enddate: formattedEndDate
   };

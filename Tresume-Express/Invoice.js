@@ -256,7 +256,7 @@ router.post("/gettimesheetlist", async (req, res) => {
       }
       var request = new sql.Request();
 
-      var query = "SELECT tm.id, tm.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS candidatename, tm.totalhrs, tm.details, tm.totalamt, tm.billableamt, tm.projectid, tm.fromdate FROM timesheet_master AS tm JOIN timesheet_project AS tp ON tm.projectid = tp.projectid JOIN trainee AS t ON tm.traineeid = t.traineeid WHERE tp.clientid = '" + req.body.orgID + "' AND tm.status = 3 AND tm.isbillable = 1";
+      var query = "SELECT tm.id, tm.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS candidatename, tm.totalhrs,tm.day1,tm.day2,tm.day3,tm.day4,tm.day5,tm.day6,tm.day7, tm.details, tm.totalamt, tm.billableamt, tm.projectid, tm.fromdate FROM timesheet_master AS tm JOIN timesheet_project AS tp ON tm.projectid = tp.projectid JOIN trainee AS t ON tm.traineeid = t.traineeid WHERE tp.clientid = '" + req.body.orgID + "' AND tm.status = 3 AND tm.isbillable = 1";
 
       if (req.body.startdate) {
         query += " AND tm.fromdate >= '" + req.body.startdate + "'";
@@ -266,6 +266,9 @@ router.post("/gettimesheetlist", async (req, res) => {
         query += " AND tm.fromdate <= '" + req.body.enddate + "'";
       }
 
+      if (req.body.candidateid && req.body.candidateid !=0 ) {
+        query += " AND tm.traineeid = '" + req.body.candidateid + "'";
+      }
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -317,7 +320,7 @@ console.log(query);
     INSERT INTO [dbo].[invoiceattachements] ([invoiceid], [filename], [status])
     VALUES (@invoiceid, @filename, @status);
   `;
-    
+
 
     for (const file of req.files) {
       const attachmentRequest = new sql.Request();
@@ -352,7 +355,7 @@ router.post('/GetlastInvoice', async (req, res) => {
       flag: 1,
       invoiceNo: nextInvoiceNo,
     };
-    res.json(data); 
+    res.json(data);
 
   } catch (err) {
     console.error('SQL error:', err.message);
