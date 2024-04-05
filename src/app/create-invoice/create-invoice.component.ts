@@ -113,6 +113,9 @@ export class CreateInvoiceComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.routeType = this.route.snapshot.params["routeType"];
     // this.addDefaultRows(2);
+
+    this.selectedState = this.timesheetlist.length > 0 ? this.timesheetlist[0].location : '';
+
   }
 
   addService() {

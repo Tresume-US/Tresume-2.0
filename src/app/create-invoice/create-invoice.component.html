@@ -270,10 +270,16 @@
               <div class="input-group-prepend">
                 <span class="input-group-text custom-bg-purple text-light"><i class="fas fa-map-marker-alt"></i></span>
               </div>
-              <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
+              <!-- <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
                 [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
                 <option value="0" selected>Select Location</option>
                 <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
+              </select> -->
+              <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
+                [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
+                <option *ngFor="let timesheet of timesheetlist" [value]="timesheet.location" selected (change)="onOptionChanges($event.target.value)">{{
+                  timesheet.location }}</option>
+                <option *ngFor="let state of states" [value]="state">{{ state.state }}</option>
               </select>
             </div>
             <div *ngIf="location.invalid && location.touched">
@@ -312,7 +318,7 @@
                 <div class="form-group">
                   <label for="candidates">Candidate Name:</label>
                   <select class="form-control" id="candidates" [(ngModel)]="candidateid"
-                    (change)="oncandidatechange($event.target.value)"  [ngModelOptions]="{standalone: true}">
+                    (change)="oncandidatechange($event.target.value)" [ngModelOptions]="{standalone: true}">
                     <option value="0">Select the Candidate</option>
                     <option *ngFor="let candidatelistnames of candidatelistname"
                       value="{{candidatelistnames.traineeid}}" [value]="candidatelistnames.traineeid">{{
@@ -322,7 +328,7 @@
 
                 <div class="form-group">
                   <label for="filterBy">Filter by:</label>
-                  <select class="form-control" id="filterBy" (change)="onFilterChanges($event.target.value)" >
+                  <select class="form-control" id="filterBy" (change)="onFilterChanges($event.target.value)">
                     <option value="option1">All dates</option>
                     <option value="option2">This month</option>
                     <option value="option3">Last month</option>
@@ -330,7 +336,8 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="filterBy">Time filter:</label>
-                  <select class="form-control" (change)="onOptionChanges($event.target.value)" [(ngModel)]="selectedOption"  [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" (change)="onOptionChanges($event.target.value)"
+                    [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}">
                     <option value="0">Group time by service</option>
                     <option value="1">Don't group time</option>
 
