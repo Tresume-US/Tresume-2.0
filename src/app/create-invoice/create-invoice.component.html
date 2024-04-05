@@ -32,7 +32,7 @@
               <label for="client" class="dropdown-label">Client</label>
               <!-- <mat-label>Client</mat-label> -->
               <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
-                (selectionChange)="onclientChanges()">
+                (selectionChange)="onclientChanges()" [ngModelOptions]="{standalone: true}">
                 <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName
                   }}-{{client.ProjectName}}</mat-option>
 
@@ -336,36 +336,68 @@
 
                   </select>
                 </div>
-                <div *ngIf="showAdditionalInputs">
-                  <div class="card mb-3" *ngFor="let timesheet of timesheetlist">
-                    <div class="card-body">
-                      <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                      <div class="row">
-                        <div class="col mt-3 d-flex justify-content-between">
-                          <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
-                            "UTC"}}</p>
-                          <p>{{timesheet.totalhrs}} hrs</p>
-                        </div>
+                <div *ngIf="!showAdditionalInputs">
+                  <div class="btn" (click)="addalltimesheet(daywisetimesheetlist)">Add All</div>
+                  <div class="card mb-3" *ngFor="let timesheet of daywisetimesheetlist">
+                      <div class="card-body">
+                          <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
+                          <div class="row">
+                              <div class="col mt-3 d-flex justify-content-between">
+                                  <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
+                                      "UTC"}}</p>
+                                  <p>{{timesheet.totalhrs}} hrs</p>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: -11px;">
+                              <div class="col">
+                                  <p class="card-text">${{timesheet.billableamt}}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col">
+                                  <p class="card-text">{{timesheet.candidatename}}</p>
+                              </div>
+                          </div>
+                          <div class="row mt-3">
+                              <div class="col d-flex justify-content-between">
+                                  <div class="btn" (click)="addtimesheet(timesheet)">Add</div>
+                                  <!-- <button class="btn ">Open</button> -->
+                              </div>
+                          </div>
                       </div>
-                      <div class="row" style="margin-top: -11px;">
-                        <div class="col">
-                          <p class="card-text">${{timesheet.totalamt}}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <p class="card-text">{{timesheet.candidatename}}</p>
-                        </div>
-                      </div>
-                      <div class="row mt-3">
-                        <div class="col d-flex justify-content-between">
-                          <div class="btn" (click)="addservice(timesheet)">Add</div>
-                          <!-- <button class="btn ">Open</button> -->
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </div>
+              </div>
+              <div *ngIf="showAdditionalInputs">
+                  <div class="card mb-3" *ngFor="let timesheet of timesheetlist">
+                      <div class="card-body">
+                          <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
+                          <div class="row">
+                              <div class="col mt-3 d-flex justify-content-between">
+                                  <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
+                                      "UTC"}}</p>
+                                  <p>{{timesheet.totalhrs}} hrs</p>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top: -11px;">
+                              <div class="col">
+                                  <p class="card-text">${{timesheet.totalamt}}</p>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col">
+                                  <p class="card-text">{{timesheet.candidatename}}</p>
+                              </div>
+                          </div>
+                          <div class="row mt-3">
+                              <div class="col d-flex justify-content-between">
+                                  <div class="btn" (click)="addtimesheet(timesheet)">Add</div>
+                                  <!-- <button class="btn ">Open</button> -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
 
 
                 <!-- <p style="color: #999; font-style: italic;"

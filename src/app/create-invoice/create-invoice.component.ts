@@ -210,16 +210,14 @@ export class CreateInvoiceComponent implements OnInit {
 
   onOptionChanges(event: any) {
     if(event == 1){
-      this.showAdditionalInputs = true;
-
-    }else{
       this.showAdditionalInputs = false;
+    
+      
+    }else{
+      this.showAdditionalInputs = true;
+      
       console.log(this.timesheetlist.length);
-      if(this.timesheetlist.length != 0){
-        for (let i = 0; i < this.timesheetlist.length; i++) {
-          console.log(this.timesheetlist[i]);
-        }
-      }
+      
 
     }
   }
@@ -248,7 +246,6 @@ export class CreateInvoiceComponent implements OnInit {
     console.log(value);
     this.candidateid = value;
     this.getalltimesheetlist();
-
   }
 
   onclientChanges(){
@@ -302,13 +299,14 @@ export class CreateInvoiceComponent implements OnInit {
     this.showPopup = false;
   }
 
-  selectedOption: any = '0';
-  showAdditionalInputs: boolean = true;
+  selectedOption: any = '1';
+  showAdditionalInputs: boolean = false;
   showButtons: any;
 
   onFilterChange(value: string) {
     this.selectedOption = value;
     console.log('Selected Option:', this.selectedOption);
+    
   }
 
   selectedItem: any;
@@ -361,6 +359,34 @@ export class CreateInvoiceComponent implements OnInit {
     };
     this.Service.gettimesheetlist(Req).subscribe((x: any) => {
       this.timesheetlist = x.result;
+      this.daywisetimesheetlist = [];
+      if(this.timesheetlist.length != 0){
+        for (let i = 0; i < this.timesheetlist.length; i++) {
+          console.log(this.timesheetlist[i]);
+          const fromDateString = this.timesheetlist[i].fromdate;
+          const fromDate = new Date(fromDateString);
+          for (let day = 1; day <= 7; day++) {
+            const nextDate = new Date(fromDate);
+            nextDate.setDate(nextDate.getDate() + day);
+            var date = nextDate.toISOString();
+
+            var hrs = this.timesheetlist[i]['day' + day];
+            if(hrs != ''){
+              var data = {
+                fromdate:date,
+                details:this.timesheetlist[i].details,
+                totalhrs:hrs,
+                billableamt:this.timesheetlist[i].billableamt,
+                id:this.timesheetlist[i].id,
+                candidatename:this.timesheetlist[i].candidatename
+                }
+                this.daywisetimesheetlist.push(data);
+            }
+            
+          }
+          console.log(this.daywisetimesheetlist);
+        }
+      }
     });
   }
 
@@ -382,6 +408,35 @@ export class CreateInvoiceComponent implements OnInit {
 
     this.Service.gettimesheetlist(Req).subscribe((x: any) => {
         this.timesheetlist = x.result;
+        
+        this.daywisetimesheetlist = [];
+        if(this.timesheetlist.length != 0){
+          for (let i = 0; i < this.timesheetlist.length; i++) {
+            console.log(this.timesheetlist[i]);
+            const fromDateString = this.timesheetlist[i].fromdate;
+            const fromDate = new Date(fromDateString);
+            for (let day = 1; day <= 7; day++) {
+              const nextDate = new Date(fromDate);
+              nextDate.setDate(nextDate.getDate() + day);
+              var date = nextDate.toISOString();
+  
+              var hrs = this.timesheetlist[i]['day' + day];
+              if(hrs != ''){
+                var data = {
+                  fromdate:date,
+                  details:this.timesheetlist[i].details,
+                  totalhrs:hrs,
+                  billableamt:this.timesheetlist[i].billableamt,
+                  id:this.timesheetlist[i].id,
+                  candidatename:this.timesheetlist[i].candidatename
+                  }
+                  this.daywisetimesheetlist.push(data);
+              }
+              
+            }
+            console.log(this.daywisetimesheetlist);
+          }
+        }
     });
 }
 
@@ -405,11 +460,39 @@ getcurrenttimesheetlist() {
 
   this.Service.gettimesheetlist(Req).subscribe((x: any) => {
       this.timesheetlist = x.result;
+      this.daywisetimesheetlist = [];
+      if(this.timesheetlist.length != 0){
+        for (let i = 0; i < this.timesheetlist.length; i++) {
+          console.log(this.timesheetlist[i]);
+          const fromDateString = this.timesheetlist[i].fromdate;
+          const fromDate = new Date(fromDateString);
+          for (let day = 1; day <= 7; day++) {
+            const nextDate = new Date(fromDate);
+            nextDate.setDate(nextDate.getDate() + day);
+            var date = nextDate.toISOString();
+
+            var hrs = this.timesheetlist[i]['day' + day];
+            if(hrs != ''){
+              var data = {
+                fromdate:date,
+                details:this.timesheetlist[i].details,
+                totalhrs:hrs,
+                billableamt:this.timesheetlist[i].billableamt,
+                id:this.timesheetlist[i].id,
+                candidatename:this.timesheetlist[i].candidatename
+                }
+                this.daywisetimesheetlist.push(data);
+            }
+            
+          }
+          console.log(this.daywisetimesheetlist);
+        }
+      }
   });
 }
 
 
-addservice(timesheet:any){
+addtimesheet(timesheet:any){
   if(this.newrows){
     this.invoiceLines = [];
   }
@@ -425,6 +508,28 @@ addservice(timesheet:any){
   }
   this.invoiceLines.push(data);
   this.updateAmount(data);
+  this.newrows = false;
+}
+
+addalltimesheet(timesheet:any){
+  if(this.newrows){
+    this.invoiceLines = [];
+  }
+  for (let i = 0; i < this.daywisetimesheetlist.length; i++) {
+    var data = {
+      sno: '',
+      serviceDate: this.daywisetimesheetlist[i].fromdate,
+      productService: 'SERVICE',
+      description: this.daywisetimesheetlist[i].details,
+      qty: this.daywisetimesheetlist[i].totalhrs,
+      rate: this.daywisetimesheetlist[i].billableamt,
+      attachment: '',
+      timesheetid:this.daywisetimesheetlist[i].id
+    }
+    this.invoiceLines.push(data);
+    this.updateAmount(data);
+  }
+  
   this.newrows = false;
 }
 
@@ -473,9 +578,7 @@ addservice(timesheet:any){
   formData.append('orgid', this.OrgID);
 
   // Append invoice lines data
-  this.invoiceLines.forEach(line => {
-    formData.append('invoicedetails', JSON.stringify(line));
-  });
+  formData.append('invoicedetails', JSON.stringify(invoiceLinesData));
 
   // Append attachments
   this.files.forEach(file => {
