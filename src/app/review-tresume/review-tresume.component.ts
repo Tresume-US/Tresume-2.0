@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   templateUrl: './review-tresume.component.html',
-  providers: [CookieService, ReviewService, MessageService,AppService],
+  providers: [CookieService, ReviewService, MessageService, AppService],
   styleUrls: ['./review-tresume.component.scss']
 })
 
@@ -37,6 +37,7 @@ export class ReviewTresumeComponent implements OnChanges {
   stateTaxAllowance: any;
   federalTaxAllowance: any;
   federalAddAllowance: any;
+  FState: any;
   gcDate: any;
   gcWages: any;
   lcaDate: any;
@@ -53,7 +54,7 @@ export class ReviewTresumeComponent implements OnChanges {
   routingnum1: any;
   salaryDepositType: any;
   howMuch: any;
-  submissionList: any[] = []; 
+  submissionList: any[] = [];
 
 
   //general declaration
@@ -150,8 +151,8 @@ export class ReviewTresumeComponent implements OnChanges {
   deleteIndex: number;
   reviewService: any;
   placementList: any;
-  candidateID:any;
-  selectedcurrentstatus:string='';
+  candidateID: any;
+  selectedcurrentstatus: string = '';
   selectedStatus: string = '-PLACED/WORKING AT CLIENT LOCATION-';
   statuss: string[] = ['ON TRAINING', 'DIRECT MARKETTING', 'ON BENCH', 'MARKETTING ON HOLD', 'HAS OFFER', 'FIRST TIME CALLER', 'DROPPED TRAINING'];
 
@@ -164,10 +165,10 @@ export class ReviewTresumeComponent implements OnChanges {
   ssn: string = '';
   showSSN: boolean = false;
   inputDisabled: boolean = true;
-  loading:boolean = false;
-  phoneNumberG:any 
-  generalEmail:any 
-  DealOffered:any 
+  loading: boolean = false;
+  phoneNumberG: any
+  generalEmail: any
+  DealOffered: any
   selectedrecruiterName: any;
   state: any;
   ReferredBy2: any;
@@ -181,8 +182,9 @@ export class ReviewTresumeComponent implements OnChanges {
   Availability: any = '0';
   txtComments: any;
   MarketerName: any;
-  TresumeID:any = '';
+  TresumeID: any = '';
   candiateName: any;
+  userorganizationid: any;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -237,8 +239,8 @@ export class ReviewTresumeComponent implements OnChanges {
       statusDate: this.datePipe.transform(this.statusDate),
       duiFelonyInfo: this.duiFelonyInfo,
       selectedcurrentstatus: this.selectedcurrentstatus,
-      legalStatusVal:  this.datePipe.transform(this.legalStatusVal),
-      legalStatusValend:  this.datePipe.transform(this.legalStatusValend),
+      legalStatusVal: this.datePipe.transform(this.legalStatusVal),
+      legalStatusValend: this.datePipe.transform(this.legalStatusValend),
       selectedLegalStatus: this.selectedLegalStatus,
       ftcNotes: this.ftcNotes,
       otherNotes: this.otherNotes,
@@ -262,12 +264,12 @@ export class ReviewTresumeComponent implements OnChanges {
       City: this.personalCity,
       Zipcode: this.personalZipcode,
       AddressType: this.addressType,
-      ReferredBy_external:this.referredByExternal
-  };
-  
+      ReferredBy_external: this.referredByExternal
+    };
+
     console.log(Req);
-    
-    console.log('Education Data:'+this.educations);
+
+    console.log('Education Data:' + this.educations);
 
     console.log('Experience Data:');
     for (let i = 0; i < this.experiences.length; i++) {
@@ -309,9 +311,9 @@ export class ReviewTresumeComponent implements OnChanges {
       'Zipcode': this.personalZipcode,
       'Address Type': this.addressType
     };
-      console.log("Personal-Info Tab")
-      console.log(formData);
-    
+    console.log("Personal-Info Tab")
+    console.log(formData);
+
   }
 
   private handleSuccess(response: any): void {
@@ -320,9 +322,9 @@ export class ReviewTresumeComponent implements OnChanges {
     this.loading = false;
     this.fetchinterviewlist();
   }
-  
+
   private handleError(response: any): void {
-    this.messageService.add({ severity: 'error', summary:  response.message });
+    this.messageService.add({ severity: 'error', summary: response.message });
     this.loading = false;
   }
 
@@ -340,13 +342,13 @@ export class ReviewTresumeComponent implements OnChanges {
       assistedBy: this.myForm.get('assistedBy').value,
       typeOfAssistance: this.myForm.get('typeOfAssistance').value,
       interviewMode: this.myForm.get('interviewMode').value,
-      interviewTimeZone:'EST',
-      traineeID:this.candidateID,
-      recruiterID:this.TraineeID,
-      recruiteremail:this.userName,
-      InterviewStatus:'SCHEDULED',
+      interviewTimeZone: 'EST',
+      traineeID: this.candidateID,
+      recruiterID: this.TraineeID,
+      recruiteremail: this.userName,
+      InterviewStatus: 'SCHEDULED',
     };
-    
+
     console.log(Req);
 
     this.service.insertTraineeInterview(Req).subscribe(
@@ -374,9 +376,9 @@ export class ReviewTresumeComponent implements OnChanges {
       vendorName: this.myFormSubmission.value.vendorName,
       rate: this.myFormSubmission.value.rate,
       clientName: this.myFormSubmission.value.clientName,
-      recruiteremail:this.userName,
-      MarketerID:this.TraineeID,
-      CandidateID:this.candidateID
+      recruiteremail: this.userName,
+      MarketerID: this.TraineeID,
+      CandidateID: this.candidateID
     };
     console.log(Req);
     this.service.insertSubmissionInfo(Req).subscribe(
@@ -407,7 +409,7 @@ export class ReviewTresumeComponent implements OnChanges {
       GCWages: this.myFormFinancial.value.gcWages,
       Lcadate: this.myFormFinancial.value.lcaDate,
       LCARate: this.myFormFinancial.value.lcaRate,
-      state: this.selectedstate1,
+      FState: this.myFormFinancial.value.FState,
       healthInsurance: this.myFormFinancial.value.healthInsurance,
       lifeInsurance: this.myFormFinancial.value.lifeInsurance,
 
@@ -421,7 +423,7 @@ export class ReviewTresumeComponent implements OnChanges {
       Bank2RoutingNumber: this.myFormFinancial.value.routingnum2,
       SalaryDepositType: this.myFormFinancial.value.salaryDepositType,
       HowMuch: this.myFormFinancial.value.howMuch,
-      TraineeID:this.candidateID
+      TraineeID: this.candidateID
 
     };
     console.log(Req);
@@ -438,7 +440,7 @@ export class ReviewTresumeComponent implements OnChanges {
   saveSiteVisitFormData() {
     console.log('Saving data for the Site Visit tab:', this.siteVisitFormData);
   }
-  
+
 
   onTabChange(tabIndex: number) {
     const tabLabels = ['', '', '', '', '', ''];
@@ -448,7 +450,7 @@ export class ReviewTresumeComponent implements OnChanges {
       this.tabIndex = tabIndex;
       this.showSaveButton = tabIndex !== 2;
       this.saveButtonLabel = `Save ${tabLabels[tabIndex]}`;
-      this.router.navigate(['/reviewtresume/'+this.routeType+'/'+this.candidateID+'/'+tabIndex]);
+      this.router.navigate(['/reviewtresume/' + this.routeType + '/' + this.candidateID + '/' + tabIndex]);
     }
 
     this.currentTabIndex = tabIndex;
@@ -475,10 +477,10 @@ export class ReviewTresumeComponent implements OnChanges {
     }
   }
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe) {
-    
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder, private AppService: AppService, private router: Router, private datePipe: DatePipe) {
+
     this.candidateID = this.route.snapshot.params["traineeID"];
-    this.candiateName  = this.route.snapshot.queryParams['firstName'];
+    this.candiateName = this.route.snapshot.queryParams['firstName'];
     console.log(this.candidateID);
     console.log('First Name:', this.candiateName);
     this.tabIndex = this.route.snapshot.params["tabIndex"];
@@ -489,7 +491,7 @@ export class ReviewTresumeComponent implements OnChanges {
     this.onTabChange(parseInt(this.tabIndex));
     this.candidateID = this.route.snapshot.params["traineeID"];
 
-   }
+  }
 
   ngOnInit(): void {
     // this.fetchinterviewlist();
@@ -504,7 +506,7 @@ export class ReviewTresumeComponent implements OnChanges {
     this.getdivision();
 
     this.currentTabIndex = this.tabIndex;
-    
+
     this.FormGeneral = this.formBuilder.group({
       phoneNumberG: ['', [Validators.required]],
       generalEmail: ['', [Validators.required]],
@@ -526,9 +528,9 @@ export class ReviewTresumeComponent implements OnChanges {
       otherNotes: [''],
       division: [''],
       dob: [''],
-      selectedcurrentstatus:[''],
+      selectedcurrentstatus: [''],
     });
-    
+
     this.myForm = this.formBuilder.group({
       interviewInfo: ['', [Validators.required, Validators.minLength(3)]],
       client: ['', [Validators.required, Validators.minLength(3)]],
@@ -548,13 +550,13 @@ export class ReviewTresumeComponent implements OnChanges {
       vendorName: ['', [Validators.required, Validators.minLength(3)]],
       rate: ['', [Validators.required, Validators.minLength(3)]],
       clientName: ['', [Validators.required, Validators.minLength(3)]],
-      
+
     });
 
     this.myFormFinancial = this.formBuilder.group({
       accountnum1: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       accountnum2: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-       FinancialNotes: [''],
+      FinancialNotes: [''],
       salaryinfo: [''],
       maritalStatus: ['Married'],
       legalStatus: [''],
@@ -567,7 +569,7 @@ export class ReviewTresumeComponent implements OnChanges {
       lcaDate: [''],
       gcWages: [''],
       gcDate: [''],
-      State: [''],
+      FState: [''],
       healthInsurance: [''],
       lifeInsurance: [false],
 
@@ -579,21 +581,21 @@ export class ReviewTresumeComponent implements OnChanges {
       howMuch: [''],
       routingnum1: [''],
       routingnum2: [''],
-      
-      
+
+
     });
 
     // this.disableFormGroup(this.myFormFinancial);
     var viewaccess = this.AppService.checkViewOnly(2);
-    if(!viewaccess){
+    if (!viewaccess) {
       this.disableGeneralFields();
       this.disableInterviewFields();
       this.disableSubmissionFields();
       this.disableFinancialFields();
     }
-    
+
   }
-  
+
 
   disableGeneralFields() {
     Object.keys(this.FormGeneral.controls).forEach(controlName => {
@@ -663,12 +665,12 @@ export class ReviewTresumeComponent implements OnChanges {
   }
 
   // emailPlacementTracker() {
-    
+
   //   const req = {
   //     TraineeID: this.candidateID,
   //     OrgID: this.OrgID,
   //   };
-   
+
   //   this.service.Sendplacementmail(req).subscribe((x: any) => {
   //     this.TraineeID = x.result;
   //     this.OrgID = x.result;
@@ -681,10 +683,10 @@ export class ReviewTresumeComponent implements OnChanges {
     this.loading = true;
     const req = {
       TraineeID: this.candidateID,
-      OrgID: this.OrgID,
+      OrgID: this.userorganizationid,
       placementList: this.placementList
     };
-  
+
     this.service.Sendplacementmail(req).subscribe(
       (response: any) => {
         console.log('Email sent successfully:', response);
@@ -698,10 +700,10 @@ export class ReviewTresumeComponent implements OnChanges {
       }
     );
   }
-  
 
-  
-  
+
+
+
   getSubmissionList() {
     const req = {
       TraineeID: this.candidateID,
@@ -711,7 +713,7 @@ export class ReviewTresumeComponent implements OnChanges {
       this.submissionList = x.result;
     });
   }
-  
+
   fetchinterviewlist() {
     let Req = {
       TraineeID: this.candidateID,
@@ -767,34 +769,34 @@ export class ReviewTresumeComponent implements OnChanges {
     });
     console.log(this.selectedstate1);
   }
-  
+
   getOrgUserList() {
     let Req = {
       TraineeID: this.candidateID,
-      OrgID:this.OrgID
+      OrgID: this.OrgID
     };
     this.service.getOrgUserList(Req).subscribe((x: any) => {
-    this.referedby = x.result;
-    this.recruiterName = x.result;
-    this.loading = false;
-    }),(error: any) => {
+      this.referedby = x.result;
+      this.recruiterName = x.result;
+      this.loading = false;
+    }), (error: any) => {
       this.loading = false;
     };
   }
-  
+
   fetchCandidateInfo() {
     let Req = {
       TraineeID: this.candidateID,
     };
     this.service.getCandidateInfo(Req).subscribe((x: any) => {
       console.log(x.result[0].Candidatestatus);
-      this.test = x.result[0].Candidatestatus;  
+      this.test = x.result[0].Candidatestatus;
       this.selectedcurrentstatus = x.result[0].Candidatestatus;
       this.middleName = x.result[0].MiddleName || '';
-      this.phoneNumberG = x.result[0].PhoneNumber || ''; 
+      this.phoneNumberG = x.result[0].PhoneNumber || '';
       this.generalEmail = x.result[0].UserName || '';
       this.selectedrecruiterName = x.result[0].RecruiterName || '';
-      this.legalStatusVal = x.result[0].Legalstartdate || ''; 
+      this.legalStatusVal = x.result[0].Legalstartdate || '';
       this.firstName = x.result[0].FirstName || '';
       this.middleName = x.result[0].MiddleName || '';
       this.lastName = x.result[0].LastName || '';
@@ -806,7 +808,7 @@ export class ReviewTresumeComponent implements OnChanges {
       this.duiFelonyInfo = x.result[0].DuiFelonyInfo || '';
       this.MarketerName = x.result[0].marketername || '';
       this.legalStatusValend = x.result[0].Legalenddate || '';
-      this.selectedLegalStatus = x.result[0].LegalStatus || '';  
+      this.selectedLegalStatus = x.result[0].LegalStatus || '';
       this.ftcNotes = x.result[0].FTCNotes || '';
       this.otherNotes = x.result[0].Notes || '';
       this.division = x.result[0].division || '';
@@ -824,13 +826,16 @@ export class ReviewTresumeComponent implements OnChanges {
       this.addressType = x.result[0].AddressType || '';
       this.passportvalStartdate = x.result[0].PassvalidateStartdate || '';
       this.passportvalenddate = x.result[0].Passvalidateenddate || '';
-      if(x.tresumeInfo.length ===0){
+      this.userorganizationid = x.result[0].userorganizationid || '';
+      if (x.tresumeInfo.length === 0) {
         // this.addRow();
         // this.addRow1();
-      }else{
+      } else {
         var tinfo = x.tresumeInfo
-        tinfo.forEach((item: { TresumeNodeTypeID?: any; Title?: string; Org?: string; NodeDate?: string; NodeDateTo?: string; 
-          Location?: any; TresumeNodeID?: string; TresumeID?: string; Skill?: string; }) => {
+        tinfo.forEach((item: {
+          TresumeNodeTypeID?: any; Title?: string; Org?: string; NodeDate?: string; NodeDateTo?: string;
+          Location?: any; TresumeNodeID?: string; TresumeID?: string; Skill?: string;
+        }) => {
           // Check the value of TresumeNodeTypeID
           if (item.TresumeNodeTypeID === 1) {
             this.educations.push(item);
@@ -840,22 +845,22 @@ export class ReviewTresumeComponent implements OnChanges {
             this.TresumeID = item.TresumeID;
           }
         });
-        if(this.educations.length ===0){
+        if (this.educations.length === 0) {
           // this.addRow();
         }
-        if(this.experiences.length ===0){
+        if (this.experiences.length === 0) {
           // this.addRow1();
         }
       }
 
       // this.FormGeneral.patchValue({
-        
-  
+
+
       // });
       this.myFormFinancial.patchValue({
         accountnum1: x.result[0].Bank1AccountNumber || '',
         accountnum2: x.result[0].Bank2AccountNumber || '',
-         FinancialNotes: x.result[0]. FinancialNotes || '',
+        FinancialNotes: x.result[0].FinancialNotes || '',
         salaryinfo: x.result[0].Salary || '',
         maritalStatus: x.result[0].MaritalStatus || 'Married',
         legalStatus: x.result[0].LegalStatus || '',
@@ -868,7 +873,7 @@ export class ReviewTresumeComponent implements OnChanges {
         lcaDate: x.result[0].LCADate || '',
         gcWages: x.result[0].GCWages || '',
         gcDate: x.result[0].GCDate || '',
-        State: x.result[0].FState || '',
+        FState: x.result[0].FState || '',
         healthInsurance: x.result[0].HealthInsurance || '',
         lifeInsurance: x.result[0].LifeInsurance || false,
         Bankname1: x.result[0].Bank1Name || '',
@@ -956,7 +961,7 @@ export class ReviewTresumeComponent implements OnChanges {
     this.showConfirmationDialog = false;
   }
 
-  canceldeletesubmission(){
+  canceldeletesubmission() {
     console.log(this.showConfirmationDialog3);
     this.showConfirmationDialog3 = false;
   }
@@ -1007,38 +1012,38 @@ export class ReviewTresumeComponent implements OnChanges {
   }
 
   // submission delete
-deletesubmissiondata(submissionid: number) {
-  this.deleteIndex = submissionid;
-  console.log(this.deleteIndex);
-  this.showConfirmationDialog3 = true;
-}
-confirmdeletesubmission() {
-  console.log(this.deleteIndex);
-  let Req = {
-    submissionid: this.deleteIndex,
-  };
-  this.service.deletesubmissiondata(Req).subscribe((x: any) => {
-    var flag = x.flag;
-    this.getSubmissionList();
+  deletesubmissiondata(submissionid: number) {
+    this.deleteIndex = submissionid;
+    console.log(this.deleteIndex);
+    this.showConfirmationDialog3 = true;
+  }
+  confirmdeletesubmission() {
+    console.log(this.deleteIndex);
+    let Req = {
+      submissionid: this.deleteIndex,
+    };
+    this.service.deletesubmissiondata(Req).subscribe((x: any) => {
+      var flag = x.flag;
+      this.getSubmissionList();
 
-    if (flag === 1) {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Submission Deleted Sucessfully',
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Please try again later',
-      });
-    }
-  });
-  this.showConfirmationDialog3 = false;
-}
-cancelDeletesubmission() {
-  console.log(this.showConfirmationDialog3);
-  this.showConfirmationDialog3 = false;
-}
+      if (flag === 1) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Submission Deleted Sucessfully',
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please try again later',
+        });
+      }
+    });
+    this.showConfirmationDialog3 = false;
+  }
+  cancelDeletesubmission() {
+    console.log(this.showConfirmationDialog3);
+    this.showConfirmationDialog3 = false;
+  }
 
   //financialinfo
 
@@ -1058,31 +1063,63 @@ cancelDeletesubmission() {
   }
 
   addRecruitmentTracker() {
-      let Req = {
-        TraineeID: this.candidateID,
-        OrgID:this.OrgID
+    this.loading = true;
+
+    let Req = {
+      FinancialNotes: this.myFormFinancial.value.FinancialNotes,
+      Salary: this.myFormFinancial.value.salaryinfo,
+      Perdeium: this.myFormFinancial.value.Perdeium,
+      LegalStatus: this.myFormFinancial.value.legalStatus,
+      MaritalStatus: this.myFormFinancial.value.maritalStatus,
+      StateTaxAllowance: this.myFormFinancial.value.stateTaxAllowance,
+      StateTaxExemptions: this.myFormFinancial.value.stateTaxExemptions,
+      FederalTaxAllowance: this.myFormFinancial.value.federalTaxAllowance,
+      FederalTaxAdditionalAllowance: this.myFormFinancial.value.federalAddAllowance,
+      Gcdate: this.myFormFinancial.value.gcDate,
+      GCWages: this.myFormFinancial.value.gcWages,
+      Lcadate: this.myFormFinancial.value.lcaDate,
+      LCARate: this.myFormFinancial.value.lcaRate,
+      FState: this.myFormFinancial.value.FState,
+      healthInsurance: this.myFormFinancial.value.healthInsurance,
+      lifeInsurance: this.myFormFinancial.value.lifeInsurance,
+
+      Bank1Name: this.myFormFinancial.value.Bankname1,
+      Bank2Name: this.myFormFinancial.value.Bankname2,
+      Bank1AccountType: this.myFormFinancial.value.accountType1,
+      Bank2AccountType: this.myFormFinancial.value.accountType2,
+      Bank1AccountNumber: this.myFormFinancial.value.accountnum1,
+      Bank2AccountNumber: this.myFormFinancial.value.accountnum2,
+      Bank1RoutingNumber: this.myFormFinancial.value.routingnum1,
+      Bank2RoutingNumber: this.myFormFinancial.value.routingnum2,
+      SalaryDepositType: this.myFormFinancial.value.salaryDepositType,
+      HowMuch: this.myFormFinancial.value.howMuch,
+      TraineeID: this.candidateID,
+      OrgID: this.userorganizationid,
     };
+
     console.log('Form values:', this.myFormFinancial.value);
     this.service.insertRecruitmentTracker(Req).subscribe(
       (x: any) => {
         this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
+        this.loading = false;
       },
       (error: any) => {
         this.messageService.add({ severity: 'error', summary: 'Failed to send Mail' });
+        this.loading = false;
       }
     );
   }
 
   // Education
-  educations:any[] = [];
+  educations: any[] = [];
 
   addRow() {
-this.loading = true;
+    this.loading = true;
     let req = {
-      TraineeID:this.TraineeID,
-      TresumeID:this.TresumeID,
-      username:this.userName,
-      type:1
+      TraineeID: this.TraineeID,
+      TresumeID: this.TresumeID,
+      username: this.userName,
+      type: 1
     };
     this.service.addTresumeNode(req).subscribe(
       (x: any) => {
@@ -1092,8 +1129,8 @@ this.loading = true;
           NodeDate: '',
           NodeDateTo: '',
           Location: '',
-          TresumeNodeID:x.TresumeNodeID,
-          TresumeID:x.TresumeID
+          TresumeNodeID: x.TresumeNodeID,
+          TresumeID: x.TresumeID
         });
         this.loading = false;
       },
@@ -1106,37 +1143,37 @@ this.loading = true;
   }
 
   //Above function will remove all row in education tab
-  deleteRow(index: number,TresumeNodeID:any) {
+  deleteRow(index: number, TresumeNodeID: any) {
     this.loading = true;
     let req = {
-      TresumeNodeID:TresumeNodeID,  
+      TresumeNodeID: TresumeNodeID,
     };
     this.service.DeleteTresumeNode(req).subscribe(
       (x: any) => {
         this.messageService.add({ severity: 'Success', summary: 'Education Deleted Successfully' });
         this.educations.splice(index, 1);
-        this.loading=false;
+        this.loading = false;
       },
       (error: any) => {
         this.messageService.add({ severity: 'danger', summary: 'Error adding Experience. Please try again' });
         this.loading = false;
       }
     );
-      
-    
+
+
   }
 
   // Experience
   experienceForm: FormGroup;
-  experiences:any = [];
+  experiences: any = [];
 
   addRow1() {
-this.loading = true;
+    this.loading = true;
     let req = {
-      TraineeID:this.TraineeID,
-      TresumeID:this.TresumeID,
-      username:this.userName,
-      type:2
+      TraineeID: this.TraineeID,
+      TresumeID: this.TresumeID,
+      username: this.userName,
+      type: 2
     };
     this.service.addTresumeNode(req).subscribe(
       (x: any) => {
@@ -1146,9 +1183,9 @@ this.loading = true;
           NodeDate: '',
           NodeDateTo: '',
           Location: '',
-          TresumeNodeID:x.TresumeNodeID,
-          TresumeID:x.TresumeID,
-          Skill:''
+          TresumeNodeID: x.TresumeNodeID,
+          TresumeID: x.TresumeID,
+          Skill: ''
         });
         this.loading = false
       },
@@ -1157,17 +1194,17 @@ this.loading = true;
         this.loading = false;
       }
     );
-   
+
   }
 
-  UpdateTresumeNode(type:any,data:any){
+  UpdateTresumeNode(type: any, data: any) {
     console.log(data);
     let req = {
-      data:data,
+      data: data,
     };
     this.service.UpdateTresumeNode(req).subscribe(
       (x: any) => {
-        
+
       },
       (error: any) => {
         this.messageService.add({ severity: 'danger', summary: 'Error adding Experience. Please try again' });
@@ -1176,10 +1213,10 @@ this.loading = true;
     );
   }
 
-  deleteRow1(index: number,TresumeNodeID:any) {
+  deleteRow1(index: number, TresumeNodeID: any) {
     this.loading = true;
     let req = {
-      TresumeNodeID:TresumeNodeID,  
+      TresumeNodeID: TresumeNodeID,
     };
     this.service.DeleteTresumeNode(req).subscribe(
       (x: any) => {
@@ -1192,7 +1229,7 @@ this.loading = true;
         this.loading = false;
       }
     );
-      
+
   }
 
   // download DSR Submission tab 
@@ -1210,7 +1247,7 @@ this.loading = true;
 
     let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += "Title,SubmissionDate,MarketerName,VendorName,ClientName,Note,Rate\n";
-    
+
     data.forEach(submission => {
       csvContent += `${submission.Title},${submission.SubmissionDate},${submission.MarketerName},${submission.VendorName},${submission.ClientName},${submission.Note},${submission.Rate}\n`;
     });
@@ -1227,31 +1264,31 @@ this.loading = true;
 
     this.showmovetotalentbench = true;
   }
-  cancelMoveTB(){
+  cancelMoveTB() {
     this.showmovetotalentbench = false;
   }
 
-  movetotalentbench(){
+  movetotalentbench() {
 
     let Req = {
       TraineeID: this.candidateID,
-      Name:this.firstName +' '+this.lastName,
-      ReferredBy:this.ReferredBy2,
-      Currency:this.Currency,
-      BillRate:this.BillRate,
-      PayType:this.PayType,
-      TaxTerm:this.TaxTerm,
-      ConsultantType:this.ConsultantType,
-      JobTitle:this.title,
-      LocationPreference:this.selectedstate,
-      BenchStatus:'ACTIVEBENCH',
-      Availability:this.Availability,
-      txtComments:this.txtComments,
-      CreateBy:this.userName
-      
+      Name: this.firstName + ' ' + this.lastName,
+      ReferredBy: this.ReferredBy2,
+      Currency: this.Currency,
+      BillRate: this.BillRate,
+      PayType: this.PayType,
+      TaxTerm: this.TaxTerm,
+      ConsultantType: this.ConsultantType,
+      JobTitle: this.title,
+      LocationPreference: this.selectedstate,
+      BenchStatus: 'ACTIVEBENCH',
+      Availability: this.Availability,
+      txtComments: this.txtComments,
+      CreateBy: this.userName
+
     };
 
- this.service.MoveToTalentBench(Req).subscribe(
+    this.service.MoveToTalentBench(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
         this.cancelMoveTB()
@@ -1265,10 +1302,10 @@ this.loading = true;
 
   }
 
-  movetoBack(){
-    if(this.routeType == 1){
+  movetoBack() {
+    if (this.routeType == 1) {
       this.router.navigate(['/candidates/1']);
-    }else if(this.routeType ==3){
+    } else if (this.routeType == 3) {
       this.router.navigate(['/talentBench']);
     }
   }

@@ -747,7 +747,7 @@ router.post("/getCandidateInfo", async (req, res) => {
     const pool = await sql.connect(config);
     const request = new sql.Request();
     const query =
-      "select t.FTCNotes,t.FirstName ,t.LastName ,t.MiddleName,CONVERT(NVARCHAR(10),t.DOB,101) AS DOB,T.PhoneNumber,(t.FirstName + ' '+t.LastName) as Name,t.UserName,Cs.CSName,T.Candidatestatus,d.Value,t.division,t.SSn,T.RecruiterName,t.marketername,T.ReferredBy,T.DealOffered,t.DuiFelonyInfo,T.EmergConName,t.EmergConPhone,t.EmergConemail,t.ReferredBy_external,t.PassportNumber,t.Address,t.addressline2,t.validateNumber, CONVERT(NVARCHAR(10),t.statusdate,101) AS statusdate,CONVERT(NVARCHAR(10),t.LegalStatusValidFrom,101) AS Legalstartdate, CONVERT(NVARCHAR(10),t.LegalStatusValidTo,101) AS Legalenddate,CONVERT(NVARCHAR(10),t.PassValidityEndDate,101) AS Passvalidateenddate,CONVERT(NVARCHAR(10),t.PassvalidityStartDate,101) AS PassvalidateStartdate,CONVERT(NVARCHAR(10),t.validateEnddate,101) AS ValidateEndDate,CONVERT(NVARCHAR(10),t.EmploymentStartDate,101) AS EmploymentStartDate,CONVERT(NVARCHAR(10),t.EmploymentEndDate,101) AS EmploymentEndDate,t.Title,t.Skill,t.Country,t.state,t.City,t.Zipcode,t.AddressType,t.Notes,t.LegalStatus,  t.FinancialNotes,t.Salary,t.State,t.Perdeium,t.MaritalStatus,t.LCARate,t.FState,t.GCWages,t.StateTaxAllowance,t.StateTaxExemptions,t.FederalTaxAllowance,t.HealthInsurance,t.LifeInsurance,t.FederalTaxAdditionalAllowance,t.Bank1Name,t.Bank1AccountType,t.Bank1AccountNumber,t.Bank1RoutingNumber,t.SalaryDepositType,t.HowMuch,t.Bank2Name,t.Bank2AccountType,t.Bank2AccountNumber,t.Bank2RoutingNumber,CONVERT(NVARCHAR(10),t.Lcadate,101) AS Lcadate,CONVERT(NVARCHAR(10),t.Gcdate,101) AS Gcdate from Trainee t LEFT Join Currentstatus cs On cs.CsID=T.Candidatestatus LEFT Join Department d On d.DepartmentID = T.Division   left Join Phone p On p.PhoneID=(select TOP 1 PhoneID from TraineePhone where TraineeID='" +
+      "select t.FTCNotes,t.FirstName ,t.userorganizationid,t.LastName ,t.MiddleName,CONVERT(NVARCHAR(10),t.DOB,101) AS DOB,T.PhoneNumber,(t.FirstName + ' '+t.LastName) as Name,t.UserName,Cs.CSName,T.Candidatestatus,d.Value,t.division,t.SSn,T.RecruiterName,t.marketername,T.ReferredBy,T.DealOffered,t.DuiFelonyInfo,T.EmergConName,t.EmergConPhone,t.EmergConemail,t.ReferredBy_external,t.PassportNumber,t.Address,t.addressline2,t.validateNumber, CONVERT(NVARCHAR(10),t.statusdate,101) AS statusdate,CONVERT(NVARCHAR(10),t.LegalStatusValidFrom,101) AS Legalstartdate, CONVERT(NVARCHAR(10),t.LegalStatusValidTo,101) AS Legalenddate,CONVERT(NVARCHAR(10),t.PassValidityEndDate,101) AS Passvalidateenddate,CONVERT(NVARCHAR(10),t.PassvalidityStartDate,101) AS PassvalidateStartdate,CONVERT(NVARCHAR(10),t.validateEnddate,101) AS ValidateEndDate,CONVERT(NVARCHAR(10),t.EmploymentStartDate,101) AS EmploymentStartDate,CONVERT(NVARCHAR(10),t.EmploymentEndDate,101) AS EmploymentEndDate,t.Title,t.Skill,t.Country,t.state,t.City,t.Zipcode,t.AddressType,t.Notes,t.LegalStatus,  t.FinancialNotes,t.Salary,t.State,t.Perdeium,t.MaritalStatus,t.LCARate,t.FState,t.GCWages,t.StateTaxAllowance,t.StateTaxExemptions,t.FederalTaxAllowance,t.HealthInsurance,t.LifeInsurance,t.FederalTaxAdditionalAllowance,t.Bank1Name,t.Bank1AccountType,t.Bank1AccountNumber,t.Bank1RoutingNumber,t.SalaryDepositType,t.HowMuch,t.Bank2Name,t.Bank2AccountType,t.Bank2AccountNumber,t.Bank2RoutingNumber,CONVERT(NVARCHAR(10),t.Lcadate,101) AS Lcadate,CONVERT(NVARCHAR(10),t.Gcdate,101) AS Gcdate from Trainee t LEFT Join Currentstatus cs On cs.CsID=T.Candidatestatus LEFT Join Department d On d.DepartmentID = T.Division   left Join Phone p On p.PhoneID=(select TOP 1 PhoneID from TraineePhone where TraineeID='" +
       req.body.TraineeID +
       "'AND Active = 1) AND p.Active = 1  where TraineeID = '" +
       req.body.TraineeID +
@@ -1177,8 +1177,8 @@ router.post("/updateFinancial", async function (req, res) {
       req.body.GCWages +
       "', Gcdate = '" +
       req.body.Gcdate +
-      "', state = '" +
-      req.body.state +
+      "', FState = '" +
+      req.body.FState +
       "', Bank1Name = '" +
       req.body.Bank1Name +
       "', Bank2Name = '" +
@@ -1947,111 +1947,16 @@ router.post("/DeleteTresumeNode", async (req, res) => {
   }
 });
 
-// router.post("/placementTrackerReport", async (req, res) => {
-//   try {
-//     const pool = await sql.connect(config);
-//     const request = new sql.Request();
-//     // const query =
-//     //   "select distinct state from usazipcodenew order by state asc;";
 
-//     console.log(query);
-
-//     const recordset = await request.query(query);
-
-//     if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
-//       const result = {
-//         flag: 1,
-//         result: recordset.recordsets[0],
-//       };
-//       res.send(result);
-//     } else {
-//       const result = {
-//         flag: 0,
-//         error: "No Placements found! ",
-//       };
-//       res.send(result);
-//     }
-//   } catch (error) {
-//     console.error("Error fetching placement Details", error);
-//     const result = {
-//       flag: 0,
-//       error: "An error occurred while fetching Placements!",
-//     };
-//     res.status(500).send(result);
-//   }
-// });
-
-// async function emailPlacementTracker(candidateID, OrgID) {
-//   try {
-//     const transporter = nodemailer.createTransport({
-//       port: 465,
-//       host: "smtp.mail.yahoo.com",
-//       auth: {
-//         user: "support@tresume.us",
-//         pass: "xzkmvglehwxeqrpd",
-//       },
-//       secure: true,
-//     });
-
-//     const mailOptions = {
-//       from: 'support@tresume.us',
-//       to: 'venkat@tresume.us',
-//       bcc: '',
-//       subject: 'Candidate Placement Notification',
-//       html: `
-//         <p><strong>Organization ID:</strong> ${OrgID}</p>
-//         <p><em>This is to notify that a candidate has been placed.</em></p>
-//       `,
-//     };
-
-//     await transporter.sendMail(mailOptions);
-
-//     console.log("Placement email sent successfully.");
-//   } catch (error) {
-//     console.error("Error while sending placement email:", error);
-//   }
-// }
-
-// router.post("/Sendplacementmail", async (req, res) => {
-//   try {
-//     const { candidateID, OrgID } = req.body;
-
-//     await emailPlacementTracker(candidateID, OrgID);
-
-//     res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
-//   } catch (error) {
-//     console.error("Error handling placement notification:", error);
-//     res.status(500).json({ success: false, message: 'Internal server error' });
-//   }
-// });
-
-// router.post("/Sendplacementmail", async (req, res) => {
-//   try {
-//     const { candidateID, OrgID, placementList } = req.body;
-
-//     // Call emailPlacementTracker function with candidateID, OrgID, and placementList
-//     await emailPlacementTracker(candidateID, OrgID, placementList);
-
-//     res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
-//   } catch (error) {
-//     console.error("Error handling placement notification:", error);
-//     res.status(500).json({ success: false, message: 'Internal server error' });
-//   }
-// });
-
-async function emailPlacementTracker(candidateID, OrgID, placementList) {
+async function emailPlacementTracker(candidateID, OrgID, placementList, useremails) {
   try {
-    // Create a workbook and add a worksheet
     const workbook = new excel.Workbook();
     const worksheet = workbook.addWorksheet('Placement Data');
     
-    // Define table headers
     const headers = ['Work Start Date', 'Work End Date', 'Position Title', 'Marketer', 'End Client Name', 'Vendor', 'End Client Address'];
 
-    // Add headers to the worksheet
     worksheet.addRow(headers);
 
-    // Add data to the worksheet
     placementList.forEach(placement => {
       const rowData = [
         placement.POStartDate,
@@ -2065,11 +1970,9 @@ async function emailPlacementTracker(candidateID, OrgID, placementList) {
       worksheet.addRow(rowData);
     });
 
-    // Generate a temporary file to save the workbook
     const tempFilePath = './placement_data.xlsx';
     await workbook.xlsx.writeFile(tempFilePath);
 
-    // Create nodemailer transporter
     const transporter = nodemailer.createTransport({
       port: 465,
       host: "smtp.mail.yahoo.com",
@@ -2080,26 +1983,26 @@ async function emailPlacementTracker(candidateID, OrgID, placementList) {
       secure: true,
     });
 
-    // Construct email options
-    const mailOptions = {
-      from: 'support@tresume.us',
-      to: 'venkat@tresume.us',
-      subject: 'Marketers Placement Tracker',
-      html: '<p><em>This is to notify that a candidate has been placed.</em></p>',
-      attachments: [
-        {
-          filename: 'placement_data.xlsx',
-          path: tempFilePath
-        }
-      ]
-    };
+    // Iterate over each useremail and send email individually
+    for (const useremail of useremails) {
+      const mailOptions = {
+        from: 'support@tresume.us',
+        to: useremail,
+        subject: 'Marketers Placement Tracker',
+        html: '<p><em>This is to notify that a candidate has been placed.</em></p>',
+        attachments: [
+          {
+            filename: 'placement_data.xlsx',
+            path: tempFilePath
+          }
+        ]
+      };
 
-    // Send email with placement data
-    await transporter.sendMail(mailOptions);
+      await transporter.sendMail(mailOptions);
+      console.log(`Placement email sent successfully to ${useremail}.`);
+    }
 
-    console.log("Placement email sent successfully.");
-
-    // Delete the temporary Excel file after sending email
+    // Delete the temporary file after sending emails
     fs.unlinkSync(tempFilePath);
   } catch (error) {
     console.error("Error while sending placement email:", error);
@@ -2111,77 +2014,57 @@ router.post("/Sendplacementmail", async (req, res) => {
   try {
     const { candidateID, OrgID, placementList } = req.body;
 
-    await emailPlacementTracker(candidateID, OrgID, placementList);
+    // Log the incoming OrgID value
+    console.log("OrgID:", OrgID);
+    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%,"+OrgID+",%' and WFID in (1,4,5,6,7) and active = 1";
 
-    res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
+    console.log(query);
+    // Fetching useremails based on SQL query
+    const useremailsResult = await pool.query(query);
+
+    console.log("SQL Query Result:", useremailsResult.recordset);
+
+    // Check if useremailsResult.rows is defined and is an array before calling map
+    if (useremailsResult && Array.isArray(useremailsResult.recordset)) {
+      if (useremailsResult.recordset.length > 0) {
+        // Extracting useremails from the result
+        const useremails = useremailsResult.recordset.map(result => result.useremail);
+        
+        // Assuming emailPlacementTracker takes useremails as an array
+        await emailPlacementTracker(candidateID, OrgID, placementList, useremails);
+        
+        res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
+      } else {
+        console.error("Error handling placement notification: No matching records found");
+        res.status(404).json({ success: false, message: 'No matching records found in the database' });
+      }
+    } else {
+      console.error("Error handling placement notification: Invalid SQL query result");
+      res.status(500).json({ success: false, message: 'Invalid SQL query result' });
+    }
   } catch (error) {
     console.error("Error handling placement notification:", error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
-}); 
+});
 
-async function emailFinanicialTracker(candidateID, OrgID, placementList) {
+
+
+async function emailFinancialTracker(candidateID, OrgID, financialData) {
   try {
-    // Create a workbook and add a worksheet
-    // const workbook = new excel.Workbook();
-    // const worksheet = workbook.addWorksheet('Financial Data');
-    
-    // // Define table headers
-    // const headers = ['Work Start Date', 'Work End Date', 'Position Title', 'Marketer', 'End Client Name', 'Vendor', 'End Client Address'];
-
-    // // Add headers to the worksheet
-    // worksheet.addRow(headers);
-
-    // // Add data to the worksheet
-    // placementList.forEach(placement => {
-    //   const rowData = [
-    //     placement.POStartDate,
-    //     placement.POEndDate,
-    //     placement.PositionTitle,
-    //     placement.MarketerFirstName,
-    //     placement.ClientName,
-    //     placement.VendorName,
-    //     placement.ClientAddress
-    //   ];
-    //   worksheet.addRow(rowData);
-    // });
-
-    // // Generate a temporary file to save the workbook
-    // const tempFilePath = './Financial_data.xlsx';
-    // await workbook.xlsx.writeFile(tempFilePath);
-
-    // // Create nodemailer transporter
-    // const transporter = nodemailer.createTransport({
-    //   port: 465,
-    //   host: "smtp.mail.yahoo.com",
-    //   auth: {
-    //     user: "support@tresume.us",
-    //     pass: "xzkmvglehwxeqrpd",
-    //   },
-    //   secure: true,
-    // });
-
-    // Construct email options
     const mailOptions = {
       from: 'support@tresume.us',
       to: 'venkat@tresume.us',
       subject: 'Financial Tracker',
       html: '<p><em>This is to notify you that the payroll process for the candidate can now commence as their financial details have been securely stored within the HRMS.</em></p>',
-      // attachments: [
-      //   {
-      //     filename: '',
-      //     path: tempFilePath
-      //   }
-      // ]
+      attachments: [{
+        filename: 'financial_details.xlsx',
+        content: financialData // Attach the Excel file content
+      }]
     };
 
-    // Send email with placement data
     await transporter.sendMail(mailOptions);
-
     console.log("Financial-Data email sent successfully.");
-
-    // Delete the temporary Excel file after sending email
-    fs.unlinkSync(tempFilePath);
   } catch (error) {
     console.error("Error while sending Financial Tracker email:", error);
     throw error;
@@ -2190,9 +2073,10 @@ async function emailFinanicialTracker(candidateID, OrgID, placementList) {
 
 router.post("/insertRecruitmentTracker", async (req, res) => {
   try {
-    const { candidateID, OrgID, placementList } = req.body;
+    const { candidateID, OrgID } = req.body;
+    const financialData = await generateExcel(req.body); // Generate Excel data from req.body
 
-    await emailFinanicialTracker(candidateID, OrgID, placementList);
+    await emailFinancialTracker(candidateID, OrgID, financialData);
 
     res.status(200).json({ success: true, message: 'Financial-Data notification email sent successfully' });
   } catch (error) {
@@ -2201,30 +2085,21 @@ router.post("/insertRecruitmentTracker", async (req, res) => {
   }
 });
 
-// router.post("/insertRecruitmentTracker", async (req, res) => {
-//   try {
-//     var query = ``;
+async function generateExcel(data) {
+  const workbook = new exceljs.Workbook();
+  const worksheet = workbook.addWorksheet('Financial Details');
 
-//     console.log(query);
-//     const pool = await sql.connect(config);
-//     const request = new sql.Request(pool);
-//     const recordset = await request.query(query);
+  // Transpose the data: Convert object keys to values and vice versa
+  const transposedData = Object.keys(data).map(key => [key, data[key]]);
 
-//     const result = {
-//       flag: 1,
-//       message: "data inserted successfully!",
-//     };
-//     res.status(200).json(result);
-//   } catch (error) {
-//     console.error("Error inserting data:", error);
-//     const result = {
-//       flag: 0,
-//       error: "An error occurred while inserting data!",
-//     };
-//     res.status(500).json(result);
-//   }
-// });
+  // Add transposed data to worksheet
+  transposedData.forEach(row => {
+    worksheet.addRow(row);
+  });
 
+  // Return the Excel file buffer
+  return await workbook.xlsx.writeBuffer();
+}
 // Helper function to format values
 function formatValue(value) {
   return typeof value === 'string' ? `'${value}'` : value;

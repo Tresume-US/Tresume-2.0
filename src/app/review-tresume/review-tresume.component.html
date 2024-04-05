@@ -967,8 +967,7 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label>State</label>
-                  <select class="form-control" name="State" [(ngModel)]="selectedstate"
-                      [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" name="State" id="selectedstate" formControlName="FState">
                       <option value="0" selected>Select State</option>
                       <option *ngFor="let state of state" [value]="state.state">{{ state.state }}</option>
                   </select>
