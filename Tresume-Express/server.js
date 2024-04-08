@@ -2875,6 +2875,7 @@ app.post("/createJobSeekerDetails", function (req, res) {
                   request.input("UserOrganizationID", sql.Int, OrgID);
                   request.input("CreateBy", sql.VarChar, UserName);
                   request.input("harvest", sql.VarChar, "");
+                  request.input("securityclearance", sql.VarChar, req.body.securityclearance);
                   request.input("ats_md5email", sql.VarChar, req.body.ATSID);
                   request.execute("CreateJobSeekerProfile", function (err, recordset) {
                       if (err) {
@@ -4554,6 +4555,7 @@ app.post("/getResumes2", function (req, res) {
     var Jobboard = req.body.Jobboard.value;
     var OrgID = req.body.OrgID;
     var recruiter = req.body.recruiter;
+    var securityclearance = req.body.securityclearance
     console.log(Jobboard);
 
     const timeoutDuration = 60000; // Timeout duration in milliseconds (60 seconds)
@@ -4634,6 +4636,9 @@ app.post("/getResumes2", function (req, res) {
 
             if (recruiter != 0) {
               sql += `AND T.CreateBy = '` + recruiter + `'`;
+            }
+            if (securityclearance) {
+              sql += `AND T.securityclearance = '1'`;
             }
 
             sql += ` ORDER BY ISNULL(CreateTime, '1900-01-01T00:00:00') DESC`;

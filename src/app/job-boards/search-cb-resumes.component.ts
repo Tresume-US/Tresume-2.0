@@ -631,7 +631,8 @@ export class SearchResumesCBComponent implements OnInit {
                                     htmlResume: html.text,
                                     source: 'CB',
                                     ATSID: ATSID,
-                                    traineeId: this.traineeId
+                                    traineeId: this.traineeId,
+                                    securityclearance:this.hasSecurityClearance ? '1' : '0'
                                 }
 
                                 if (!this.isPDFSrc) {
@@ -889,5 +890,6 @@ export interface CBProfileRequestItem {
     source?: string;
     ATSID?: string;
     traineeId?: string | null;
+    securityclearance?:string | null;
 }
 

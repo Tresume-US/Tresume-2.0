@@ -148,6 +148,7 @@ export class SearchResumesComponent implements OnInit {
   startdate: Date;
   enddate: Date;
   userName: any;
+  securityclearance:boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -457,6 +458,7 @@ export class SearchResumesComponent implements OnInit {
       Jobboard: this.selectedJobboard,
       recruiter: this.selectedRecruiter.value,
       OrgID: this.OrgID,
+      securityclearance:this.securityclearance
     };
     console.log(req);
     this.service.getResumes2(req).subscribe((x) => {

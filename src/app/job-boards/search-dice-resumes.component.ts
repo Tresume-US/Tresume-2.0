@@ -226,7 +226,7 @@ export class SearchResumesDiceComponent implements OnInit {
   migratedResumeID: any;
 
   selectedWorkPermit: any[] = [];
-  onlyWithSecurityClearance: boolean;
+  onlyWithSecurityClearance: boolean = false;
   workPermitDocuments: any;
   isscocialprofiles: boolean;
   @ViewChild('lgModal', { static: false }) lgModal?: ModalDirective;
@@ -602,6 +602,7 @@ export class SearchResumesDiceComponent implements OnInit {
                   source: source,
                   ATSID: ATSID,
                   traineeId: this.traineeId,
+                  securityclearance:this.onlyWithSecurityClearance ? '1' : '0'
                 };
                 this.service
                   .createJobSeekerProfile(createRequest)
@@ -813,29 +814,35 @@ export class SearchResumesDiceComponent implements OnInit {
   
       console.log('Request:', request);
   
-      this.loading = true;
-  
-      this.service.getDiceIntelliSearch(request, this.accessToken).subscribe(
-        (response: any) => {
-          console.log('Response:', response);
-          this.loading = false;
-          this.resultsFound = false;
-          this.rowData = response.data;
-          this.resultsFound = true;
-          this.totalResults = response.meta.totalCount;
-          this.rowData.forEach((item: { migrated: boolean; legacyIds: any[]; showmigrated: boolean; EdgeID: any; diceSkills: any; skills: any[]; }) => {
-            item.migrated = this.migratedProfiles.find(x => x.ATSID == item.legacyIds[0]) ? true : false;
-            if (this.showcrediterror == true) {
-              item.showmigrated = this.migratedProfiles.find(x => x.ATSID == item.EdgeID) ? true : false;
+      if (this.model.jobDesc.length < 150) {
+        alert("Job description should be 150 characters or above.");
+      }else{
+        this.loading = true;
+        this.service.getDiceIntelliSearch(request, this.accessToken).subscribe(
+          (response: any) => {
+            console.log('Response:', response);
+            this.loading = false;
+            this.resultsFound = false;
+            this.rowData = response.data;
+            this.resultsFound = true;
+            this.totalResults = response.meta.totalCount;
+            this.rowData.forEach((item: { migrated: boolean; legacyIds: any[]; showmigrated: boolean; EdgeID: any; diceSkills: any; skills: any[]; }) => {
+              item.migrated = this.migratedProfiles.find(x => x.ATSID == item.legacyIds[0]) ? true : false;
+              if (this.showcrediterror == true) {
+                item.showmigrated = this.migratedProfiles.find(x => x.ATSID == item.EdgeID) ? true : false;
+            }
+              item.diceSkills = item.skills ? item.skills.map((skill: { skill: any; }) => skill.skill) : [];
+            });
+          },
+          error => {
+            console.error('Error:', error);
+            this.loading = false;
           }
-            item.diceSkills = item.skills ? item.skills.map((skill: { skill: any; }) => skill.skill) : [];
-          });
-        },
-        error => {
-          console.error('Error:', error);
-          this.loading = false;
-        }
-      );
+        );
+
+      }
+  
+     
     }
     
   }
@@ -1200,4 +1207,5 @@ export interface DiceProfileRequestItem {
   source?: string;
   ATSID?: string;
   traineeId?: string | null;
+  securityclearance?: string|null
 }

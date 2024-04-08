@@ -437,6 +437,12 @@ export class SearchResumesMonsterComponent implements OnInit {
                     }
                     this.fileReady = true;
                     this.visibleSidebar2 = true;
+                    let securityclearance = '0'
+                    if (this.selectedSecurityClearance && this.selectedSecurityClearance.value != 2) {
+                        securityclearance = '1';
+                      } else {
+                        securityclearance = '0';
+                      }
                     let createRequest: MonsterProfileRequestItem = {
                         emailID: emailID,
                         firstName: firstName,
@@ -448,7 +454,8 @@ export class SearchResumesMonsterComponent implements OnInit {
                         htmlResume: HtmlResume,
                         source: source,
                         ATSID: ATSID,
-                        traineeId: this.traineeId
+                        traineeId: this.traineeId,
+                        securityclearance:securityclearance
                     };
                     this.service.createJobSeekerProfile(createRequest).subscribe(z => {
                         console.log('z', z);
@@ -939,4 +946,5 @@ export interface MonsterProfileRequestItem {
     source?: string;
     ATSID?: string;
     traineeId?: string | null;
+    securityclearance?: string | null;
 }
