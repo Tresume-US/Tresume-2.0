@@ -4,6 +4,12 @@
             <div class="col">
                 <h2 class="ml-3 mt-4 text-dark">Corporate Documents</h2>
             </div>
+            <div class="col">
+                <label> Organization </label>
+                  <select class="form-control" name="DocumentType" [(ngModel)]="selectedOrgID" (change)="fetchTabslist(1)">
+                    <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{type.organizationname}}</option>
+                  </select>
+            </div>
         </div>       
   
         <div class="row">
@@ -15,12 +21,20 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-4 mt-5">
+            <!-- <div class="col-md-4 mt-2">
+                <div class="text-left">
+                  <label> Organization </label>
+                  <select class="form-control" name="DocumentType" [(ngModel)]="selectedOrgID" >
+                    <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{type.organizationname}}</option>
+                  </select>
+                </div>
+              </div> -->
+            <div class="col-md-2" style="margin-top: 40px;">
               <div class="text-right">
                 <input type="file" id="fileUpload" (change)="onFileChange($event)">
               </div>
             </div>
-            <div class="col-md-4 mt-3">
+            <div class="col-md-2 mt-2">
               <div class="text-right">
                 <button class="btn text-white btn-bgcolor mt-3 mr-4" (click)="upload()">Upload</button>
               </div>

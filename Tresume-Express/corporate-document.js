@@ -39,9 +39,10 @@ const storage = multer.diskStorage({
     cb(null, 'C:/inetpub/vhosts/tresume.us/httpdocs/CorporateDocument');
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, file.originalname); // Using the original filename
   }
 });
+
 
 const upload = multer({ storage: storage });
 
@@ -83,6 +84,27 @@ const upload = multer({ storage: storage });
       if (err) console.log(err);
       var request = new sql.Request();
       request.query("select * from CorporateDocType WHERE Active = 1", function (err, recordset) {
+        if (err) console.log(err);
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        res.send(recordset.recordsets[0]);
+      });
+    });
+  });
+
+  router.post("/fetchmultiorg", function (req, res) {
+    sql.connect(config, function (err) {
+      if (err) console.log(err);
+      var request = new sql.Request();
+      var useremail = req.body.useremail
+      var query = `SELECT org.organizationname,org.organizationid
+      FROM memberdetails AS md
+      CROSS APPLY STRING_SPLIT(md.accessorg, ',') AS s
+      JOIN organization AS org ON org.organizationid = CAST(s.value AS INT)
+      WHERE md.useremail = '${useremail}'`
+      request.query(query, function (err, recordset) {
         if (err) console.log(err);
         var result = {
           flag: 1,

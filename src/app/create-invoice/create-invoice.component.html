@@ -270,10 +270,16 @@
               <div class="input-group-prepend">
                 <span class="input-group-text custom-bg-purple text-light"><i class="fas fa-map-marker-alt"></i></span>
               </div>
-              <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
+              <!-- <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
                 [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
                 <option value="0" selected>Select Location</option>
                 <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
+              </select> -->
+              <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
+                [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
+                <option *ngFor="let timesheet of timesheetlist" [value]="timesheet.location" selected>{{
+                  timesheet.location }}</option>
+                <option *ngFor="let state of states" [value]="state">{{ state.state }}</option>
               </select>
             </div>
             <div *ngIf="location.invalid && location.touched">
@@ -664,7 +670,7 @@
         <div class="col-md-4 d-flex ml-2">
           <div class="d-flex dropdown">
             <button class="btn btn dropdown-toggle fbtn" type="button" id="saveAndNewDropdown" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">Save and New</button>
+              aria-haspopup="true" aria-expanded="false">Save</button>
             <div class="dropdown-menu" aria-labelledby="saveAndNewDropdown">
               <button class="save-close-btn" [ngClass]="{'disabled-style': invoiceForm.invalid}"
                 (click)="getExistingInvoiceNo()" [disabled]="!invoiceForm.valid">Save and close</button><br>

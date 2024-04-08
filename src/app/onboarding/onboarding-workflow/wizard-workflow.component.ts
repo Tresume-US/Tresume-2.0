@@ -458,10 +458,17 @@ export class WizardWorkflowComponent implements OnInit {
         this.router.navigate(['/onboardingList']);
     }
 
+    // viewDoc(docID: any) {
+    //     this.visibleSidebar2 = true;
+    //     this.fileRoute = `${this.apiUrl}reviewdownload/` + this.onboardId + "/" + docID;
+    //     window.open(fileRoute, '_blank');
+    // }
+
     viewDoc(docID: any) {
-        this.visibleSidebar2 = true;
-        this.fileRoute = `${this.apiUrl}reviewdownload/` + this.onboardId + "/" + docID;
+        const fileRoute: string = `${this.apiUrl}reviewdownload/${this.onboardId}/${docID}`;
+        window.open(fileRoute, '_blank');
     }
+    
 
     download(docID: any) {
         window.location.href = `${this.apiUrl}reviewdownload/` + this.onboardId + "/" + docID

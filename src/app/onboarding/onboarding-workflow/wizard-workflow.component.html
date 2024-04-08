@@ -211,8 +211,8 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                                                     <div *ngIf="item.isUpload" class="d-flex align-items-center">
                                                         <!-- <strong>Review</strong> -->
                                                         <a class="btn btn-app bg-secondary ml-auto"
-                                                            (click)="viewDoc(item.DocTypeID)">
-                                                            <i class="fas fa-eye"></i> View
+                                                            (click)="viewDoc(item.DocTypeID)" target="_blank" >
+                                                            <i class="fas fa-eye" ></i> View
                                                         </a>
                                                         <a class="btn btn-app bg-secondary ml-auto"
                                                             (click)="download(item.DocTypeID)">

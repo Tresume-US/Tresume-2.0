@@ -24,6 +24,8 @@ export class CorporateDocumentComponent implements OnInit {
   file:File;
   username: string | Blob;
   CorporateDocumentTypeID: string | Blob;
+  selectedOrgID:any;
+  multiorgID:any;
 
   constructor(private cookieService: CookieService, private service: CorporateDocumentService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
   }
@@ -34,8 +36,10 @@ export class CorporateDocumentComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.fetchDocumnetType();
     this.fetchTabslist(1);
+    this.fetchmultiorg();
     this.corporateTabIndex = 0;
     this.miscellaneousTabIndex = 0;
+    this.selectedOrgID = this.OrgID;
   }
 
   
@@ -48,10 +52,20 @@ export class CorporateDocumentComponent implements OnInit {
     console.log("Document Type",this.DocumentType);
   }
 
+  fetchmultiorg() {
+    const Req = {
+      useremail:this.username
+    };
+    this.service.fetchmultiorg(Req).subscribe((x: any) => {
+      this.multiorgID = x;
+    });
+    console.log("Document Type",this.multiorgID);
+  }
+
   fetchTabslist(typeid:any) {
     let Req = {
       typeid: typeid,
-      OrgID: this.OrgID,
+      OrgID: this.selectedOrgID,
     };
     this.service.getTabsList(Req).subscribe((x: any) => {
       this.DocumentData = x.result;

@@ -25,6 +25,9 @@ export class CorporateDocumentService {
   uploadCorporateDoc(request: FormData): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'uploadCorporateDoc', request);
   }
+  fetchmultiorg(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'fetchmultiorg', request);
+  }
 }
 export interface ResponseDetails {
   flag?: any;
