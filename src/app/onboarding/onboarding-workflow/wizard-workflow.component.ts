@@ -485,6 +485,7 @@ export class WizardWorkflowComponent implements OnInit {
     }
 
     approveItem(item: any) {
+        this.loading=true;
         let fileNameArr = item.SignedFilepath.split('\\');
         let indexFilename = fileNameArr.length;
         let fileName = fileNameArr[indexFilename - 1];
@@ -508,6 +509,12 @@ export class WizardWorkflowComponent implements OnInit {
             newPath: 'C:/inetpub/vhosts/tresume.us/httpdocs/Content/Resume/' + this.traineeId + '/' + fileName,
         }
         this.service.approveFile(requestItem).subscribe((x: any) => {
+            this.loading=false;
+            this.messageService.add({ severity: 'success', summary: 'File Approved' });
+        },
+        error => {
+          console.error('Error:', error);
+          this.loading = false;
         });
             this.getOnboardRequests();
             this.approveDocItem = {};
