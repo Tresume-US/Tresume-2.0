@@ -53,15 +53,15 @@ export class OnboardingService {
     }
 
     getChecklistNames(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getChecklistNames/', request);
+        return this.http.post<ResponseDetails>(this.endpoint + 'getChecklistNames', request);
     }
 
     getOnboardingDetails(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingDetails/' , request);
+        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingDetails' , request);
     }
 
     getOnboardingRequest(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingRequest/' , request);
+        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingRequest' , request);
     }
 
     updateOnboardingStatus(request: any): Observable<ResponseDetails> {

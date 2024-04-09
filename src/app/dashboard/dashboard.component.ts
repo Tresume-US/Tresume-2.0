@@ -311,7 +311,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public getTraineeDetails() {
-    this.service.getTraineeDetails(this.traineeID).subscribe(x => {
+    let req = {
+      traineeId:this.traineeID
+  }
+    this.service.getTraineeDetails(req).subscribe(x => {
       let response = x.result;
       if (response) {
         this.traineeDetails = response[0];

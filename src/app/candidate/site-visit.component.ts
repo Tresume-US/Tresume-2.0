@@ -32,7 +32,10 @@ export class SiteVisitComponent implements OnInit {
 
     ngOnInit(): void {
         this.traineeId=this.candidateId;
-        this.service.getSiteVisitDetails(this.traineeId).subscribe(x => {
+        let req = {
+            traineeID:this.traineeId
+        }
+        this.service.getSiteVisitDetails(req).subscribe(x => {
             let response = x.result;
             if (response) {
                 this.details = response[0];

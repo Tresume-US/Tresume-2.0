@@ -18,12 +18,12 @@ export class AppService {
 
     constructor(private http: HttpClient,private cookieService: CookieService) { }
 
-    getTraineeDetails(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getTraineeDetails/' + id);
+    getTraineeDetails(req: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeDetails/' , req);
     }
 
     getOnboardingSession(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'onboardSession/' + id);
+        return this.http.get<ResponseDetails>(this.endpoint + 'onboardSession' + id);
     }
 
     getLoggedUser(request: any): Observable<ResponseDetails> {

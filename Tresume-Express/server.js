@@ -524,7 +524,7 @@ app.get(
   }
 );
 
-app.get("/getTraineeDetails/:traineeId", function (req, res) {
+app.post("/getTraineeDetails/", function (req, res) {
   sql.connect(config, function (err) {
     try {
       if (err) throw err;
@@ -532,7 +532,7 @@ app.get("/getTraineeDetails/:traineeId", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select * from Trainee (nolock) where TraineeID = '" +
-          req.params.traineeId +
+          req.body.traineeId +
           "' and Active = 1",
         function (err, recordset) {
           try {
@@ -908,12 +908,12 @@ app.post("/uploadinsert", function (req, res) {
 });
 
 
-app.get("/sitevisit/:traineeID", async function (req, res) {
+app.post("/sitevisit", async function (req, res) {
   try {
     await sql.connect(config);
 
     const request = new sql.Request();
-    request.input("TraineeID", sql.VarChar, req.params.traineeID);
+    request.input("TraineeID", sql.VarChar, req.body.traineeID);
 
     const recordset = await request.execute("GetTraineeDetails");
 
@@ -1361,7 +1361,7 @@ app.post("/getChecklists", function (req, res) {
   }
 });
 
-app.get("/getDocTypes", function (req, res) {
+app.post("/getDocTypes", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1393,7 +1393,7 @@ app.get("/getDocTypes", function (req, res) {
   }
 });
 
-app.get("/getNewChecklistID", function (req, res) {
+app.post("/getNewChecklistID", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1467,7 +1467,7 @@ app.post("/saveChecklist", function (req, res) {
   }
 });
 
-app.get("/deleteChecklist", function (req, res) {
+app.post("/deleteChecklist", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1499,38 +1499,6 @@ app.get("/deleteChecklist", function (req, res) {
   }
 });
 
-// app.get("/getChecklistNames", function (req, res) {
-//   try {
-//     sql.connect(config, function (err) {
-//       if (err) {
-//         console.log(err);
-//         res.status(500).send("Error connecting to database");
-//         return;
-//       }
-
-//       var request = new sql.Request();
-//       request.query(
-//         "select distinct ListID, ListName from Checklists where OrgID=" +
-//           req.body.OrgID,
-//         function (err, recordset) {
-//           if (err) {
-//             console.log(err);
-//             res.status(500).send("Error executing query");
-//             return;
-//           }
-//           var result = {
-//             flag: 1,
-//             result: recordset.recordsets[0],
-//           };
-//           res.send(recordset.recordsets[0]);
-//         }
-//       );
-//     });
-//   } catch (error) {
-//     console.log("Error:", error);
-//     res.status(500).send("Internal server error");
-//   }
-// });
 app.post("/getChecklistNames", function (req, res) {
   try {
     sql.connect(config, function (err) {
@@ -1716,64 +1684,32 @@ app.post("/uploadReqOnboardDocument/:onboardID", function (req, res) {
   }
 });
 
-// app.get("/getOnboardingDetails", function (req, res) {
-//   try {
-//     sql.connect(config, function (err) {
-//       if (err) {
-//         console.log(err);
-//         res.status(500).send("Error connecting to database");   
-//         return;
-//       }
-
-//       const onboardId = req.body.onboardId; 
-//       const query = "select * from CurrentOnboardings where ID=" + onboardId;
-
-//       var request = new sql.Request();
-//       request.query(query, function (err, recordset) {
-//         if (err) {
-//           console.log(err);
-//           res.status(500).send("Error executing query");
-//           return;
-//         }
-//         var result = {
-//           flag: 1,
-//           result: recordset.recordsets[0],
-//         };
-//         console.log("Query:", query); 
-//         console.log("Result:", recordset.recordsets[0]); 
-//         res.send(result);
-//       });
-//     });
-//   } catch (error) {
-//     console.log("Error:", error);
-//     res.status(500).send("Internal server error");
-//   }
-// });
 app.post("/getOnboardingDetails", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        return res.status(500).send("Error connecting to database");   
+        res.status(500).send("Error connecting to database");
+        return;
       }
-
-      const onboardId = req.body.onboardId; 
-      const query = "select * from CurrentOnboardings where ID=" + onboardId;
-
       var request = new sql.Request();
-      request.query(query, function (err, recordset) {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("Error executing query");
+      var query = "select * from CurrentOnboardings where ID=" + req.body.onboardId;
+      console.log(query);
+      request.query(query,
+
+        function (err, recordset) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          var result = {
+            flag: 1,
+            result: recordset.recordsets[0],
+          };
+          res.send(recordset.recordsets[0]);
         }
-        var result = {
-          flag: 1,
-          result: recordset.recordsets[0],
-        };
-        console.log("Query:", query); 
-        console.log("Result:", recordset.recordsets[0]); 
-        res.send(result);
-      });
+      );
     });
   } catch (error) {
     console.log("Error:", error);
@@ -1781,7 +1717,7 @@ app.post("/getOnboardingDetails", function (req, res) {
   }
 });
 
-app.get("/getOnboardingRequest", function (req, res) {
+app.post("/getOnboardingRequest", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1848,7 +1784,7 @@ app.post("/saveOnboardingRequest", function (req, res) {
   }
 });
 
-app.get("/updateOnboardStatus", function (req, res) {
+app.post("/updateOnboardStatus", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1879,7 +1815,7 @@ app.get("/updateOnboardStatus", function (req, res) {
   }
 });
 
-app.get("/updateOnboardStatus1", function (req, res) {
+app.post("/updateOnboardStatus1", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1910,7 +1846,7 @@ app.get("/updateOnboardStatus1", function (req, res) {
   }
 });
 
-app.get("/onboardSession", function (req, res) {
+app.post("/onboardSession", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
