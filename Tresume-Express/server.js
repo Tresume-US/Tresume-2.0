@@ -1504,25 +1504,23 @@ app.post("/getChecklistNames", function (req, res) {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error connecting to database");
-        return;
+        return res.status(500).send("Error connecting to database");
       }
 
       var request = new sql.Request();
       request.query(
         "select distinct ListID, ListName from Checklists where OrgID=" +
-          req.body.OrgID,
+          req.body.OrgID, // Access OrgID from request body
         function (err, recordset) {
           if (err) {
             console.log(err);
-            res.status(500).send("Error executing query");
-            return;
+            return res.status(500).send("Error executing query");
           }
           var result = {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(recordset.recordsets[0]);
+          res.send(result);
         }
       );
     });
