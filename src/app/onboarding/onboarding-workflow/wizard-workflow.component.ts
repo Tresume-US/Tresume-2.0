@@ -425,7 +425,10 @@ export class WizardWorkflowComponent implements OnInit {
     }
 
     getOnboardRequests() {
-        this.service.getOnboardingRequest(this.onboardId).subscribe((x: any) => {
+        let req = {
+            OnboardID:this.onboardId
+        }
+        this.service.getOnboardingRequest(req).subscribe((x: any) => {
             console.log('x', x)
             this.groupedItems = x.reduce((acc: { [key: string]: any[] }, item: any) => {
                 this.additionalChecklistIDs.push(item.AdditionalChecklistID);

@@ -65,7 +65,10 @@ export class EmployeeViewComponent implements OnInit {
     }
 
     getDetails() {
-        this.appService.getTraineeDetails(this.sessionDetails.TraineeID).subscribe((x: any) => {
+        let req = {
+            traineeId:this.sessionDetails.TraineeID
+        }
+        this.appService.getTraineeDetails(req).subscribe((x: any) => {
             let response = x.result;
             if (response) {
                 this.employeeDetails = response[0];

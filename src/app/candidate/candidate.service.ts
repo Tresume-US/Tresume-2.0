@@ -40,8 +40,8 @@ export class CandidateService {
         return this.http.post<ResponseDetails>(this.endpoint + 'uploadinsert', request);
     }
 
-    getSiteVisitDetails(id: RequestItem): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'sitevisit/' + id);
+    getSiteVisitDetails(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'sitevisit' , request);
     }
 
     getTraineeEduDetails(id: RequestItem): Observable<ResponseDetails> {
