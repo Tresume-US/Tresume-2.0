@@ -1467,7 +1467,7 @@ app.post("/saveChecklist", function (req, res) {
   }
 });
 
-app.get("/deleteChecklist/:ID", function (req, res) {
+app.get("/deleteChecklist", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1478,7 +1478,7 @@ app.get("/deleteChecklist/:ID", function (req, res) {
 
       var request = new sql.Request();
       request.query(
-        "delete from Checklists where ListID=" + req.params.ID,
+        "delete from Checklists where ListID=" + req.body.id,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1499,7 +1499,7 @@ app.get("/deleteChecklist/:ID", function (req, res) {
   }
 });
 
-app.get("/getChecklistNames/:OrgID", function (req, res) {
+app.get("/getChecklistNames", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1511,7 +1511,7 @@ app.get("/getChecklistNames/:OrgID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select distinct ListID, ListName from Checklists where OrgID=" +
-          req.params.OrgID,
+          req.body.OrgID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1686,7 +1686,7 @@ app.post("/uploadReqOnboardDocument/:onboardID", function (req, res) {
   }
 });
 
-app.get("/getOnboardingDetails/:ID", function (req, res) {
+app.get("/getOnboardingDetails", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1696,7 +1696,7 @@ app.get("/getOnboardingDetails/:ID", function (req, res) {
       }
       var request = new sql.Request();
       request.query(
-        "select * from CurrentOnboardings where ID=" + req.params.ID,
+        "select * from CurrentOnboardings where ID=" + req.body.onboardId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1717,7 +1717,7 @@ app.get("/getOnboardingDetails/:ID", function (req, res) {
   }
 });
 
-app.get("/getOnboardingRequest/:ID", function (req, res) {
+app.get("/getOnboardingRequest", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1728,7 +1728,7 @@ app.get("/getOnboardingRequest/:ID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select * from OnboardingDocRequest where OnboardID=" +
-          req.params.ID +
+          req.body.OnboardID +
           " and isRequested=1",
         function (err, recordset) {
           if (err) {
@@ -1784,7 +1784,7 @@ app.post("/saveOnboardingRequest", function (req, res) {
   }
 });
 
-app.get("/updateOnboardStatus/:ID", function (req, res) {
+app.get("/updateOnboardStatus", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1794,7 +1794,7 @@ app.get("/updateOnboardStatus/:ID", function (req, res) {
       }
       var request = new sql.Request();
       request.query(
-        "update CurrentOnboardings set Status=2 where ID=" + req.params.ID,
+        "update CurrentOnboardings set Status=2 where ID=" + req.body.onboardId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1815,7 +1815,7 @@ app.get("/updateOnboardStatus/:ID", function (req, res) {
   }
 });
 
-app.get("/updateOnboardStatus1/:ID", function (req, res) {
+app.get("/updateOnboardStatus1", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1825,7 +1825,7 @@ app.get("/updateOnboardStatus1/:ID", function (req, res) {
       }
       var request = new sql.Request();
       request.query(
-        "update CurrentOnboardings set Status=0 where ID=" + req.params.ID,
+        "update CurrentOnboardings set Status=0 where ID=" + req.body.onboardId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1846,7 +1846,7 @@ app.get("/updateOnboardStatus1/:ID", function (req, res) {
   }
 });
 
-app.get("/onboardSession/:ID", function (req, res) {
+app.get("/onboardSession", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
@@ -1857,7 +1857,7 @@ app.get("/onboardSession/:ID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select * from OnboardingSession where SessionID='" +
-          req.params.ID +
+          req.body.sessionID +
           " ' ",
         function (err, recordset) {
           if (err) {

@@ -105,8 +105,8 @@
 </div>
 <div *ngIf="resultsFound" [ngStyle]="loading ? { opacity:'0.2'}: {opacity:'1'}">
     <div class="align-right">Total Results: {{totalResults}}</div>
-    <div class="align-right">Monthly Quota: {{quota['us monthly']}}</div>
-    <div class="align-right">Daily Quota: {{quota['us daily']}}</div>
+    <!-- <div class="align-right">Monthly Quota: {{quota['us monthly']}}</div>
+    <div class="align-right">Daily Quota: {{quota['us daily']}}</div> -->
     <div *ngFor=" let jobDetail of rowData; let i=index" style="padding: 10px;">
         <mat-card class="example-card">
             <mat-card-title class="border-title">

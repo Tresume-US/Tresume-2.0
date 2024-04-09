@@ -31,7 +31,10 @@ export class EmployeeViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.service.getOnboardingSession(this.sessionID).subscribe((x: any) => {
+        let req = {
+            sessionID:this.sessionID
+        }
+        this.service.getOnboardingSession(req).subscribe((x: any) => {
             if (x[0]) {
                 let CurrentDate = new Date(new Date());
                 this.sessionDetails = x[0];
@@ -52,7 +55,10 @@ export class EmployeeViewComponent implements OnInit {
     }
 
     getOnboardRequests() {
-        this.service.getOnboardingRequest(this.sessionDetails.OnboardID).subscribe((x: any) => {
+        let req={
+            OnboardID:this.sessionDetails.OnboardID
+        }
+        this.service.getOnboardingRequest(req).subscribe((x: any) => {
             console.log('x', x)
             this.requestedList = x;
         });

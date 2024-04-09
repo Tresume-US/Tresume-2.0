@@ -176,7 +176,10 @@ export class OnboardingComponent implements OnInit {
     if (this.onModifylist) {
       this.deleteCard(this.modifylistID);
     }
-    this.service.getNewChecklistID().subscribe((x: any) => {
+    let req = {
+
+    }
+    this.service.getNewChecklistID(req).subscribe((x: any) => {
       console.log('x', x)
       this.newChecklistID = x[0].ID;
       let newcard = {
@@ -206,7 +209,10 @@ export class OnboardingComponent implements OnInit {
   }
 
   deleteCard(id: number) {
-    this.service.deleteChecklist(id).subscribe(x => {
+    let req = {
+      id:id
+    }
+    this.service.deleteChecklist(req).subscribe(x => {
       if (!this.onModifylist) {
         this.cards = [];
         this.cardItems = [];

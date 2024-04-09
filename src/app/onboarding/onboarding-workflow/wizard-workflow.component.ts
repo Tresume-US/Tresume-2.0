@@ -148,8 +148,11 @@ export class WizardWorkflowComponent implements OnInit {
     ngOnInit(): void {
         this.bsConfig = Object.assign({}, { containerClass: 'theme-default' });
 
-        this.OrgID = this.cookieService.get('OrgID') || 9;
-        this.service.getOnboardingDetails(this.onboardId).subscribe((x: any) => {
+        this.OrgID = this.cookieService.get('OrgID');
+        let req2 = {
+            onboardId:this.onboardId
+        }
+        this.service.getOnboardingDetails(req2).subscribe((x: any) => {
             this.traineeId = x[0].TraineeID;
             if (x[0].Status != 1) {
                 this.typeSelector = false;
@@ -165,7 +168,10 @@ export class WizardWorkflowComponent implements OnInit {
                 }
             });
         });
-        this.service.getChecklistNames(this.OrgID).subscribe((x: any) => {
+        let req={
+            OrgID:this.OrgID 
+        }
+        this.service.getChecklistNames(req).subscribe((x: any) => {
             this.cards = x;
         });
         this.firstFormGroup = this._formBuilder.group({
@@ -368,7 +374,7 @@ export class WizardWorkflowComponent implements OnInit {
                 ${clientlogo}
                 <center>
                   <div style="width: 100%; text-align: left;">
-                    <p>Hi Wilson,</p>
+                    <p>Hi ${this.candidateDetails.FirstName},</p>
                     <p>Please upload the documents in the link below:</p>
                     <p><a href="${url}">Access Tresume Link</a></p>
                     <p><i>Note: The link will be valid for 7 days.</i></p>
@@ -405,7 +411,10 @@ export class WizardWorkflowComponent implements OnInit {
 
     save() {
       this.loading = true;
-        this.service.updateOnboardingStatus(this.onboardId).subscribe(x => {
+      let req = {
+        onboardId: this.onboardId
+      }
+        this.service.updateOnboardingStatus(req).subscribe(x => {
             this.router.navigate(['/onboardingList']);
         })
     }
@@ -536,7 +545,10 @@ export class WizardWorkflowComponent implements OnInit {
     complete() {
         if (this.requestedList && this.requestedList.filter(x => x.Status == 0).length == 0) {
             //this.messageService.add({ severity: 'success', summary: 'Onboarding Complete' });
-            this.service.updateOnboardingStatus1(this.onboardId).subscribe(x => {
+            let req = {
+                onboardId:this.onboardId
+            }
+            this.service.updateOnboardingStatus1(req).subscribe(x => {
                 this.router.navigate(['/onboardingList']);
             })
         }
@@ -574,7 +586,7 @@ export class WizardWorkflowComponent implements OnInit {
         this.adhocDocItem.checklistName = checklist[0]?.AdditionalChecklistName;
         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
         let requestItem: any = {
-            OrgID: this.OrgID || 9,
+            OrgID: this.OrgID,
         }
         this.service.getDocTypes(requestItem).subscribe((x: any) => {
             this.docTypes = x.map((item: any) => {
@@ -664,7 +676,7 @@ export class WizardWorkflowComponent implements OnInit {
         this.adhocDocItem.checklistID = this.onboardId + this.requestedList.length;
         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
         let requestItem: any = {
-            OrgID: this.OrgID || 9,
+            OrgID: this.OrgID,
         }
         this.service.getDocTypes(requestItem).subscribe((x: any) => {
             this.docTypes = x.map((item: any) => {
@@ -752,7 +764,7 @@ export class WizardWorkflowComponent implements OnInit {
         //this.adhocDocItem.checklistID = checklist[0]?.AdditionalChecklistID;
         this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
         let requestItem: any = {
-            OrgID: this.OrgID || 9,
+            OrgID: this.OrgID,
         }
         this.service.getDocTypes(requestItem).subscribe((x: any) => {
             this.docTypes = x.map((item: any) => {

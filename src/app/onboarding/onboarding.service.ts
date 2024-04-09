@@ -29,11 +29,11 @@ export class OnboardingService {
     }
 
     getDocTypes(request: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getDocTypes');
+        return this.http.post<ResponseDetails>(this.endpoint + 'getDocTypes',request);
     }
 
-    getNewChecklistID(): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getNewChecklistID');
+    getNewChecklistID(request:any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getNewChecklistID',request);
     }
 
     saveChecklists(request: any): Observable<ResponseDetails> {
@@ -48,28 +48,28 @@ export class OnboardingService {
         return this.http.post<ResponseDetails>(this.endpoint + 'createOnboarding', request);
     }
 
-    deleteChecklist(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'deleteChecklist/' + id);
+    deleteChecklist(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'deleteChecklist', request);
     }
 
-    getChecklistNames(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getChecklistNames/' + id);
+    getChecklistNames(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getChecklistNames/', request);
     }
 
-    getOnboardingDetails(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getOnboardingDetails/' + id);
+    getOnboardingDetails(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingDetails/' , request);
     }
 
-    getOnboardingRequest(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getOnboardingRequest/' + id);
+    getOnboardingRequest(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getOnboardingRequest/' , request);
     }
 
-    updateOnboardingStatus(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'updateOnboardStatus/' + id);
+    updateOnboardingStatus(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateOnboardStatus/' , request);
     }
 
-    updateOnboardingStatus1(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'updateOnboardStatus1/' + id);
+    updateOnboardingStatus1(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateOnboardStatus1/' , request);
     }
 
     saveOnboardingRequest(request: any): Observable<ResponseDetails> {
@@ -133,17 +133,17 @@ export class OnboardingService {
         return this.http.request(req);
     }
 
-    getOnboardingSession(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'onboardSession/' + id);
+    getOnboardingSession(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'onboardSession/' , request);
     }
 
-    getDocumentPath(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'getDocPath/' + id);
-    }
+    // getDocumentPath(id: any): Observable<ResponseDetails> {
+    //     return this.http.get<ResponseDetails>(this.endpoint + 'getDocPath/' + id);
+    // }
 
-    downloadFile(id: any): Observable<ResponseDetails> {
-        return this.http.get<ResponseDetails>(this.endpoint + 'download/' + id);
-    }
+    // downloadFile(id: any): Observable<ResponseDetails> {
+    //     return this.http.get<ResponseDetails>(this.endpoint + 'download/' + id);
+    // }
 
     deleteCurrentOnboarding(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'deleteOnboard', request);
