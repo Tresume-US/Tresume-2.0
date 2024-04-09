@@ -1056,21 +1056,54 @@ cancelDeletesubmission() {
   GoTonext() {
     this.router.navigate(['/candidateView/:id/sitevisit']);
   }
-
+// Venkat Tracker Code 
   addRecruitmentTracker() {
-      let Req = {
-        TraineeID: this.candidateID,
-        OrgID:this.OrgID
+    this.loading = true;
+    let Req = {
+      CandidateName: this.firstName +' '+this.lastName,
+      TraineeID: this.candidateID,
+      OrgID: this.OrgID,
+      FinancialNotes: this.myFormFinancial.value.FinancialNotes,
+      Salary: this.myFormFinancial.value.salaryinfo,
+      Perdeium: this.myFormFinancial.value.Perdeium,
+      LegalStatus: this.myFormFinancial.value.legalStatus,
+      MaritalStatus: this.myFormFinancial.value.maritalStatus,
+      StateTaxAllowance: this.myFormFinancial.value.stateTaxAllowance,
+      StateTaxExemptions: this.myFormFinancial.value.stateTaxExemptions,
+      FederalTaxAllowance: this.myFormFinancial.value.federalTaxAllowance,
+      FederalTaxAdditionalAllowance: this.myFormFinancial.value.federalAddAllowance,
+      Gcdate: this.myFormFinancial.value.gcDate,
+      GCWages: this.myFormFinancial.value.gcWages,
+      Lcadate: this.myFormFinancial.value.lcaDate,
+      LCARate: this.myFormFinancial.value.lcaRate,
+      FState: this.myFormFinancial.value.FState,
+      healthInsurance: this.myFormFinancial.value.healthInsurance,
+      lifeInsurance: this.myFormFinancial.value.lifeInsurance,
+
+      Bank1Name: this.myFormFinancial.value.Bankname1,
+      Bank2Name: this.myFormFinancial.value.Bankname2,
+      Bank1AccountType: this.myFormFinancial.value.accountType1,
+      Bank2AccountType: this.myFormFinancial.value.accountType2,
+      Bank1AccountNumber: this.myFormFinancial.value.accountnum1,
+      Bank2AccountNumber: this.myFormFinancial.value.accountnum2,
+      Bank1RoutingNumber: this.myFormFinancial.value.routingnum1,
+      Bank2RoutingNumber: this.myFormFinancial.value.routingnum2,
+      SalaryDepositType: this.myFormFinancial.value.salaryDepositType,
+      HowMuch: this.myFormFinancial.value.howMuch,
     };
+
     console.log('Form values:', this.myFormFinancial.value);
     this.service.insertRecruitmentTracker(Req).subscribe(
       (x: any) => {
         this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
+        this.loading = false;
       },
       (error: any) => {
         this.messageService.add({ severity: 'error', summary: 'Failed to send Mail' });
+        this.loading = false;
       }
     );
+
   }
 
   // Education

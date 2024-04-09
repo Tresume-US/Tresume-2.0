@@ -1499,30 +1499,60 @@ app.get("/deleteChecklist", function (req, res) {
   }
 });
 
-app.get("/getChecklistNames", function (req, res) {
+// app.get("/getChecklistNames", function (req, res) {
+//   try {
+//     sql.connect(config, function (err) {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).send("Error connecting to database");
+//         return;
+//       }
+
+//       var request = new sql.Request();
+//       request.query(
+//         "select distinct ListID, ListName from Checklists where OrgID=" +
+//           req.body.OrgID,
+//         function (err, recordset) {
+//           if (err) {
+//             console.log(err);
+//             res.status(500).send("Error executing query");
+//             return;
+//           }
+//           var result = {
+//             flag: 1,
+//             result: recordset.recordsets[0],
+//           };
+//           res.send(recordset.recordsets[0]);
+//         }
+//       );
+//     });
+//   } catch (error) {
+//     console.log("Error:", error);
+//     res.status(500).send("Internal server error");
+//   }
+// });
+app.post("/getChecklistNames", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error connecting to database");
-        return;
+        return res.status(500).send("Error connecting to database");
       }
 
       var request = new sql.Request();
       request.query(
         "select distinct ListID, ListName from Checklists where OrgID=" +
-          req.body.OrgID,
+          req.body.OrgID, // Access OrgID from request body
         function (err, recordset) {
           if (err) {
             console.log(err);
-            res.status(500).send("Error executing query");
-            return;
+            return res.status(500).send("Error executing query");
           }
           var result = {
             flag: 1,
             result: recordset.recordsets[0],
           };
-          res.send(recordset.recordsets[0]);
+          res.send(result);
         }
       );
     });
@@ -1686,30 +1716,64 @@ app.post("/uploadReqOnboardDocument/:onboardID", function (req, res) {
   }
 });
 
-app.get("/getOnboardingDetails", function (req, res) {
+// app.get("/getOnboardingDetails", function (req, res) {
+//   try {
+//     sql.connect(config, function (err) {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).send("Error connecting to database");   
+//         return;
+//       }
+
+//       const onboardId = req.body.onboardId; 
+//       const query = "select * from CurrentOnboardings where ID=" + onboardId;
+
+//       var request = new sql.Request();
+//       request.query(query, function (err, recordset) {
+//         if (err) {
+//           console.log(err);
+//           res.status(500).send("Error executing query");
+//           return;
+//         }
+//         var result = {
+//           flag: 1,
+//           result: recordset.recordsets[0],
+//         };
+//         console.log("Query:", query); 
+//         console.log("Result:", recordset.recordsets[0]); 
+//         res.send(result);
+//       });
+//     });
+//   } catch (error) {
+//     console.log("Error:", error);
+//     res.status(500).send("Internal server error");
+//   }
+// });
+app.post("/getOnboardingDetails", function (req, res) {
   try {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).send("Error connecting to database");
-        return;
+        return res.status(500).send("Error connecting to database");   
       }
+
+      const onboardId = req.body.onboardId; 
+      const query = "select * from CurrentOnboardings where ID=" + onboardId;
+
       var request = new sql.Request();
-      request.query(
-        "select * from CurrentOnboardings where ID=" + req.body.onboardId,
-        function (err, recordset) {
-          if (err) {
-            console.log(err);
-            res.status(500).send("Error executing query");
-            return;
-          }
-          var result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          res.send(recordset.recordsets[0]);
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Error executing query");
         }
-      );
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+        console.log("Query:", query); 
+        console.log("Result:", recordset.recordsets[0]); 
+        res.send(result);
+      });
     });
   } catch (error) {
     console.log("Error:", error);
