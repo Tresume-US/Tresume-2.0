@@ -65,7 +65,7 @@ export class OnboardingService {
     }
 
     updateOnboardingStatus(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'updateOnboardStatus/' , request);
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateOnboardStatus' , request);
     }
 
     updateOnboardingStatus1(request: any): Observable<ResponseDetails> {
@@ -134,7 +134,7 @@ export class OnboardingService {
     }
 
     getOnboardingSession(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'onboardSession/' , request);
+        return this.http.post<ResponseDetails>(this.endpoint + 'onboardSession' , request);
     }
 
     // getDocumentPath(id: any): Observable<ResponseDetails> {

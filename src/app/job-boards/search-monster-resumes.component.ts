@@ -427,7 +427,7 @@ export class SearchResumesMonsterComponent implements OnInit {
                     let b64Data: any = x.resumeDocument.file;
                     this.fileBlob = b64Data;
                     let contentType = x.resumeDocument.fileContentType;
-                    this.isPDFSrc = contentType === 'application/pdf';
+                    // this.isPDFSrc = contentType === 'application/pdf';
                     this.currentResumeResp = x.resumeDocument;
                     const blob = b64toBlob(b64Data, contentType);
                     if (!this.isPDFSrc) {

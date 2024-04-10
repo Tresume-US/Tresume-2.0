@@ -160,7 +160,10 @@ export class WizardWorkflowComponent implements OnInit {
                 this.approvalView = true;
                 this.getOnboardRequests();
             }
-            this.appService.getTraineeDetails(this.traineeId).subscribe((x: any) => {
+            let req = {
+                traineeId:this.traineeId
+            }
+            this.appService.getTraineeDetails(req).subscribe((x: any) => {
                 let response = x.result;
                 if (response) {
                     this.candidateDetails = response[0];

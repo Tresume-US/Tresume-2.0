@@ -524,7 +524,7 @@ app.get(
   }
 );
 
-app.post("/getTraineeDetails/", function (req, res) {
+app.post("/getTraineeDetails", function (req, res) {
   sql.connect(config, function (err) {
     try {
       if (err) throw err;
@@ -1935,7 +1935,11 @@ app.post("/approveFiles", function (req, res) {
                   res.status(500).send("Error updating onboarding document request status");
                   return;
                 }
-                res.send("Success");
+                var result = {
+                  flag: 1,
+                  message: 'Success'
+                };
+                res.send(result);
               }
             );
           }

@@ -19,7 +19,7 @@ export class AppService {
     constructor(private http: HttpClient,private cookieService: CookieService) { }
 
     getTraineeDetails(req: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeDetails/' , req);
+        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeDetails' , req);
     }
 
     getOnboardingSession(id: any): Observable<ResponseDetails> {

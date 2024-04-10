@@ -361,6 +361,7 @@ router.post("/insertTimesheetTraineeCandidate", async function (req, res) {
     const data = {
       flag: 1,
       message: "Trainee Candidate Data Inserted",
+      result:result
     };
 
     res.send(data);

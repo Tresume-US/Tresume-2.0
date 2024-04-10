@@ -2071,7 +2071,7 @@ router.post("/insertRecruitmentTracker", async (req, res) => {
     const financialData = await generateExcel(req.body);
 
     console.log("OrgID:", OrgID);
-    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%,"+OrgID+",%' and WFID in (8) and active = 1";
+    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%,"+OrgID+",%' and WFID in (1,4,6) and active = 1";
     const useremailsResult = await pool.query(query);
 
     const useremails = useremailsResult.recordset.map(record => record.useremail);

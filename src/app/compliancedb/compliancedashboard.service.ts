@@ -35,7 +35,7 @@ export class ComplianceDashboardService {
     }
 
     getTraineeDetails(req: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeDetails/' ,req);
+        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeDetails' ,req);
     }
 
     getLegalStatus(id: any): Observable<ResponseDetails> {
