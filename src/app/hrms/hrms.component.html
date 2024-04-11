@@ -264,7 +264,7 @@
               </div> -->
 
             <div class="col-md-4">
-              <label class="label">Email</label>
+              <label class="label">Email *</label>
               <input type="email" class="form-control" name="email" placeholder="Email" formControlName="email"
                 [ngClass]="{
                         'invalid-input':
@@ -283,7 +283,7 @@
             </div>
 
             <div class="col-md-4">
-              <label class="label">Phone</label>
+              <label class="label">Phone *</label>
               <input type="tel" class="form-control" name="phone" placeholder="Phone" formControlName="phone"
                 [ngClass]="{ 'invalid-input': addCandidate.get('phone').invalid && addCandidate.get('phone').touched }">
               <div *ngIf="addCandidate.get('phone').invalid && addCandidate.get('phone').touched"
@@ -341,7 +341,7 @@
             
             <div class="col-md-4">
               <div class="form-group text-center">
-                <label>Current Location</label>
+                <label>Current Location *</label>
                 <select class="form-control" name="Location" [(ngModel)]="currentLocation"
                   [ngModelOptions]="{standalone: true}">
                   <option value="">Select</option>
@@ -383,9 +383,14 @@
             </div>
           </div>
           <div class="row">
-
             <div class="col-md-4" *ngIf="routeType == 1">
-              <label class="label">Notes</label>
+              <label>Organization</label>
+              <select class="form-control" name="selectedOrgID" [(ngModel)]="selectedOrgID" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{ type.organizationname }}</option>
+              </select>
+            </div>
+            <div class="col-md-4" *ngIf="routeType == 1">
+              <label class="label">Notes *</label>
               <textarea class="textarea" name="notes" rows="2" formControlName="notes"></textarea>
             </div>
 
