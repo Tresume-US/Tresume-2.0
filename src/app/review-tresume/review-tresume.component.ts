@@ -437,17 +437,20 @@ export class ReviewTresumeComponent implements OnChanges {
 
   saveSiteVisitFormData() {
     console.log('Saving data for the Site Visit tab:', this.siteVisitFormData);
+    this.showSaveButton = false
   }
   
 
   onTabChange(tabIndex: number) {
-    const tabLabels = ['', '', '', '', '', ''];
-
-    if (tabIndex >= 0 && tabIndex < tabLabels.length) {
+    if (tabIndex >= 0) {
       this.currentTabIndex = tabIndex;
       this.tabIndex = tabIndex;
-      this.showSaveButton = tabIndex !== 2;
-      this.saveButtonLabel = `Save ${tabLabels[tabIndex]}`;
+      if(tabIndex === 2 || tabIndex ===6){
+        this.showSaveButton = false
+      }else{
+        this.showSaveButton = true;
+      }
+      this.saveButtonLabel = `Save`;
       this.router.navigate(['/reviewtresume/'+this.routeType+'/'+this.candidateID+'/'+tabIndex]);
     }
 

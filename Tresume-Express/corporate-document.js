@@ -142,7 +142,7 @@ const upload = multer({ storage: storage });
       console.log(query);
   
       const recordset = await request.query(query);
-  
+      console.log(recordset);
       if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
         const result = {
           flag: 1,

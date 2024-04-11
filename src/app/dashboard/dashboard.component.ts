@@ -336,7 +336,10 @@ export class DashboardComponent implements OnInit {
       if (response) {
         this.hideFTCFields = false;
         let countArray = response.map((y: any) => y.FTCCount);
-        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current);
+        // this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current);
+         //Mariya code start
+        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current,0);
+            //Mariya code end
         this.doughnutChartData = response.map((y: any) => y.FTCCount).slice(0, 5);
         this.doughnutChartLabels = response.map((z: any) => z.RecruiterName).slice(0, 5);
       }
@@ -424,7 +427,10 @@ export class DashboardComponent implements OnInit {
       if (response) {
         this.hideInterviewsFields = false;
         let countArray = response.map((y: any) => y.PlacemntCount);
-        this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+        // this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+         //Mariya code start
+        this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current, 0);
+            //Mariya code end
         let lineData = response.map((y: any) => y.PlacemntCount).slice(0, 5);
         let lineLabel = response.map((y: any) => y.MarkerterName.split(" ")[0]).slice(0, 5);
         this.lineChartData = [];
@@ -441,7 +447,10 @@ export class DashboardComponent implements OnInit {
           if (response) {
             this.hideInterviewsFields = false;
             let countArray = response.map((y: any) => y.PlacemntCount);
-            this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+            // this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+            //Mariya code start
+            this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current, 0);
+            //Mariya code end
             let lineData = response.map((y: any) => y.PlacemntCount).slice(0, 5);
             let lineLabel = response.map((y: any) => y.MarkerterName.split(" ")[0]).slice(0, 5);
             for (let i = 0; i < 5; i++) {
@@ -464,7 +473,10 @@ export class DashboardComponent implements OnInit {
             if (response) {
               this.hideInterviewsFields = false;
               let countArray = response.map((y: any) => y.PlacemntCount);
-              this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+              // this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
+               //Mariya code start
+              this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current, 0);
+                  //Mariya code end
               let lineData = response.map((y: any) => y.PlacemntCount).slice(0, 5);
               let lineLabel = response.map((y: any) => y.MarkerterName.split(" ")[0]).slice(0, 5);
               for (let i = 0; i < 5; i++) {
@@ -505,7 +517,10 @@ export class DashboardComponent implements OnInit {
       let response = x.result;
       if (response) {
         let countArray = response.map((y: any) => y.BenchCount);
-        this.totalSubmissions = countArray.reduce((sum: any, current: any) => sum + current);
+        // this.totalSubmissions = countArray.reduce((sum: any, current: any) => sum + current);
+         //Mariya code start
+        this.totalSubmissions = countArray.reduce((sum: any, current: any) => sum + current, 0);
+            //Mariya code end
         if (this.totalSubmissions > 0) {
           this.hideSubmissionsFields = false;
         }
@@ -550,7 +565,8 @@ export class DashboardComponent implements OnInit {
       if (response) {
         this.hideJBFields = false;
         let countArray = response.map((y: any) => y.count);
-        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current);
+        // this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current);
+        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current, 0);
         this.jobBoardChartData = response.map((y: any) => y.count).slice(0, 5);
         this.jobBoardChartLabels = response.map((z: any) => z.JobboardSource).slice(0, 5);
       }

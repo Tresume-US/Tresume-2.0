@@ -28,6 +28,8 @@ export class CorporateDocumentComponent implements OnInit {
   multiorgID:any;
 
   constructor(private cookieService: CookieService, private service: CorporateDocumentService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
+    this.OrgID = this.cookieService.get('OrgID');
+    this.selectedOrgID = this.OrgID;
   }
 
   ngOnInit(): void {

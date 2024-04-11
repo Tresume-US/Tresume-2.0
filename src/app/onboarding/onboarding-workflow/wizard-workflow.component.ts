@@ -175,7 +175,7 @@ export class WizardWorkflowComponent implements OnInit {
             OrgID:this.OrgID 
         }
         this.service.getChecklistNames(req).subscribe((x: any) => {
-            this.cards = x;
+            this.cards = x.result;
         });
         this.firstFormGroup = this._formBuilder.group({
             firstCtrl: ['', ''],
@@ -255,9 +255,9 @@ export class WizardWorkflowComponent implements OnInit {
             </html>
             `
         }
-        this.service.emailOfferLetter(requestItem).subscribe(x => {
-            this.messageService.add({ severity: 'success', summary: 'Welcome Email Sent', detail: this.model.Input });
-        });
+        // this.service.emailOfferLetter(requestItem).subscribe(x => {
+        //     this.messageService.add({ severity: 'success', summary: 'Welcome Email Sent', detail: this.model.Input });
+        // });
         this.stepper2.next();
         this.stepper.selectedIndex = 0;
         this.stepperPercentage = (this.stepper2.selectedIndex / (this.stepper2.steps.length - 1)) * 100;
