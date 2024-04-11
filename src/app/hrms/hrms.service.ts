@@ -32,7 +32,9 @@ export class HrmsService {
   
   //   return this.http.post<ResponseDetails>(this.endpoint + 'insertTrainee', formData);
   // }
-
+  fetchmultiorg(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'fetchmultiorg', request);
+  }
   insertTrainee(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'insertTrainee', request);
   }

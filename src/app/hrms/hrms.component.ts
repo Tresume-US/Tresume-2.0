@@ -31,7 +31,7 @@ export class HrmsComponent implements OnInit {
   noResultsFound: boolean = false;
   TraineeID: string;
   addCandidate: any;
-  OrgID: string;
+  OrgID: any;
   userName: string;
   emailvalidation: boolean = false;
   emailvalidationmessage: string = '';
@@ -56,14 +56,13 @@ export class HrmsComponent implements OnInit {
   followUpEndDate: string = '';
   dateCreatedStartDate: string = '';
   dateCreatedEndDate: string = '';
-
   title: string;
   submissionDate: Date;
   notes: string;
   vendorName: string;
   rate: number;
   clientName: string;
-
+  selectedOrgID: any;
   constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
@@ -74,15 +73,20 @@ export class HrmsComponent implements OnInit {
     this.useremail = this.cookieService.get('userName1');
     this.isAdmin = this.cookieService.get('IsAdmin');
     console.log(this.isAdmin);
+
   }
 
   ngOnInit(): void {
+    this.OrgID = this.cookieService.get('OrgID');
+    this.getOrganization();
+    this.selectedOrgID = this.OrgID;
     this.TraineeID = this.cookieService.get('TraineeID');
     this.getOrgUserList();
     this.getcandidaterstatus();
     this.getLegalStatusOptions();
     this.fetchhrmscandidatelist();
     this.gethrmsLocation();
+
 
     this.addCandidate = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -95,8 +99,9 @@ export class HrmsComponent implements OnInit {
       LegalStatus: [''],
       locationConstraint: ['yes'],
       marketerName: [''],
-      notes: [''],
+      notes: ['', [Validators.required]],
       referralType: [''],
+      selectedOrgID:[''],
       // university: [''],
       middleName: [''],
       gender: ['male'],
@@ -132,8 +137,17 @@ export class HrmsComponent implements OnInit {
     // });
 
   }
-
-
+  
+  multiorgID:any;
+  getOrganization() {
+    const Req = {
+      useremail:this.userName
+    };
+    this.service.fetchmultiorg(Req).subscribe((x: any) => {
+      this.multiorgID = x;
+    });
+  }
+  
   // fetchinterviewlist() {
   //   let Req = {
   //     TraineeID: this.candidateID,
@@ -377,7 +391,7 @@ export class HrmsComponent implements OnInit {
       candidateStatus: this.selectedcurrentstatus,
       LegalStatus: this.LegalStatus,
       recruiteremail: this.userName,
-      orgID: this.OrgID,
+      orgID: this.selectedOrgID,
       creeateby: this.userName,
       followupon: followupon,
       currentLocation: this.currentLocation
@@ -398,6 +412,7 @@ export class HrmsComponent implements OnInit {
     // this.service.insertTraineeCandidate(Req).subscribe((x: any) => {
     //   console.log(x);
     // });
+
     this.service.insertTraineeCandidate(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);

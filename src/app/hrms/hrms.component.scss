@@ -251,3 +251,8 @@ textarea {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.btn:disabled {
+  background-color: #e0e0e0; /* Change the background color */
+  color: #a8a8a8; /* Change the text color */
+  cursor: not-allowed; /* Change the cursor to not-allowed */
+}
