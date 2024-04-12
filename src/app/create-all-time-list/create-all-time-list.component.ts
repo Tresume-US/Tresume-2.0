@@ -262,6 +262,7 @@ export class CreateAllTimeListComponent implements OnInit {
     // this.traineeID = this.cookieService.get('TraineeID');
     // this.username = this.cookieService.get('userName1');
 
+    this.timesheetrole = this.cookieService.get('timesheet_role');
     this.addDefaultRows();
     this.addDefaultRows();
     this.getProjectName();
@@ -269,7 +270,7 @@ export class CreateAllTimeListComponent implements OnInit {
     // this.getLocation();
     this.getLocation('');
     this.getpayItem();
-    this.getTimesheetRole();
+    // this.getTimesheetRole();
 
     
 
@@ -287,16 +288,16 @@ export class CreateAllTimeListComponent implements OnInit {
     }
   }
 
-  timesheetrole: number[] = []
-  getTimesheetRole() {
-    let Req = {
-      traineeID: this.traineeID
-    };
+  // timesheetrole: number[] = []
+  // getTimesheetRole() {
+  //   let Req = {
+  //     traineeID: this.traineeID
+  //   };
 
-    this.Service.gettimesheetrole(Req).subscribe((x: any) => {
-      this.timesheetrole = x.result;
-    });
-  }
+  //   this.Service.gettimesheetrole(Req).subscribe((x: any) => {
+  //     this.timesheetrole = x.result;
+  //   });
+  // }
 
   getCurrentWeekDates(): { start: Date; end: Date } {
     let currentDate = new Date();
@@ -799,6 +800,7 @@ export class CreateAllTimeListComponent implements OnInit {
     Object.keys(row).forEach(key => {
       row[key] = '';
     });
+    console.log('row',row);
   }
 
 

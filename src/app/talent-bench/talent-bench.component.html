@@ -273,7 +273,7 @@
               <label class="label">Candidate Status *</label>
               <select class="form-control" id="currentStatus" [(ngModel)]="selectedcurrentstatus"
                 [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let option of  currentStatusOptions" [value]="option.CandidateStatusID">{{ option.Value
+                <option *ngFor="let option of  currentStatusOptions" [value]="option.CSID">{{ option.CSName
                   }}</option>
               </select>
             </div>
@@ -319,6 +319,12 @@
           </div>
 
           <div class="row row2">
+            <div class="col-md-4">
+              <label>Organization</label>
+              <select class="form-control" name="selectedOrgID" [(ngModel)]="selectedOrgID" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{ type.organizationname }}</option>
+              </select>
+            </div>
             <div class="col-md-4">
               <label class="label">Notes</label>
               <textarea class="textarea" name="Notes" rows="4" formControlName="Notes"></textarea>

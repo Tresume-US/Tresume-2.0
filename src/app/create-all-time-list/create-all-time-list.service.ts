@@ -40,6 +40,9 @@ export class CreateAllTimeListService {
   gettimesheetrole(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'gettimesheetrole', request);
   }
+  deleteTimesheet(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'deleteTimesheet', request);
+}
 
   autofillDetails(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'autofillDetails', request);
