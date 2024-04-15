@@ -269,7 +269,7 @@ export class CreateAllTimeListComponent implements OnInit {
     // this.getLocation();
     this.getLocation('');
     this.getpayItem();
-    this.getTimesheetRole();
+    // this.getTimesheetRole();
 
     
 
@@ -287,16 +287,16 @@ export class CreateAllTimeListComponent implements OnInit {
     }
   }
 
-  timesheetrole: number[] = []
-  getTimesheetRole() {
-    let Req = {
-      traineeID: this.traineeID
-    };
+  // timesheetrole: number[] = []
+  // getTimesheetRole() {
+  //   let Req = {
+  //     traineeID: this.traineeID
+  //   };
 
-    this.Service.gettimesheetrole(Req).subscribe((x: any) => {
-      this.timesheetrole = x.result;
-    });
-  }
+  //   this.Service.gettimesheetrole(Req).subscribe((x: any) => {
+  //     this.timesheetrole = x.result;
+  //   });
+  // }
 
   getCurrentWeekDates(): { start: Date; end: Date } {
     let currentDate = new Date();

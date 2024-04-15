@@ -44,6 +44,9 @@ export class CreateAllTimeListService {
   autofillDetails(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'autofillDetails', request);
   }
+  deleteTimesheet(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'deleteTimesheet', request);
+}
 }
 export interface ResponseDetails {
   flag?: any;

@@ -55,7 +55,7 @@ export class AllTimeListComponent implements OnChanges {
     this.fetchCompletedData();
     this.fetchNonBillableData();
     this.gethrmsLocation();
-    this.getTimesheetRole();
+    // this.getTimesheetRole();
   }
 
   ngOnChanges(){
@@ -230,16 +230,17 @@ export class AllTimeListComponent implements OnChanges {
   
 
   // timesheetroles: number[] = []
-  getTimesheetRole() {
-    let Req = {
-      traineeID: this.TraineeID
-    };
+  // getTimesheetRole() {
+  //   let Req = {
+  //     traineeID: this.TraineeID
+  //   };
 
-    this.service.gettimesheetrole(Req).subscribe((x: any) => {
-      this.timesheetrole = x.result;
-    });
-  }
+  //   this.service.gettimesheetrole(Req).subscribe((x: any) => {
+  //     this.timesheetrole = x.result;
+  //   });
+  // }
 
+//Commented by mariya
 
 
   fetchPendingResult(){
@@ -326,11 +327,11 @@ export class AllTimeListComponent implements OnChanges {
     });
   }
 
-  deleteItem(id: any, tab: string): void {
+  deleteItem(id: any): void {
     let Req = {
       Id: id,
     };
-  
+    this.loading=true;
     this.service.deleteTimesheet(Req).subscribe((x: any) => {
       var flag1 = x.flag;
       if (flag1 === 1) {
@@ -338,22 +339,11 @@ export class AllTimeListComponent implements OnChanges {
           severity: 'success',
           summary: 'Timesheet Deleted Successfully',
         });
-        switch(tab) {
-          case 'pending':
-            this.fetchPendingResult();
-            break;
-          case 'rejected':
-            this.fetchRejectedData();
-            break;
-          case 'completed':
-            this.fetchCompletedData();
-            break;
-          case 'non-billable':
-            this.fetchNonBillableData();
-            break;
-          default:
-            break;
-        }
+        this.fetchPendingResult();
+        this.fetchRejectedData();
+        this.fetchCompletedData();
+        this.fetchNonBillableData();
+        this.loading=false;
       } else {
         this.messageService.add({
           severity: 'error',
