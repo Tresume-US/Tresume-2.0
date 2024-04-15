@@ -45,7 +45,6 @@ export class TalentBenchComponent implements OnInit {
   pagesToShow: number = 10;
   searchInput:string = '';
 
-  selectedOrgID: any;
   constructor(private dialog: MatDialog, private cookieService: CookieService, private service: TalentBenchService, private messageService: MessageService, private formBuilder: FormBuilder,private route: ActivatedRoute, private renderer: Renderer2, private el: ElementRef,private datePipe: DatePipe) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
@@ -90,8 +89,6 @@ export class TalentBenchComponent implements OnInit {
     this.getGroupList();
     this.startDate = '';
     this.endDate = '';
-    this.getOrganization();
-    this.selectedOrgID = this.OrgID;
 
     this.addCandidate = this.formBuilder.group({
       FirstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -114,16 +111,6 @@ export class TalentBenchComponent implements OnInit {
   }
 
   search: string = '';
-
-  multiorgID:any;
-  getOrganization() {
-    const Req = {
-      useremail:this.userName
-    };
-    this.service.fetchmultiorg(Req).subscribe((x: any) => {
-      this.multiorgID = x;
-    });
-  }
 
 isCandidateVisible(candidate: any): boolean {
   const searchValue = this.search.toLowerCase();
@@ -416,13 +403,13 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
       locationConstraint: this.addCandidate.value.LocationConstraint,
       referralType: this.addCandidate.value.referralType,
       notes: this.addCandidate.value.Notes,
-      orgID: this.selectedOrgID,
+      orgID: this.OrgID,
       createby: this.userName,
       followupon: '',
       currentLocation: ''
     };
 
-    console.log(Req);
+    // console.log(Req);
     this.service.AddTalentBenchList(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);

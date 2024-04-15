@@ -7,11 +7,9 @@
                     <div class="col-auto">
                       <button class="btn" [routerLink]="['/createalltimelist']">Create</button>
                     </div>
-                    <!-- Mariya code start  -->
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal" *ngIf="timesheetrole === '1'">Add Candidate</button>
+                    <div class="col-auto" *ngFor="let item of timesheetrole">
+                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal" *ngIf="item.timesheetrole === 1">Add Candidate</button>
                     </div>
-                    <!-- Mariya code end -->
                   </div>
             </div>
         </div>
@@ -34,11 +32,11 @@
                             Completed
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" id="non-billable-tab" data-toggle="tab" href="#non-billable">
                             Non-Billable
                         </a>
-                    </li> -->
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <!-- Pending Tab Content -->

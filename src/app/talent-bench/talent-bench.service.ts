@@ -56,9 +56,7 @@ getGroupList(request: any): Observable<ResponseDetails> {
 addGroup(request: any): Observable<ResponseDetails> {
   return this.http.post<ResponseDetails>(this.endpoint + 'addGroup', request);
 }
-fetchmultiorg(request: any): Observable<ResponseDetails> {
-  return this.http.post<ResponseDetails>(this.endpoint + 'fetchmultiorg', request);
-}
+
 fetchGroupList(request: any): Observable<ResponseDetails> {
   return this.http.post<ResponseDetails>(this.endpoint + 'fetchGroupList', request);
 }
