@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
         
         this.UserOrganizationID = this.cookieService.get('OrgID')
         console.log(this.UserOrganizationID);
-        if(this.UserOrganizationID === '127'){
+        if(this.UserOrganizationID === '127' && this.UserOrganizationID === '155'){
             this.showats = false;
         }
         if(this.UserOrganizationID === '130' || this.UserOrganizationID === '131'){

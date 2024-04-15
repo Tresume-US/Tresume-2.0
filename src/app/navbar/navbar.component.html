@@ -208,10 +208,22 @@
                                 <a class="nav-link" routerLink="alltimelist">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>All Time List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" *ngIf="timesheetrole == 2">
+                                <a class="nav-link" routerLink="alltimelist">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p>All Time List</p>
+                                </a>
+                            </li>
+
+                              <li class="nav-item" *ngIf="timesheetrole === 1">
+                                <a class="nav-link" routerLink="tsreport">
+                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <p>Timesheet Report</p>
                                   </a>
                               </li>
-
-                              <li class="nav-item" *ngIf="timesheetrole == 1">
+                              <li class="nav-item" *ngIf="timesheetrole === 2">
                                 <a class="nav-link" routerLink="tsreport">
                                     <i class="nav-icon fas fa-chart-bar"></i>
                                     <p>Timesheet Report</p>
@@ -244,7 +256,7 @@
                               <p>Create Project</p>
                             </a>
                           </li>
-                          <li class="nav-item" *ngIf="timesheetrole == 1">
+                          <li class="nav-item" *ngIf="timesheetrole === 1 || timesheetrole === 2">
                             <a routerLink="/allclient/1" class=" nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Timesheet Clients</p>

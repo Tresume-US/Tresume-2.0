@@ -247,7 +247,8 @@ export class AllTimeListComponent implements OnChanges {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
       id: this.id,
-      username:this.username
+      username:this.username,
+      admin:this.TraineeID
     };
     this.service.getPendingTimesheetResult(Req).subscribe((x: any) => {
         this.PendingData = x.result;
@@ -260,7 +261,8 @@ export class AllTimeListComponent implements OnChanges {
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
-      username:this.username
+      username:this.username,
+      admin:this.TraineeID
     };
     this.service.getRejectedTimesheetResult(Req).subscribe((x: any) => {
       this.rejectedData = x.result;
@@ -273,7 +275,8 @@ export class AllTimeListComponent implements OnChanges {
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
-      username:this.username
+      username:this.username,
+      admin:this.TraineeID
     };
     this.service.getCompletedTimesheetResult(Req).subscribe((x: any) => {
       this.completedData = x.result;
@@ -286,7 +289,8 @@ export class AllTimeListComponent implements OnChanges {
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
-      username:this.username
+      username:this.username,
+      admin:this.TraineeID
     };
     this.service.getNonBillableTimesheetResult(Req).subscribe((x: any) => {
       this.nonBillableData = x.result;

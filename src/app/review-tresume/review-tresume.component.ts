@@ -1115,7 +1115,7 @@ cancelDeletesubmission() {
   addRow() {
 this.loading = true;
     let req = {
-      TraineeID:this.TraineeID,
+      TraineeID:this.candidateID,
       TresumeID:this.TresumeID,
       username:this.userName,
       type:1

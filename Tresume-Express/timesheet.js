@@ -152,6 +152,9 @@ router.post("/getPendingTimesheetResult", async (req, res) => {
       if (timesheetrole === 1) {
         var query =
           "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 1;";
+      } else if (timesheetrole === 2) {
+        var query =
+          "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 1 AND TM.admin ='"+req.body.admin+"';";
       } else if (timesheetrole === 3) {
         query = "SELECT  TM.id,  CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM  Timesheet_Master TM INNER JOIN  Trainee T ON TM.traineeid = T.traineeid INNER JOIN  Timesheet_Project TP ON TM.projectid = TP.projectid WHERE  T.username = '" + req.body.username + "'  AND TM.status = 1;";
       }
@@ -189,6 +192,9 @@ router.post("/getRejectedTimesheetResult", async (req, res) => {
       if (timesheetrole === 1) {
         var query =
           "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 2;";
+      }else if (timesheetrole === 2) {
+        var query =
+          "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 2 AND TM.admin ='"+req.body.admin+"';";
       } else if (timesheetrole === 3) {
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE T.username = '" + req.body.username + "' AND TM.status = 2";
       }
@@ -229,6 +235,9 @@ router.post("/getCompletedTimesheetResult", async (req, res) => {
       if (timesheetrole === 1) {
         var query =
           "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 3";
+      }else if (timesheetrole === 2) {
+        var query =
+          "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.status = 3 AND TM.admin ='"+req.body.admin+"';";
       } else if (timesheetrole === 3) {
 
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE T.username = '" + req.body.username + "' AND TM.status = 3";
@@ -271,7 +280,10 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
       var query;
       if (timesheetrole === 1) {
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
-      } else if (timesheetrole === 3) {
+      } else if (timesheetrole === 2) {
+        var query =
+          "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3) AND TM.admin ='"+req.body.admin+"';";
+      }else if (timesheetrole === 3) {
         query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid LEFT JOIN Timesheet_Project TP ON TM.projectid = TP.projectid  WHERE T.username = '" + req.body.username + "' AND TM.isBillable = 0 AND TM.status IN (1, 2, 3)";
       }
 
