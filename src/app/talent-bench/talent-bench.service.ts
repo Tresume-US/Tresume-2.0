@@ -87,6 +87,9 @@ DSRReportDownload(request: any): Observable<any> {
 InterviewReportDownload(request: any): Observable<any> {
   return this.http.post(this.endpoint + 'InterviewReportDownload', request, { responseType: 'blob' });
 }
+fetchmultiorg(request: any): Observable<ResponseDetails> {
+  return this.http.post<ResponseDetails>(this.endpoint + 'fetchmultiorg', request);
+}
 }
 export interface ResponseDetails {
   flag?: any;
