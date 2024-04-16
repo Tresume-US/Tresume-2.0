@@ -366,6 +366,45 @@ export class AllTimeListComponent implements OnChanges {
       }
     });
   }
+
+  getBadgeColor(letter: string): string {
+    const colorMap: { [key: string]: string } = {
+      'A': 'lightblue',
+      'B': 'lightsteelblue',
+      'C': 'lightcyan',
+      'D': 'indianred',
+      'E': 'lightgreen',
+      'F': 'lightpink',
+      'G': 'gold',
+      'H': 'lightcoral',
+      'I': 'mediumorchid',
+      'J': 'lemonchiffon',
+      'K': 'khaki',
+      'L': 'lavender',
+      'M': 'mediumvioletred',
+      'N': 'lightnavy',
+      'O': 'lightsalmon',
+      'P': 'plum',
+      'Q': 'lightseagreen',
+      'R': 'lightsalmon',
+      'S': 'lightgrey',
+      'T': 'lightcyan',
+      'U': 'cornflowerblue',
+      'V': 'violet',
+      'W': 'wheat',
+      'X': 'mediumseagreen',
+      'Y': 'lightyellow',
+      'Z': 'lightyellow', 
+    };
+    
+  
+    const defaultColor = '#4cacff'; 
+
+    const color = colorMap[letter.toUpperCase()];
+    return color ? color : defaultColor;
+  }
+  
+  
   
   
   
