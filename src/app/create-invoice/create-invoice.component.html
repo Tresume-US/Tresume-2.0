@@ -18,7 +18,7 @@
             </div>
         </div> -->
 
-          <div class="dropdown-container">
+          
             <!-- <label for="client" class="dropdown-label">Client</label>
             <select class="form-control custom-select" style="width: 100%;" name="client" required #client="ngModel"
               [(ngModel)]="selectedclient" style="width: 9rem" (change)="onclientChanges()">
@@ -28,20 +28,27 @@
             <div *ngIf="client.invalid && client.touched">
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
             </div> -->
-            <mat-form-field>
-              <label for="client" class="dropdown-label">Client</label>
-              <!-- <mat-label>Client</mat-label> -->
-              <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
-                (selectionChange)="onclientChanges()" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName
-                  }}-{{client.ProjectName}}</mat-option>
 
-              </mat-select>
-            </mat-form-field>
-            <div *ngIf="client.invalid && client.touched">
-              <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
+
+<!-- Bala coding start -->
+
+            <div class="dropdown-container">
+              <mat-form-field>
+                <label for="client" class="dropdown-label">Client</label>
+                <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
+                (selectionChange)="onclientChanges()" [ngModelOptions]="{standalone: true}">
+                  <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}-{{client.ProjectName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="client.invalid && client.touched">
+                <div *ngIf="client.errors?.required" class="text-danger">Client selection is required</div>
+              </div>
             </div>
-          </div>
+            
+            
+            
+<!-- Bala coding End -->
+            
 
           <!-- <div class="clientemail mt-0 ml-3">
           <label for="clientEmail" class="dropdown-label">Client Email</label>
@@ -325,15 +332,20 @@
                       candidatelistnames.name }}</option>
                   </select>
                 </div>
-
                 <div class="form-group">
                   <label for="filterBy">Filter by:</label>
-                  <select class="form-control" id="filterBy" (change)="onFilterChanges($event.target.value)" >
+                  <select class="form-control" id="filterBy" (change)="onFilterChangess($event.target.value)">
                     <option value="option1">All dates</option>
                     <option value="option2">This month</option>
                     <option value="option3">Last month</option>
-                  </select>
-                </div>
+                    <option value="custom">Custom date</option>
+                </select>
+                
+                <div *ngIf="showCustomDate">
+                  <input type="text" class="form-control mt-3" placeholder="From Date" [(ngModel)]="fromDate" bsDatepicker>
+                  <input type="text" class="form-control mt-3" placeholder="To Date" [(ngModel)]="toDate" bsDatepicker>
+              </div>
+            </div>
                 <div class="form-group mb-3">
                   <label for="filterBy">Time filter:</label>
                   <select class="form-control" (change)="onOptionChanges($event.target.value)" [(ngModel)]="selectedOption"  [ngModelOptions]="{standalone: true}">
