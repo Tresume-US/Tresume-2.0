@@ -312,7 +312,7 @@ router.post("/getInterviewList", async (req, res) => {
     const traineeID = req.body.TraineeID;
 
     const query =
-      "SELECT CONVERT(NVARCHAR, TI.InterviewDate, 101) AS Date, CONCAT(T1.FirstName, ' ', T1.LastName) AS Marketer, ISNULL(TI.Assistedby, '') AS Assigned,TI.TraineeInterviewID, TI.InterviewMode, ISNULL(TI.Notes, '') AS Notes, ISNULL(TI.ClientName, '') AS Client, ISNULL(TI.VendorName, '') AS Vendor, ISNULL(TI.SubVendor, '') AS SubVendor, ISNULL(TI.TypeofAssistance, '') AS TypeofAssistance FROM TraineeInterview TI LEFT JOIN Trainee T1 ON T1.TraineeID = TI.RecruiterID WHERE TI.active = 1 AND TI.TraineeID = " +
+      "SELECT CONVERT(NVARCHAR, TI.InterviewDate, 101) AS Date, CONCAT(T1.FirstName, ' ', T1.LastName) AS Marketer, ISNULL(TI.Assistedby, '') AS Assigned,TI.TraineeInterviewID, TI.InterviewMode, ISNULL(TI.Notes, '') AS Notes, ISNULL(TI.ClientName, '') AS Client, ISNULL(TI.VendorName, '') AS Vendor, ISNULL(TI.SubVendor, '') AS SubVendor, ISNULL(TI.TypeofAssistance, '') AS TypeofAssistance,TI.CreateTime FROM TraineeInterview TI LEFT JOIN Trainee T1 ON T1.TraineeID = TI.RecruiterID WHERE TI.active = 1 AND TI.TraineeID = " +
       traineeID +
       " ORDER BY TI.CreateTime DESC;";
 
@@ -601,7 +601,8 @@ router.post("/getPlacementList", async (req, res) => {
     ISNULL(P.SubVendorPhone, '') AS SubVendorPhone,
     ISNULL(P.SubVendorAddress, '') AS SubVendorAddress,
     CONCAT(T.FirstName, ' ', T.LastName) AS Name,
-    P.PrimaryPlacement
+    P.PrimaryPlacement,
+    P.CreatedTime
 FROM
     Placements P
 LEFT JOIN
@@ -1688,7 +1689,7 @@ router.post("/fetchrecruiter", function (req, res) {
       // "select traineeid,firstname,lastname from trainee where organizationid = "+req.body.orgID+" and active = 1",
       "SELECT DISTINCT traineeid, firstname, lastname FROM trainee WHERE organizationid = " +
         req.body.orgID +
-        " AND active = 1 ORDER BY firstname ASC, lastname ASC",
+        " AND active = 1 AND role='recruiter' ORDER BY firstname ASC, lastname ASC",
 
       function (err, recordset) {
         if (err) console.log(err);

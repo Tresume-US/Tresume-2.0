@@ -78,6 +78,8 @@ export class NewTimeSheetReportComponent implements OnInit {
    candidatelist(){
      let Req = {
       OrgId : this.OrgID,
+      timesheetrole: this.timesheetrole,
+      TraineeID:this.TraineeID
      };
      this.service.reportCandidatetList(Req).subscribe((x: any) => {
        this.candidatelistname = x.result;
@@ -87,6 +89,8 @@ export class NewTimeSheetReportComponent implements OnInit {
 fetchtimesheetreport(){
   let Req = {
     OrgID: this.OrgID,
+    timesheetrole: this.timesheetrole,
+      TraineeID:this.TraineeID
   };
   this.service.getTimesheetReport(Req).subscribe((x: any) => {
     this.tableData = x.result;
@@ -181,7 +185,9 @@ fetchtimesheetreport(){
       OrgID: this.OrgID,
       startdate: '',
       enddate: '',
-      candidateid:this.candidateid
+      candidateid:this.candidateid,
+      timesheetrole: this.timesheetrole,
+      TraineeID:this.TraineeID
     };
   
     if (this.isCustomizeSelected() && this.fromDate && this.toDate) {

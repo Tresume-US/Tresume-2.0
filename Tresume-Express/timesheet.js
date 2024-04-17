@@ -97,9 +97,10 @@ router.post("/getTimesheetReport", async (req, res) => {
       // WHERE 
       //     md.useremail = 'kumarsaravana1821@gmail.com'`;
 
+      var query = '';
 
-
-      var query = `SELECT 
+      if(req.body.timesheetrole == 2){
+        query = `SELECT 
                       t1.*, 
                       CONCAT(t2.FirstName, ' ', t2.LastName) AS TraineeName
                   FROM 
@@ -107,14 +108,34 @@ router.post("/getTimesheetReport", async (req, res) => {
                   JOIN 
                       Trainee AS t2 ON t1.TraineeID = t2.TraineeID
                   WHERE 
-                      t1.orgid = '${req.body.OrgID}'`;
+                      t1.orgid = '${req.body.OrgID}' AND t2.timesheet_admin = '${req.body.TraineeID}'`
               if (req.body.candidateid) {
-                query += ` AND t1.traineeid = '${req.body.candidateid}'`;
+                query += ` AND t1.traineeid = '${req.body.candidateid}'`
               }
               // Check if startdate and enddate are provided
               if (req.body.startdate && req.body.enddate) {
-                query += ` AND t1.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
+                query += ` AND t1.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`
               }
+      } else{
+            query = `SELECT 
+            t1.*, 
+            CONCAT(t2.FirstName, ' ', t2.LastName) AS TraineeName
+            FROM 
+                timesheet_master AS t1
+            JOIN 
+                Trainee AS t2 ON t1.TraineeID = t2.TraineeID
+            WHERE 
+                t1.orgid = '${req.body.OrgID}'`;
+        if (req.body.candidateid) {
+          query += ` AND t1.traineeid = '${req.body.candidateid}'`;
+        }
+        // Check if startdate and enddate are provided
+        if (req.body.startdate && req.body.enddate) {
+          query += ` AND t1.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
+        }
+      }
+
+
 
     
       console.log(query);
@@ -1111,7 +1132,20 @@ router.post('/reportCandidatetList', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
 //1 and 3 as per status
-    const query = `
+let query = ''
+if(req.body.timesheetrole == '2'){
+  query = `
+  SELECT traineeid, CONCAT(firstname, ' ', lastname) AS name 
+  FROM trainee 
+  WHERE istimesheet = 1 
+    AND active = 1 
+    AND timesheet_role = 3 
+    AND userorganizationid = '${req.body.OrgId}' 
+    AND timesheet_admin = '${req.body.TraineeID}'
+  ORDER BY name;
+`;
+}else{
+  query = `
       SELECT traineeid, CONCAT(firstname, ' ', lastname) AS name 
       FROM trainee 
       WHERE istimesheet = 1 
@@ -1120,6 +1154,8 @@ router.post('/reportCandidatetList', async (req, res) => {
         AND userorganizationid = '${req.body.OrgId}' 
       ORDER BY name;
     `;
+}
+     
 
 
     console.log(query);

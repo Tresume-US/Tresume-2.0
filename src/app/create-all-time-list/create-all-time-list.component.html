@@ -3,7 +3,7 @@
     <h2>Weekly Timesheet</h2>
     <i class="fa fa-close" [routerLink]="['/alltimelist']"></i>
   </div>
-  <div class="content pl-3 pt-1 pb-1 dropdown">
+  <div class="content pl-3 pt-1 pb-1 dropdown" *ngFor="let item of tsroles">
     <div class="row mt-3">
       <!-- <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="timesheetrole === '1'">
         <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem" id="selectedItem"
@@ -22,7 +22,7 @@
         </div>
       </div> -->
       <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      *ngIf="timesheetrole === '1'">
+      *ngIf="item.timesheetrole === 1">
         <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem"
           placeholder="Who's time are you tracking?">
         <div class="input-group-append">
@@ -36,9 +36,9 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3"  *ngIf="timesheetrole === '3'">
+      <div class="col-md-3"  *ngIf="item.timesheetrole === 3">
         <div class="mt-2 username">
-          <!-- Candidate Name: {{ username }} -->
+          <!-- {{ username }} -->
           {{ item.Name }}
         </div>
       </div>

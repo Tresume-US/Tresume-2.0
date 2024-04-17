@@ -573,6 +573,7 @@
                   <th>Vendor</th>
                   <th>Sub Vendor</th>
                   <th>Type of Assistance</th>
+                  <th>Created at</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -587,6 +588,7 @@
                   <td>{{ job.Vendor }}</td>
                   <td>{{ job.SubVendor }}</td>
                   <td>{{ job.TypeofAssistance }}</td>
+                  <td>{{ job.CreateTime | date:'MM/dd/yy hh:mm a' }}</td>
                   <td>
                     <i class="fa fa-trash fa-lg ml-3 mr-2"
                       (click)="deleteinterviewdata(job.TraineeInterviewID)"></i>
@@ -641,6 +643,7 @@
                   <th>End Client Name</th>
                   <th>Vendor</th>
                   <th>End Client Address</th>
+                  <th>Created at</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -653,6 +656,7 @@
                   <td>{{ placement.ClientName }}</td>
                   <td>{{ placement.VendorName }}</td>
                   <td>{{ placement.ClientAddress }}</td>
+                  <td>{{ placement.CreatedTime | date:'MM/dd/yy hh:mm a' }}</td>
                   <td>
                     <div style="display: flex; align-items: center;">
                       <!-- <div [routerLink]="['/candidateView/' + placement.PID + '/placementview/' + candidateID]" routerLinkActive="active"> -->
@@ -776,6 +780,7 @@
                     <th>ClientName</th>
                     <th>Note</th>
                     <th>Rate</th>
+                    <th>Created at</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -788,6 +793,7 @@
                     <td>{{ submission.ClientName }}</td>
                     <td>{{ submission.Note }}</td>
                     <td>{{ submission.Rate }}</td>
+                    <td>{{ submission.CreateTime | date:'MM/dd/yy hh:mm a' }}</td>
                     <td>
                       <i class="fa fa-trash fa-lg ml-3 mr-2"
                         (click)="deletesubmissiondata(submission.submissionid)"></i>

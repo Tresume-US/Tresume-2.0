@@ -120,6 +120,7 @@ router.post('/getTalentBenchList', async (req, res) => {
       organizationname,
       LegalStatus,
       GroupID,
+      CreateTime,
       Age,
       IsNew
   FROM 
@@ -752,7 +753,7 @@ router.post('/InterviewReportDownload', async (req, res) => {
           TI.VendorName,
           TI.ClientName,
           TI.Notes,
-          TI.CreateTime
+          FORMAT(TI.CreateTime, 'dd-MM-yyyy hh:mm:ss tt') AS CreateTime
       FROM 
           TraineeInterview TI
       INNER JOIN 
@@ -822,7 +823,7 @@ router.post('/DSRReportDownload', async (req, res) => {
         s.ClientName,
         s.Note,
         s.Rate,
-        FORMAT(s.createtime, 'dd-MM-yyyy') AS CreatedOn
+        FORMAT(s.createtime, 'dd-MM-yyyy hh:mm:ss tt') AS CreatedOn
       FROM 
         submission s
       INNER JOIN 
@@ -901,7 +902,8 @@ router.post('/PlacementReportDownload', async (req, res) => {
         P.VendorEmail,
         P.VendorPhone,
         P.VendorAddress,
-        P.SubVendorName
+        P.SubVendorName,
+        FORMAT(P.CreatedTime, 'dd-MM-yyyy hh:mm:ss tt') AS CreateTime
       FROM 
         placements P
       LEFT JOIN 
@@ -943,6 +945,7 @@ router.post('/PlacementReportDownload', async (req, res) => {
       'VendorPhone',
       'VendorAddress',
       'SubVendorName',
+      'CreateTime'
     ];
 
     // Add headers to the worksheet

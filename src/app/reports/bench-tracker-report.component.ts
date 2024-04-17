@@ -51,7 +51,8 @@ export class BenchTrackerReportComponent implements OnInit {
         { field: 'Legal Status', sortable: true, filter: true, resizable: true },
         { field: 'Profile', sortable: true, filter: true, resizable: true },
         { field: 'Location constraint', sortable: true, filter: true, resizable: true },
-        { field: 'Deal Offered', sortable: true, filter: true, resizable: true }
+        { field: 'Deal Offered', sortable: true, filter: true, resizable: true },
+        { field: 'Create Time', sortable: true, filter: true, resizable: true }
     ];
 
     public startDate: any;
