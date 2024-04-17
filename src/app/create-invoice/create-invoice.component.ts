@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { CreateInvoiceService } from './create-invoice.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -13,7 +14,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 })
 export class CreateInvoiceComponent implements OnInit {
+  clients: any[] = [/* Your client data */];
+  selectedClient: any;
+  isClientSelected: boolean = false;
 
+  showDatePicker: boolean = false;
+  fromDate: string = '';
+  toDate: string = '';
   loading: boolean = false;
   TraineeID: any;
   OrgID: string = '';
@@ -23,7 +30,7 @@ export class CreateInvoiceComponent implements OnInit {
   showConfirmationModal: boolean = false;
   showModal: boolean = false;
   previousOption: string = '';
-  clients: any;
+  // clients: any;
   ClientName: any;
   state: any;
   files: File[] = [];
@@ -92,6 +99,9 @@ export class CreateInvoiceComponent implements OnInit {
   candidatelistname:any;
   candidateid:any =0;
   daywisetimesheetlist: any = [];
+  showCustomDate: boolean;
+  previousClient: any;
+  showAlert: boolean;
 
   ngOnInit(): void {
     this.loading = true;
@@ -106,9 +116,10 @@ export class CreateInvoiceComponent implements OnInit {
     this.newrows = true;
     this.selectedInvoiceDate = this.getCurrentDate();
     this.getreportcandidatelist();
+    this.previousClient = this.selectedClient;
   }
 
-  constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute) {
+  constructor(private messageService: MessageService, private cookieService: CookieService, private Service: CreateInvoiceService, private router: Router, private route: ActivatedRoute , private dialog: MatDialog) {
 
     this.OrgID = this.cookieService.get('OrgID');
     this.routeType = this.route.snapshot.params["routeType"];
@@ -248,16 +259,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.getalltimesheetlist();
   }
 
-  onclientChanges(){
-    this.clientid = this.selectedclient.ClientID
-   this.clientEmail = this.selectedclient.EmailID
-   this.selectedBillingaddress = this.selectedclient.Address
-   this.ClientName = this.selectedclient.ClientName
-   this.selectedTerm = this.selectedclient.PaymentTerms
-   console.log(this.selectedclient);
-   this.getalltimesheetlist();
-  }
-
+  
   onOptionChange(event: any) {
     this.selectedOption = event.target.value;
     if (this.selectedOption === 'example2') {
@@ -491,47 +493,57 @@ getcurrenttimesheetlist() {
   });
 }
 
-
-addtimesheet(timesheet:any){
-  if(this.newrows){
-    this.invoiceLines = [];
-  }
-  var data = {
-    sno: '',
-    serviceDate: timesheet.fromdate,
-    productService: 'SERVICE',
-    description: timesheet.details,
-    qty: timesheet.totalhrs,
-    rate: timesheet.billableamt,
-    attachment: '',
-    timesheetid:timesheet.id
-  }
-  this.invoiceLines.push(data);
-  this.updateAmount(data);
-  this.newrows = false;
-}
-
-addalltimesheet(timesheet:any){
-  if(this.newrows){
-    this.invoiceLines = [];
-  }
-  for (let i = 0; i < this.daywisetimesheetlist.length; i++) {
+  addtimesheet(timesheet: any) {
+    if (this.newrows) {
+      this.invoiceLines = [];
+    }
     var data = {
       sno: '',
-      serviceDate: this.daywisetimesheetlist[i].fromdate,
+      serviceDate: timesheet.fromdate,
       productService: 'SERVICE',
-      description: this.daywisetimesheetlist[i].details,
-      qty: this.daywisetimesheetlist[i].totalhrs,
-      rate: this.daywisetimesheetlist[i].billableamt,
+      description: timesheet.details,
+      qty: timesheet.totalhrs,
+      rate: timesheet.billableamt,
       attachment: '',
-      timesheetid:this.daywisetimesheetlist[i].id
+      timesheetid: timesheet.id
     }
     this.invoiceLines.push(data);
     this.updateAmount(data);
+    this.newrows = false;
+    const index = this.daywisetimesheetlist.findIndex((item: any) => item.id === timesheet.id);
+    if (index !== -1) {
+      this.daywisetimesheetlist.splice(index, 1);
+    }
   }
-  
-  this.newrows = false;
-}
+
+
+  addalltimesheet(timesheet: any) {
+    if (this.newrows) {
+      this.invoiceLines = [];
+    }
+    const indexesToRemove: number[] = [];
+
+    for (let i = 0; i < this.daywisetimesheetlist.length; i++) {
+      var data = {
+        sno: '',
+        serviceDate: this.daywisetimesheetlist[i].fromdate,
+        productService: 'SERVICE',
+        description: this.daywisetimesheetlist[i].details,
+        qty: this.daywisetimesheetlist[i].totalhrs,
+        rate: this.daywisetimesheetlist[i].billableamt,
+        attachment: '',
+        timesheetid: this.daywisetimesheetlist[i].id
+      }
+      this.invoiceLines.push(data);
+      this.updateAmount(data);
+      indexesToRemove.push(i);
+    }
+    indexesToRemove.reverse().forEach(index => {
+      this.daywisetimesheetlist.splice(index, 1);
+    });
+
+    this.newrows = false;
+  }
 
   addinvoice() {
 
@@ -715,6 +727,38 @@ getExistingInvoiceNo() {
     }
   );
 }
+onFilterChangess(option: string) {
+  this.showCustomDate = (option === 'custom');
+}
+
+//  Bala coding start
 
 
+onclientChanges(){
+  this.clientid = this.selectedclient.ClientID
+ this.clientEmail = this.selectedclient.EmailID
+ this.selectedBillingaddress = this.selectedclient.Address
+ this.ClientName = this.selectedclient.ClientName
+ this.selectedTerm = this.selectedclient.PaymentTerms
+ console.log(this.selectedclient);
+ this.getalltimesheetlist();
+ if (this.isClientSelected) {
+  const confirmChange = confirm("Do you want to switch the client without saving the invoice?");
+  if (!confirmChange) {
+    this.selectedClient = this.selectedClient; // Ensure the same client remains selected
+    return;
+  }
+}
+this.isClientSelected = true; // Mark client as selected after the first change
+}
+
+changeClient() {
+  this.isClientSelected = false;
+  this.showAlert = false;
+}
+
+cancelChange() {
+  this.showAlert = false;
+}
+//Bala coding end
 }
