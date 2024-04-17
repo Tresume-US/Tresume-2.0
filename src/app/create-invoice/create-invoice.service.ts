@@ -51,8 +51,8 @@ export class CreateInvoiceService {
     return this.http.post<ResponseDetails>(this.endpoint + 'checkExistInvoiceNo', request);
   }
 
-  reportCandidatetList(request: any): Observable<ResponseDetails> {
-    return this.http.post<ResponseDetails>(this.endpoint + 'reportCandidatetList', request);
+  invoiceCandidatetList(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'invoiceCandidatetList', request);
   }
 
 }

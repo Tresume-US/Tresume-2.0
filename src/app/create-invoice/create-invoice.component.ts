@@ -57,7 +57,7 @@ export class CreateInvoiceComponent implements OnInit {
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
  //PaymentTerms: any;
   PaymentTerms: any = [
-    
+
     {
       value:"7",
       option:'Net 7'
@@ -115,7 +115,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.fetchInvoiceNo();
     this.newrows = true;
     this.selectedInvoiceDate = this.getCurrentDate();
-    this.getreportcandidatelist();
+    this.getinvoicecandidatelist();
     this.previousClient = this.selectedClient;
   }
 
@@ -132,11 +132,11 @@ export class CreateInvoiceComponent implements OnInit {
     }
   }
 
-  getreportcandidatelist() {
+  getinvoicecandidatelist() {
     let Req = {
       OrgId : this.OrgID,
      };
-     this.Service.reportCandidatetList(Req).subscribe((x: any) => {
+     this.Service.invoiceCandidatetList(Req).subscribe((x: any) => {
        this.candidatelistname = x.result;
      });
   }
@@ -222,13 +222,13 @@ export class CreateInvoiceComponent implements OnInit {
   onOptionChanges(event: any) {
     if(event == 1){
       this.showAdditionalInputs = false;
-    
-      
+
+
     }else{
       this.showAdditionalInputs = true;
-      
+
       console.log(this.timesheetlist.length);
-      
+
 
     }
   }
@@ -259,7 +259,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.getalltimesheetlist();
   }
 
-  
+
   onOptionChange(event: any) {
     this.selectedOption = event.target.value;
     if (this.selectedOption === 'example2') {
@@ -308,7 +308,7 @@ export class CreateInvoiceComponent implements OnInit {
   onFilterChange(value: string) {
     this.selectedOption = value;
     console.log('Selected Option:', this.selectedOption);
-    
+
   }
 
   selectedItem: any;
@@ -384,7 +384,7 @@ export class CreateInvoiceComponent implements OnInit {
                 }
                 this.daywisetimesheetlist.push(data);
             }
-            
+
           }
           console.log(this.daywisetimesheetlist);
         }
@@ -410,7 +410,7 @@ export class CreateInvoiceComponent implements OnInit {
 
     this.Service.gettimesheetlist(Req).subscribe((x: any) => {
         this.timesheetlist = x.result;
-        
+
         this.daywisetimesheetlist = [];
         if(this.timesheetlist.length != 0){
           for (let i = 0; i < this.timesheetlist.length; i++) {
@@ -421,7 +421,7 @@ export class CreateInvoiceComponent implements OnInit {
               const nextDate = new Date(fromDate);
               nextDate.setDate(nextDate.getDate() + day);
               var date = nextDate.toISOString();
-  
+
               var hrs = this.timesheetlist[i]['day' + day];
               if(hrs != ''){
                 var data = {
@@ -434,7 +434,7 @@ export class CreateInvoiceComponent implements OnInit {
                   }
                   this.daywisetimesheetlist.push(data);
               }
-              
+
             }
             console.log(this.daywisetimesheetlist);
           }
@@ -485,7 +485,7 @@ getcurrenttimesheetlist() {
                 }
                 this.daywisetimesheetlist.push(data);
             }
-            
+
           }
           console.log(this.daywisetimesheetlist);
         }
