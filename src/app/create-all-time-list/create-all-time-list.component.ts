@@ -46,7 +46,7 @@ export class CreateAllTimeListComponent implements OnInit {
   isBillable: boolean;
   autofillData: any;
   timesheet_role:any;
-
+  adminid:any;
 
   updateTotalAmount() {
     setTimeout(() => {
@@ -284,6 +284,9 @@ export class CreateAllTimeListComponent implements OnInit {
     this.dynamicDays = this.generateWeeks();
     if(this.timesheet_role === '3'){
       this.autofillDetails();
+      this.adminid = this.cookieService.get('timesheet_admin'); 
+    }else{
+      this.adminid = this.traineeID
     }
   }
 
@@ -563,7 +566,7 @@ export class CreateAllTimeListComponent implements OnInit {
           formData.append('day6', row.sat);
           formData.append('day7', row.sun);
           formData.append('totalamt', parseFloat(row.totalAmount).toFixed(2));
-          formData.append('admin', this.traineeID);
+          formData.append('admin', this.adminid);
           formData.append('orgid', this.OrgID);
           formData.append('create_by', this.username);
           const status = row.status ? row.status : '1';

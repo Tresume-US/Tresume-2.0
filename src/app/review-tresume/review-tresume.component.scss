@@ -281,3 +281,43 @@ form,
 .custom-btn{
   width: 100px;
 }
+
+.example-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.call-button {
+  background-color: green;
+  color: white;
+  margin-right: 10px; 
+}
+
+.mail-button {
+  background-color: #DB4437;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

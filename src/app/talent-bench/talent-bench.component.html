@@ -99,7 +99,8 @@
                       <td>{{ item.phone }}</td>
                     </tr>
                   </table>
-                  <a class="bn59" [routerLink]="['/candidateView/'+item.TraineeID+'/create']">
+                  <a class="bn59" [routerLink]="['/candidateView/'+item.TraineeID+'/create/'+routeType]"
+                  routerLinkActive="active">
                     <span class="bi bi-plus">+</span> Add Placement
                   </a>
                 </div>

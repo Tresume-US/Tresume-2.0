@@ -49,7 +49,7 @@ export class TalentBenchComponent implements OnInit {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
     this.TraineeID = this.cookieService.get('TraineeID');
-    this.routeType = this.route.snapshot.params["routeType"];
+    this.routeType = 2;
     this.candidateID = this.route.snapshot.params["traineeID"];
   }
 

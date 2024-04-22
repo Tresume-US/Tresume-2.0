@@ -1,11 +1,29 @@
 <div class="header p-3">
   <div class="container-fluid">
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
     <button class="btn btn-primary mt-3" (click)="movetoTB()" *ngIf="routeType == 1">Move to Talent
       Bench</button>
   </div>
   <div class="col-md-6">
+    <mat-card class="example-card">
+      <mat-card-content class="content">
+        <mat-card-title>{{ firstName }} {{ lastName }}</mat-card-title>
+        <div class="actions">
+          <a href="tel:{{phoneNumberG}}" mat-button class="call-button">
+            <mat-icon>phone</mat-icon> Call
+          </a>
+          <a href="mailto:{{generalEmail}}" mat-button class="mail-button">
+            <mat-icon>mail</mat-icon> Mail
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  
+  
+  <div class="col-md-3">
     <button class="btn btn-primary mt-3 float-right" (click)="movetoBack()" >Back</button>
   </div>
 </div>
@@ -1110,6 +1128,18 @@
         </ng-template>
       </mat-tab>
 
+      <!-- <mat-tab label="Profile Video" class="mt-5">
+        <div class="container">
+          <video #videoPlayer>
+            <source src="assets/video/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          
+          <button (click)="togglePlayPause()">Play/Pause</button>
+          <button (click)="stop()">Stop</button>
+          
+        </div>
+      </mat-tab> -->
     </mat-tab-group>
     <!-- <div class="text-right"><button class="btn btn-bgcolor" [routerLink]="['/candidateview/']">Document</button>
     <button class="btn btn-bgcolor ml-3" [routerLink]="['/candidateview/']">Sitevisit</button>

@@ -22,7 +22,7 @@
         </div>
       </div> -->
       <div class="input-group col-md-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      *ngIf="item.timesheetrole === 1">
+      *ngIf="(item.timesheetrole === 1) || (item.timesheetrole === 2)">
         <input type="text" class="form-control custom-input" [(ngModel)]="selectedItem"
           placeholder="Who's time are you tracking?">
         <div class="input-group-append">

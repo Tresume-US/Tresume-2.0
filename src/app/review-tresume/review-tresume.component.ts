@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewService } from './review.service';
 import { MessageService } from 'primeng/api';
@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 })
 
 export class ReviewTresumeComponent implements OnChanges {
-
+  @ViewChild('videoPlayer') videoPlayer: ElementRef;
   showConfirmationDialog2: boolean;
   showConfirmationDialog3: boolean;
   showmovetotalentbench: boolean = false;
@@ -445,7 +445,7 @@ export class ReviewTresumeComponent implements OnChanges {
     if (tabIndex >= 0) {
       this.currentTabIndex = tabIndex;
       this.tabIndex = tabIndex;
-      if(tabIndex === 2 || tabIndex ===6){
+      if(tabIndex === 2 || tabIndex ===6 || tabIndex===7){
         this.showSaveButton = false
       }else{
         this.showSaveButton = true;
@@ -1307,6 +1307,19 @@ this.loading = true;
     }else if(this.routeType ==3){
       this.router.navigate(['/talentBench']);
     }
+  }
+
+  togglePlayPause() {
+    if (this.videoPlayer.nativeElement.paused) {
+      this.videoPlayer.nativeElement.play();
+    } else {
+      this.videoPlayer.nativeElement.pause();
+    }
+  }
+
+  stop() {
+    this.videoPlayer.nativeElement.pause();
+    this.videoPlayer.nativeElement.currentTime = 0;
   }
 
 }

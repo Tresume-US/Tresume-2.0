@@ -134,6 +134,7 @@ export class InterviewsReportComponent implements OnInit {
     public onValueChange(value: any) {
         this.startDate = this.dateFormatter(value[0]);
         this.endDate = this.dateFormatter(value[1]);
+        this.getInterviews(this.startDate, this.endDate);
     }
 
     public dateFormatter(value: any) {
