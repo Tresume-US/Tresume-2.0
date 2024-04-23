@@ -119,13 +119,13 @@ const upload = multer({ storage: storage });
     sql.connect(config, function (err) {
       if (err) console.log(err);
       var request = new sql.Request();
-      request.query("DELETE FROM CorporateDocType WHERE CorporateDocumentID = '"+req.body.CorporateDocumentID+"'", function (err, recordset) {
+      request.query("DELETE FROM CorporateDocument WHERE CorporateDocumentID = '"+req.body.CorporateDocumentID+"'", function (err, recordset) {
         if (err) console.log(err);
         var result = {
           flag: 1,
-          result: recordset.recordsets[0],
+          result: recordset,
         };
-        res.send(recordset.recordsets[0]);
+        res.send(result);
       });
     });
   });

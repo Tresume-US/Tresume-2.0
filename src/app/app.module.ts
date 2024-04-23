@@ -172,6 +172,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -347,7 +351,9 @@ import { CorporateDocumentComponent } from './corporate-document/corporate-docum
     TypeaheadModule.forRoot(),
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [CookieService, BsLocaleService, AuthGuard, AppService, AppConfigService,DatePipe,
     {

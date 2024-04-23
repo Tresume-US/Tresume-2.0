@@ -449,7 +449,19 @@
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn" data-dismiss="modal" (click)="savehrmsdata()"
-          [disabled]="emailvalidation">Save</button>
+        [disabled]="!addCandidate.get('firstName').valid || 
+        !addCandidate.get('lastName').valid || 
+        addCandidate.get('email').invalid || 
+        addCandidate.get('phone').invalid || 
+        !recruiterName || 
+        emailvalidation || 
+        !selectedcurrentstatus || 
+        !currentLocation || 
+        !selectedFollowUpOption || 
+        !formData.referralType || 
+        !selectedOrgID || 
+        !LegalStatus || 
+        !addCandidate.get('notes').valid">Save</button>
       </div>
     </div>
   </div>

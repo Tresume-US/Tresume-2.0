@@ -249,6 +249,7 @@ export class SearchResumesMonsterComponent implements OnInit {
     cworkpermit: string;
     csocialsource: string;
     ceducation: string;
+    JobTitle:string;
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer, private pdfViewerService: NgxExtendedPdfViewerService) {
@@ -623,6 +624,7 @@ export class SearchResumesMonsterComponent implements OnInit {
         }
         if (this.searchType == SearchType.semantic) {
             objectReq = {
+                jobTitle :this.JobTitle,
                 country: 'US',
                 searchType: 'semantic',
                 semantic: {
@@ -898,6 +900,7 @@ export enum SearchType {
 }
 
 export interface SearchReqItem {
+    jobTitle ?:string;
     country?: string;
     searchType?: string;
     semantic: {

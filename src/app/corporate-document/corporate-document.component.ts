@@ -33,6 +33,7 @@ export class CorporateDocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.TraineeID = this.cookieService.get('TraineeID');
     this.username = this.cookieService.get('userName1');
     this.OrgID = this.cookieService.get('OrgID');
@@ -46,10 +47,15 @@ export class CorporateDocumentComponent implements OnInit {
 
   
   fetchDocumnetType() {
+    this.loading = true
     const Req = {
     };
     this.service.getDocumnetType(Req).subscribe((x: any) => {
       this.DocumentType = x;
+      this.loading = false
+    },(error) => {
+      this.loading=false
+      console.error("Upload failed:", error);
     });
     console.log("Document Type",this.DocumentType);
   }
@@ -60,26 +66,43 @@ export class CorporateDocumentComponent implements OnInit {
     };
     this.service.fetchmultiorg(Req).subscribe((x: any) => {
       this.multiorgID = x;
+      this.loading=false
+    },(error) => {
+      this.loading=false
+      console.error("Upload failed:", error);
     });
     console.log("Document Type",this.multiorgID);
   }
 
   fetchTabslist(typeid:any) {
+    this.loading = true;
     let Req = {
       typeid: typeid,
       OrgID: this.selectedOrgID,
     };
     this.service.getTabsList(Req).subscribe((x: any) => {
       this.DocumentData = x.result;
+      this.loading=false
+    },(error) => {
+      this.loading=false
+      console.error("Upload failed:", error);
     });
   }
 
-  delete(CorporateDocumentID:any){
+  delete(CorporateDocumentID:any,tablist:any){
+    this.loading = true
     let Req = {
       CorporateDocumentID: CorporateDocumentID,
     };
     this.service.deletecorporatedocument(Req).subscribe((x: any) => {
-      this.DocumentType = x.result;
+      // this.DocumentType = x.result;
+      this.fetchTabslist(tablist);
+      this.messageService.add({ severity: 'success', summary: 'Successfully Doucment Deleted'});
+      this.loading = false
+    },(error) => {
+      this.loading=false
+      this.messageService.add({ severity: 'error', summary:  'Please try again later' });
+      console.error("Upload failed:", error);
     });
   }
 
@@ -98,6 +121,7 @@ export class CorporateDocumentComponent implements OnInit {
   }
 
   upload(){
+    this.loading = true
     if (!this.file) {
       console.error("No file selected!");
       return;
@@ -109,8 +133,12 @@ export class CorporateDocumentComponent implements OnInit {
     formData.append('OrgID', this.OrgID);
     formData.append('CorporateDocumentTypeID', this.CorporateDocumentTypeID);
     this.service.uploadCorporateDoc(formData).subscribe((x: any) => {
-      alert(x.message);
+      this.loading = false;
+      this.messageService.add({ severity: 'success', summary: x.message });
+      
     },(error) => {
+      this.loading = false;
+      this.messageService.add({ severity: 'error', summary:  'Please try again later' });
       console.error("Upload failed:", error);
     });
   }

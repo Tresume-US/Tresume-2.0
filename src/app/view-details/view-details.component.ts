@@ -73,7 +73,7 @@ export class ViewDetailsComponent {
   constructor(private cdr: ChangeDetectorRef, private router: Router, private cookieService: CookieService, private service: ViewDetailsService, private messageService: MessageService, private route: ActivatedRoute, private renderer: Renderer2,private datePipe: DatePipe) { }
 
   getFormattedDate(date: Date | null): string {
-    return date ? this.datePipe.transform(date, 'dd/MM') || '' : '';
+    return date ? this.datePipe.transform(date, 'dd/MM', 'UTC') || '' : '';
   }
   getNextDay(date: Date, daysToAdd: number): Date {
     const nextDay = new Date(date);

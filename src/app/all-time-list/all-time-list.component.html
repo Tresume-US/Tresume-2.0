@@ -146,7 +146,7 @@
                             </div>
                           </div>
                         </div>
-                        <a *ngIf="PendingData.length === 0" href="#" class="list-group-item list-group-item-action">
+                        <a *ngIf="rejectedData.length === 0" href="#" class="list-group-item list-group-item-action">
                           <div class="row">
                             <div class="col text-center">
                               No results found.
@@ -198,7 +198,7 @@
                             </div>
                           </div>
                         </div>
-                        <a *ngIf="PendingData.length === 0" href="#" class="list-group-item list-group-item-action">
+                        <a *ngIf="completedData.length === 0" href="#" class="list-group-item list-group-item-action">
                           <div class="row">
                             <div class="col text-center">
                               No results found.
@@ -252,7 +252,7 @@
                             </div>
                           </div>
                         </div>
-                        <a *ngIf="PendingData.length === 0" href="#" class="list-group-item list-group-item-action">
+                        <a *ngIf="nonBillableData.length === 0" href="#" class="list-group-item list-group-item-action">
                           <div class="row">
                             <div class="col text-center">
                               No results found.

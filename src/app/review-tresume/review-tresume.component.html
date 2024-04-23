@@ -269,35 +269,76 @@
                 <div *ngFor="let education of educations; let i = index"
                   class="row" [id]="'educationRow' + i">
                   <div class="col-md-2 form-group">
-                    <label for="education1">Degree</label>
+                    <!-- <label for="education1">Degree</label>
                     <input type="text" class="form-control" id="degree"
-                      placeholder="Degree" [(ngModel)]="education.Title" (change)="UpdateTresumeNode(1,education)">
+                      placeholder="Degree" [(ngModel)]="education.Title" (change)="UpdateTresumeNode(1,education)"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>Degree</mat-label>
+                        <input matInput type="text" placeholder="Degree" 
+                               [(ngModel)]="education.Title" 
+                               (input)="UpdateTresumeNode(1, education)">
+                      </mat-form-field>
+                      
                   </div>
                   <div class="col-md-2 form-group">
-                    <label for="education2">University</label>
+                    <!-- <label for="education2">University</label>
                     <input type="text" class="form-control" id="university"
                       placeholder="University"
-                      [(ngModel)]="education.Org" (change)="UpdateTresumeNode(1,education)">
+                      [(ngModel)]="education.Org" (change)="UpdateTresumeNode(1,education)"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>University</mat-label>
+                        <input matInput type="text" placeholder="University" 
+                               [(ngModel)]="education.Org" 
+                               (input)="UpdateTresumeNode(1, education)">
+                      </mat-form-field>
+                      
                   </div>
                   <div class="col-md-2 form-group">
-                    <label for="education3">Attended from</label>
+                    <!-- <label for="education3">Attended from</label>
                     <input type="date" class="form-control" id="attendedfrom"
                       placeholder="Attended from"
                       [ngModel]="education.NodeDate | date:'yyyy-MM-dd'"
-                      (ngModelChange)="education.NodeDate = $event" (change)="UpdateTresumeNode(1,education)">
+                      (ngModelChange)="education.NodeDate = $event" (change)="UpdateTresumeNode(1,education)"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>Attended from</mat-label>
+                        <input matInput [matDatepicker]="picker" 
+                               (dateChange)="UpdateTresumeNode(1,education)"
+                               [(ngModel)]="education.NodeDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      
                   </div>
                   <div class="col-md-2 form-group">
-                    <label for="education4">Attended to</label>
+                    <!-- <label for="education4">Attended to</label>
                     <input type="date" class="form-control" id="attendedto"
                       placeholder="Attended to"
                       [ngModel]="education.NodeDateTo | date:'yyyy-MM-dd'"
-                      (ngModelChange)="education.NodeDateTo = $event" (change)="UpdateTresumeNode(1,education)">
+                      (ngModelChange)="education.NodeDateTo = $event" (change)="UpdateTresumeNode(1,education)"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>Attended to</mat-label>
+                        <input matInput [matDatepicker]="picker" 
+                               (dateChange)="UpdateTresumeNode(1,education)"
+                               [(ngModel)]="education.NodeDateTo">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      
+                      
+                      
                   </div>
                   <div class="col-md-2 form-group">
-                    <label for="education5">University Address</label>
+                    <!-- <label for="education5">University Address</label>
                     <input type="text" class="form-control" id="Location"
                       placeholder="University Address"
-                      [(ngModel)]="education.Location" (change)="UpdateTresumeNode(1,education)">
+                      [(ngModel)]="education.Location" (change)="UpdateTresumeNode(1,education)"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>University Address</mat-label>
+                        <input matInput type="text" placeholder="University Address" 
+                               [(ngModel)]="education.Location" 
+                               (input)="UpdateTresumeNode(1, education)">
+                      </mat-form-field>
+                      
                   </div>
                   <div class="col-md-1">
                     <button class="btn mt-4 mb-2 mr-2"
@@ -314,34 +355,54 @@
                 <div *ngFor="let experience of experiences; let i = index"
                   class="row" [id]="'experienceRow' + i">
                   <div class="col-md-2 form-group">
-                    <label for="experience1">Title</label>
-                    <input type="text" class="form-control" id="experience1"
-                      placeholder="Title" [(ngModel)]="experience.Title" (change)="UpdateTresumeNode(2,experience)">
+                    <div class="col-md-2 form-group">
+                      <label for="experience1">Title</label>
+                      <mat-form-field appearance="fill">
+                        <input matInput type="text" id="experience1" placeholder="Title" 
+                               [(ngModel)]="experience.Title" 
+                               (input)="UpdateTresumeNode(2, experience)">
+                      </mat-form-field>
+                    </div>
+                    
                   </div>
                   <div class="col-md-2 form-group">
-                    <label for="education2">Organization</label>
-                    <input type="text" class="form-control" id="university"
-                      placeholder="University"
-                      [(ngModel)]="experience.Org" (change)="UpdateTresumeNode(2,experience)">
+     
+                      <label for="education2">Organization</label>
+                      <mat-form-field appearance="fill">
+                        <input matInput type="text" id="university" placeholder="Organization" 
+                               [(ngModel)]="experience.Org" 
+                               (input)="UpdateTresumeNode(2, experience)">
+                      </mat-form-field>
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="experience2">Employment Start Date</label>
-                    <input type="date" class="form-control" id="experience2"
-                      placeholder="Employment Start Date"
-                      [ngModel]="experience.NodeDate | date:'yyyy-MM-dd'"
-                      (ngModelChange)="experience.NodeDate = $event" (change)="UpdateTresumeNode(2,experience)">
+                    <mat-form-field appearance="fill">
+                      <input matInput [matDatepicker]="startDatePicker" placeholder="Employment Start Date"
+                             [ngModel]="experience.NodeDate" 
+                             (ngModelChange)="experience.NodeDate = $event" 
+                             (dateChange)="UpdateTresumeNode(2, experience)">
+                      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                      <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="experience3">Employment End Date</label>
-                    <input type="date" class="form-control" id="experience3"
-                      placeholder="Employment End Date"
-                      [ngModel]="experience.NodeDateTo | date:'yyyy-MM-dd'"
-                      (ngModelChange)="experience.NodeDateTo = $event" (change)="UpdateTresumeNode(2,experience)">
+                    <mat-form-field appearance="fill">
+                      <input matInput [matDatepicker]="endDatePicker" placeholder="Employment End Date"
+                            [ngModel]="experience.NodeDateTo" 
+                            (ngModelChange)="experience.NodeDateTo = $event" 
+                            (dateChange)="UpdateTresumeNode(2, experience)">
+                      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                      <mat-datepicker #endDatePicker></mat-datepicker>
+                    </mat-form-field>
                   </div>
                   <div class="col-md-2 form-group">
                     <label for="experience4">Skill(s)</label>
-                    <input type="text" class="form-control" id="experience4"
-                      placeholder="Skill(s)" [(ngModel)]="experience.Skill" (change)="UpdateTresumeNode(2,experience)">
+  <mat-form-field appearance="fill">
+    <input matInput type="text" id="experience4" placeholder="Skill(s)" 
+           [(ngModel)]="experience.Skill" 
+           (input)="UpdateTresumeNode(2, experience)">
+  </mat-form-field>
                   </div>
                   <div class="col-md-1">
                     <button class="btn mt-4 mb-2 mr-2"
@@ -350,7 +411,7 @@
                 </div>
                 <div class="col-md-2 float-right">
                   <button class="btn btn-sm mb-3 mr-5"
-                    (click)="addRow1()">&#x2b; Experiance</button>
+                    (click)="addRow1()">&#x2b; Experience</button>
                 </div>
               </div>
               <div class="tab-pane fade" id="personalinfo" role="tabpanel"

@@ -9,9 +9,9 @@
       <ng-container *ngFor="let row of rowdata; let i = index">
         <div class="date-container">
           <span class="date-label mr-2">Week Start Date:</span>
-          <span class="date mr-4">{{row.fromdate | date : "MMMM d, y"}}</span>
+          <span class="date mr-4">{{row.fromdate | date : "MMMM d, y" : "UTC"}}</span>
           <span class="date-label">Week End Date:</span>
-          <span class="date">{{row.todate | date : "MMMM d, y"}}</span>
+          <span class="date">{{row.todate | date : "MMMM d, y" : "UTC"}}</span>
         </div>
       </ng-container>
     </div>

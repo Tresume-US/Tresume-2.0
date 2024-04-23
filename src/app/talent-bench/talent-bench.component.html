@@ -338,7 +338,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn" data-dismiss="modal" (click)="saveData()">Save</button>
+        <button type="button" class="btn" data-dismiss="modal" (click)="saveData()" [disabled]="!addCandidate.get('FirstName').valid || 
+        !addCandidate.get('LastName').valid || 
+        !addCandidate.get('email').valid || 
+        !addCandidate.get('Phone').valid || 
+        !addCandidate.get('Notes').value || 
+        !selectedcurrentstatus || 
+        !legalStatus ||
+        !referralType ||
+        !recruiterName">Save</button>
       </div>
     </div>
   </div>
