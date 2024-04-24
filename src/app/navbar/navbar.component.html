@@ -131,8 +131,8 @@
                             </p>
                         </a>
                     </li>
-                    
-                   
+
+
                     <li class="nav-item" *ngIf="checkFullAccess(6)">
                         <a routerLink="/talentBench" class="nav-link">
                             <i class="nav-icon fas fa-user-circle"></i>
@@ -197,7 +197,7 @@
                             </a>
                           </li>
                         </ul>
-                      </li>   
+                      </li>
                       <li class="nav-item" *ngIf="checkFullAccess(5)">
                         <a class="nav-link" (click)="toggleDropdown('timesheetSubMenu')">
                           <i class="nav-icon fas fa-clock"></i>
@@ -244,7 +244,7 @@
                                     <p>Invoice Report</p>
                                   </a>
                               </li>
-                              
+
                           <li class="nav-item" *ngIf="timesheetrole == 1">
                             <a class="nav-link" routerLink="/assignrole">
                               <i class="nav-icon fas fa-highlighter"></i>
@@ -277,7 +277,7 @@
                             <p> Vendors</p>
                         </a>
                     </li>
-                    
+
                     <!-- <li class="nav-item" *ngIf="checkFullAccess(9)">
                         <a routerLink="/batch" class="nav-link">
                             <i class="nav-icon fas fa-id-card"></i>
@@ -322,7 +322,7 @@
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(11)">
-                        <a class="nav-link" routerLink="/reports" routerLinkActive="active">
+                        <a class="nav-link" routerLink="/reports">
                             <i class="nav-icon fas fa-list-alt"></i>
                             <p>
                                 Reports
@@ -337,8 +337,8 @@
                     </li>
 
                 </ul>
-               
+
             </nav>
         </div>
-    </aside>    
+    </aside>
 </div>

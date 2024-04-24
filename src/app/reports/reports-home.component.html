@@ -1,17 +1,18 @@
 <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Reports</h1>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Reports</h1>
+      </div>
     </div>
+  </div>
 </div>
+
 <style>
   .nav-tabs {
     justify-content: space-around;
     position: relative;
-    color: black;
+    color: Black;
   }
 
   .nav-item {
@@ -22,8 +23,13 @@
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
-    color: black;
-}
+    color: Black;
+  }
+  .nav-link.active {
+    background-color: #380838;
+    border-color: rgb(56, 8, 56) ;
+    color: white;
+  }
   .nav-link::after {
     content: "";
     position: absolute;
@@ -34,198 +40,676 @@
     background-color: #49274a;
     transition: all 0.3s;
   }
-
   .nav-link.active::after {
     width: 100%;
     left: 0;
-  }
+    background-color: #49274a;
+}
+.nav-tabs .nav-item.show .nav-link.active, .nav-tabs .nav-link.active  {
+    background-color: #380838;
+    border-color: rgb(56, 8, 56) ;
+    color: white;
+}
+.nav-link.active {
+    background-color: #49274a;
+    color: white;
+}
+
 </style>
-<div class="container" style="padding: 0 0.5rem;">
-      <!-- TAB -->
-      <div class="container mt-3">
 
-  <ul class="nav nav-tabs" style="justify-content: space-around; position: relative;">
-    <li class="nav-item" style=" position: relative;">
-      <a class="nav-link" id="recruitment-tab" data-toggle="tab" href="#recruitment" routerLink="recruitment">
-        Recruitment Report
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="finance-tab" data-toggle="tab" href="#finance" routerLink="finance">
-        Finance Report
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="compliance-tab" data-toggle="tab" href="#compliance" routerLink="compliance">
-        Compliance Report
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" id="timesheet-tab" data-toggle="tab" href="#timesheet" routerLink="timesheet">
-        Timesheet Report
-      </a>
-    </li>
-  </ul>
-        <!-- Tab Content -->
-        <div class="tab-content mt-3">
-          <!-- Tab 1: Recruitment Report -->
-          <div class="tab-pane fade show active" id="recruitment">
-            <div class="row">
-              <!-- Card Method 1: FTC Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-file-alt" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;">FTC Report</a>
-                  <p style="margin-bottom: 30px;">This Report generates a list of First Time Callers</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="routeLinks('ftc')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Card Method 2: Interviews Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-calendar-check" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Interviews Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates a list of Interviews scheduled during a time period</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('interviews')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Card Method 3: Bench Tracker Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-users" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Bench Tracker Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates a list of Candidates currently on bench</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="routeLinks('benchtracker')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Additional Card: Placement Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-envelope-open" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Placements Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates a list of Placements completed during the time period</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="routeLinks('placements')">View Report</button>
-                </div>
-              </div>
-                 <!-- Additional Card: Job board Report -->
-                 <div class="col-md-4 mb-3">
-                  <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                    <i class="fas fa-briefcase" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                    <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" > Job board Report</a>
-                    <p style="margin-bottom: 10px;">This Report generates a list of Job Postings completed during the time period</p>
-                    <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="routeLinks('jobboardaudit')">View Report</button>
-                  </div>
-                </div>
-              <!-- Add more cards as needed -->
+<div class="container" style="padding: 0 0.5rem">
+  <!-- TAB -->
+  <div class="container mt-3">
+    <ul
+      class="nav nav-tabs"
+      style="justify-content: space-around; position: relative"
+    >
+      <li class="nav-item" style="position: relative">
+        <a
+          class="nav-link active"
+          id="recruitment-tab"
+          data-toggle="tab"
+          href="#recruitment"
+          routerLink="recruitment"
+        >
+          Recruitment Report
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="finance-tab"
+          data-toggle="tab"
+          href="#finance"
+          routerLink="finance"
+        >
+          Finance Report
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="compliance-tab"
+          data-toggle="tab"
+          href="#compliance"
+          routerLink="compliance"
+        >
+          Compliance Report
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="timesheet-tab"
+          data-toggle="tab"
+          href="#timesheet"
+          routerLink="timesheet"
+        >
+          Timesheet Report
+        </a>
+      </li>
+    </ul>
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
+      <!-- Tab 1: Recruitment Report -->
+      <div class="tab-pane fade show active" id="recruitment">
+        <div class="row">
+          <!-- Card Method 1: FTC Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-file-alt"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >FTC Report</a
+              >
+              <p style="margin-bottom: 30px">
+                This Report generates a list of First Time Callers
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('ftc')"
+              >
+                View Report
+              </button>
             </div>
           </div>
-          <!-- Tab 2: Finance Report -->
-          <div class="tab-pane fade" id="finance">
-            <div class="row">
-              <!-- Card Method 1: Billable Employee Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-dollar-sign" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Billable Employee Report</a>
-                  <p style="margin-bottom: 30px;">This Report generates a list of Billable Employees</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('billable')" >View Report</button>
-                </div>
-              </div>
+   <!-- Card Method 2: DSR Report -->
+   <div class="col-md-4 mb-3">
+    <div
+      style="
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+      "
+    >
+      <i
+        class="fas fa-chart-pie"
+        style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+      ></i>
+      <a
+        class="clickable"
+        style="
+          text-decoration: none;
+          color: #333;
+          font-weight: bold;
+          display: block;
+          margin-bottom: 10px;
+        "
+        >DSR Report</a
+      >
+      <p style="margin-bottom: 30px">
+        This Report generates a list of Submissions
+      </p>
+      <button
+        class="btn btn-primary"
+        style="background-color: #49274a; width: 100%; border: none"
+        (click)="routeLinks('dsr')"
+      >
+        View Report
+      </button>
+    </div>
+  </div>
 
-              <!-- Card Method 2: DSR Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-chart-pie" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >DSR Report</a>
-                  <p style="margin-bottom: 30px;">This Report generates a list of Submissions</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('dsr')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Card Method 3: Public Access File Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-folder-open" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Public Access File Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates the Public Access files like LCA in the organization</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('pfa')">View Report</button>
-                </div>
-              </div>
-            <!-- Thirteenth Column: Document Expiry Report -->
-
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="far fa-file-alt" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Document Expiry Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates the list of documents expiry dates</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%;border: none;"(click)="routeLinks('docexpiry')">View Report</button>
-                </div>
+          <!-- Card Method 2: Interviews Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-calendar-check"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Interviews Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates a list of Interviews scheduled during a
+                time period
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('interviews')"
+              >
+                View Report
+              </button>
             </div>
-              <!-- Add more cards as needed for Finance Report -->
+          </div>
+
+          <!-- Card Method 3: Bench Tracker Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-users"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Bench Tracker Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates a list of Candidates currently on bench
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('benchtracker')"
+              >
+                View Report
+              </button>
             </div>
           </div>
 
-          <!-- Tab 3: Compliance Report -->
-          <div class="tab-pane fade" id="compliance">
-            <div class="row">
-              <!-- Card Method 1: H1B Expiry Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-calendar-times" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;">H1B Expiry Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates a list of H1B Expiry in the time period</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="routeLinks('h1bexpiry')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Card Method 2: Non H1B Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-user-slash" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Non H1B Report</a>
-                  <p style="margin-bottom: 30px;">This Report generates a list of Non H1B Employees</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('nonh1b')">View Report</button>
-                </div>
-              </div>
-
-              <!-- Card Method 3: Compliance Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-clipboard-check" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Compliance Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates the compliance status of the Employee details</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;"(click)="routeLinks('compliance')">View Report</button>
-                </div>
-              </div>
-               <!-- Card Method 3: Legal Status Report -->
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-gavel" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;">Legal Status Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates Legal Status of the Employees</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%;border: none;" (click)="routeLinks('legalstatus')">View Report</button>
-                </div>
-              </div>
+          <!-- Additional Card: Placement Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-envelope-open"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Placements Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates a list of Placements completed during the
+                time period
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('placements')"
+              >
+                View Report
+              </button>
             </div>
           </div>
-          <!-- Tab 4: Timesheet Report -->
-          <div class="tab-pane fade" id="timesheet">
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <div style="background-color: #f0f0f0; border-radius: 8px; padding: 10px; text-align: center;">
-                  <i class="fas fa-calendar-alt" style="font-size: 4rem; color: #49274a; margin-bottom: 10px;"></i>
-                  <a class="clickable" style="text-decoration: none; color: #333; font-weight: bold; display: block; margin-bottom: 10px;" >Timesheet Report</a>
-                  <p style="margin-bottom: 10px;">This Report generates the timesheet status of the Candidate</p>
-                  <button class="btn btn-primary" style="background-color: #49274a; width: 100%; border: none;" (click)="timesheetrouteLinks('tsreport')">View Report</button>
-                </div>
-              </div>
+          <!-- Additional Card: Job board Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-briefcase"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+              >
+                Job board Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates a list of Job Postings completed during
+                the time period
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('jobboardaudit')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Add more cards as needed -->
+        </div>
+      </div>
+      <!-- Tab 2: Finance Report -->
+      <div class="tab-pane fade" id="finance">
+        <div class="row">
+          <!-- Card Method 1: Billable Employee Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-dollar-sign"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Billable Employee Report</a
+              >
+              <p style="margin-bottom: 30px">
+                This Report generates a list of Billable Employees
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('billable')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+            <!-- Card Method 2: invoice Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-calendar-alt"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Invoice Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates the invoices of a Candidate
+                <br><br>
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="timesheetrouteLinks('tsreport')"
+              >
+                View Report
+              </button>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Tab 3: Compliance Report -->
+      <div class="tab-pane fade" id="compliance">
+        <div class="row">
+          <!-- Card Method 1: H1B Expiry Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-calendar-times"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >H1B Expiry Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates a list of H1B Expiry in the time period
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('h1bexpiry')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Method 2: Non H1B Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-user-slash"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Non H1B Report</a
+              >
+              <p style="margin-bottom: 30px">
+                This Report generates a list of Non H1B Employees
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('nonh1b')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Method 3: Compliance Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-clipboard-check"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Compliance Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates the compliance status of the Employee
+                details
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('compliance')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+          <!-- Card Method 3: Legal Status Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-gavel"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Legal Status Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates Legal Status of the Employees
+                <br><br>
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('legalstatus')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Card Method 3: Public Access File Report -->
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-folder-open"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Public Access File Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates the Public Access files like LCA in the
+                organization
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('pfa')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+          <!-- Thirteenth Column: Document Expiry Report -->
+
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="far fa-file-alt"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Document Expiry Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates the list of documents expiry dates
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="routeLinks('docexpiry')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Tab 4: Timesheet Report -->
+      <div class="tab-pane fade" id="timesheet">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div
+              style="
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                padding: 10px;
+                text-align: center;
+              "
+            >
+              <i
+                class="fas fa-calendar-alt"
+                style="font-size: 4rem; color: #49274a; margin-bottom: 10px"
+              ></i>
+              <a
+                class="clickable"
+                style="
+                  text-decoration: none;
+                  color: #333;
+                  font-weight: bold;
+                  display: block;
+                  margin-bottom: 10px;
+                "
+                >Timesheet Report</a
+              >
+              <p style="margin-bottom: 10px">
+                This Report generates the timesheet status of the Candidate
+              </p>
+              <button
+                class="btn btn-primary"
+                style="background-color: #49274a; width: 100%; border: none"
+                (click)="timesheetrouteLinks('tsreport')"
+              >
+                View Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
+
+
