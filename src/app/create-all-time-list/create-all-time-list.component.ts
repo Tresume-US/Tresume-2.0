@@ -353,7 +353,8 @@ export class CreateAllTimeListComponent implements OnInit {
   }
   getCandidateName() {
     let Req = {
-      username: this.username
+      username: this.username,
+      traineeid:this.traineeID
     };
 
     this.Service.getTimesheetCandidatetList(Req).subscribe((x: any) => {
@@ -363,7 +364,8 @@ export class CreateAllTimeListComponent implements OnInit {
 
   getCandidateList() {
     let Req = {
-      username: this.username
+      username: this.username,
+      traineeid:this.traineeID
     };
     this.Service.getTimesheetCandidatetList(Req).subscribe((x: any) => {
       this.dropdownOptions = x.result;

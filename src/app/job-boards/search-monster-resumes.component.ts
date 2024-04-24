@@ -365,9 +365,15 @@ export class SearchResumesMonsterComponent implements OnInit {
             md5emailID: params.textResumeID
         };
         this.service.checkmd5resume(req1).subscribe((y: any) => {
+            let resumedata = '';
             if (y.length > 0) {
                 this.isPDFSrc = false;
-                this.objUrl = this.highlightSkills(y[0].HtmlResume, keywords);
+                if(y[0].HtmlResume == '' || y[0].HtmlResume == null){
+                    resumedata = 'No resumes found'
+                }else{
+                    resumedata = y[0].HtmlResume
+                }
+                this.objUrl = this.highlightSkills(resumedata, keywords);
                 this.Htmlresumetopdf = y[0].HtmlResume;
                 this.loading = false;
                 this.fileReady = true;
@@ -471,6 +477,10 @@ export class SearchResumesMonsterComponent implements OnInit {
                         });
                     });
                     this.adddivisionaudit();
+                }, error => {
+                    this.loading = false;
+                    console.error('Error in createJobSeekerProfile:', error);
+                    // Handle error if needed
                 });
             }
         });

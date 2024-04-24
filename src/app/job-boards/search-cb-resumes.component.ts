@@ -602,9 +602,17 @@ export class SearchResumesCBComponent implements OnInit {
                         emailID: emailID
                     }
                     this.service.checkIfResumeExists(req1).subscribe((y: any) => {
+                        let resumedata = '';
                         if (y.length > 0) {
+
+                            if(y[0].HtmlResume == '' || y[0].HtmlResume == null){
+                                resumedata = 'No resumes found'
+                            }else{
+                                resumedata = y[0].HtmlResume
+                            }
+
                             this.objUrl = this.highlightSkills(
-                                y[0].HtmlResume,
+                                resumedata,
                                 keywords
                               );
                             // this.objUrl = this.sanitizer.bypassSecurityTrustHtml(y[0].HtmlResume);
@@ -616,35 +624,54 @@ export class SearchResumesCBComponent implements OnInit {
                         }
                         else {
                             this.isMigratedProfile = false;
+                            let createRequest: CBProfileRequestItem = {
+                                emailID: emailID,
+                                firstName: firstName,
+                                lastName: lastName,
+                                title: title,
+                                currentLocation: CurrentLocation,
+                                yearsOfExpInMonths: YearsOfExpInMonths,
+                                skills: skills,
+                                source: 'CB',
+                                ATSID: ATSID,
+                                traineeId: this.traineeId,
+                                securityclearance:this.hasSecurityClearance ? '1' : '0'
+                            }
                             this.service.getCBResumePreview(req).subscribe((html: any) => {
                                 this.loading = false;
                                 this.fileReady = true;
                                 this.visibleSidebar2 = true;
-                                let createRequest: CBProfileRequestItem = {
-                                    emailID: emailID,
-                                    firstName: firstName,
-                                    lastName: lastName,
-                                    title: title,
-                                    currentLocation: CurrentLocation,
-                                    yearsOfExpInMonths: YearsOfExpInMonths,
-                                    skills: skills,
-                                    htmlResume: html.text,
-                                    source: 'CB',
-                                    ATSID: ATSID,
-                                    traineeId: this.traineeId,
-                                    securityclearance:this.hasSecurityClearance ? '1' : '0'
+                                
+                                if(html.flag == 1){
+                                    createRequest.htmlResume = html.text
+                                    resumedata = html.text
+                                }else{
+                                    resumedata = "No Resumes Found"
                                 }
+                                
 
                                 if (!this.isPDFSrc) {
                                     // this.objUrl = this.sanitizer.bypassSecurityTrustHtml(html.text);
                                     this.objUrl = this.highlightSkills(
-                                        html.text,
+                                        resumedata,
                                         keywords
                                       );
                                 }
 
                                 this.service.createJobSeekerProfile(createRequest).subscribe(z => {
 
+                                }, error => {
+                                    this.loading = false;
+                                    console.error('Error in createJobSeekerProfile:', error);
+                                    // Handle error if needed
+                                });
+                            }, error => {
+                                this.loading = false;
+                                this.service.createJobSeekerProfile(createRequest).subscribe(z => {
+
+                                }, error => {
+                                    console.error('Error in createJobSeekerProfile:', error);
+                                    // Handle error if needed
                                 });
                             });
                             this.adddivisionaudit();

@@ -3092,32 +3092,42 @@ app.post("/GetCBResumePreview", function (req, res) {
     }
     response = JSON.parse(res1.body);
     console.log(response);
-    if (response.data) {
+    if (response.data && response.data.length > 0) {
       const options2 = {
-        url:
-          "https://api.careerbuilder.com/consumer/edge/profiles/" +
-          req.body.edgeID +
-          "/Resumes/RDB/" +
-          response.data[0].ResumeDID +
-          "/Preview",
-        method: "GET",
-        headers: {
-          Accept: "text/html",
-          /* 'Access-Control-Allow-Origin': "*",
-                    "accept-encoding": 'gzip, deflate',
-                    'accept-language': 'en-US,en;q=0.8',
-                    'content-encoding': 'gzip', */
-          Authorization: `Bearer ${req.body.token}`,
-        },
-        gzip: true,
+          url:
+              "https://api.careerbuilder.com/consumer/edge/profiles/" +
+              req.body.edgeID +
+              "/Resumes/RDB/" +
+              response.data[0].ResumeDID +
+              "/Preview",
+          method: "GET",
+          headers: {
+              Accept: "text/html",
+              Authorization: `Bearer ${req.body.token}`,
+          },
+          gzip: true,
       };
       request(options2, (err2, res2, body) => {
-        if (err) {
-          return console.log(err2);
-        }
-        res.send({ text: res2.body });
+          if (err2) {
+              console.error(err2);
+              res.send({
+                  flag: 0,
+                  message: "Error fetching preview"
+              });
+          } else {
+              res.send({
+                  flag: 1,
+                  text: res2.body
+              });
+          }
       });
-    }
+  } else {
+      res.send({
+          flag: 2,
+          message: "Message not available"
+      });
+  }
+  
   });
 });
 

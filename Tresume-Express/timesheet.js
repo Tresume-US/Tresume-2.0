@@ -1095,7 +1095,9 @@ router.post('/getTimesheetCandidatetList', async (req, res) => {
     const pool = await sql.connect(config);
     const request = pool.request();
 
-    const query = "SELECT trainee.* FROM trainee INNER JOIN memberdetails ON trainee.userorganizationid IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(memberdetails.accessorg, ',')) WHERE trainee.istimesheet = 1 AND trainee.Role = 'TRESUMEUSER' AND memberdetails.useremail = '" + req.body.username + "' AND trainee.active = 1";
+    // const query = "SELECT trainee.* FROM trainee INNER JOIN memberdetails ON trainee.userorganizationid IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(memberdetails.accessorg, ',')) WHERE trainee.istimesheet = 1 AND trainee.Role = 'TRESUMEUSER' AND memberdetails.useremail = '" + req.body.username + "' AND trainee.active = 1";
+
+    const query = "SELECT * from trainee where active=1 and timesheet_admin ="+req.body.traineeid;
 
     console.log(query);
 
