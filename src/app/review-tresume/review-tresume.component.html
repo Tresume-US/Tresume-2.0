@@ -1189,18 +1189,30 @@
         </ng-template>
       </mat-tab>
 
-      <!-- <mat-tab label="Profile Video" class="mt-5">
+      <mat-tab label="Profile Video" class="mt-5">
         <div class="container">
-          <video #videoPlayer>
-            <source src="assets/video/video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          
-          <button (click)="togglePlayPause()">Play/Pause</button>
-          <button (click)="stop()">Stop</button>
-          
+          <div class="container mt-5"><h1>Upload Profile Video</h1></div>
+          <div class="row">
+            <div class="col-md-8" *ngIf="this.videoPlayershow">
+              <div class="video-wrapper mt-3">
+                <video #videoPlayer controls width="640" height="360" style="width: 640px; height: 360px;">
+                  <source src="https://tresume.us/{{this.profilevideoPath}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              Video Uploaded at {{this.videouploadDate | date:'MM-dd-yyyy hh:mm a'}}
+            </div>
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+              <div class="upload-section mt-5 mb-5 ">
+                <input type="file" id="videoUpload" (change)="onFileSelected($event)" accept="video/mp4">
+                <button class="btn btn-primary" (click)="submitVideo()">Submit</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </mat-tab> -->
+      </mat-tab>
+      
+      
     </mat-tab-group>
     <!-- <div class="text-right"><button class="btn btn-bgcolor" [routerLink]="['/candidateview/']">Document</button>
     <button class="btn btn-bgcolor ml-3" [routerLink]="['/candidateview/']">Sitevisit</button>

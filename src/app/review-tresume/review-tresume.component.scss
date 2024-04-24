@@ -321,3 +321,61 @@ form,
   align-items: center;
   justify-content: center;
 }
+
+
+
+
+
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: auto;
+}
+
+.video-wrapper video::-webkit-media-controls {
+  /* Styles for Chrome and Safari */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.video-wrapper video::-webkit-media-controls-panel {
+  /* Styles for Chrome and Safari */
+  color: #fff;
+}
+
+.video-wrapper video::-webkit-media-controls-play-button {
+  /* Styles for Chrome and Safari */
+  background-color: transparent;
+  border: none;
+}
+
+.video-wrapper video::-webkit-media-controls-volume-slider {
+  /* Styles for Chrome and Safari */
+  background-color: transparent;
+}
+
+.video-wrapper video::-webkit-media-controls-mute-button {
+  /* Styles for Chrome and Safari */
+  background-color: transparent;
+  border: none;
+}
+
+.video-wrapper video::-webkit-media-controls-timeline {
+  /* Styles for Chrome and Safari */
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.video-wrapper video::-webkit-media-controls-timeline-container {
+  /* Styles for Chrome and Safari */
+  height: 6px;
+}
+
+.video-wrapper video::-webkit-media-controls-current-time-display,
+.video-wrapper video::-webkit-media-controls-time-remaining-display {
+  /* Styles for Chrome and Safari */
+  color: #fff;
+}

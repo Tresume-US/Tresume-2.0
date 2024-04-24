@@ -183,6 +183,10 @@ export class ReviewTresumeComponent implements OnChanges {
   MarketerName: any;
   TresumeID:any = '';
   candiateName: any;
+  ProfileVideoFile: any;
+  profilevideoPath:any;
+  videouploadDate: any;
+  videoPlayershow: boolean = false;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -215,6 +219,7 @@ export class ReviewTresumeComponent implements OnChanges {
       case 5:
         this.saveSiteVisitFormData();
         break;
+      
       default:
         console.error('Invalid tab index');
     }
@@ -324,6 +329,62 @@ export class ReviewTresumeComponent implements OnChanges {
   private handleError(response: any): void {
     this.messageService.add({ severity: 'error', summary:  response.message });
     this.loading = false;
+  }
+
+  FetchProfileVideo(){
+    let req={
+      traineeid:this.candidateID
+    }
+
+    this.service.FetchProfileVideo(req).subscribe(
+      (x: any) => {
+        console.log(x);
+        let result = x.result;
+        if(result[0].profilevideoPath == '' || result[0].profilevideoPath == null){
+          this.videoPlayershow = false
+        }else{
+          this.videoPlayershow = true
+          this.profilevideoPath = result[0].profilevideoPath;
+          this.videouploadDate = result[0].videouploadDate;
+          this.FetchProfileVideo();
+        }
+        
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      }
+    );
+
+  }
+
+
+  onFileSelected(event: any) {
+    this.ProfileVideoFile = event.target.files[0];
+  }
+
+  submitVideo(){
+    this.loading = true;
+    if (!this.ProfileVideoFile) {
+      console.error('No file selected');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('Profilevideo', this.ProfileVideoFile);
+    formData.append('traineeid', this.candidateID);
+    this.service.ProfileVideoUpload(formData).subscribe(
+      (x: any) => {
+        this.messageService.add({ severity: 'success', summary: x.message });
+        this.loading = false;
+      },
+      (error: any) => {
+        this.messageService.add({ severity: 'success', summary: error.message });
+        this.loading = false;
+      }
+    );
+
+
   }
 
   saveInterviewFormData() {
@@ -458,7 +519,6 @@ export class ReviewTresumeComponent implements OnChanges {
     switch (tabIndex) {
       case 0:
         this.loading = true;
-        this.fetchCandidateInfo();
         this.getOrgUserList();
         break;
       case 1:
@@ -500,11 +560,13 @@ export class ReviewTresumeComponent implements OnChanges {
     // this.fetchCandidateInfo();
     // this.getSubmissionList() ;
     // this.getOrgUserList();
+    this.fetchCandidateInfo();
     this.getmarketername();
     this.getcandidaterstatus();
     this.getLegalStatusOptions();
     this.getState();
     this.getdivision();
+    this.FetchProfileVideo();
 
     this.currentTabIndex = this.tabIndex;
     

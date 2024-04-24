@@ -133,6 +133,14 @@ export class ReviewService {
   divisiondropdown(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'divisiondropdown', request);
   }
+
+  FetchProfileVideo(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'FetchProfileVideo', request);
+  }
+
+  ProfileVideoUpload(formData: FormData): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'ProfileVideoUpload', formData);
+  }
   // This is for email tracker in the placement tab // HRMS
   // getTableData(): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.endpoint}/table-data`);

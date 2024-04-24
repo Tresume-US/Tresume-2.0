@@ -15,7 +15,22 @@ const exceljs = require("exceljs");
 const excel = require('exceljs');
 const fs = require('fs');
 
+const multer = require('multer');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'C:/inetpub/vhosts/tresume.us/httpdocs/Content/ProfileVideo/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueFilename = uuidv4();
+    const fileExtension = path.extname(file.originalname);
+    cb(null, uniqueFilename + fileExtension);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 const config = {
   user: "sa",
@@ -2088,6 +2103,58 @@ router.post("/insertRecruitmentTracker", async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
+router.post("/FetchProfileVideo", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) throw err;
+
+      var request = new sql.Request();
+      var query = "select profilevideoPath,videouploadDate from trainee where traineeid=" + req.body.traineeid;
+      request.query(query, function (err, recordset) {
+        if (err) throw err;
+
+        var result = { flag: 1, result: recordset.recordsets[0] };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send({ error: "An error occurred while fetching profile video" });
+  }
+});
+
+
+
+router.post("/ProfileVideoUpload", upload.single('Profilevideo'), async (req, res) => {
+  try {
+    let filename = '';
+    let TraineeID = req.body.traineeid;
+
+    if (req.file) {
+      filename = '/Content/ProfileVideo/' + req.file.filename;
+    }
+
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    var query = `update Trainee set profilevideoPath ='${filename}',videouploadDate = GETDATE() where TraineeID = '${TraineeID}'`;
+    console.log(query);
+    const queryResult = await request.query(query);
+
+    let result = {
+      flag: 1,
+      message: 'Profile Video Uploaded Successfully',
+      filename: filename,
+      TraineeID: TraineeID
+    }
+    res.send(result);
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send({ error: "An error occurred while uploading profile video" });
+  }
+});
+
 
 
 async function generateExcel(data) {
