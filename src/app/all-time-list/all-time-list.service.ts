@@ -47,7 +47,9 @@ export class TimesheetListService {
     gettimesheetrole(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'gettimesheetrole', request);
       }
-
+      getBillableTimesheetResult(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getBillableTimesheetResult', request);
+      }
     
     
 }

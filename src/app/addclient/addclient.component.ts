@@ -46,7 +46,37 @@ export class AddclientComponent implements OnInit {
   selectedClientStatusID: any=0;
   selectedClientCategoryID: any=0;
   country: string[] = ['United States'];
-  PaymentTerms: string[] = ['Net 10', 'Net 15', 'Net 30', 'Net 45', 'Net 60', 'Net 7', 'Net 90'];
+  PaymentTerms: any = [
+    
+    {
+      value:"7",
+      option:'Net 7'
+      },
+      {
+    value:"10",
+    option:'Net 10'
+    },
+    {
+      value:"15",
+      option:'Net 15'
+      },
+      {
+        value:"30",
+        option:'Net 30'
+        },
+        {
+          value:"45",
+          option:'Net 45'
+          },
+          {
+            value:"60",
+            option:'Net 60'
+            },
+            {
+              value:"90",
+              option:'Net 90'
+              },
+];
   Industry: string[] = [
     "Accounting - Finance",
     "Advertising",
@@ -295,6 +325,7 @@ export class AddclientComponent implements OnInit {
     return this.addClient.get('ClientStatusID').value !== null &&
            this.addClient.get('ClientCategoryID').value !== null;
   }
+
 }
 
 

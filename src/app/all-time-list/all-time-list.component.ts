@@ -14,6 +14,7 @@ export class AllTimeListComponent implements OnChanges {
   rejectedData: any [] = [];
   completedData: any[] = [];
   nonBillableData: any [] = [];
+ BillableData: any [] = [];
   showConfirmationDialog: boolean = false;
   router: any;
   OrgID:string = '';
@@ -54,6 +55,7 @@ export class AllTimeListComponent implements OnChanges {
     this.fetchRejectedData();
     this.fetchCompletedData();
     this.fetchNonBillableData();
+    this.fetchBillableData();
     this.gethrmsLocation();
     // this.getTimesheetRole();
   }
@@ -299,6 +301,18 @@ export class AllTimeListComponent implements OnChanges {
     // this.loading = false;
   }
 
+  fetchBillableData(){
+    let Req = {
+      traineeID: this.TraineeID,
+      timesheetrole:this.timesheetrole,
+      username:this.username,
+      admin:this.TraineeID
+    };
+    this.service.getBillableTimesheetResult(Req).subscribe((x: any) => {
+      this.BillableData = x.result;
+    });
+    // this.loading = false;
+  }
   CandidateSave() {
     let req = {
       userName: this.cookieService.get('userName1'), // Assuming userName is stored in the cookie
@@ -383,7 +397,7 @@ export class AllTimeListComponent implements OnChanges {
       'V': 'violet',
       'W': 'wheat',
       'X': 'mediumseagreen',
-      'Y': 'lightyellow',
+      'Y': 'green',
       'Z': 'lightyellow', 
     };
     
@@ -394,7 +408,17 @@ export class AllTimeListComponent implements OnChanges {
     return color ? color : defaultColor;
   }
   
-  
+  getStatusColor(status: number): string {
+    switch (status) {
+        case 1:
+            return '#FFBF00'; 
+        case 2:
+            return 'red'; 
+        default:
+            return 'green'; 
+    }
+}
+
   
   
   
