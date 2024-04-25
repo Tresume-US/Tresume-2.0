@@ -417,5 +417,39 @@ router.post('/checkExistInvoiceNo', async (req, res) => {
   }
 });
 
+router.post("/getInvoiceReport", async (req, res) => {
+    try {
+        await sql.connect(config);
+        
+        let query = `
+            SELECT 
+                CONCAT(T.firstname, ' ', T.lastname) AS ClientName,
+                IM.*
+            FROM 
+                invoice_Master AS IM
+            JOIN 
+                trainee AS T ON IM.traineeid = T.traineeid
+            WHERE 
+                IM.orgid = '${req.body.OrgID}' AND IM.status IN (1, 2, 3)`;
+
+        if (req.body.startdate && req.body.enddate) {
+            query += ` AND IM.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
+        }
+
+        console.log(query);
+
+        const result = await sql.query(query);
+        
+        res.send({
+            flag: 1,
+            result: result.recordset
+        });
+    } catch (error) {
+        console.error("Error occurred: ", error);
+        res.status(500).send("An error occurred while processing your request.");
+    } finally {
+        sql.close();
+    }
+});
 
 module.exports = router;

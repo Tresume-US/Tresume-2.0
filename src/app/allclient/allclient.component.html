@@ -23,32 +23,34 @@
                     <th>Email ID</th>
                     <th> Website</th>
                     <th>Owner</th>
+                    <th>View Details</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let client of clients">
-                    <tr *ngIf="isClientVisible(client)">
-                        <td>{{ client.ClientName }}</td>
-                        <td>{{ client.EmailID }}</td>
-                        <td>{{ client.Website }}</td>
-                        <td>{{ client.PrimaryOwner}}</td>
-                        <td>
-                            <div>
-                                <!-- <i class="fa fa-eye fa-lg  mr-2" [routerLink]="['/viewclient'+authType]"></i> -->
-                                <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr>
+                      <td>{{ client.ClientName }}</td>
+                      <td>{{ client.EmailID }}</td>
+                      <td>{{ client.Website }}</td>
+                      <td>{{ client.PrimaryOwner[1] }}</td>
+                      <td>
+                        <div>
+                            <i class="fa fa-eye fa-lg ml-3 mr-2"></i>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
+                        </div>
+                      </td>
+                    </tr>                  
                 </ng-container>
-            </tbody>
+              </tbody>              
         </table>
     </div>
 </div>
 
-<!-- <div *ngIf="noResultsFound">
-    No Results Found
-</div> -->
 
 <div *ngIf="showConfirmationDialog" class="modal align-center">
     <div class="modal-content justify-content-center ">

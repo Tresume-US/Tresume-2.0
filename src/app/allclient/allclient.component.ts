@@ -94,11 +94,14 @@ export class AllclientComponent implements OnInit {
 
   searchInput: string = '';
 
-  isClientVisible(client: any): boolean {
-    const searchValue = this.searchInput.toLowerCase();
-    return (
-      client.EmailID.toLowerCase().includes(searchValue) ||
-      client.ClientName.toLowerCase().includes(searchValue)
-    );
-  }
+  // isClientVisible(client: any): boolean {
+  //   const searchValue = this.searchInput.toLowerCase();
+  //   return (
+  //     client.EmailID.toLowerCase().includes(searchValue) ||
+  //     client.ClientName.toLowerCase().includes(searchValue)
+  //   );
+  // }
+
+  
+
 }

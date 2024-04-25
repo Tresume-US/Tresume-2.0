@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Client Name *</label>
+                            <label>Client Name <span class="star">*</span></label>
                             <input name="ClientName" type="text" maxlength="500" id="ClientName" class="form-control"
                                 placeholder="Client Name" formControlName="ClientName"
                                 [ngClass]="{ 'invalid-input': addClient.get('ClientName').invalid && addClient.get('ClientName').touched }">
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Contact Number *</label>
+                            <label>Contact Number <span class="star">*</span></label>
                             <input name="ContactNumber" type="tel" maxlength="10" id="ContactNumber"
                                 class="form-control" placeholder="Contact Number" onkeypress=""
                                 formControlName="ContactNumber"
@@ -53,7 +53,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Email ID *</label>
+                            <label>Email ID <span class="star">*</span></label>
                             <input name="EmailID" type="text" maxlength="500" id="EmailID" class="form-control"
                                 placeholder="Email ID" formControlName="EmailID"
                                 [ngClass]="{ 'invalid-input': addClient.get('EmailID').invalid && addClient.get('EmailID').touched }">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Address *</label>
+                            <label>Address <span class="star">*</span></label>
                             <input name="Address" type="text" maxlength="500" id="Address" class="form-control"
                                 placeholder="Address" formControlName="Address"
                                 [ngClass]="{ 'invalid-input': addClient.get('Address').invalid && addClient.get('Address').touched }">
@@ -145,7 +145,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Status*</label>
+                            <label>Status <span class="star">*</span></label>
                             <select class="form-control" name="ClientStatusID" [(ngModel)]="selectedClientStatusID"
                                 [ngModelOptions]="{ standalone: true }" required="required">
                                 <option value="0" disabled>Select Status</option>
@@ -162,7 +162,7 @@
 
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Category*</label>
+                            <label>Category <span class="star">*</span></label>
                             <select class="form-control" name="ClientCategoryID" [(ngModel)]="selectedClientCategoryID"
                                 [ngModelOptions]="{ standalone: true }"  required="required">
                                 <option value="0" disabled>Select Category</option>
@@ -181,7 +181,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group text-center">
-                            <label>Primary Owner*</label>
+                            <label>Primary Owner <span class="star">*</span></label>
                             <select class="form-control" name="PrimaryOwner" [(ngModel)]="selectedPrimaryOwner"
                                 [ngModelOptions]="{ standalone: true }" required="required" >
                                 <option value="0" disabled>Select Primary Owner</option>
@@ -197,11 +197,11 @@
                             <label>Payment Terms </label>
                             <select class="form-control" name="PaymentTerms" formControlName="PaymentTerms">
                                 <option value="" disabled>Select Payment Terms</option>
-                                <option *ngFor="let term of PaymentTerms" [value]="term">{{ term }}</option>
+                                <option *ngFor="let term of PaymentTerms" [value]="term.value">{{ term.option }}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 mt-2">
+                    <div class="col-md-4 mt-2" *ngIf="routeType == 0">
                         <div class=" text-center">
                             <label>Required Documents</label>
                         </div>
@@ -231,7 +231,7 @@
                                 style="height: auto !important;"></textarea>
                         </div>
                         <br>
-                        <div class="form group custom-control custom-checkbox text-left ml-3">
+                        <div class="form group custom-control custom-checkbox text-left ml-3" *ngIf="routeType == 0">
                             <input type="checkbox" class="custom-control-input" id="sendingEmail"
                                 formControlName="sendingEmail">
                             <label class="custom-control-label" for="sendingEmail">You want to stop sending email
@@ -239,13 +239,13 @@
                         </div>
                         <br>
 
-                        <div class="form group custom-control custom-checkbox text-left ml-3">
+                        <div class="form group custom-control custom-checkbox text-left ml-3" *ngIf="routeType == 0">
                             <input type="checkbox" class="custom-control-input" id="Access" formControlName="Access">
                             <label class="custom-control-label" for="Access">Allow Access to All users</label>
                         </div>
                         <br>
 
-                        <div class="form-group text-left ml-3">
+                        <div class="form-group text-left ml-3" *ngIf="routeType == 0">
                             <label for="posting">Display on Job Posting?</label><br>
                             <div class="form-check ml-2" style="display: inline-block;">
                                 <input class="mr-2" type="radio" id="postingTrue" value="true" checked
