@@ -861,7 +861,7 @@ export class SearchResumesDiceComponent implements OnInit {
   public nocredits() {
     this.messageService.add({
       severity: 'warning',
-      summary: 'Error',
+      summary: 'Notification',
       detail: 'You dont have enough credit to View Resume',
     });
   }
@@ -1017,13 +1017,13 @@ export class SearchResumesDiceComponent implements OnInit {
                 this.showcrediterror = true;
                 this.messageService.add({
                   severity: 'warning',
-                  summary: 'Error',
+                  summary: 'Notification',
                   detail: 'You dont have enough credit to View Resume',
                 });
                 reject('No division credit found');
                 this.messageService.add({
                   severity: 'warning',
-                  summary: 'Error',
+                  summary: 'Notification',
                   detail: 'No division credit found',
                 });
               } else {
@@ -1069,7 +1069,7 @@ export class SearchResumesDiceComponent implements OnInit {
               if (percentage >= 80) {
                 this.messageService.add({
                   severity: 'warning',
-                  summary: 'Error',
+                  summary: 'Notification',
                   detail:
                     'Your Credit reached 80% contact sales to increase your credit',
                 });
@@ -1088,7 +1088,7 @@ export class SearchResumesDiceComponent implements OnInit {
                 this.showcrediterror = true;
                 this.messageService.add({
                   severity: 'warning',
-                  summary: 'Error',
+                  summary: 'Notification',
                   detail: 'You dont have enough credit to View Resume',
                 });
               }
@@ -1175,6 +1175,37 @@ export class SearchResumesDiceComponent implements OnInit {
 
   sanitizeHtml(htmlContent: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+  }
+
+  ExportToDoc() {
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+  
+    const footer = "</body></html>";
+  
+    const html = header + ' ' + document.getElementById('printpdf')!.innerHTML+' ' + footer;
+  
+    console.log(html);
+    const blob = new Blob(['\ufeff', html], {
+      type: 'application/msword'
+    });
+  
+    const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+  
+    var filename = this.cfullname  ? this.cfullname  + '.doc' : 'document.doc';
+  
+    if ((navigator as any).msSaveOrOpenBlob) {
+      // For Internet Explorer
+      (navigator as any).msSaveOrOpenBlob(blob, filename);
+    } else {
+      // For other browsers
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      downloadLink.style.display = 'none';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
   }
 }
 

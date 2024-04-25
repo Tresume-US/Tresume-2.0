@@ -315,7 +315,7 @@ export class AllTimeListComponent implements OnChanges {
         this.messageService.add({ severity: 'success', summary: 'Successfully', detail: 'Candidate Added' });
       },
       (error: any) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to Add Candidate' });
+        this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'Failed to Add Candidate' });
       }
     );
   }

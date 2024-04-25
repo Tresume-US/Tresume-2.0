@@ -757,7 +757,7 @@ export class IntegratedSearchComponent implements OnInit {
                 this.showmonstererror = true;
                 this.showdiceerror = true;
                 this.showcberror = true;
-                this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'No division credit found' });
+                this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'No division credit found' });
             } else{
             this.monstercreditcount = x.result[0].umonster;
             this.dicecreditcount = x.result[0].udice;
@@ -781,7 +781,7 @@ export class IntegratedSearchComponent implements OnInit {
                     this.amonster = count;
                     if (count <= 0) {
                         this.showmonstererror = true;
-                        this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough Monster credit to View Resume' });
+                        this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough Monster credit to View Resume' });
                     }
                 }
                 if (jobid == 2) {
@@ -790,7 +790,7 @@ export class IntegratedSearchComponent implements OnInit {
                     this.adice = count;
                     if (count <= 0) {
                         this.showdiceerror = true;
-                        this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough Dice credit to View Resume' });
+                        this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough Dice credit to View Resume' });
                     }
                 }
                 if (jobid == 4) {
@@ -799,7 +799,7 @@ export class IntegratedSearchComponent implements OnInit {
                     this.acb = count;
                     if (count <= 0) {
                         this.showcberror = true;
-                        this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough Career Builder credit to View Resume' });
+                        this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough Career Builder credit to View Resume' });
                     }
                 }
 
@@ -829,7 +829,7 @@ export class IntegratedSearchComponent implements OnInit {
     //                 this.showmonstererror = true;
     //                 this.showdiceerror = true;
     //                 this.showcberror = true;
-    //                 this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'No division credit found' });
+    //                 this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'No division credit found' });
     //                 reject('No division credit found');
     //               } else {
     //                 this.monstercreditcount = x.result[0].monster;
@@ -871,7 +871,7 @@ export class IntegratedSearchComponent implements OnInit {
     //                 percentage = (this.monsterusedcount / this.monstercreditcount) * 100;
     //                 if (count <= 0) {
     //                     this.showmonstererror = true;
-    //                     this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+    //                     this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
     //                 }
     //             }
     //             if (jobid == 2) {
@@ -881,7 +881,7 @@ export class IntegratedSearchComponent implements OnInit {
     //                 percentage = (this.diceusedcount / this.dicecreditcount) * 100;
     //                 if (count <= 0) {
     //                     this.showdiceerror = true;
-    //                     this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+    //                     this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
     //                 }
     //             }
     //             if (jobid == 4) {
@@ -891,7 +891,7 @@ export class IntegratedSearchComponent implements OnInit {
     //                 percentage = (this.cbusedcount / this.cbcreditcount) * 100;
     //                 if (count <= 0) {
     //                     this.showcberror = true;
-    //                     this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+    //                     this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
     //                 }
     //             }
                   
@@ -1177,7 +1177,7 @@ export class IntegratedSearchComponent implements OnInit {
     }
 
     public nocredits(){
-        this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+        this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
       }
 }
 

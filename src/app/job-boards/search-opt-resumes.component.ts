@@ -496,13 +496,13 @@ export class SearchResumesOptComponent implements OnInit {
                     this.showcrediterror = true;
                     this.messageService.add({
                       severity: 'warning',
-                      summary: 'Error',
+                      summary: 'Notification',
                       detail: 'You dont have enough credit to View Resume',
                     });
                     reject('No division credit found');
                     this.messageService.add({
                       severity: 'warning',
-                      summary: 'Error',
+                      summary: 'Notification',
                       detail: 'No division credit found',
                     });
                   } else {
@@ -548,7 +548,7 @@ export class SearchResumesOptComponent implements OnInit {
                   if (percentage >= 80) {
                     this.messageService.add({
                       severity: 'warning',
-                      summary: 'Error',
+                      summary: 'Notification',
                       detail:
                         'Your Credit reached 80% contact sales to increase your credit',
                     });
@@ -567,7 +567,7 @@ export class SearchResumesOptComponent implements OnInit {
                     this.showcrediterror = true;
                     this.messageService.add({
                       severity: 'warning',
-                      summary: 'Error',
+                      summary: 'Notification',
                       detail: 'You dont have enough credit to View Resume',
                     });
                   }
@@ -590,7 +590,7 @@ export class SearchResumesOptComponent implements OnInit {
     public nocredits() {
     this.messageService.add({
         severity: 'warning',
-        summary: 'Error',
+        summary: 'Notification',
         detail: 'You dont have enough credit to View Resume',
     });
     }

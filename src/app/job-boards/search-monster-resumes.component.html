@@ -47,11 +47,15 @@
           </div>
         </div>
         <div class="row" *ngIf="searchType == 2">
-          <div class="col-md-6" style="padding: 20px">
+          <div class="col-md-12" style="padding: 20px">
             <form [formGroup]="form">
               <formly-form [model]="model" [fields]="fieldBool" [options]="options" [form]="form1">
               </formly-form>
             </form>
+          </div>
+          <div class="col-md-3" style="padding: 20px">
+            <label for="recruiter">Job Title</label>
+            <input [(ngModel)]="JobTitle" class="form-control" />
           </div>
           <div class="col-md-3" style="padding: 20px">
             <label for="recruiter">Location (State, City, Zipcode)</label>
@@ -94,10 +98,7 @@
             <label for="recruiter">Max Experience</label>
             <input [(ngModel)]="yearsOfExp" class="form-control" />
           </div>
-          <div class="col-md-3" style="padding: 20px">
-            <label for="recruiter">Job Title</label>
-            <input [(ngModel)]="JobTitle" class="form-control" />
-          </div>
+         
         </div>
         <div class="row">
           <div class="col-md-3" style="padding: 5px 20px">
@@ -257,7 +258,8 @@
     <h1 id="dialog-sizes-name1" class="modal-title" style="text-align: center">
       Quick Resume View
     </h1>
-    <i *ngIf="fileReady && !isPDFSrc" class="fa fa-download clickable" (click)="downloadhtmlPdf()"></i>
+    <button *ngIf="fileReady && !isPDFSrc" (click)="downloadhtmlPdf()" class="btn btn-primary"><i  class="fa fa-file-pdf clickable"></i> Download Pdf</button>
+    <button *ngIf="fileReady && !isPDFSrc" (click)="ExportToDoc()" class="btn btn-primary"><i  class="fa fa-file-word clickable"></i> Download Word</button>
   </div>
   <div>
     <div class="row">

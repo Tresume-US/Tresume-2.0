@@ -234,7 +234,8 @@
     <h1 id="dialog-sizes-name1" class="modal-title" style="text-align: center">
       Quick Resume View
     </h1>
-    <i *ngIf="fileReady && !isPDFSrc" class="fa fa-download clickable" (click)="downloadhtmlPdf()"></i>
+    <button *ngIf="fileReady && !isPDFSrc" (click)="downloadhtmlPdf()" class="btn btn-primary"><i  class="fa fa-file-pdf clickable"></i> Download Pdf</button>
+    <button *ngIf="fileReady && !isPDFSrc" (click)="ExportToDoc()" class="btn btn-primary"><i  class="fa fa-file-word clickable"></i> Download Word</button>
   </div>
   <div>
     <div class="row">

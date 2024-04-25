@@ -604,7 +604,7 @@ export class SearchResumesComponent implements OnInit {
       (error: any) => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Error',
+          summary: 'Notification',
           detail: 'Failed to Add Candidate',
         });
       }
@@ -627,4 +627,37 @@ export class SearchResumesComponent implements OnInit {
   sanitizeHtml(htmlContent: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
   }
+
+  ExportToDoc(element: string) {
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+  
+    const footer = "</body></html>";
+  
+    const html = header + ' ' + document.getElementById('printpdf')!.innerHTML+' ' + footer;
+  
+    console.log(html);
+    const blob = new Blob(['\ufeff', html], {
+      type: 'application/msword'
+    });
+  
+    const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+  
+    var filename = this.currentResumeID ? this.currentResumeID + '.doc' : 'document.doc';
+  
+    if ((navigator as any).msSaveOrOpenBlob) {
+      // For Internet Explorer
+      (navigator as any).msSaveOrOpenBlob(blob, filename);
+    } else {
+      // For other browsers
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = filename;
+      downloadLink.style.display = 'none';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  }
+  
+  
 }

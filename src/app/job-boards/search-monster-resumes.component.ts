@@ -438,7 +438,8 @@ export class SearchResumesMonsterComponent implements OnInit {
                     this.currentResumeResp = x.resumeDocument;
                     const blob = b64toBlob(b64Data, contentType);
                     if (!this.isPDFSrc) {
-                        this.objUrl = this.sanitizer.bypassSecurityTrustHtml(x.resume);
+                        var urldata = x.resume;
+                        this.objUrl = this.highlightSkills(urldata, keywords);
                         /* const re = new RegExp(`\\b${this.model.boolean}\\b`, 'gi');
                         this.objUrl = x.resume.replace(re, `<mark>${this.model.boolean}</mark>`); */
                     }
@@ -634,10 +635,10 @@ export class SearchResumesMonsterComponent implements OnInit {
         }
         if (this.searchType == SearchType.semantic) {
             objectReq = {
-                jobTitle :this.JobTitle,
                 country: 'US',
                 searchType: 'semantic',
                 semantic: {
+                    jobTitles :[this.JobTitle],
                     booleanExpression: {
                         expression: this.model.boolean,
                         importance: 'Required'
@@ -782,7 +783,7 @@ export class SearchResumesMonsterComponent implements OnInit {
                   console.log(x.result.length);
                   if (x.result.length == 0) {
                     this.showcrediterror = true;
-                    this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'No division credit found' });
+                    this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'No division credit found' });
                     reject('No division credit found');
                   } else {
                     this.creditcount = x.result[0].umonster;
@@ -838,7 +839,7 @@ export class SearchResumesMonsterComponent implements OnInit {
                   console.log(count);
                   if (count <= 0) {
                     this.showcrediterror = true;
-                    this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+                    this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
                   }
                   resolve();
                 })
@@ -884,8 +885,39 @@ export class SearchResumesMonsterComponent implements OnInit {
     }
 
     public nocredits(){
-        this.messageService.add({ severity: 'warning', summary: 'Error', detail: 'You dont have enough credit to View Resume' });
+        this.messageService.add({ severity: 'warning', summary: 'Notification', detail: 'You dont have enough credit to View Resume' });
     }
+
+    ExportToDoc() {
+        const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+      
+        const footer = "</body></html>";
+      
+        const html = header + ' ' + document.getElementById('printpdf')!.innerHTML+' ' + footer;
+      
+        console.log(html);
+        const blob = new Blob(['\ufeff', html], {
+          type: 'application/msword'
+        });
+      
+        const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+      
+        var filename = this.cfullname  ? this.cfullname  + '.doc' : 'document.doc';
+      
+        if ((navigator as any).msSaveOrOpenBlob) {
+          // For Internet Explorer
+          (navigator as any).msSaveOrOpenBlob(blob, filename);
+        } else {
+          // For other browsers
+          const downloadLink = document.createElement('a');
+          downloadLink.href = url;
+          downloadLink.download = filename;
+          downloadLink.style.display = 'none';
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        }
+      }
 
 
 
@@ -910,10 +942,10 @@ export enum SearchType {
 }
 
 export interface SearchReqItem {
-    jobTitle ?:string;
     country?: string;
     searchType?: string;
     semantic: {
+        jobTitles? :any[],
         booleanExpression?: {
             expression: string,
             importance: string

@@ -356,7 +356,7 @@ export class HarvestComponent implements OnInit {
       for (let i = 0; i < downloadlimit; i++) {
         this.deleteAudit(this.userName);
       }
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Your Harvest is deleted' });
+      this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'Your Harvest is deleted' });
     });
     this.fetchharvest();
     // setTimeout(() => {

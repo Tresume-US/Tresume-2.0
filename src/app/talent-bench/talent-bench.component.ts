@@ -195,7 +195,7 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
       },
       (error: any) => {
         this.loading = false;   
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Record Found' });
+        this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'No Record Found' });
       }
     );
   }
@@ -215,7 +215,7 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
         this.loading = false;
         // this.handleError(error);
         // this.messageService.add({ severity: 'error',  });
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Record Found' });
+        this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'No Record Found' });
 
       }
     );
@@ -234,7 +234,7 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
       },
       (error: any) => {
         this.loading = false;      
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Record Found' });
+        this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'No Record Found' });
       }
     );
   }
