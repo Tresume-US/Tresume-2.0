@@ -19,26 +19,28 @@
         <table class="table text-center">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Client Name</th>
                     <th>Email ID</th>
                     <th> Website</th>
                     <th>Owner</th>
-                    <th>View Details</th>
+                    <!-- <th>View Details</th> -->
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let client of clients">
                     <tr>
+                      <td>{{ client.ClientID }}</td>
                       <td>{{ client.ClientName }}</td>
                       <td>{{ client.EmailID }}</td>
                       <td>{{ client.Website }}</td>
                       <td>{{ client.PrimaryOwner[1] }}</td>
-                      <td>
+                      <!-- <td>
                         <div>
-                            <i class="fa fa-eye fa-lg ml-3 mr-2"></i>
+                            <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientdetails',client.ClientID]"></i>
                         </div>
-                      </td>
+                      </td> -->
                       <td>
                         <div>
                           <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>

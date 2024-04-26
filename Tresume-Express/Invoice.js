@@ -422,15 +422,15 @@ router.post("/getInvoiceReport", async (req, res) => {
         await sql.connect(config);
         
         let query = `
-            SELECT 
-                CONCAT(T.firstname, ' ', T.lastname) AS ClientName,
-                IM.*
-            FROM 
-                invoice_Master AS IM
-            JOIN 
-                trainee AS T ON IM.traineeid = T.traineeid
-            WHERE 
-                IM.orgid = '${req.body.OrgID}' AND IM.status IN (1, 2, 3)`;
+        SELECT 
+        C.ClientName,
+        IM.*
+    FROM 
+        invoice_Master AS IM
+    JOIN 
+        clients AS C ON IM.ClientID = C.ClientID
+    WHERE 
+        IM.orgid = '${req.body.OrgID}' AND IM.status IN (1, 2, 3)`;
 
         if (req.body.startdate && req.body.enddate) {
             query += ` AND IM.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
