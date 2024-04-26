@@ -174,6 +174,7 @@ import { CorporateDocumentComponent } from './corporate-document/corporate-docum
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 
 
 @NgModule({
@@ -277,6 +278,7 @@ import { MatNativeDateModule } from '@angular/material/core';
       MultipleInvoicesComponent,
       InvoiceReportComponent,
       CorporateDocumentComponent,
+      ClientViewDetailsComponent,
     // TimesheetViewdetailsComponent
 
   ],
