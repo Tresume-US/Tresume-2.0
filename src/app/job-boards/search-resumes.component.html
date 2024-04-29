@@ -1,8 +1,115 @@
 <section class="content">
   <div class="container-fluid">
     <accordion [isAnimated]="true">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col-md-4">
+            <!-- <div class="form-group text-center mt-4">
+              <button type="button" class="btn btn-wdth text-white" (click)="openPopup()" style="margin-left: 14rem;">Add Candidate</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
       <accordion-group heading="Tresume Search" [isOpen]=true>
+        <div *ngIf="isPopupOpen" class="modal" style="display: block;">
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="margin-top: 7rem;
+            margin-left: 8rem;">
+              <div class="modal-header">
+                <h2 class="modal-title">Add Candidate</h2>
+                <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
 
+              <div class="modal-body">
+                <div class="form-container">
+                    <form #myForm="ngForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="firstName">First Name *</label>
+                      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required [(ngModel)]="firstName">
+                  </div>
+                  
+                    <div class="form-group col-md-4">
+                      <label for="middleName">Middle Name</label>
+                      <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Enter middle name" [(ngModel)]="middleName">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="lastName">Last Name *</label>
+                      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" required [(ngModel)]="lastName">
+                  </div>
+                  
+                  <div class="form-group col-md-4">
+                    <label for="phone">Phone</label>
+                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter phone no" required [(ngModel)]="phone">
+                </div>
+                
+                    <div class="form-group col-md-4">
+                      <label for="email">Email</label>
+                      <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" required [(ngModel)]="email">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="jobTitle">Job Title</label>
+                      <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Enter job title" required [(ngModel)]="jobTitle">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="location">Location</label>
+                        <select class="form-control" name="Location" [(ngModel)]="currentLocation"
+                          [ngModelOptions]="{standalone: true}">
+                          <option value="">Select</option>
+                          <option *ngFor="let location of Locations?.result || []" [value]="location.state">{{ location.state }}
+                          </option>
+                        </select>
+                      </div>  
+                    <div class="form-group col-md-4">
+                      <label for="jobBoardSource">Source</label>
+                      <input type="text" class="form-control" id="jobBoardSource" name="jobBoardSource" placeholder="Enter job board source" required [(ngModel)]="jobBoardSource">
+                    </div>
+
+                    <!-- <div class="form-group col-md-4">
+                      <label for="createdTime">Created Time</label>
+                      <input type="text" class="form-control" id="createdTime" name="createdTime" placeholder="Enter created time" required [(ngModel)]="createdTime">
+                    </div> -->
+                    <!-- <div class="form-group col-md-4">
+                      <label for="lastUpdatedBy">Last Updated By </label>
+                      <input type="text" class="form-control" id="lastUpdatedBy" name="lastUpdatedBy" placeholder="Enter last updatedby" required [(ngModel)]="lastUpdatedBy">
+                    </div> -->
+                    <div class="form-group col-md-4">
+                      <label for="experience">Experience</label>
+                      <input type="text" class="form-control" id="experience" name="experience" placeholder="Enter experience" required [(ngModel)]="experience">
+                    </div>
+                    <div class="form-group col-md-8">
+                      <label for="experience">Skills</label>
+                      <input type="text" class="form-control" id="experience" name="experience" placeholder="Enter experience" required [(ngModel)]="experience">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="uploadFile">Resume Upload *</label>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="uploadFile" (change)="handleFileInput($event)" accept=".pdf,.doc,.docx" required>
+                        <label class="custom-file-label" for="uploadFile">Choose file</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <p-checkbox  name="searchType" value="2" [(ngModel)]="securityclearance" inputId="semantic"></p-checkbox >
+                      <label class="labelType" for="semantic">Security Clearance</label>
+                    </div>
+                    <!-- Add other form fields with ngModel here -->
+                  </div>
+                </form>
+                <div *ngIf="fileHTML">
+                  <p>HTML Content:</p>
+                  <div [innerHTML]="fileHTML"></div>
+                </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn" (click)="closePopup()">Cancel</button>
+                <button type="submit" class="btn" (click)="insertdata()" [disabled]="!allFieldsFilled()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row" *ngIf="searchType == 1">
           <div class="col-md-6" style="padding: 20px;">
             <form [formGroup]="form">
@@ -112,7 +219,7 @@
           </div>
           <div class="col-md-3" style="padding: 5px 20px">
             <br>
-            <p-radioButton name="searchType" value="2" [(ngModel)]="securityclearance" inputId="semantic"></p-radioButton>
+            <p-checkbox  name="searchType" value="2" [(ngModel)]="securityclearance" inputId="semantic"></p-checkbox >
             <label class="labelType" for="semantic">Security Clearance</label>
           </div>
         </div>

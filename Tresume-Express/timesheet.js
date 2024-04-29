@@ -1231,6 +1231,60 @@ if(req.body.timesheetrole == '2'){
   }
 });
 
+router.post('/invoiceCandidatetList', async (req, res) => {
+  let recordset; // Declare recordset outside the try block
+
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+//1 and 3 as per status
+let query = ''
+if(req.body.timesheetrole == '2'){
+  query = `
+  SELECT DISTINCT im.clientid, im.orgid, c.ClientName
+  FROM invoice_master im
+  JOIN clients c ON im.clientid = c.clientid
+  WHERE im.orgid = '${req.body.OrgId}';
+`;
+}else{
+  query = `
+  SELECT DISTINCT im.clientid, im.orgid, c.ClientName
+  FROM invoice_master im
+  JOIN clients c ON im.clientid = c.clientid
+  WHERE im.orgid = '${req.body.OrgId}';
+    `;
+}
+     
+
+
+    console.log(query);
+
+    recordset = await request.query(query);
+
+    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+        error: "No active results found!",
+      };
+      res.send(result);
+    }
+  }
+  catch (error) {
+    console.error("Error fetching candidate data:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while fetching candidate data!",
+    };
+    res.status(500).send(result);
+  }
+});
+
 
 router.post('/getCreateProjectList', async (req, res) => {
   try {

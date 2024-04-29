@@ -4,11 +4,12 @@ import { MessageService } from 'primeng/api';
 import { InvoiceReportService } from './invoice-report.service';
 import * as html2pdf from 'html2pdf.js';
 import * as XLSX from 'xlsx';
+import { NewTimeSheetReportService } from '../new-time-sheet-report/new-time-sheet-report.service'
 @Component({
   selector: 'app-invoice-report',
   templateUrl: './invoice-report.component.html',
   styleUrls: ['./invoice-report.component.scss'],
-  providers: [CookieService,InvoiceReportService , MessageService],
+  providers: [CookieService,InvoiceReportService , MessageService,NewTimeSheetReportService],
 })
 export class InvoiceReportComponent implements OnInit {
 
@@ -23,11 +24,14 @@ export class InvoiceReportComponent implements OnInit {
   showNotes: boolean = false;
   fromDate: Date;
   toDate: Date;
+  candidateid:any =0;
+  candidatelistname:any;
+  tableData: { }[] = [];
 
   notes: string = '';
   loading: boolean = false;
 
-  constructor(private cookieService: CookieService,private messageService: MessageService, private service:InvoiceReportService) { 
+  constructor(private cookieService: CookieService,private messageService: MessageService, private service:InvoiceReportService,private request:NewTimeSheetReportService) { 
     this.OrgID = this.cookieService.get('OrgID');
 
     this.fromDate = new Date();
@@ -40,6 +44,18 @@ export class InvoiceReportComponent implements OnInit {
     this.timesheetrole = this.cookieService.get('timesheet_role');
     this.loading=true;
     this.fetchinvoicereport();
+    this.candidatelist();
+  }
+
+  candidatelist(){
+    let Req = {
+     OrgId : this.OrgID,
+     timesheetrole: this.timesheetrole,
+     TraineeID:this.TraineeID
+    };
+    this.service.invoiceCandidatetList(Req).subscribe((x: any) => {
+      this.candidatelistname = x.result;
+    });
   }
 
   toggleExportOptions() {
@@ -141,7 +157,19 @@ closeNotes() {
 
   
   runReport(): void {
-    console.log('Its working')
+    let Req: any = {
+      OrgID: this.OrgID,
+      startdate: '',
+      enddate: '',
+      candidateid:this.candidateid,
+      timesheetrole: this.timesheetrole,
+      TraineeID:this.TraineeID
+    };
+    this.service.getInvoiceReport(Req).subscribe((x: any) => {
+      this.tableData = x.result;
+      this.loading = false;
+      this.fetchinvoicereport();
+    });
       }
   
 

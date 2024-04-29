@@ -22,4 +22,8 @@ export class InvoiceReportService {
     return this.http.post<ResponseDetails>(this.endpoint + 'getInvoiceReport', request);
   }
 
+  invoiceCandidatetList(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'invoiceCandidatetList', request);
+  }
+
 }

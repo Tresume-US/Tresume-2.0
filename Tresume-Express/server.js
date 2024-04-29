@@ -147,16 +147,66 @@ app.post("/text-mail", (req, res) => {
     from: "support@tresume.us",
     to: to,
     subject: subject,
-    html: text,
+    html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${subject}</title>
+      <style>
+          body {
+              margin: 0;
+              padding: 0;
+              font-family: Arial, sans-serif;
+          }
+          .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+              background-color: #f2f2f2;
+          }
+          .header {
+              background-color: #6a0dad;
+              text-align: center;
+              padding: 20px 0;
+          }
+          .footer {
+              background-color: #6a0dad;
+              text-align: center;
+              padding: 20px 0;
+              color: #fff;
+          }
+      </style>
+      </head>
+      <body>
+      <div class="container">
+      <div class="header">
+      <img src="https://tresume.us/email/Tresume_logo.png" height="100px" alt="Company Logo">
+  </div>
+          <div class="content">
+              ${text}
+          </div>
+          <div class="footer">
+            <p>44121 Leesburg Pike., STE 230 Ashburn</p>
+            <p>VA 20147, United States Of America</p>
+            <p>(703) 9863350</p>
+            <p>support@tresume.us</p>
+        </div>
+      </div>
+      </body>
+      </html>
+    `,
   };
 
   transporter.sendMail(mailData, (error, info) => {
     if (error) {
       return console.log(error);
     }
-    res.status(200).send({ message: "Mail send", message_id: info.messageId });
+    res.status(200).send({ message: "Mail sent", message_id: info.messageId });
   });
 });
+
 
 // config for your database
 var config = {
@@ -2976,7 +3026,7 @@ app.post("/getCBAuthToken", function (req, res) {
       client_secret:
         "mmYQ7+pkLk1VQq+to5Pc1t+4agJ8f/WhyhSccR5yHdhfZhdFgYdI6mLyZhmNmWZCxg6D7PAWXuS5VaJENtlVvw==",
       refresh_token:
-        "puseyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhHQ00ifQ.EFby7POdxZ6_sjQRGP3j_g6gcoReW4k7Rb2Y20alH6O3YPfz-4E7ysccYDwv_RQxQaKhbi-X0TdssLZk9VjafDwrYNLKkzNxbcfLfhnQZF15HUkUL-r1JRdfz2RZTBXESdjBzAMlU8alJu91YRE4UX3ub_6BPv8zGvuTtefZ1OqbTE_-Em_e3Su3IZZuxINduoyIhIBFDJN7G982dEPblKChzJbO6ep6kDDMJV9fBxtjZTjCKSFlO_T83EHDRoaVCXf9bml9DHky7Ce7pjmYq2Su6z0MIEZPsOfgtuvOl_LHOdVildcNpsjKuZU4jrDij5W54mg6RuoTFnAT2U6fLQ.sIPcX1LEh2lkWwZl.JF3OTbojqNjN3vEwkFLMMjDtzLP5E8-RVKi7lKIFO9FGfOV-ZrPevKkCDRj627gFc8TeD8DljrnIkgUK3UbrTlA2k750Htd_SKjokzxMmEC4kpbRv-1yxFLKXb5RTLSpDBXiLm6iyKicy-snXBUFMqKKWTPPbgmoHss44ARf6JsGLsJEckGQk3UypXecKhYnPtQOa0Ska7UgBWypLG2u4EK6G-MC1BI46DvZDAS7ZmVsrBseFEYeUUUzCKAHTmcqF6b5EeEPZ6UTKqIryJ_BLUB6YXByodP3kUUKUn89v8ZVNqkIDYaF8hXBdzQ_UFv9iBRFrvXZOpUtJ1MDUZdLEw.3_T_RocqCbe9DbPlPUjRmg",
+        "puseyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkExMjhHQ00ifQ.kTDvOFflvvy__F1XD4OdfQshC-erAE_N5PUXmw5HkQ8EAeHrJriBDgFdm5GrHlC9aLNaHmbvyWvN6fsCC7L3RSSxi9Pp6KyEGb5PTligbtB85BEBBNwO5Tw415_L7DFLQT2zEnUzH6wKFtT3PoUDH-YVz7vIw4Wn1q9MF6mJcDYbB9Z7yzp74zJJM9235oTASqc-4pB3Q9vDgfak8SMaJFQSS2zzXLjyUzI9V8iRqTjcCP3yTFguPe9uTwshJMbC-PJaYJFzrshaOgf8n8MgD4vG12oGB5IYNNn17hQOc4UFPtZo87jPx7MaIU7ILq8Cphqit_IFjS97W-_v4XNWDg.EuJD-q7aPECC9Z3T.-dJfSDplXyV9jb0NTvwrZcwtKDs1892M9n6Jx4_L-1jsZjwQ67ybrNJKubF8-PJ4v40j9QzNFC_BEG2OZvDDBmYm4eDb3b4mAJUuymGRUzmwQKGEuUEOD0EuLHN9_0eng5ZuiL-qXSdPXXfioQBe3zpI7wAdMRg6PYrJIZRhmQr-viZ777L49MLc2Ob0CEdBjtQP0DMKadSF872wDG2smSYqwIa7kHN-a60FDuR1678kkAaX6epkkRPj1unc5EGPMmIrNyQ0E7rrCl6PB7eNij3s6Dp24nPNFHtbjBZbs5VhQXpK_q7qwWgLFsLeiWP4nSCtAevUhu3EOSn8JIgW5pY.OLLAsFZY3YegCU6ChywO0A",
       scope: "offline_access",
     };
 

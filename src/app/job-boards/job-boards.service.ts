@@ -227,6 +227,9 @@ export class JobBoardsService {
     insertcandidatejob(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'insertcandidatejob', request);
     }
+    getLocation(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getLocation', request);
+      }
     
 }
 

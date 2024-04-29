@@ -19,6 +19,12 @@
   </div>
   <div class="row ml-1">
     <div class="col-md-2">
+      <select class="form-control" [(ngModel)]="candidateid">
+        <option value="0">Select the Client</option>
+        <option *ngFor="let candidatelistnames of candidatelistname" value="{{candidatelistnames.clientid }}" [value]="candidatelistnames.clientid">{{ candidatelistnames.ClientName }}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
       <select class="form-control" [(ngModel)]="selection">
         <option *ngFor="let option of options">{{ option }}</option>
       </select>
