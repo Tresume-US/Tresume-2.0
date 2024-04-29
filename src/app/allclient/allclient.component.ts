@@ -19,10 +19,10 @@ export class AllclientComponent implements OnInit {
   TraineeID: string = '';
   clients: any[];
   noResultsFound: boolean = false;
-  authType: any;
+  routeType: any;
 
   constructor(private fb: FormBuilder, private cookieService: CookieService, private service: AllClientService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
-    this.authType = this.route.snapshot.params["authType"];
+    this.routeType = this.route.snapshot.params["routeType"];
   }
 
   ngOnInit(): void {

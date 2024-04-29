@@ -4,7 +4,7 @@
             <div class="col">
                 <h2 class="ml-3 mt-4 text-dark">ALL CLIENTS</h2>
             </div>
-            <div><button class="btn text-white btn-bgcolor mt-3 mr-5" [routerLink]="['/addclient/'+authType]">Add Client</button>
+            <div><button class="btn text-white btn-bgcolor mt-3 mr-5" [routerLink]="['/addclient/'+routeType]">Add Client</button>
             </div>
         </div>
         <div class="row mt-4">
@@ -24,7 +24,7 @@
                     <th>Email ID</th>
                     <th> Website</th>
                     <th>Owner</th>
-                    <!-- <th>View Details</th> -->
+                    <th *ngIf="routeType == 1">View Details</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -36,11 +36,11 @@
                       <td>{{ client.EmailID }}</td>
                       <td>{{ client.Website }}</td>
                       <td>{{ client.PrimaryOwner[1] }}</td>
-                      <!-- <td>
+                      <td *ngIf="routeType == 1">
                         <div>
                             <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientdetails',client.ClientID]"></i>
                         </div>
-                      </td> -->
+                      </td>
                       <td>
                         <div>
                           <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
