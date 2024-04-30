@@ -1,0 +1,42 @@
+.container-fluid {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+.example-card {
+    max-width: 400px;
+  }
+.mat-header-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.mat-header-content div {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.mat-header-content i {
+    margin-right: 10px;
+    color: #555;
+}
+
+.fas {
+    min-width: 24px;
+    font-size: 20px;
+    text-align: center;
+}
+

@@ -169,6 +169,7 @@ export class AddclientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.routeType = this.route.snapshot.params["routeType"];
     // this.loading = true;
     this.addClient = this.fb.group({
       ClientName: ['', [Validators.required, Validators.minLength(3)]],
