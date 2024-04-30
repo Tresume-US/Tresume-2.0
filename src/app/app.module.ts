@@ -177,6 +177,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
