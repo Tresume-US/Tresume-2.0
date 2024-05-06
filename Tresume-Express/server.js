@@ -148,54 +148,75 @@ app.post("/text-mail", (req, res) => {
     to: to,
     subject: subject,
     html: `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${subject}</title>
-      <style>
-          body {
-              margin: 0;
-              padding: 0;
-              font-family: Arial, sans-serif;
-          }
-          .container {
-              width: 100%;
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #f2f2f2;
-          }
-          .header {
-              background-color: #6a0dad;
-              text-align: center;
-              padding: 20px 0;
-          }
-          .footer {
-              background-color: #6a0dad;
-              text-align: center;
-              padding: 20px 0;
-              color: #fff;
-          }
-      </style>
-      </head>
-      <body>
-      <div class="container">
-      <div class="header">
-      <img src="https://tresume.us/email/Tresume_logo.png" height="100px" alt="Company Logo">
-  </div>
-          <div class="content">
-              ${text}
-          </div>
-          <div class="footer">
-            <p>44121 Leesburg Pike., STE 230 Ashburn</p>
-            <p>VA 20147, United States Of America</p>
-            <p>(703) 9863350</p>
-            <p>support@tresume.us</p>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tresume</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background-color: #49274a;
+            padding: 20px 0;
+     
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+        }
+        .content {
+            padding: 40px 20px;
+            background-color: #f7f9fa;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+        .footer {
+            text-align: center;
+            background-color: #e7e7e7;
+            padding: 20px 0;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        .footer p {
+            font-size: 12px;
+            color: #8d8d8d;
+        }
+        .footer img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    </style>
+    </head>
+    <body style="background-color: #49274a;">
+    <div class="container">
+        <div class="header">
+            <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
         </div>
-      </div>
-      </body>
-      </html>
+        <div class="content">
+            ${text}
+        </div>
+        <div class="footer">
+            <p>POWERED BY <img src="https://tresume.us/assets/img/logo.png" alt="Tresume Logo" height="30"></p>
+            <p> 44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
+            <p>(703) 9863350 | support@tresume.us </p>
+            <p style="font-weight: bold; font-size: 12px; color: #a4a4a4;">© 2024 Tresume. Ltd. All rights reserved</p>
+        </div>
+    </div>
+    </body>
+    </html>
+    
     `,
   };
 
