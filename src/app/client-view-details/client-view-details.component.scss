@@ -1,5 +1,6 @@
 .container-fluid {
     width: 100%;
+    height: 280px;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -7,28 +8,22 @@
     padding-left: 0;
     margin-right: auto;
     margin-left: auto;
-  }
-.example-card {
-    max-width: 400px;
-  }
+    background-color: #ede7f6;    
+}
 .mat-header-content {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
-
 .card-title {
     font-size: 20px;
-    color: #333;
     margin-bottom: 10px;
 }
-
 .mat-header-content div {
     display: flex;
     align-items: center;
     margin: 5px 0;
 }
-
 .mat-header-content i {
     margin-right: 10px;
     color: #555;
@@ -38,5 +33,30 @@
     min-width: 24px;
     font-size: 20px;
     text-align: center;
+}
+
+.slanted-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #fff 30%, transparent 30%);
+}
+
+.slanted-line {
+    position: absolute;
+    top: 0;
+    left: -30%; 
+    width: 140%;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(-10deg);
+    z-index: -1;
+}
+.col-md-col-md-9.card.slanted-card {
+    background-color: #999496;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+.mat-header-content.m-4 div i {
+    color: white;
 }
 
