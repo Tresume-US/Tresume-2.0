@@ -25,28 +25,26 @@ export class ClientViewDetailsComponent implements OnInit {
   constructor( private router: Router, private route: ActivatedRoute, private cookieService: CookieService,private messageService: MessageService, private service: ClientViewDetailService) {
     
     this.TraineeID = this.cookieService.get('TraineeID');
-    this.OrgID = this.cookieService.get('OrgID');
+    // this.OrgID = this.cookieService.get('OrgID');
     this.ClientID = this.route.snapshot.params['ClientID'];
    }
 
   ngOnInit(): void {
-    this.fetchclientlist();
+    this.ClientViewDetails();
   }
 
   
 
-  fetchclientlist() {
+  ClientViewDetails() {
     let Req = {
       TraineeID: this.TraineeID,
-      clientid:this.ClientID,
-      OrgID:this.OrgID,
+      clientid:this.ClientID
     };
     console.log(Req)
-    this.service.getTraineeClientList(Req).subscribe((x: any) => {
+    this.service.getClientDetailsList(Req).subscribe((x: any) => {
       this.ClientDetails = x.result;
       this.noResultsFound = this.ClientDetails.length === 0;
     this.loading = false;
-
     }),
     (error: any) => {
       // Error callback
