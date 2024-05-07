@@ -225,35 +225,42 @@ export class WizardWorkflowComponent implements OnInit {
             to: this.model.Input,
             // to: 'wilson@dmsol.in',
             subject: 'Welcome aboard, ' + this.candidateDetails.FirstName,
-            text: `
-            <html>
-            <head>
-              <style>
+            // text: `
+            // <html>
+            // <head>
+            //   <style>
 
-                .logo {
-                  width: 100px;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="email-container">
-               <center>
-                ${clientlogo}
-                </center>
-                <div style="width: 100%; text-align: left;">
-                  <p>Hi ${this.candidateDetails.FirstName},</p>
-                  <p>${this.text}</p>
-                  <p>Thanks & Regards</p>
-                  <p>${this.orgName}</p>
-                </div>
-                <center>
-                <p>Powered by<p><br>
-                <img src="https://tresume.us/img_Home/logo_new.png" alt="Tresume Logo" class="logo">
-                </center>
-              </div>
-            </body>
-            </html>
-            `
+            //     .logo {
+            //       width: 100px;
+            //     }
+            //   </style>
+            // </head>
+            // <body>
+            //   <div class="email-container">
+            //    <center>
+            //     ${clientlogo}
+            //     </center>
+            //     <div style="width: 100%; text-align: left;">
+            //       <p>Hi ${this.candidateDetails.FirstName},</p>
+            //       <p>${this.text}</p>
+            //       <p>Thanks & Regards</p>
+            //       <p>${this.orgName}</p>
+            //     </div>
+            //     <center>
+            //     <p>Powered by<p><br>
+            //     <img src="https://tresume.us/img_Home/logo_new.png" alt="Tresume Logo" class="logo">
+            //     </center>
+            //   </div>
+            // </body>
+            // </html>
+            // `
+            text: `<p style="font-weight: 600; text-align: center; font-size: 18px; margin-top: 20px; color: #333333;">Hello ${this.candidateDetails.FirstName},</p>
+            <p style="font-weight: 600; text-align: center; font-size: 14px; color: #646464">${this.text}</p>
+            
+            <p style="font-weight: 600; text-align: center; font-size: 14px; color: #646464; margin-bottom: 20px;">
+                <p>Thanks & Regards<p>
+                <p>${this.orgName}</p>
+            </p>`
         }
         this.service.emailOfferLetter(requestItem).subscribe(x => {
             this.messageService.add({ severity: 'success', summary: 'Welcome Email Sent', detail: this.model.Input });
@@ -361,37 +368,43 @@ export class WizardWorkflowComponent implements OnInit {
                 const url = `https://tresume.us/onboard/employee/${sessionID}`;
 
                 const emailSubject = 'Onboarding Documents Request';
-                const emailText = `
-              <html>
-              <head>
-                <style>
+            //     const emailText = `
+            //   <html>
+            //   <head>
+            //     <style>
 
-                  .logo {
-                    width: 100px;
-                  }
-                </style>
-              </head>
-              <body>
-                <div class="email-container">
-                <center>
-                ${clientlogo}
-                <center>
-                  <div style="width: 100%; text-align: left;">
-                    <p>Hi ${this.candidateDetails.FirstName},</p>
-                    <p>Please upload the documents in the link below:</p>
-                    <p><a href="${url}">Access Tresume Link</a></p>
-                    <p><i>Note: The link will be valid for 7 days.</i></p>
-                    <p>Thank you,<br></p>
-                    <p>${this.orgName}</p>
-                  </div>
-                  <center>
-                  <p>Powered by</p><br>
-                  <img src="https://tresume.us/img_Home/logo_new.png" alt="Tresume Logo" class="logo">
-                  <center>
-                </div>
-              </body>
-              </html>
-              `;
+            //       .logo {
+            //         width: 100px;
+            //       }
+            //     </style>
+            //   </head>
+            //   <body>
+            //     <div class="email-container">
+            //     <center>
+            //     ${clientlogo}
+            //     <center>
+            //       <div style="width: 100%; text-align: left;">
+                    // <p>Hi ${this.candidateDetails.FirstName},</p>
+                    // <p>Please upload the documents in the link below:</p>
+                    // <p><a href="${url}">Access Tresume Link</a></p>
+                    // <p><i>Note: The link will be valid for 7 days.</i></p>
+                    // <p>Thank you,<br></p>
+                    // <p>${this.orgName}</p>
+            //       </div>
+            //       <center>
+            //       <p>Powered by</p><br>
+            //       <img src="https://tresume.us/img_Home/logo_new.png" alt="Tresume Logo" class="logo">
+            //       <center>
+            //     </div>
+            //   </body>
+            //   </html>
+            //   `;
+            const emailText = `<p>Hi ${this.candidateDetails.FirstName},</p>
+            <p>Please upload the documents in the link below:</p>
+            <p><a href="${url}">Access Tresume Link</a></p>
+            <p><i>Note: The link will be valid for 7 days.</i></p>
+            <p>Thank you,<br></p>
+            <p>${this.orgName}</p>`
 
                 const requestItemEmail = {
                     to: this.candidateDetails.UserName,

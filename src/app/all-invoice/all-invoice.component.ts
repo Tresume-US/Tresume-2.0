@@ -23,6 +23,7 @@ export class AllInvoiceComponent implements OnInit {
   @Output() modalClosed = new EventEmitter<void>();
   makeInactiveModal: any;
   isModal3Open: any;
+CancelledInvoices: any;
   // openMakeInactiveModal: any;
   deleteAction() {
     throw new Error('Method not implemented.');
@@ -84,7 +85,7 @@ export class AllInvoiceComponent implements OnInit {
     this.showPopup = true;
     this.invoiceid = invoiceId;
   }
- 
+
   selectAll(checked: boolean): void {
     this.filteredInvoices.forEach(invoice => {
       invoice.selected = checked;
@@ -288,6 +289,7 @@ export class AllInvoiceComponent implements OnInit {
     this.fetchPaidInvoiceList();
     this.fetchUnpaidInvoiceList();
     this.fetchAllInvoiceList();
+    this.fetchCancelledInvoices();
   }
 
 
@@ -414,4 +416,44 @@ applyPaidFilter() {
     // Any other cancellation logic can go here
   }
   
+
+
+  
+  cancelInvoice(id: any): void {
+    let Req = {
+      Id: id,
+    };
+    this.loading=true;
+    this.service.CancelInvoice(Req).subscribe((x: any) => {
+      var flag1 = x.flag;
+      if (flag1 === 1) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Invoice Cancelled Successfully',
+        });
+        this.fetchPaidInvoiceList();
+        this.fetchUnpaidInvoiceList();
+        this.fetchAllInvoiceList();
+        this.loading=false;
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please try again later',
+        });
+      }
+    });
+  }
+
+
+  fetchCancelledInvoices(){
+    let Req = {
+      OrgID: this.OrgID,
+    };
+    this.service.getCancelledInvoices(Req).subscribe((x: any) => {
+        this.CancelledInvoices = x.result;
+        this.loading = false;
+    });
+}
+
+
 }

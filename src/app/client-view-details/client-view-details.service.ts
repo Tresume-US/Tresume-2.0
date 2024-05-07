@@ -10,8 +10,8 @@ export class ClientViewDetailService {
 
     constructor(private http: HttpClient) { }
     
-    getTraineeClientList(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getTraineeClientList', request);
+    getClientDetailsList(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getClientDetailsList', request);
     }
 
   

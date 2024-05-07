@@ -567,7 +567,7 @@ export class CreateAllTimeListComponent implements OnInit {
         this.Service.createTimesheet(formData).subscribe(
           (x: any) => {
             this.handleSuccess(x);
-
+            this.loading=true;
             // Type assertion to ensure that this.tsroles[0] is treated as an object
             const candidateNameValue = this.tsroles.length > 0 ? (this.tsroles[0] as unknown as { Name: string }).Name : '';
             row.totalHours = this.calculateTotalHours(row);
@@ -592,6 +592,7 @@ export class CreateAllTimeListComponent implements OnInit {
                 flag = x.flag;
                 this.loading = false;
                 resolve();
+                this.router.navigate(['/alltimelist']);    
               },
               (error: any) => {
                 this.handleError(error);
