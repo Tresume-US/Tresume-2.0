@@ -1,20 +1,36 @@
-<div class="container-fluid p-4 row justify-content-between" *ngFor="let client of ClientDetails">
-    <div class="col-md-9 card slanted-card">
-        <div class="slanted-line"></div>
-        <div class="mat-header-content m-4">
-            <div class="card-title"><strong>{{ client.ClientName }}</strong></div>
-            <div class="text-center"><i class="fas fa-mobile-alt"></i> {{ client.ContactNumber }}</div>
-            <div><i class="fas fa-envelope"></i> {{ client.EmailID }}</div>
-            <div><i class="fas fa-home"></i> {{ client.Address }}</div>
-            <div><i class="fas fa-briefcase"></i> {{ client.Industry }}</div>
-            <div><i class="fas fa-user"></i> {{ client.Country }}</div>
-            <div><i class="fas fa-user"></i> {{ client.Website }}</div>
+<div class="container-fluid p-4" *ngFor="let client of ClientDetails">
+    <div class="row justify-content-between">
+        <div class="col-md-9 card slanted-card">
+            <div class="slanted-line"></div>
+            <div class="mat-header-content m-4">
+                <div class="card-title"><strong>{{ client.ClientName }}</strong></div>
+                <div class="text-center"><i class="fas fa-mobile-alt"></i> {{ client.ContactNumber }}</div>
+                <div><i class="fas fa-envelope"></i> {{ client.EmailID }}</div>
+                <div><i class="fas fa-home"></i> {{ client.Address }}</div>
+                <div><i class="fas fa-briefcase"></i> {{ client.Industry }}</div>
+                <div><i class="fas fa-user"></i> {{ client.Country }}</div>
+            </div>
+        </div>
+        <div class="col-md-2 card">
+            <div class="mat-header-content m-4 d-flex flex-column content2 p-0">
+                <div class="h6 text-center">SUMMARY</div>
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-start flex-column ">
+                        <div class="amt pl-2 received"><b>$34,980.34</b></div>
+                        <div class="m-0 pl-4">Received Amount</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-start ">
+                        <div class="d-flex align-items-start flex-column ">
+                            <div class="amt pl-2 pending"><b>$56,678.90</b></div>
+                            <div class="m-0 pl-4">Pending Amount</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
         </div>
     </div>
-    <div class="col-md-2 card">
-        <div class="mat-header-content m-4">
-            <div class="received-amt">Received Amount</div>
-            <div class="pending-amt">Pending Amount</div>
-        </div>
-    </div>
-</div>

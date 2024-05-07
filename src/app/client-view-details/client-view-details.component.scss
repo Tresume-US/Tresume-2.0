@@ -59,4 +59,23 @@
 .mat-header-content.m-4 div i {
     color: white;
 }
+.content2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
+.amt {
+    text-align: left;
+    font-size: 16px;
+}
+.received{
+    border-left: 4px inset #FFA523;
+}
+.pending{
+    border-left: 4px inset #1CCD1C;
+}
+.m-0{
+    font-family: 'Times New Roman', Times, serif;
+    // font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
