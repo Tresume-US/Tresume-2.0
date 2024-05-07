@@ -17,7 +17,6 @@ export class CreateInvoiceComponent implements OnInit {
   clients: any[] = [/* Your client data */];
   selectedClient: any;
   isClientSelected: boolean = false;
-
   showDatePicker: boolean = false;
   fromDate: string = '';
   toDate: string = '';
@@ -726,6 +725,7 @@ getExistingInvoiceNo() {
       console.error('Error fetching invoice data:', error);
     }
   );
+  
 }
 onFilterChangess(option: string) {
   this.showCustomDate = (option === 'custom');
@@ -761,4 +761,16 @@ cancelChange() {
   this.showAlert = false;
 }
 //Bala coding end
+saveAndClose(event: Event) {
+  if (this.files.length === 0) {
+    alert("Please upload attachments");
+    event.preventDefault(); // Prevent the default form submission behavior
+  } else {
+    this.getExistingInvoiceNo(); // Call the getExistingInvoiceNo function
+    // Implement your save and close logic here
+  }
+}
+
+
+
 }
