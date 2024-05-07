@@ -19,10 +19,10 @@ export class AllclientComponent implements OnInit {
   TraineeID: string = '';
   clients: any[];
   noResultsFound: boolean = false;
-  authType: any;
+  routeType: any;
 
   constructor(private fb: FormBuilder, private cookieService: CookieService, private service: AllClientService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
-    this.authType = this.route.snapshot.params["authType"];
+    this.routeType = this.route.snapshot.params["routeType"];
   }
 
   ngOnInit(): void {
@@ -94,11 +94,14 @@ export class AllclientComponent implements OnInit {
 
   searchInput: string = '';
 
-  isClientVisible(client: any): boolean {
-    const searchValue = this.searchInput.toLowerCase();
-    return (
-      client.EmailID.toLowerCase().includes(searchValue) ||
-      client.ClientName.toLowerCase().includes(searchValue)
-    );
-  }
+  // isClientVisible(client: any): boolean {
+  //   const searchValue = this.searchInput.toLowerCase();
+  //   return (
+  //     client.EmailID.toLowerCase().includes(searchValue) ||
+  //     client.ClientName.toLowerCase().includes(searchValue)
+  //   );
+  // }
+
+  
+
 }

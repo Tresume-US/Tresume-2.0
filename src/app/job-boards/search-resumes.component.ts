@@ -108,7 +108,21 @@ export class SearchResumesComponent implements OnInit {
     { value: 'CB', name: 'Career Builder' },
     { value: 'Monster', name: 'Monster' },
   ];
-
+  middleName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  jobTitle: string;
+  jobBoardSource: string;
+  experience: string;
+  addCandidate: any;
+formData: any = {};
+  Locations: any;
+  currentLocation: any = "";
+  isPopupOpen: boolean;
+  TraineeID: any;
+  createdTime: any;
+  lastUpdatedBy: any;
   selectedJobboard: any[] = [];
   states: any[];
   rowData: any;
@@ -132,7 +146,6 @@ export class SearchResumesComponent implements OnInit {
   daysWithin: number;
   yearsOfExp: number;
   yearsOfExpmin: number;
-  jobTitle: string = '';
 
   loading: boolean = false;
   recruiterList: any;
@@ -149,6 +162,8 @@ export class SearchResumesComponent implements OnInit {
   enddate: Date;
   userName: any;
   securityclearance:boolean;
+  fileBlob: string | ArrayBuffer | null;
+  fileHTML: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -220,6 +235,7 @@ export class SearchResumesComponent implements OnInit {
         });
       });
     }
+    this.gethrmsLocation();
   }
 
   public initGrid() {
@@ -659,5 +675,86 @@ export class SearchResumesComponent implements OnInit {
     }
   }
   
+    gethrmsLocation() {
+      let Req = {
+        TraineeID: this.TraineeID,
+        orgID: this.OrgID
+      };
+      this.service.getLocation(Req).subscribe((x: any) => {
+        this.Locations = x;
+      });
+    } 
+    firstName:any;
+    insertdata() {
+      this.loading = true;
+      let Req = {
+        firstName: this.firstName,
+        middleName: this.middleName,
+        lastName: this.lastName,
+        email: this.email,
+        phone: this.phone,
+        jobTitle: this.jobTitle,
+        currentLocation: this.currentLocation,
+        jobBoardSource: this.jobBoardSource,
+        createdTime: this.createdTime,
+        lastUpdatedBy: this.lastUpdatedBy,
+        experience: this.experience,
+      };
+      // console.log(Req);
+      // this.Service.insertJobboardCandidate(Req).subscribe(
+      //   (x: any) => {
+      //     this.messageService.add({ severity: 'success', summary: 'Inserted Successfully' });
+      //   },
+      //   (error: any) => {
+      //     this.messageService.add({ severity: 'error', summary: 'Failed to insert data' });
+      //   }
+      // );
   
+    }
+    allFieldsFilled(): boolean {
+      return !!this.firstName && !!this.lastName && !!this.phone && !!this.email && !!this.jobTitle && !!this.currentLocation && !!this.jobBoardSource && !!this.experience;
+    }
+    openPopup() {
+      this.isPopupOpen = true;
+    }
+  
+    closePopup() {
+      this.isPopupOpen = false;
+    }
+  
+    saveData() {
+      // Implement save data logic here
+      this.closePopup();
+    }
+    onSubmit() {
+      console.log(this.formData);
+    }
+
+    handleFileInput(event: any): void {
+      const file = event.target.files[0];
+      if (file) {
+        this.convertToBase64(file);
+        this.convertToHTML(file);
+      
+      }
+    }
+  
+    private convertToBase64(file: File): void {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fileBlob = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  
+    private convertToHTML(file: File): void {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Here you can add logic to convert the file content to HTML
+        // For example, you can use a library like Mammoth.js for DOCX to HTML conversion
+        this.fileHTML = reader.result as string;
+        console.log(this.fileHTML);
+      };
+      reader.readAsText(file);
+    }
 }

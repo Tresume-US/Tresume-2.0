@@ -4,7 +4,7 @@
             <div class="col">
                 <h2 class="ml-3 mt-4 text-dark">ALL CLIENTS</h2>
             </div>
-            <div><button class="btn text-white btn-bgcolor mt-3 mr-5" [routerLink]="['/addclient/'+authType]">Add Client</button>
+            <div><button class="btn text-white btn-bgcolor mt-3 mr-5" [routerLink]="['/addclient/'+routeType]">Add Client</button>
             </div>
         </div>
         <div class="row mt-4">
@@ -19,36 +19,40 @@
         <table class="table text-center">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Client Name</th>
                     <th>Email ID</th>
                     <th> Website</th>
                     <th>Owner</th>
+                    <th *ngIf="routeType == 1">View Details</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let client of clients">
-                    <tr *ngIf="isClientVisible(client)">
-                        <td>{{ client.ClientName }}</td>
-                        <td>{{ client.EmailID }}</td>
-                        <td>{{ client.Website }}</td>
-                        <td>{{ client.PrimaryOwner}}</td>
-                        <td>
-                            <div>
-                                <!-- <i class="fa fa-eye fa-lg  mr-2" [routerLink]="['/viewclient'+authType]"></i> -->
-                                <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr>
+                      <td>{{ client.ClientID }}</td>
+                      <td>{{ client.ClientName }}</td>
+                      <td>{{ client.EmailID }}</td>
+                      <td>{{ client.Website }}</td>
+                      <td>{{ client.PrimaryOwner[1] }}</td>
+                      <td *ngIf="routeType == 1">
+                        <div>
+                            <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientdetails',client.ClientID]"></i>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
+                        </div>
+                      </td>
+                    </tr>                  
                 </ng-container>
-            </tbody>
+              </tbody>              
         </table>
     </div>
 </div>
 
-<!-- <div *ngIf="noResultsFound">
-    No Results Found
-</div> -->
 
 <div *ngIf="showConfirmationDialog" class="modal align-center">
     <div class="modal-content justify-content-center ">

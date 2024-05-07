@@ -22,7 +22,7 @@ router.post('/getTraineeClientList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "SELECT   V.ClientID,  V.ClientName,  V.EmailID,  V.ContactNumber, V.Website,  CONCAT(T.firstname, ' ', T.lastname) AS PrimaryOwner FROM   clients V INNER JOIN   Trainee T ON V.primaryowner = T.traineeid WHERE V.active = 1  AND V.primaryowner = '" + req.body.TraineeID + "'";
+    const query = "SELECT   V.*,  CONCAT(T.firstname, ' ', T.lastname) AS PrimaryOwner FROM   clients V INNER JOIN   Trainee T ON V.primaryowner = T.traineeid WHERE V.active = 1  AND V.primaryowner = '" + req.body.TraineeID + "'";
 
     console.log(query);
 
@@ -251,5 +251,41 @@ router.post('/addClienta', async (req, res) => {
       error: "An error occurred while inserting Client data!",
     };
     res.status(500).json(result);
+  }  
+});
+
+
+router.post('/getClientDetailsList', async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const query = "SELECT   V.*,  CONCAT(T.firstname, ' ', T.lastname) AS PrimaryOwner FROM   clients V INNER JOIN   Trainee T ON V.primaryowner = T.traineeid WHERE V.active = 1  AND V.primaryowner = '" + req.body.TraineeID + "' AND V.ClientID='" + req.body.clientid + "' ";
+
+    console.log(query);
+
+    const recordset = await request.query(query);
+
+    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+        error: "No active clients found! ",
+      };
+      res.send(result); 
+    }
+  } catch (error) {
+    console.error("Error fetching client data:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while fetching client data!",
+    };
+    res.status(500).send(result);
   }
 });
+
+module.exports = router;

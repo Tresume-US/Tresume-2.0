@@ -108,7 +108,7 @@ router.post("/getTimesheetReport", async (req, res) => {
                   JOIN 
                       Trainee AS t2 ON t1.TraineeID = t2.TraineeID
                   WHERE 
-                      t1.orgid = '${req.body.OrgID}' AND t2.timesheet_admin = '${req.body.TraineeID}'`
+                      t1.orgid = '${req.body.OrgID}' AND t2.timesheet_admin = '${req.body.TraineeID}' AND t1.status IN (1,2,3)`
               if (req.body.candidateid) {
                 query += ` AND t1.traineeid = '${req.body.candidateid}'`
               }
@@ -125,7 +125,7 @@ router.post("/getTimesheetReport", async (req, res) => {
             JOIN 
                 Trainee AS t2 ON t1.TraineeID = t2.TraineeID
             WHERE 
-                t1.orgid = '${req.body.OrgID}'`;
+                t1.orgid = '${req.body.OrgID}' AND t1.status IN (1,2,3)`;
         if (req.body.candidateid) {
           query += ` AND t1.traineeid = '${req.body.candidateid}'`;
         }
@@ -329,6 +329,49 @@ router.post("/getNonBillableTimesheetResult", async (req, res) => {
   }
 });
 
+router.post("/getBillableTimesheetResult", async (req, res) => {
+  try {
+
+    const timesheetrole = parseInt(req.body.timesheetrole);
+
+
+    sql.connect(config, async function (err) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      var request = new sql.Request();
+
+      var query;
+      if (timesheetrole === 1) {
+        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN memberdetails MD ON TM.orgid = MD.orgid INNER JOIN Timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 1 AND TM.status IN (1, 2, 3)";
+      } else if (timesheetrole === 2) {
+        var query =
+          "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) AS Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM  INNER JOIN Trainee T ON TM.traineeid = T.traineeid INNER JOIN  memberdetails MD ON TM.orgid = MD.orgid INNER JOIN timesheet_Project TP ON TM.projectid = TP.projectid WHERE MD.useremail = '" + req.body.username + "' AND TM.isBillable = 1 AND TM.status IN (1, 2, 3) AND TM.admin ='"+req.body.admin+"';";
+      }else if (timesheetrole === 3) {
+        query = "SELECT TM.id, CONCAT(T.firstname, ' ', T.lastname) as Candidate, TM.fromdate, TM.todate, TM.totalhrs, TM.created_at, TM.status, TM.comments, TM.details, TP.projectname FROM Timesheet_Master TM INNER JOIN Trainee T ON TM.traineeid = T.traineeid LEFT JOIN Timesheet_Project TP ON TM.projectid = TP.projectid  WHERE T.username = '" + req.body.username + "' AND TM.isBillable = 1 AND TM.status IN (1, 2, 3)";
+      }
+
+      console.log(query);
+      request.query(query, async function (err, recordset) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
 
 router.post("/getLocation", async (req, res) => {
   try {
@@ -1155,6 +1198,60 @@ if(req.body.timesheetrole == '2'){
         AND timesheet_role = 3 
         AND userorganizationid = '${req.body.OrgId}' 
       ORDER BY name;
+    `;
+}
+     
+
+
+    console.log(query);
+
+    recordset = await request.query(query);
+
+    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+        error: "No active results found!",
+      };
+      res.send(result);
+    }
+  }
+  catch (error) {
+    console.error("Error fetching candidate data:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while fetching candidate data!",
+    };
+    res.status(500).send(result);
+  }
+});
+
+router.post('/invoiceCandidatetList', async (req, res) => {
+  let recordset; // Declare recordset outside the try block
+
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+//1 and 3 as per status
+let query = ''
+if(req.body.timesheetrole == '2'){
+  query = `
+  SELECT DISTINCT im.clientid, im.orgid, c.ClientName
+  FROM invoice_master im
+  JOIN clients c ON im.clientid = c.clientid
+  WHERE im.orgid = '${req.body.OrgId}';
+`;
+}else{
+  query = `
+  SELECT DISTINCT im.clientid, im.orgid, c.ClientName
+  FROM invoice_master im
+  JOIN clients c ON im.clientid = c.clientid
+  WHERE im.orgid = '${req.body.OrgId}';
     `;
 }
      

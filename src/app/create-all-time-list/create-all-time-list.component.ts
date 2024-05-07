@@ -578,6 +578,7 @@ export class CreateAllTimeListComponent implements OnInit {
             (x: any) => {
               this.handleSuccess(x);
               this.loading = false;
+              this.router.navigate(['/alltimelist']);              
             },
             (error: any) => {
               this.handleError(error);
@@ -585,9 +586,9 @@ export class CreateAllTimeListComponent implements OnInit {
             }
           );
         }
-      }
-    
+      }    
     });
+    
   }
 
 

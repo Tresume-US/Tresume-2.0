@@ -108,6 +108,7 @@ import { CreateStatementsComponent } from './all-invoice/create-statements/creat
 import { MultipleInvoicesComponent } from './all-invoice/multiple-invoices/multiple-invoices.component';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
+import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
@@ -144,12 +145,12 @@ const routes: Routes = [
   { path: 'searchtresume/reviewtresume/general', component: GeneralComponent, canActivate: [AuthGuard]   },
   { path: 'Myjobs/createnewjob', component:  CreateNewJobsComponent, canActivate: [AuthGuard]   },
   { path: 'viewdetails', component: ViewDetailsComponent, canActivate: [AuthGuard]   },
-  { path: 'allclient/:authType',component: AllclientComponent, canActivate: [AuthGuard]  },
+  { path: 'allclient/:routeType',component: AllclientComponent, canActivate: [AuthGuard]  },
   { path: 'viewclient/:authType',component: ViewclientComponent, canActivate: [AuthGuard]  },
   { path: 'organizationinfo' , component:OrganinfoComponent, canActivate: [AuthGuard]  },
   { path: 'searchtresume' , component:SearchTresumeComponent, canActivate: [AuthGuard]  },
   { path: 'financialinfo' , component:FinancialInfoComponent, canActivate: [AuthGuard]  },
-  { path: 'addclient/:authType',component: AddclientComponent, canActivate: [AuthGuard]  },
+  { path: 'addclient/:routeType', component: AddclientComponent, canActivate: [AuthGuard] },
   // { path: 'viewclient',component: ViewclientComponent, canActivate: [AuthGuard]  },
   { path: 'jobpostings',component:AllJobPostingsComponent, canActivate: [AuthGuard]  },
   { path: 'jobapplication',component:JobApplicationComponent, canActivate: [AuthGuard]  },
@@ -230,6 +231,7 @@ const routes: Routes = [
   { path: 'create-statements', component: CreateStatementsComponent },
   { path: 'multiple-invoices', component: MultipleInvoicesComponent },
   { path: 'corpdocument', component: CorporateDocumentComponent },
+  { path: 'clientdetails/:ClientID', component: ClientViewDetailsComponent },
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  

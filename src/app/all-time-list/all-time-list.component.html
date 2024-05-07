@@ -1,338 +1,521 @@
 <div class="header p-4">
-    <div class="container-fluid">
-        <div class="row main pt-3 pl-3 pr-3">
-            <h2 class="col-md-6">ALL TIME SHEET</h2>
-            <div class="col-md-6 text-end">
-                <div class="row justify-content-end">
-                    <div class="col-auto">
-                      <button class="btn" [routerLink]="['/createalltimelist']">Create</button>
-                    </div>
-                    <!-- Mariya code start  -->
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal" *ngIf="timesheetrole === '1'">Add Candidate</button>
-                    </div>
-                    <!-- Mariya code end -->
-                  </div>
-            </div>
-        </div>
-        <div class="container" style="padding: 0 0.5rem;">
-    
-            <div class="container mt-3">
-                <ul class="nav nav-tabs" style="justify-content: space-around; position: relative;">
-                    <li class="nav-item" style="position: relative;">
-                        <a class="nav-link active" id="pending-tab" data-toggle="tab" href="#pending">
-                            Pending
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected">
-                            Rejected
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="completed-tab" data-toggle="tab" href="#completed">
-                            Completed
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="non-billable-tab" data-toggle="tab" href="#non-billable">
-                            Non-Billable
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <!-- Pending Tab Content -->
-                    <div id="pending" class="tab-pane fade show active">
-            
-                      <div class="container">
-                        <div class="list-group">
-                          <div  class="list-group-item list-group-item-warning mb-3">
-                            <div class="row">
-                              <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i class="fa fa-sort"></i></div>
-                              <!-- <div class="col">Project Name</div> -->
-                              <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
-                              <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
-                              <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
-                              <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
-                              <div class="col">Comments</div>
-                              <div class="col">Details</div>
-                              <div class="col">Action</div>
-                            </div>
-                          </div>
-                          <div *ngFor="let row of PendingData" class="list-group-item list-group-item-action mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                            <div class="row">
-                              <div class="col" style="min-width: 200px;">
-                                <span class="badge" style="margin-bottom: 5px;"
-                                  [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{ row.Candidate.charAt(0) }}</span>
-                                {{ row.Candidate }} <br>
-                                <span style="border-radius: 5px;padding: 2px;" [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname }}</span>
-                              </div>
-                              <!-- <div class="col">{{ row.projectname }}</div> -->
-                              <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
-                              <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
-                              <div class="col">{{ row.totalhrs }} hrs</div>
-                              <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
-                              <div class="col">
-                            
-                                <i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" 
-                                data-toggle="tooltip" 
-                                data-placement="top" 
-                                title="{{ row.comments }}" 
-                                style="white-space: normal;"></i>
-                             
-                               
-                              
-                              </div>
-                              <div class="col">
-                                <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
-                              </div>
-                              <div class="col">
-                                <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <a *ngIf="PendingData.length === 0" href="#" class="list-group-item list-group-item-action">
-                            <div class="row">
-                              <div class="col text-center">
-                                No results found.
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <!-- Rejected Tab Content -->
-                    <div id="rejected" class="tab-pane fade">
-                     
-                      <div class="list-group">
-                        <div  class="list-group-item list-group-item-danger mb-3">
-                          <div class="row">
-                            <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i class="fa fa-sort"></i></div>
-                            <!-- <div class="col">Project Name</div> -->
-                            <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
-                            <div class="col">Comments</div>
-                            <div class="col">Details</div>
-                            <div class="col">Action</div>
-                          </div>
-                        </div>
-                        <div *ngFor="let row of rejectedData" class="list-group-item list-group-item-action mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                          <div class="row">
-                            <div class="col" style="min-width: 200px;">
-                              <span class="badge" style="margin-bottom: 5px;"
-                                [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{ row.Candidate.charAt(0) }}</span>
-                              {{ row.Candidate }} <br>
-                              <span style="border-radius: 5px;padding: 2px;" [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname }}</span>
-                            </div>
-                            <!-- <div class="col">{{ row.projectname }}</div> -->
-                            <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.totalhrs }} hrs</div>
-                            <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col"><i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" 
-                              data-toggle="tooltip" 
-                              data-placement="top" 
-                              title="{{ row.comments }}" 
-                              style="white-space: normal;"></i>
-                           </div>
-                            <div class="col">
-                              <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
-                            </div>
-                            <div class="col">
-                              <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <a *ngIf="rejectedData.length === 0" href="#" class="list-group-item list-group-item-action">
-                          <div class="row">
-                            <div class="col text-center">
-                              No results found.
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                   
-                    <div id="completed" class="tab-pane fade"> 
-                      <div class="list-group">
-                        <div  class="list-group-item list-group-item-success mb-3">
-                          <div class="row">
-                            <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i class="fa fa-sort"></i></div>
-                            <!-- <div class="col">Project Name</div> -->
-                            <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
-                            <div class="col">Comments</div>
-                            <div class="col">Details</div>
-                            <div class="col">Action</div>
-                          </div>
-                        </div>
-                        <div *ngFor="let row of completedData" class="list-group-item list-group-item-action mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                          <div class="row">
-                            <div class="col" style="min-width: 200px;">
-                              <span class="badge" style="margin-bottom: 5px;"
-                                [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{ row.Candidate.charAt(0) }}</span>
-                              {{ row.Candidate }} <br>
-                              <span style="border-radius: 5px;padding: 2px;" [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname }}</span>
-                            </div>
-                            <!-- <div class="col">{{ row.projectname }}</div> -->
-                            <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.totalhrs }} hrs</div>
-                            <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col"><i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" 
-                              data-toggle="tooltip" 
-                              data-placement="top" 
-                              title="{{ row.comments }}" 
-                              style="white-space: normal;"></i>
-                           </div>
-                            <div class="col">
-                              <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
-                            </div>
-                            <div class="col">
-                              <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <a *ngIf="completedData.length === 0" href="#" class="list-group-item list-group-item-action">
-                          <div class="row">
-                            <div class="col text-center">
-                              No results found.
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <!-- Non-billable Tab Content -->
-                    <div id="non-billable" class="tab-pane fade"> 
-                  
-                      <div class="list-group">
-                        <div  class="list-group-item list-group-item-primary mb-3">
-                          <div class="row">
-                            <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i class="fa fa-sort"></i></div>
-                            <!-- <div class="col">Project Name</div> -->
-                            <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
-                            <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
-                            <div class="col">Comments</div>
-                            <div class="col">Details</div>
-                            <div class="col">Action</div>
-                          </div>
-                        </div>
-                        <div *ngFor="let row of nonBillableData" class="list-group-item list-group-item-action mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                          <div class="row">
-                            <div class="col" style="min-width: 200px;">
-                              <span class="badge" style="margin-bottom: 5px;"
-                                [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{ row.Candidate.charAt(0) }}</span>
-                              {{ row.Candidate }} <br>
-                              <span style="border-radius: 5px;padding: 2px;" [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname }}</span>
-                            </div>
-                            <!-- <div class="col">{{ row.projectname }}</div> -->
-                            <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">{{ row.totalhrs }} hrs</div>
-                            <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
-                            <div class="col">
-                              <i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" 
-                              data-toggle="tooltip" 
-                              data-placement="top" 
-                              title="{{ row.comments }}" 
-                              style="white-space: normal;"></i>
-                           </div>
-                            <div class="col">
-                              <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
-                            </div>
-                            <div class="col">
-                              <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <a *ngIf="nonBillableData.length === 0" href="#" class="list-group-item list-group-item-action">
-                          <div class="row">
-                            <div class="col text-center">
-                              No results found.
-                            </div>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-  
-  <!-- Modal -->
-  <div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content container2">
-        <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLongTitle">Add Candidate</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span class="close" aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body text-center">
-            <form>
-              <div class="form-group row">
-                <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="firstName" placeholder="First Name" [(ngModel)]="firstname" [ngModelOptions]="{standalone: true}">
-                </div>
-              </div>
-          
-              <div class="form-group row">
-                <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" [(ngModel)]="lastname" [ngModelOptions]="{standalone: true}">
-                </div>
-              </div>
-          
-              <div class="form-group row">
-                <label for="email" class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
-                  <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="candidateEmail" [ngModelOptions]="{standalone: true}">
-                </div>
-              </div>
-          
-              <div class="form-group row">
-                <label for="currentLocation" class="col-sm-3 col-form-label">Current Location</label>
-                <div class="col-sm-9">
-                  <select class="form-control" name="Location" [(ngModel)]="currentLocation" [ngModelOptions]="{standalone: true}">
-                    <option value="">Select</option>
-                    <option *ngFor="let location of Locations?.result || []" [value]="location.state">{{ location.state }}</option>
-                  </select>
-                </div>
-              </div>
-          
-              <div class="form-group row">
-                <label for="phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
-                <div class="col-sm-9">
-                  <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" [(ngModel)]="phonenumber" [ngModelOptions]="{standalone: true}">
-                </div>
-              </div>
-            </form>
+  <div class="container-fluid">
+    <div class="row main pt-3 pl-3 pr-3">
+      <h2 class="col-md-6">ALL TIME SHEET</h2>
+      <div class="col-md-6 text-end">
+        <div class="row justify-content-end">
+          <div class="col-auto">
+            <button class="btn" [routerLink]="['/createalltimelist']">Create</button>
           </div>
-        <!-- Closing modal-body div -->
-        <div class="modal-footer">
-          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn" data-dismiss="modal" (click)="CandidateSave()">Save</button>
+          <!-- Mariya code start  -->
+          <div class="col-auto">
+            <button type="button" class="btn btn-wdth text-white" data-toggle="modal" data-target=".bd-example-modal"
+              *ngIf="timesheetrole === '1'">Add Candidate</button>
+          </div>
+          <!-- Mariya code end -->
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding: 0 0.5rem;">
+
+      <div class="container mt-3">
+        <ul class="nav nav-tabs" style="justify-content: space-around; position: relative;">
+          <li class="nav-item" style="position: relative;">
+            <a class="nav-link active" id="pending-tab" data-toggle="tab" href="#pending">
+              Pending
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="completed-tab" data-toggle="tab" href="#completed">
+              Approved
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected">
+              Rejected
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" id="non-billable-tab" data-toggle="tab" href="#non-billable">
+              Non-Billable
+            </a>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" id="billable-tab" data-toggle="tab" href="#billable">
+              Billable
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" id="tsreminder-tab" data-toggle="tab" href="#tsreminder">
+              Timesheet Reminder
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <!-- Pending Tab Content -->
+          <div id="pending" class="tab-pane fade show active">
+            <!-- Clickable Toggle for Showing Filters -->
+            <div class="list-group m-2">
+              <div class="list-group-item shadow-style">
+                <span class="filter-elements" (click)="toggleFilters()">Advanced Filter</span>
+              </div>
+            </div>
+            
+
+            <!-- Conditionally Displayed Dropdowns -->
+            <div *ngIf="showFilters" class=" m-2">
+              <mat-form-field>
+                <mat-label>Candidate</mat-label>
+                <mat-select [(value)]="selectedCandidate">
+                  <mat-option *ngFor="let candidate of candidates" [value]="candidate.TraineeID">
+                    {{ candidate.FirstName }} {{ candidate.LastName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+
+              <mat-form-field>
+                <mat-label>Client</mat-label>
+                <mat-select [(value)]="selectedClient">
+                  <mat-option *ngFor="let client of clients" [value]="client.value">{{ client.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Project</mat-label>
+                <mat-select [(value)]="selectedProject">
+                  <mat-option *ngFor="let project of projects" [value]="project.value">{{ project.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select [(value)]="selectedType">
+                  <mat-option *ngFor="let type of types" [value]="type.value">{{ type.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+            <div class="container">
+              <div class="list-group">
+                <div class="list-group-item list-group-item-warning mb-3">
+                  <div class="row">
+                    <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
+                        class="fa fa-sort"></i></div>
+                    <!-- <div class="col">Project Name</div> -->
+                    <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                    <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
+                    <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                    <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
+                    <div class="col">Comments</div>
+                    <div class="col">Details</div>
+                    <div class="col">Action</div>
+                  </div>
+                </div>
+                <div *ngFor="let row of PendingData" class="list-group-item list-group-item-action mb-3"
+                  style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                  <div class="row">
+                    <div class="col" style="min-width: 200px;">
+                      <span class="badge" style="margin-bottom: 5px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{
+                        row.Candidate.charAt(0) }}</span>
+                      {{ row.Candidate }} <br>
+                      <span style="border-radius: 5px;padding: 2px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname
+                        }}</span>
+                    </div>
+                    <!-- <div class="col">{{ row.projectname }}</div> -->
+                    <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
+                    <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
+                    <div class="col">{{ row.totalhrs }} hrs</div>
+                    <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
+                    <div class="col">
+
+                      <i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" data-toggle="tooltip"
+                        data-placement="top" title="{{ row.comments }}" style="white-space: normal;"></i>
+
+
+
+                    </div>
+                    <div class="col">
+                      <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                    </div>
+                    <div class="col">
+                      <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                    </div>
+                  </div>
+                </div>
+                <a *ngIf="PendingData.length === 0" href="#" class="list-group-item list-group-item-action">
+                  <div class="row">
+                    <div class="col text-center">
+                      No results found.
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+          <!-- Rejected Tab Content -->
+          <div id="rejected" class="tab-pane fade">
+
+            <div class="list-group">
+              <div class="list-group-item list-group-item-danger mb-3">
+                <div class="row">
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
+                      class="fa fa-sort"></i></div>
+                  <!-- <div class="col">Project Name</div> -->
+                  <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
+                  <div class="col">Comments</div>
+                  <div class="col">Details</div>
+                  <div class="col">Action</div>
+                </div>
+              </div>
+              <div *ngFor="let row of rejectedData" class="list-group-item list-group-item-action mb-3"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                  <div class="col" style="min-width: 200px;">
+                    <span class="badge" style="margin-bottom: 5px;"
+                      [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{
+                      row.Candidate.charAt(0) }}</span>
+                    {{ row.Candidate }} <br>
+                    <span style="border-radius: 5px;padding: 2px;"
+                      [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname
+                      }}</span>
+                  </div>
+                  <!-- <div class="col">{{ row.projectname }}</div> -->
+                  <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.totalhrs }} hrs</div>
+                  <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col"><i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" data-toggle="tooltip"
+                      data-placement="top" title="{{ row.comments }}" style="white-space: normal;"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                  </div>
+                </div>
+              </div>
+              <a *ngIf="rejectedData.length === 0" href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col text-center">
+                    No results found.
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div id="completed" class="tab-pane fade">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-success mb-3">
+                <div class="row">
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
+                      class="fa fa-sort"></i></div>
+                  <!-- <div class="col">Project Name</div> -->
+                  <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
+                  <div class="col">Comments</div>
+                  <div class="col">Details</div>
+                  <div class="col">Action</div>
+                </div>
+              </div>
+              <div *ngFor="let row of completedData" class="list-group-item list-group-item-action mb-3"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                  <div class="col" style="min-width: 200px;">
+                    <span class="badge" style="margin-bottom: 5px;"
+                      [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{
+                      row.Candidate.charAt(0) }}</span>
+                    {{ row.Candidate }} <br>
+                    <span style="border-radius: 5px;padding: 2px;"
+                      [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname
+                      }}</span>
+                  </div>
+                  <!-- <div class="col">{{ row.projectname }}</div> -->
+                  <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.totalhrs }} hrs</div>
+                  <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col"><i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" data-toggle="tooltip"
+                      data-placement="top" title="{{ row.comments }}" style="white-space: normal;"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                  </div>
+                </div>
+              </div>
+              <a *ngIf="completedData.length === 0" href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col text-center">
+                    No results found.
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Non-billable Tab Content -->
+          <div id="non-billable" class="tab-pane fade">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-primary mb-3">
+                <div class="row">
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 300px;">Candidate <i
+                      class="fa fa-sort"></i></div>
+                  <!-- <div class="col">Project Name</div> -->
+                  <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
+                  <div class="col">Comments</div>
+                  <div class="col">Details</div>
+                  <div class="col">Action</div>
+                </div>
+              </div>
+              <div *ngFor="let row of nonBillableData" class="list-group-item list-group-item-action mb-3"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                  <div class="col" style="min-width: 300px;">
+                    <div style="display: inline-block;">
+                      <span class="badge" style="margin-bottom: 5px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{
+                        row.Candidate.charAt(0) }}</span>
+                      {{ row.Candidate }}
+                      <span style="border-radius: 5px;padding: 2px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname
+                        }}</span>
+                    </div><br>
+                    <span class="status-bg" style="border-radius: 5px;padding: 3px;margin-left: 4px;"
+                      [ngStyle]="{ 'color': getStatusColor(row.status) }">
+                      <ng-container *ngIf="row.status === 1; else elseBlock">
+                        <span>Pending</span>
+                      </ng-container>
+                      <ng-template #elseBlock>
+                        <ng-container *ngIf="row.status === 2; else elseBlock2">
+                          <span>Rejected</span>
+                        </ng-container>
+                        <ng-template #elseBlock2>
+                          <span>Completed</span>
+                        </ng-template>
+                      </ng-template>
+                    </span>
+                  </div>
+                  <!-- <div class="col">{{ row.projectname }}</div> -->
+                  <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.totalhrs }} hrs</div>
+                  <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">
+                    <i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" data-toggle="tooltip" data-placement="top"
+                      title="{{ row.comments }}" style="white-space: normal;"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                  </div>
+                </div>
+              </div>
+              <a *ngIf="nonBillableData.length === 0" href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col text-center">
+                    No results found.
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div id="billable" class="tab-pane fade">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-primary mb-3">
+                <div class="row">
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 300px;">Candidate <i
+                      class="fa fa-sort"></i></div>
+                  <!-- <div class="col">Project Name</div> -->
+                  <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
+                  <div class="col">Comments</div>
+                  <div class="col">Details</div>
+                  <div class="col">Action</div>
+                </div>
+              </div>
+              <div *ngFor="let row of BillableData" class="list-group-item list-group-item-action mb-3"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                  <div class="col" style="min-width: 300px;">
+                    <div style="display: inline-block;">
+                      <span class="badge" style="margin-bottom: 5px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.Candidate.charAt(0)) }">{{
+                        row.Candidate.charAt(0) }}</span>
+                      {{ row.Candidate }}
+                      <span style="border-radius: 5px;padding: 2px;"
+                        [ngStyle]="{ 'background-color': getBadgeColor(row.projectname .charAt(0)) }">{{ row.projectname
+                        }}</span>
+                    </div><br>
+                    <span class="status-bg" style="border-radius: 5px;padding: 3px;margin-left: 4px;"
+                      [ngStyle]="{ 'color': getStatusColor(row.status) }">
+                      <ng-container *ngIf="row.status === 1; else elseBlock">
+                        <span>Pending</span>
+                      </ng-container>
+                      <ng-template #elseBlock>
+                        <ng-container *ngIf="row.status === 2; else elseBlock2">
+                          <span>Rejected</span>
+                        </ng-container>
+                        <ng-template #elseBlock2>
+                          <span>Completed</span>
+                        </ng-template>
+                      </ng-template>
+                    </span>
+                  </div>
+                  <!-- <div class="col">{{ row.projectname }}</div> -->
+                  <div class="col">{{ row.fromdate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.todate | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">{{ row.totalhrs }} hrs</div>
+                  <div class="col">{{ row.created_at | date : "MM/dd/y" : "UTC" }}</div>
+                  <div class="col">
+                    <i class="fa fa-info-circle fa-fw fa-lg ml-4 text-center" data-toggle="tooltip" data-placement="top"
+                      title="{{ row.comments }}" style="white-space: normal;"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-eye fa-fw fa-lg ml-4 text-center" [routerLink]="['/viewtimesheet',row.id]"></i>
+                  </div>
+                  <div class="col">
+                    <i class="fa fa-trash fa-fw fa-lg ml-4 text-center" (click)="deleteItem(row.id)"></i>
+                  </div>
+                </div>
+              </div>
+              <a *ngIf="BillableData.length === 0" href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col text-center">
+                    No results found.
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- Timesheet Reminder Tab Content -->
+          <div id="tsreminder" class="tab-pane fade">
+            <!-- reminder.component.html -->
+            <div class="reminder-container">
+              <button class="btn reminder-button">Send Reminder Email</button>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">Filter
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item">This Month</a>
+                  <a class="dropdown-item">Last Month</a>
+                  <a class="dropdown-item">Last 3 Months</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="list-group">
+              <div class="list-group-item list-group-item-dark mb-3">
+                <div class="row">
+                  <div class="col-9">Candidate Name</div>
+
+                  <div class="col-3">Weeks to fill</div>
+                </div>
+              </div>
+
+              <!-- <a *ngIf="BillableData.length === 0" href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col text-center">
+                    No results found.
+                  </div>
+                </div>
+              </a> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content container2">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle">Add Candidate</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="close" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <form>
+          <div class="form-group row">
+            <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="firstName" placeholder="First Name" [(ngModel)]="firstname"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="lastName" placeholder="Last Name" [(ngModel)]="lastname"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="candidateEmail"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="currentLocation" class="col-sm-3 col-form-label">Current Location</label>
+            <div class="col-sm-9">
+              <select class="form-control" name="Location" [(ngModel)]="currentLocation"
+                [ngModelOptions]="{standalone: true}">
+                <option value="">Select</option>
+                <option *ngFor="let location of Locations?.result || []" [value]="location.state">{{ location.state }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="phoneNumber" class="col-sm-3 col-form-label">Phone Number</label>
+            <div class="col-sm-9">
+              <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number"
+                [(ngModel)]="phonenumber" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Closing modal-body div -->
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn" data-dismiss="modal" (click)="CandidateSave()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-
-
-
-
-
-

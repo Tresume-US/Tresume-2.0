@@ -57,6 +57,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.7",
     "npm": "^6.9.0",
+    "pdfjs-dist": "^4.1.392",
     "primeicons": "^5.0.0",
     "primeng": "^13.4.1",
     "quill": "^1.3.7",

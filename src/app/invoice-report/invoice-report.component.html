@@ -1,50 +1,56 @@
 <div class="container-fluid pt-3 pl-5 pr-5 pb-5">
 
 
-    <div class="row">
-      <div class="col-md-6">
-        <h2 style="margin-top: 10px;">Invoice Report </h2>
-      </div>
-      <div class="col-md-6 float-right">
-        <div class="icon-p" style="display: flex; justify-content: flex-end; align-items: center;">
-          <span style="font-size: 34px; margin-right: 20px;" class="fas fa-print" (click)="toggleExportOptions()"></span>
-          <div *ngIf="showExportOptions" class="export-options">
-            <p (click)="exportAsPDF()">Export as PDF</p>
-            <p (click)="exportAsExcel()">Export as Excel</p>
-          </div>
-  
-        </div>
-      </div>
-  
+  <div class="row">
+    <div class="col-md-6">
+      <h2 style="margin-top: 10px;">Invoice Report </h2>
     </div>
-    <div class="row ml-1">
-      <div class="col-md-2">
-        <select class="form-control" [(ngModel)]="selection">
-          <option *ngFor="let option of options">{{ option }}</option>
-        </select>
-      </div>
-      <div *ngIf="isCustomizeSelected()" class="row">
-        <div class="col">
-          <input type="text" class="form-control" id="fromDate" placeholder="From Date" [(ngModel)]="fromDate"
-            bsDatepicker>
+    <div class="col-md-6 float-right">
+      <div class="icon-p" style="display: flex; justify-content: flex-end; align-items: center;">
+        <span style="font-size: 34px; margin-right: 20px;" class="fas fa-print" (click)="toggleExportOptions()"></span>
+        <div *ngIf="showExportOptions" class="export-options">
+          <p (click)="exportAsPDF()">Export as PDF</p>
+          <p (click)="exportAsExcel()">Export as Excel</p>
         </div>
-        <span class="mt-2 text-lg">to</span>
-        <div class="col">
-          <input type="text" class="form-control" id="toDate" placeholder="To Date" [(ngModel)]="toDate" bsDatepicker>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btncolor run" (click)="runReport()">Run Report</button>
+
       </div>
     </div>
-  
-    <div class="container-fluid mt-3">
-      <div class="scroll-container">
-        <div class="table-responsive" id="export-content">
-  
-          <table class="table table-bordered table-hover" id="keywords">
-            <thead>
-              <!-- <tr>
+
+  </div>
+  <div class="row ml-1">
+    <div class="col-md-2">
+      <select class="form-control" [(ngModel)]="candidateid">
+        <option value="0">Select the Client</option>
+        <option *ngFor="let candidatelistnames of candidatelistname" value="{{candidatelistnames.clientid }}" [value]="candidatelistnames.clientid">{{ candidatelistnames.ClientName }}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" [(ngModel)]="selection">
+        <option *ngFor="let option of options">{{ option }}</option>
+      </select>
+    </div>
+    <div *ngIf="isCustomizeSelected()" class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="fromDate" placeholder="From Date" [(ngModel)]="fromDate"
+          bsDatepicker>
+      </div>
+      <span class="mt-2 text-lg">to</span>
+      <div class="col">
+        <input type="text" class="form-control" id="toDate" placeholder="To Date" [(ngModel)]="toDate" bsDatepicker>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btncolor run" (click)="runReport()">Run Report</button>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-3">
+    <div class="scroll-container">
+      <div class="table-responsive" id="export-content">
+
+        <table class="table table-bordered table-hover" id="keywords">
+          <thead>
+            <!-- <tr>
                 <th colspan="7">
                   <div class="top-row">
                     <div class="top-row-content d-flex justify-content-between">
@@ -81,72 +87,78 @@
                   </div>
                 </th>
               </tr> -->
-              <tr class="text-center">
-                <th colspan="9" class="text-center">
-                  <div class="header col-md-4 mx-auto mt-3">
-                    <span>{{ title }}</span>
-                    <h3>{{ subTitle }}</h3>
-                  </div>
-                </th>
-              </tr>
-              <tr class="thead-light">
-                <th><span>Date</span></th>
-                <th><span>Transcation Type</span></th>
-                <th><span>Num</span></th>
-                <th><span>Client Name</span></th>
-                <th><span>Location Name</span></th>
-                <th><span>Memo</span></th>
-                <th><span>Due Date</span></th>
-                <th><span>Amount</span></th>
-                <th><span>Open Balance</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row of">
-                <!-- <tr *ngFor="let row of tableData"> -->
-                <td>{{ row.TraineeName }}<i class="fas fa-filter" style="vertical-align: middle;"></i></td>
+            <tr class="text-center">
+              <th colspan="9" class="text-center">
+                <div class="header col-md-4 mx-auto mt-3">
+                  <span>{{ title }}</span><br>
+                  <h3>{{ subTitle }}</h3>
+                </div>
+              </th>
+            </tr>
+            <tr class="thead-light">
+              <th><span>Num</span></th>
+              <th><span>Client Name</span></th>
+              <th><span>Date</span></th>
+              <th><span>Transcation Type</span></th>
+              <th><span>Location Name</span></th>
+              <th><span>Memo</span></th>
+              <th><span>Due Date</span></th>
+              <th><span>Amount</span></th>
+              <th><span>Open Balance</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of InvoiceReport">
+              <td>{{ row.invoiceNo }}</td>
+              <td>{{ row.ClientName }}</td>
+              <td>{{ row.created_at | date : "MM/dd/y"}}</td>
+              <td>{{ row.TransactionType === 1 ? 'Cash' : 'Online' }}</td>
+              <td>{{ row.location }}</td>
+              <td>{{ row.statement }}</td>
+              <td>{{ row.duedate | date : "MM/dd/y"}}</td>
+              <td>{{ row.total }}</td>
+              <td>{{ calculateOpenBalance(row.total, row.receivedamt) }}</td>
+            </tr>
+            <tr *ngIf="InvoiceReport.length === 0">
+              <td colspan="9" class="text-center">
+                No results found.
+              </td>
+            </tr>
+            <!-- <tr *ngFor="let row of"> -->
+            <!-- <tr *ngFor="let row of tableData"> -->
+            <!-- <td>{{ row.TraineeName }}<i class="fas fa-filter" style="vertical-align: middle;"></i></td>
                 <td>{{ row.fromdate | date : "MM/dd/y"}}</td>
                 <td>{{ row.todate| date : "MM/dd/y" }}</td>
                 <td>{{ row.comments }}</td>
                 <td>{{ row.totalhrs }}</td>
                 <td>{{ row.totalhrs }}</td>
                 <td>{{ row.isBillable ? "Yes" : "No" }}</td>
-              </tr>
-              <!-- <tr>
+              </tr> -->
+            <!-- <tr>
                 <td>Total for Bala Rohit Reddy Gurivireddy</td>
                 <td colspan="6"></td>
               </tr> -->
-              <tr>
-                <td colspan="9" class="text-center">
-                  No results found.
-                </td>
-                <!-- <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td> -->
-                <!-- <td>{{ getTotalDuration() }}</td> -->
-              </tr>
-  
-            </tbody>
-  
-          </table>
-          <br>
-          <!-- <div class="container justify-content-center">Tuesday, January 30, 2024 02:39 AM GMT+05:30</div> -->
-        </div>
-        
+
+
+          </tbody>
+
+        </table>
+        <br>
+       
       </div>
-      <div *ngIf="showNotes" class="notes-container col-md-12">
-        <i class="fas fa-times float-right" (click)="closeNotes()"></i>
-        <textarea class="mt-2" [(ngModel)]="notes"
-          placeholder="Add notes or include additional info with your report"></textarea>
-        <div class="notes-actions">
-          <div>4000 characters max</div>
-        </div>
-      </div>
-      <span class="btn btncolor run" (click)="toggleNotes($event)">Add notes</span>
+
     </div>
+    <div *ngIf="showNotes" class="notes-container col-md-12">
+      <i class="fas fa-times float-right" (click)="closeNotes()"></i>
+      <textarea class="mt-2" [(ngModel)]="notes"
+        placeholder="Add notes or include additional info with your report"></textarea>
+      <div class="notes-actions">
+        <div>4000 characters max</div>
+      </div>
+    </div>
+    <span class="btn btncolor run mt-5 float-right" (click)="toggleNotes($event)">Add notes</span>
   </div>
+</div>
+
+<p-toast position="bottom-right"></p-toast>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

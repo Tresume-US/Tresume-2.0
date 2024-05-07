@@ -487,7 +487,41 @@ router.post("/getCancelledInvoices", async (req, res) => {
   } catch (error) {
     console.error("Error occurred: ", error);
     res.status(500).send("An error occurred while processing your request.");
-  }
+  }});
+
+router.post("/getInvoiceReport", async (req, res) => {
+    try {
+        await sql.connect(config);
+        
+        let query = `
+        SELECT 
+        C.ClientName,
+        IM.*
+    FROM 
+        invoice_Master AS IM
+    JOIN 
+        clients AS C ON IM.ClientID = C.ClientID
+    WHERE 
+        IM.orgid = '${req.body.OrgID}' AND IM.status IN (1, 2, 3)`;
+
+        if (req.body.startdate && req.body.enddate) {
+            query += ` AND IM.fromdate BETWEEN '${req.body.startdate}' AND '${req.body.enddate}'`;
+        }
+
+        console.log(query);
+
+        const result = await sql.query(query);
+        
+        res.send({
+            flag: 1,
+            result: result.recordset
+        });
+    } catch (error) {
+        console.error("Error occurred: ", error);
+        res.status(500).send("An error occurred while processing your request.");
+    } finally {
+        sql.close();
+    }
 });
 
 module.exports = router;

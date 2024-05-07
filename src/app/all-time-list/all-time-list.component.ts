@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { TimesheetListService } from './all-time-list.service';
 import { MessageService } from 'primeng/api';
@@ -14,6 +14,7 @@ export class AllTimeListComponent implements OnChanges {
   rejectedData: any [] = [];
   completedData: any[] = [];
   nonBillableData: any [] = [];
+ BillableData: any [] = [];
   showConfirmationDialog: boolean = false;
   router: any;
   OrgID:string = '';
@@ -54,7 +55,9 @@ export class AllTimeListComponent implements OnChanges {
     this.fetchRejectedData();
     this.fetchCompletedData();
     this.fetchNonBillableData();
+    this.fetchBillableData();
     this.gethrmsLocation();
+    this.getCandidateName();
     // this.getTimesheetRole();
   }
 
@@ -247,7 +250,7 @@ export class AllTimeListComponent implements OnChanges {
     let Req = {
       traineeID: this.TraineeID,
       timesheetrole:this.timesheetrole,
-      id: this.id,
+      // id: this.id,
       username:this.username,
       admin:this.TraineeID
     };
@@ -299,6 +302,18 @@ export class AllTimeListComponent implements OnChanges {
     // this.loading = false;
   }
 
+  fetchBillableData(){
+    let Req = {
+      traineeID: this.TraineeID,
+      timesheetrole:this.timesheetrole,
+      username:this.username,
+      admin:this.TraineeID
+    };
+    this.service.getBillableTimesheetResult(Req).subscribe((x: any) => {
+      this.BillableData = x.result;
+    });
+    // this.loading = false;
+  }
   CandidateSave() {
     let req = {
       userName: this.cookieService.get('userName1'), // Assuming userName is stored in the cookie
@@ -383,7 +398,7 @@ export class AllTimeListComponent implements OnChanges {
       'V': 'violet',
       'W': 'wheat',
       'X': 'mediumseagreen',
-      'Y': 'lightyellow',
+      'Y': 'green',
       'Z': 'lightyellow', 
     };
     
@@ -394,8 +409,54 @@ export class AllTimeListComponent implements OnChanges {
     return color ? color : defaultColor;
   }
   
-  
-  
-  
-  
+  getStatusColor(status: number): string {
+    switch (status) {
+        case 1:
+            return '#FFBF00'; 
+        case 2:
+            return 'red'; 
+        default:
+            return 'green'; 
+    }
+}
+
+
+getCandidateName() {
+  let Req = {
+    username: this.username,
+    traineeid:this.TraineeID
+  };
+
+  this.service.getTimesheetCandidatetList(Req).subscribe((x: any) => {
+    this.candidates = x.result;
+  });
+}
+
+showFilters = false;
+
+// Dummy data for the dropdowns
+candidates: any[] = [];
+clients = [
+  { value: 'client1', viewValue: 'Client 1' },
+  { value: 'client2', viewValue: 'Client 2' }
+];
+projects = [
+  { value: 'project1', viewValue: 'Project 1' },
+  { value: 'project2', viewValue: 'Project 2' }
+];
+types = [
+  { value: 'type1', viewValue: 'Type 1' },
+  { value: 'type2', viewValue: 'Type 2' }
+];
+
+// Selected values
+selectedCandidate: string;
+selectedClient: string;
+selectedProject: string;
+selectedType: string;
+
+// Toggle visibility function
+toggleFilters() {
+  this.showFilters = !this.showFilters;
+}
 }
