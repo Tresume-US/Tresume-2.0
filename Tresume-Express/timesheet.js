@@ -1459,11 +1459,13 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
     };
 
     if (id) {
-      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = '${filename}', created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() WHERE id = @id`;
+      query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = '${filename}', created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() OUTPUT inserted.id WHERE id = @id`;
 
       inputParams['id'] = sql.Int;
     } else {
-      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, '${filename}', GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
+      query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) OUTPUT inserted.id VALUES (@traineeid,@projectid, @totalhrs, @details, '${filename}', GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
+
+      inputParams['id'] = sql.Int;
     }
     console.log(query)
     const request = pool.request();
@@ -1476,12 +1478,82 @@ router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
 
     const result = await request.query(query);
 
-    res.status(200).json({ message: id ? 'Timesheet Updated successfully' : 'Timesheet Created successfully', filename });
+    const createdTimesheetId = result.recordset[0].id; // Assuming your ID column is named 'id'
+
+    res.status(200).json({ id: createdTimesheetId, message: id ? 'Timesheet Updated successfully' : 'Timesheet Created successfully', filename });
   } catch (error) {
     console.error('Error creating/updating timesheet:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+// router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
+//   try {
+//     const { id, traineeid, totalhrs, comments, projectid, details, approvalstatus, statusreport, clientapproved, approvedby, processdate, admincomment, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by } = req.body;
+//     let filename = '';
+
+//     // const isBillableBool = isBillable === '1' ? true : false;
+
+//     if (req.file) {
+//       filename = req.file.filename;
+//     }
+
+//     const pool = await sql.connect(config);
+
+//     let query;
+//     let inputParams = {
+//       'traineeid': sql.Int,
+//       'projectid': sql.Int,
+//       'totalhrs': sql.Float,
+//       'details': sql.Text,
+//       'clientapproved': sql.VarChar(sql.MAX),
+//       'created_at': sql.DateTime,
+//       'status': sql.Int,
+//       'fromdate': sql.DateTime,
+//       'todate': sql.DateTime,
+//       'isBillable': sql.Int,
+//       'payterm': sql.VarChar(20),
+//       'service': sql.VarChar(20),
+//       'location': sql.VarChar(50),
+//       'billableamt': sql.VarChar(50),
+//       'day1': sql.VarChar(10),
+//       'day2': sql.VarChar(10),
+//       'day3': sql.VarChar(10),
+//       'day4': sql.VarChar(10),
+//       'day5': sql.VarChar(10),
+//       'day6': sql.VarChar(10),
+//       'day7': sql.VarChar(10),
+//       'totalamt': sql.Float,
+//       'admin': sql.Int,
+//       'orgid': sql.Int,
+//       'create_by': sql.VarChar(50)
+//     };
+
+//     if (id) {
+//       query = `UPDATE [dbo].[timesheet_Master] SET traineeid = @traineeid, projectid= @projectid, totalhrs = @totalhrs, details = @details, clientapproved = '${filename}', created_at =GETDATE(), status = @status, fromdate = @fromdate, todate = @todate, isBillable = @isBillable, payterm = @payterm, service = @service, location = @location, billableamt = @billableamt, day1 = @day1, day2 = @day2, day3 = @day3, day4 = @day4, day5 = @day5, day6 = @day6, day7 = @day7, totalamt = @totalamt, admin = @admin, orgid = @orgid, lastUpdated_by = @create_by,lastUpdated_at = GETDATE() WHERE id = @id`;
+
+//       inputParams['id'] = sql.Int;
+//     } else {
+//       query = `INSERT INTO [dbo].[timesheet_Master] (traineeid,projectid,totalhrs, details, clientapproved, created_at, status, fromdate, todate, isBillable, payterm, service, location, billableamt, day1, day2, day3, day4, day5, day6, day7, totalamt, admin, orgid, create_by,lastUpdated_by,lastUpdated_at) VALUES (@traineeid,@projectid, @totalhrs, @details, '${filename}', GETDATE(), @status, @fromdate, @todate, @isBillable, @payterm, @service, @location, @billableamt, @day1, @day2, @day3, @day4, @day5, @day6, @day7, @totalamt, @admin, @orgid, @create_by,@create_by,GETDATE())`;
+//     }
+//     console.log(query)
+//     const request = pool.request();
+
+//     for (const paramName in inputParams) {
+//       // if (req.body.hasOwnProperty(paramName)) {
+//       request.input(paramName, inputParams[paramName], req.body[paramName]);
+//       // }
+//     }
+
+//     const result = await request.query(query);
+
+//     res.status(200).json({ message: id ? 'Timesheet Updated successfully' : 'Timesheet Created successfully', filename });
+//   } catch (error) {
+//     console.error('Error creating/updating timesheet:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 
 // router.post('/createTimesheet', upload.single('file1'), async (req, res) => {
@@ -1858,3 +1930,216 @@ router.post('/autofillDetails', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 });
+
+router.post('/sendEmail', async (req, res) => {
+  const { tableData, projectName, weekStartDate, weekEndDate , timesheet_role,CandidateNumber,TotalHours,Project,candidateName, timesheetId} = req.body;
+
+  const approveLink = `http://localhost:4200/update-timesheet/:${timesheetId}/2`;
+
+  // Check if tableData is defined
+  if (!tableData) {
+    return res.status(400).send('Table data is missing in the request.');
+  }
+
+  // Nodemailer configuration
+
+  const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.mail.yahoo.com",
+    auth: {
+      user: "support@tresume.us",
+      pass: "xzkmvglehwxeqrpd",
+    },
+    secure: true,
+  });
+  var tableHtml = '';
+
+  if (timesheet_role == 3) {
+    var tableHtml = `
+    <p>Candidate id: ${CandidateNumber}</p>
+    <p>Week Start Date: ${weekStartDate}</p>
+    <p>Week End Date: ${weekEndDate}</p>
+    <br>
+    <table border="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+    <thead style="background-color: #e5d6f3;">
+      <tr>
+        <th style="padding: 8px; border: 1px solid #ddd;">Candidate Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Project Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Mon</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Tue</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Wed</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Thu</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Fri</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Sat</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Sun</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Total Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+    `;
+  
+    tableData.forEach((row, index) => {
+      const backgroundColor = index % 2 === 0 ? '#ffffff' : '#f2f2f2'; 
+      tableHtml += `
+        <tr style="background-color: ${backgroundColor};">
+          <td style="padding: 8px; border: 1px solid #ddd;">${candidateName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${projectName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.mon}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.tues}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.wed}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.thu}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.fri}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.sat}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.sun}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${TotalHours}</td>
+        </tr>
+      `;
+    });
+  
+    tableHtml += `
+    </tbody>
+  </table>
+  <br>
+  <a href=${approveLink} target="_blank" style="color:green;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Approve</b></a>
+  <a href="https://www.tresume.us" target="_blank" style="color:red;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Reject</b></a>
+  `;
+  
+  } else if (timesheet_role == 2) {
+    var tableHtml = `
+    <h3><i> Updated the timesheet data.<i> </h3>
+    <br>
+    <p>Candidate Name: ${candidateName}</p>
+    <p>Project Name: ${projectName}</p>
+    <p>Week Start Date: ${weekStartDate}</p>
+    <p>Week End Date: ${weekEndDate}</p>
+    <br>
+    <table border="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+    <thead style="background-color: #e5d6f3;">
+      <tr>
+        <th style="padding: 8px; border: 1px solid #ddd;">Candidate ID</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Project Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Mon</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Tue</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Wed</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Thu</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Fri</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Sat</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Sun</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Total Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+    `;
+  
+    tableData.forEach((row, index) => {
+      const backgroundColor = index % 2 === 0 ? '#ffffff' : '#f2f2f2';
+      tableHtml += `
+        <tr style="background-color: ${backgroundColor};">
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.id}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${projectName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.mon}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.tues}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.wed}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.thu}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.fri}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.sat}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.sun}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${row.totalHours}</td>
+        </tr>
+      `;
+    });
+  
+    tableHtml += `
+      </tbody>
+    </table> `;
+  }
+  
+  const mailOptions = {
+    from: 'support@tresume.us',
+    to: 'venkat@tresume.us',
+    subject: 'Table Data',
+    html: tableHtml
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    let data = {
+      flag:1,
+      Message:'Email sent successfully'
+    }
+    res.send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to send email');
+  }
+});
+
+router.get('/update-timesheet/:timesheetid', async (req, res) => {
+  try {
+      const pool = await sql.connect(config);
+      const request = pool.request();
+      
+      const timesheetId = 445;
+      const status = '2';
+
+      const query = `UPDATE timesheet_Master SET status = ${status} WHERE id = ${timesheetId}`;
+
+      const result = await request.query(query);
+
+      setTimeout(() => {
+          res.send('Successfully Approved');
+      }, 5000);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).send('Error updating timesheet status');
+  }
+});
+
+// router.get('/update-timesheet/:timesheetid', (req, res) => {
+//   const timesheetId = 445;
+//   const status = '2'; 
+
+//   db.query('UPDATE timesheet_master SET status = ? WHERE id = ?', [status, timesheetId], (err, result) => {
+//       if (err) {
+//           console.error(err);
+//           return res.status(500).send('Error updating timesheet status');
+//       }
+
+//       // Assuming the query executed successfully
+//       setTimeout(() => {
+//           res.send('Successfully Approved');
+//       }, 5000); 
+//   });
+// });
+
+
+// const approveLink = `http://www.tresume.us/update-timesheet/:timesheetid/2`;
+
+// router.get('/approve', (req, res) => {
+//   const { projectId, approvalAction } = req.query;
+//   res.send(`Project ${projectId} ${approvalAction}d successfully.`);
+// });
+
+// router.get('/update-timesheet/:timesheetid/:status', (req, res) => {
+//   const timesheetId = req.params.timesheetid;
+//   const status = req.params.status;
+
+//   // Your database query to update the timesheet status
+//   db.query('UPDATE timesheet_master SET status = ? WHERE id = ?', [status, timesheetId], (err, result) => {
+//       if (err) {
+//           console.error(err);
+//           return res.status(500).send('Error updating timesheet status');
+//       }
+
+//       // Assuming the query executed successfully
+//       setTimeout(() => {
+//           res.send('Successfully Approved');
+//       }, 5000); 
+//   });
+// });
+
+// http://www.tresume.us/update-timesheet/:timesheetid/:status
+
+// 2 reject 
+// 3 accepted
