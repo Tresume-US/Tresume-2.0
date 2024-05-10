@@ -52,6 +52,14 @@ export class CandidateService {
         return this.http.post<ResponseDetails>(this.endpoint + 'updateJobDuties', request);
     }
 
+    updatesupervised(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updatesupervised', request);
+    }
+
+    updateworktype(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateworktype', request);
+    }
+
     getPlacementDetails(placementID: number) {
         return this.http.post<ResponseDetails>(this.endpoint + 'getPlacementDetails', { placementID: placementID });
     }
