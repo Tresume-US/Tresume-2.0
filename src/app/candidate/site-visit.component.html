@@ -26,8 +26,12 @@
                     <dd class="col-sm-8">{{details.Title}}</dd>
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-4">Start Date</dt>
+                    <dt class="col-sm-4">Start Date with client</dt>
                     <dd class="col-sm-8">{{details.StartDate | date }}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-4">Client Name</dt>
+                    <dd class="col-sm-8">{{details.Name}}</dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-4">Client address</dt>
@@ -37,6 +41,21 @@
                     <dt class="col-sm-4">Client Supervisor</dt>
                     <dd class="col-sm-8">{{details.ClientSupervisor}}</dd>
                 </dl>
+                <dl class="row">
+                    <dt class="col-sm-4">Work Type</dt>
+                    <dd class="col-sm-8" *ngIf="!isEditing">{{ details.worktype }}
+                      <button type="button" class="btn btn-link btn__edit" (click)="toggleEditS()">
+                        <i class="fa fa-pencil-alt"></i> Edit
+                      </button>
+                    </dd>
+                    <!-- Display the input field when in editing mode -->
+                    <dd class="col-sm-8" *ngIf="isEditing">
+                      <input type="text" [(ngModel)]="editedWorkType" class="form-control" style="margin-bottom: 10px;">
+                      <button type="button" class="btn btn-primary" (click)="saveChangesedwork()" style="margin-right: 5px;">Save</button>
+                      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+                    </dd>
+                </dl>
+                
                 <dl class="row">
                     <dt class="col-sm-4">Vendor Details</dt>
                     <dd class="col-sm-8">{{details.VendorName}}</dd>
@@ -57,7 +76,11 @@
 
                 </dl>
                 <dl class="row">
-                    <dt class="col-sm-4">Salary/Hr</dt>
+                    <dt class="col-sm-4">LCA Rate</dt>
+                    <dd class="col-sm-8">${{details.LCARate}}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-4">Salary</dt>
                     <dd class="col-sm-8">${{details.Salary}}</dd>
                 </dl>
                 <dl class="row">
@@ -70,7 +93,7 @@
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-4">Start date of employee with Company</dt>
-                    <dd class="col-sm-8">{{details.EmploymentStartDate | date}}</dd>
+                    <dd class="col-sm-8">{{details.CreateTime | date}}</dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-4">Residential address</dt>
@@ -78,11 +101,21 @@
                 </dl>
                 <dl class="row">
                     <dt class="col-sm-4">How is the employee supervised?</dt>
-                    <dd class="col-sm-8">We conduct annual performance evaluations, monthly meetings over phone and
-                        review status reports</dd>
-                </dl>
+                    <dd *ngIf="!isEditing" class="col-sm-8">{{details.supervised}}
+                      <button type="button" class="btn btn-link btn__edit" (click)="toggleEdit()">
+                        <i class="fa fa-pencil-alt"></i> Edit
+                      </button>
+                    </dd>
+                    <dd *ngIf="isEditing" class="col-sm-8">
+                      <form [formGroup]="supervisionForm" (ngSubmit)="saveChanges()">
+                        <textarea formControlName="supervisionText" class="form-control" style="margin-bottom: 10px;"></textarea>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      </form>
+                    </dd>
+                  </dl>
+                  
                 <dl class="row">
-                    <dt class="col-sm-4">Education</dt>
+                    <dt class="col-sm-4">Educational Degree</dt>
                     <dd class="col-sm-8">{{eduDetails.Title}},
                         {{eduDetails.Org}},
                         {{eduDetails.Location}}</dd>
@@ -110,4 +143,36 @@
         </div>
     </div>
 </div>
+<button type="button" (click)="toggleTable()" class="btn btn-default">Check Placement for the candidate</button>
+
+<div *ngIf="showTable" class="table-responsive mt-8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Work Start Date</th>
+          <th>Work End Date</th>
+          <th>Position Title</th>
+          <th>Marketer</th>
+          <th>End Client Name</th>
+          <th>Vendor</th>
+          <th>End Client Address</th>
+          <th>Created at</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let placement of placementList">
+          <td>{{ placement.POStartDate }}</td>
+          <td>{{ placement.POEndDate }}</td>
+          <td>{{ placement.PositionTitle }}</td>
+          <td>{{ placement.MarketerFirstName }}</td>
+          <td>{{ placement.ClientName }}</td>
+          <td>{{ placement.VendorName }}</td>
+          <td>{{ placement.ClientAddress }}</td>
+          <td>{{ placement.CreatedTime | date:'MM/dd/yy hh:mm a' }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+  
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
