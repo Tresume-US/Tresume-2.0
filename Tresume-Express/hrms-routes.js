@@ -226,7 +226,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             FROM Trainee T
             INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
-            LEFT JOIN Trainee CreatedBy ON T.createby = CreatedBy.username
+            LEFT JOIN Memberdetails CreatedBy ON T.createby = CreatedBy.useremail
             INNER JOIN Organization O ON T.userorganizationid = O.organizationid
             WHERE M.useremail = '${useremail}' AND T.active = 1 AND ${generateSearchCondition(searchterm)}
             ORDER BY T.CreateTime DESC
@@ -236,7 +236,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             SELECT T.TraineeID, CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.CSName AS CandidateStatus, T.CreateTime AS DateCreated, T.followupon, T.notes, O.organizationname
             FROM Trainee T
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
-            LEFT JOIN Trainee CreatedBy ON T.CreateBy = CreatedBy.UserName
+            LEFT JOIN Memberdetails CreatedBy ON T.CreateBy = CreatedBy.Useremail
             LEFT JOIN organization O ON T.userorganizationid = O.organizationid
             WHERE T.RecruiterName = '${traineeid}' AND ${generateSearchCondition(searchterm)}
             ORDER BY T.CreateTime DESC

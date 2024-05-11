@@ -11,6 +11,7 @@ const environment = process.env.NODE_ENV || "prod";
 const envconfig = require(`./config.${environment}.js`);
 const apiUrl = envconfig.apiUrl;
 router.use(bodyparser.json());
+const fs = require('fs');
 
 const config = {
   user: "sa",
@@ -199,7 +200,8 @@ router.post('/getJobPostData', async (req, res) => {
             legalstatus,
             clients,
             admins,
-            recruiters
+            recruiters,
+            jobbaordaccount
         ] = await Promise.all([
             pool.query('SELECT ISNULL(MAX(JobId), 0) + 1 AS NextJobId FROM Job;'),
             pool.query('select distinct state from usazipcodenew order by state asc;'),
@@ -212,7 +214,8 @@ router.post('/getJobPostData', async (req, res) => {
             pool.query('select LegalText as name,LegalValue as value from legalstatus where active = 1;'),
             pool.query(`select ClientID, ClientName from clients where PrimaryOwner = ${req.body.TraineeID}`),
             pool.query(`SELECT T.TraineeID, T.FirstName, T.LastName, T.Active FROM Trainee T JOIN memberdetails M ON T.Username = M.useremail WHERE M.isAdmin = 1 AND T.Active = 1 AND M.Active = 1 AND M.PrimaryOrgID = ${req.body.OrgID}`),
-            pool.query(`SELECT T.TraineeID, T.FirstName, T.LastName, T.Active FROM Trainee T JOIN memberdetails M ON T.Username = M.useremail WHERE M.isAdmin != 1 AND T.Active = 1 AND M.Active = 1 AND M.PrimaryOrgID = ${req.body.OrgID}`)
+            pool.query(`SELECT T.TraineeID, T.FirstName, T.LastName, T.Active FROM Trainee T JOIN memberdetails M ON T.Username = M.useremail WHERE M.isAdmin != 1 AND T.Active = 1 AND M.Active = 1 AND M.PrimaryOrgID = ${req.body.OrgID}`),
+            pool.query(`select * from JobBoardAccount where active = 1 AND RecruiterID = ${req.body.TraineeID}`)
         ]);
 
         const responseData = {
@@ -227,7 +230,8 @@ router.post('/getJobPostData', async (req, res) => {
             legalstatus:legalstatus.recordset,
             clients: clients.recordset,
             admins: admins.recordset,
-            recruiters: recruiters.recordset
+            recruiters: recruiters.recordset,
+            jobbaordaccount:jobbaordaccount.recordset
         };
 
         res.json(responseData);
@@ -274,6 +278,66 @@ router.post('/PostJob', async (req, res) => {
 
     // Execute the query
     await request.query(query);
+
+    if(req.body.DicePostjob == 1){
+      
+        const taxterm = reqBody.JobTypeID === 1 ? 'FULLTIME' :
+        reqBody.JobTypeID === 2 ? 'CON_W2' :
+        reqBody.JobTypeID === 3 ? 'PARTTIME' : '';
+
+        const reqBody = {
+        positionid: req.body.JobCode,
+        diceid: 'yourdiceid',
+        taxterm: taxterm,
+        allowrecruiterapplies: 'Y',
+        country: 'US',
+        state: req.body.State,
+        postalcode: req.body.ZipCode,
+        location: req.body.Address,
+        areacode: req.body.AreaCode,
+        company: req.body.Company,
+        companystate: req.body.State,
+        companyzip: req.body.ZipCode,
+        addr1: req.body.Address,
+        payrate: req.body.PayRate,
+        jobtitle: req.body.JobTitle,
+        skillsreq: req.body.Skills,
+        comments: req.body.JobDescription,
+        applylink:'https://tresume.us/applyjob/'+req.body.JobCode
+        };
+
+        const batchContent = generateBatchFile(reqBody);
+
+        fs.writeFile('batchFile.txt', batchContent, (err) => {
+        if (err) {
+        console.error('Error writing batch file:', err);
+        return;
+        }
+
+        console.log('Batch file created successfully');
+
+        const mailOptions = {
+        from: 'support@tresume.us',
+        to: 'wilson@dmsol.in',
+        subject: 'Batch Posting Request',
+        text: 'Please find attached the batch file for job posting',
+        attachments: [
+        {
+        filename: 'batchFile.txt',
+        path: './batchFile.txt'
+        }
+        ]
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+        console.error('Error sending email:', error);
+        } else {
+        console.log('Email sent:', info.response);
+        }
+        });
+        });
+    }
 
     // Send success response
     res.status(200).json({ success: true, message: 'Job inserted successfully.' });
@@ -415,6 +479,81 @@ router.post('/TBassignee', async (req, res) => {
     return res.send(result);
   }
 });
+
+router.post('/DiceJobPost', async (req, res) => {
+
+  const taxterm = reqBody.JobTypeID === 1 ? 'FULLTIME' :
+                 reqBody.JobTypeID === 2 ? 'CON_W2' :
+                 reqBody.JobTypeID === 3 ? 'PARTTIME' : '';
+
+    const reqBody = {
+    positionid: req.body.JobCode,
+    diceid: 'yourdiceid',
+    taxterm: taxterm,
+    allowrecruiterapplies: 'Y',
+    country: 'US',
+    state: req.body.State,
+    postalcode: req.body.ZipCode,
+    location: req.body.Address,
+    areacode: req.body.AreaCode,
+    company: req.body.Company,
+    companystate: req.body.State,
+    companyzip: req.body.ZipCode,
+    addr1: req.body.Address,
+    payrate: req.body.PayRate,
+    jobtitle: req.body.JobTitle,
+    skillsreq: req.body.Skills,
+    comments: req.body.JobDescription,
+    applylink:'https://tresume.us/applyjob/'+req.body.JobCode
+  };
+  
+  // Generate the batch file content
+  const batchContent = generateBatchFile(reqBody);
+  
+  // Write the batch content to a text file
+  fs.writeFile('batchFile.txt', batchContent, (err) => {
+    if (err) {
+      console.error('Error writing batch file:', err);
+      return;
+    }
+    
+    console.log('Batch file created successfully');
+  
+    // Send email with the batch file attached
+    const mailOptions = {
+      from: 'support@tresume.us',
+      to: 'wilson@dmsol.in',
+      subject: 'Batch Posting Request',
+      text: 'Please find attached the batch file for job posting',
+      attachments: [
+        {
+          filename: 'batchFile.txt',
+          path: './batchFile.txt'
+        }
+      ]
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+  });
+})
+
+function generateBatchFile(reqBody) {
+  let batchContent = `<!doctype batch totalreplace>\n<doc>\n`;
+
+  Object.keys(reqBody).forEach(key => {
+    batchContent += `<${key}>${reqBody[key]}</${key}>\n`;
+  });
+
+  batchContent += `</doc>\n`;
+
+  return batchContent;
+}
 
 
 

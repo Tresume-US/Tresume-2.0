@@ -120,6 +120,8 @@ export class CreateNewJobsComponent{
   salesmanager:string='';
   Legalstatus: any;
   username: any;
+  jobbaordaccount: any = [];
+  selectedJobboardaccount: any[]=[];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -217,6 +219,7 @@ getCity() {
       this.statusOptions = x.legalstatus;
       this.RecruiterStatusOptionsons = x.recruiters;
       this.admins = x.admins;
+      this.jobbaordaccount = x.jobbaordaccount
       console.log(x)
     }),(error: any) => {
       // Error callback
@@ -288,6 +291,7 @@ getCity() {
           LastUpdateBy: this.username,
           MinYearsOfExpInMonths: this.selectedExperience * 12,
           JobStatus: this.selectedJobStatus.Value,
+          jobboardaccount:this.selectedJobboardaccount
       };
   
       console.log(Req);
@@ -309,6 +313,21 @@ getCity() {
       this.loading = false;
   }
   
+  }
+
+  JobboardSelection(data:any){
+    
+
+    if(data.Active){
+      this.selectedJobboardaccount.push(data)
+    }else{
+      const index = this.selectedJobboardaccount.indexOf(data);
+      if (index !== -1) {
+        this.selectedJobboardaccount.splice(index, 1);
+      }
+    }
+    console.log(this.selectedJobboardaccount);
+
   }
 
   }

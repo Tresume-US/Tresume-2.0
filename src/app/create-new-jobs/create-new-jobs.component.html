@@ -438,19 +438,23 @@
                     <p-editor [style]="{'height':'320px', 'width':'100%'}"
                       placeholder="Enter the email content to be sent" [(ngModel)]="JobDescription" [ngModelOptions]="{ standalone: true }"></p-editor>
                   </div>
-                  <!-- <div class="col">
+                  <div class="col" *ngIf="jobbaordaccount.length >= 1">
                     <div class="col post-job-boards">
 
                       <h4>Post on job Boards</h4>
-                      <div *ngFor="let checkbox of checkboxes; let i = index">
-                        <label>
-                          <input type="checkbox" (change)="updateArray(i)" [checked]="checkbox.checked"> {{
-                          checkbox.label
+                      <div *ngFor="let data of jobbaordaccount; let i = index">
+                        <!-- <label>
+                          <input type="checkbox" (change)="JobboardSelection(data)" [(ngModel)]="data.Active"> {{
+                          data.AccountName
                           }}
-                        </label><br>
+                        </label> -->
+                        <mat-checkbox [(ngModel)]="data.Active" (ngModelChange)="JobboardSelection(data)" [ngModelOptions]="{standalone: true}">
+                          {{data.AccountName}}
+                        </mat-checkbox>
+                        <br>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
 
                   
                 </div>
