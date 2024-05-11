@@ -46,7 +46,17 @@ export class CreateAllTimeListService {
   }
   deleteTimesheet(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deleteTimesheet', request);
+}  
+sendEmail(request: any): Observable<ResponseDetails> {
+  return this.http.post<ResponseDetails>(this.endpoint + 'sendEmail', request);
 }
+  // 'update-timesheet/:timesheetid/:status'(request: any): Observable<ResponseDetails> {
+  //   return this.http.post<ResponseDetails>(this.endpoint + 'update-timesheet/:timesheetid/:status', request);
+  // }
+  updateTimesheetStatus(timesheetId: string): Observable<any> {
+    const status = '2'; 
+    return this.http.get<any>(`${this.endpoint}update-timesheet/${timesheetId}/${status}`);
+  }
 }
 export interface ResponseDetails {
   flag?: any;

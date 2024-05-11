@@ -42,7 +42,7 @@ router.post("/getPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1 AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -113,7 +113,7 @@ router.post("/getunPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0 AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -147,7 +147,7 @@ router.post("/getAllInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "'";
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -416,6 +416,78 @@ router.post('/checkExistInvoiceNo', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+router.post("/CancelInvoice", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const query = "UPDATE invoice_Master SET status = 0 WHERE id = '" + req.body.Id + "'";
+
+
+
+    // request.input('Id', sql.Int, req.body.Id);
+
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were deleted.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error Deleteing Timesheet:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while Deleting Timesheet!",
+    };
+    res.status(500).send(response);
+  }
+});
+
+
+
+
+router.post("/getCancelledInvoices", async (req, res) => {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      var request = new sql.Request();
+
+      var query =
+        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = @OrgID AND im.status=0";
+
+
+        request.input('OrgID', sql.VarChar, req.body.OrgID);
+
+      console.log(query);
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }});
 
 router.post("/getInvoiceReport", async (req, res) => {
     try {

@@ -1036,6 +1036,72 @@ app.post("/updateJobDuties", function (req, res) {
   }
 });
 
+app.post("/updatesupervised", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "UPDATE Placements SET EmployeeSupervised='" +
+            req.body.supervised +
+            "' WHERE TraineeID=" +
+            req.body.traineeID,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
+});
+
+app.post("/updateworktype", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+        
+        var request = new sql.Request();
+        request.query(
+          "UPDATE Placements SET Worktype='" +
+            req.body.worktype +
+            "' WHERE TraineeID=" +
+            req.body.traineeID,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
+});
+
 app.get("/getEducationDetails/:traineeID", function (req, res) {
   try {
     sql.connect(config, function (err) {

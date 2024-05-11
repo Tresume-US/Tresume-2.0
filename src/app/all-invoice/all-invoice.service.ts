@@ -24,7 +24,13 @@ export class AllInvoiceService {
 updateReceivedPayment(request: any): Observable<ResponseDetails> {
   return this.http.post<ResponseDetails>(this.endpoint + 'updateReceivedPayment', request);
 }
+CancelInvoice(request: any): Observable<ResponseDetails> {
+  return this.http.post<ResponseDetails>(this.endpoint + 'CancelInvoice', request);
+}
 
+getCancelledInvoices(request: any): Observable<ResponseDetails> {
+  return this.http.post<ResponseDetails>(this.endpoint + 'getCancelledInvoices', request);
+}
 }
 export interface ResponseDetails {
   flag?: any;

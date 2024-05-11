@@ -28,6 +28,11 @@
                 Unpaid Invoices
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="cancelledinvoices-tab" data-toggle="tab" href="#cancelledinvoices">
+                  Cancelled Invoices
+              </a>
+          </li>
           </ul>
 
           <div class="tab-content">
@@ -386,10 +391,10 @@
                   <thead>
                       <tr class="text-center">
                         <td><input type="checkbox" (change)="selectAll($event.target.checked)"></td>
-                          <th>Invoice ID</th>
+                          <!-- <th>Invoice ID</th> -->
+                          <th>Invoice No</th>
                           <th>Date</th>
                           <th>Type</th>
-                          <th>Invoice No</th>
                           <th>Client/Project</th>
                           <th>Memo</th>
                           <th>Total Amount</th>
@@ -402,10 +407,10 @@
                   <tbody>
                     <tr *ngFor="let invoice of filteredInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
                       <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
-                      <td>{{ invoice.id}}</td>
+                      <!-- <td>{{ invoice.id}}</td> -->
+                      <td>{{ invoice.invoiceNo }}</td>
                       <td>{{ invoice.date | date: "MM/dd/y" : "UTC" }}</td>
                       <td>Invoice</td>
-                      <td>{{ invoice.invoiceNo }}</td>
                       <td>{{ invoice.clientname }}</td>
                       <td>{{ invoice.memo }}</td>
                       <td>{{ invoice.total}}</td>
@@ -417,7 +422,8 @@
                         'overdue': isOverdue(invoice.date)
                       }">{{ invoice.ispaid ? 'Paid' : 'Unpaid' }}</td>
                       <td>
-                        <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
+                        <!-- <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button> -->
+                        <i class="fa fa-trash" (click)="cancelInvoice(invoice.id)"></i>
                       </td>
                     </tr>
 
@@ -476,10 +482,10 @@
                   <tr>
                     <!-- Header cells -->
                     <td><input type="checkbox" (change)="selectAll1($event.target.checked)"></td>
-                    <th>Invoice ID</th>
+                    <!-- <th>Invoice ID</th> -->
+                    <th>Invoice No</th>
                     <th>Date</th>
                     <th>Type</th>
-                    <th>Invoice No</th>
                     <th>Client/Project</th>
                     <th>Memo</th>
                     <th>Total Amount</th>
@@ -492,10 +498,10 @@
                 <tbody>
                     <tr *ngFor="let invoice of filteredPaidInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
                         <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
-                        <td>{{ invoice.id}}</td>
+                        <!-- <td>{{ invoice.id}}</td> -->
+                        <td>{{ invoice.invoiceNo }}</td>
                         <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
                         <td>Invoice</td>
-                        <td>{{ invoice.invoiceNo }}</td>
                         <td>{{ invoice.clientname }}</td>
                         <td>{{ invoice.memo }}</td>
                         <td>{{ invoice.total}}</td>
@@ -546,6 +552,65 @@
               </table>
             </div>
 
+            <div id="cancelledinvoices" class="tab-pane fade">
+              <!-- Dummy content for Cancelled Invoices tab -->
+              <div class="row">
+                  <div class="col mt-4 containers">
+                 
+              </div>
+              <div class="action-icons icons-container float-right mt-3" style="padding: 10px;">
+                  <i class="material-icons" onclick="handlePrint()">print</i>
+                  <i class="fas fa-upload" onclick="handleFileUpload()"></i>
+                  <!-- Add more actions if needed -->
+              </div>
+              <!-- Table or other content for Cancelled Invoices tab -->
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td>
+                    <!-- <th>Invoice ID</th> -->                   
+                    <th>Invoice No</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Client/Project</th>
+                    <th>Memo</th>
+                    <th>Total Amount</th>
+                    <th>Received Amount</th>
+                    <th>Balance Amount</th>
+                    <!-- <th>Status</th> -->
+                    <!-- <th>Action</th> -->
+                  </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let invoice of CancelledInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
+                        <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
+                        <!-- <td>{{ invoice.id}}</td> -->
+                        <td>{{ invoice.invoiceNo }}</td>
+                        <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+                        <td>Invoice</td>
+                        <td>{{ invoice.clientname }}</td>
+                        <td>{{ invoice.memo }}</td>
+                        <td>{{ invoice.total}}</td>
+                        <td>{{ invoice.receivedamt }}</td>
+                        <td>{{ invoice.total - invoice.receivedamt }}</td>
+                        <!-- <td>
+                          <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
+                        </td> -->
+                        <tr *ngIf="filteredUnpaidInvoices.length === 0">
+                          <td colspan="12" class="text-center" style="font-size: 16px;">
+                            No results found.
+                          </td>
+                        </tr>
+
+                </tbody>
+
+              </table>
+              <div style="text-align: center; font-style: italic; margin-top: 20px;">
+                <p style="    margin-left: 17rem;">These invoices will be retained for 2 weeks; after that, it will be deleted automatically.</p>
+            </div>
+          </div>
+        </div>
 
             <div id="unpaidinvoices" class="tab-pane fade">
               <div class="row">

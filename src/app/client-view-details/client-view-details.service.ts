@@ -14,7 +14,6 @@ export class ClientViewDetailService {
         return this.http.post<ResponseDetails>(this.endpoint + 'getClientDetailsList', request);
     }
 
-  
 
 }
 export interface ResponseDetails {
