@@ -22,12 +22,12 @@
           <tr  *ngFor="let row of rowdata; let i = index">
             <th>Candidate ID</th>
             <th>Project ID</th>
-            <th>MON {{ getFormattedDate(row.fromdate)  | date : "dd/MM"}}</th>
-            <th>TUE {{ getFormattedDate(getNextDay(row.fromdate, 1))  | date : "dd/MM" }}</th>
-            <th>WED {{ getFormattedDate(getNextDay(row.fromdate, 2))  | date : "dd/MM" }}</th>
-            <th>THU {{ getFormattedDate(getNextDay(row.fromdate, 3))  | date : "dd/MM" }}</th>
-            <th>FRI {{ getFormattedDate(getNextDay(row.fromdate, 4))  | date : "dd/MM" }}</th>
-            <th>SAT {{ getFormattedDate(getNextDay(row.fromdate, 5))  | date : "dd/MM" }}</th>
+            <th>MON {{ getFormattedDate(row.fromdate)}}</th>
+            <th>TUE {{ getFormattedDate(getNextDay(row.fromdate, 1)) }}</th>
+            <th>WED {{ getFormattedDate(getNextDay(row.fromdate, 2)) }}</th>
+            <th>THU {{ getFormattedDate(getNextDay(row.fromdate, 3)) }}</th>
+            <th>FRI {{ getFormattedDate(getNextDay(row.fromdate, 4)) }}</th>
+            <th>SAT {{ getFormattedDate(getNextDay(row.fromdate, 5)) }}</th>
             <th>SUN {{row.todate | date : "MM/dd"}}</th>
             <th>Total Hours</th>
             <th>Description</th>
