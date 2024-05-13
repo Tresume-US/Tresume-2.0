@@ -35,35 +35,35 @@
               Rejected
             </a>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" id="non-billable-tab" data-toggle="tab" href="#non-billable">
               Non-Billable
             </a>
-          </li> -->
-          <!-- <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="billable-tab" data-toggle="tab" href="#billable">
               Billable
             </a>
-          </li> -->
-          <li class="nav-item">
+          </li>
+          <!-- <li class="nav-item">
             <a class="nav-link" id="tsreminder-tab" data-toggle="tab" href="#tsreminder">
               Timesheet Reminder
             </a>
-          </li>
+          </li> -->
         </ul>
         <div class="tab-content">
           <!-- Pending Tab Content -->
           <div id="pending" class="tab-pane fade show active">
             <!-- Clickable Toggle for Showing Filters -->
-            <div class="list-group m-2">
+            <!-- <div class="list-group m-2">
               <div class="list-group-item shadow-style">
                 <span class="filter-elements" (click)="toggleFilters()">Advanced Filter</span>
               </div>
-            </div>
+            </div> -->
             
 
             <!-- Conditionally Displayed Dropdowns -->
-            <div *ngIf="showFilters" class=" m-2">
+            <!-- <div *ngIf="showFilters" class=" m-2">
               <mat-form-field>
                 <mat-label>Candidate</mat-label>
                 <mat-select [(value)]="selectedCandidate">
@@ -95,7 +95,7 @@
                   <mat-option *ngFor="let type of types" [value]="type.value">{{ type.viewValue }}</mat-option>
                 </mat-select>
               </mat-form-field>
-            </div>
+            </div> -->
 
 
             <div class="container">
