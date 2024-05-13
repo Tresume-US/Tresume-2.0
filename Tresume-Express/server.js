@@ -5265,6 +5265,62 @@ app.post("/getDiceAuthToken", async (req, res) => {
   }
 });
 
+app.post("/JobboardUsageReport", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Database connection error");
+      }
+      
+      var request = new sql.Request();
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const orgID = req.body.OrgID;
+
+        const sqlQuery = `
+            SELECT
+                CONCAT(T.Firstname, ' ', T.LastName) as Name,
+                T.Traineeid,
+                OD.DivisionName,
+                T.UserName,
+                COALESCE(T.monster, 0) AS monster,
+                (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= '${startDate}' AND createtime <= '${endDate}') AS monsterused,
+                COALESCE(T.cb, 0) AS cb,
+                (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 4 AND createtime >= '${startDate}' AND createtime <= '${endDate}') AS cbused,
+                COALESCE(T.dice, 0) AS dice,
+                (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND createtime >= '${startDate}' AND createtime <= '${endDate}') AS diceused
+            FROM
+                Trainee AS T
+            INNER JOIN
+                org_division AS OD ON T.Org_Div = OD.id
+            WHERE
+                OD.Orgid = '${orgID}' AND T.Active = 1
+            ORDER BY
+                OD.DivisionName;`;
+
+      console.log(sqlQuery);
+      request.query(sqlQuery, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Database query error");
+        }
+  
+        var data = recordset.recordsets[0];
+        var result = {
+          flag: 1,
+          result: data,
+        };
+  
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal server error");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

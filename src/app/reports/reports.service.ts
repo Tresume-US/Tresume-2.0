@@ -140,6 +140,14 @@ export class ReportsService {
     return this.http.post<ResponseDetails>(this.endpoint + 'getSubmittedRatio', requestDetails);
   }
 
+  JobboardUsageReport(request: any): Observable<ResponseDetails> {
+    let requestDetails: any = {
+        startDate: request.startDate,
+        endDate: request.endDate,
+        OrgID: request.OrgID
+    };
+    return this.http.post<ResponseDetails>(this.endpoint + 'JobboardUsageReport', requestDetails);
+}
 
 }
 

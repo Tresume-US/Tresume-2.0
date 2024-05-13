@@ -15,6 +15,7 @@ import { ComplianceReportComponent } from './compliance-report.component';
 import { TimesheetReportComponent } from './timesheet-report.component ';
 import { PFAReportComponent } from './pfa-report.component';
 import { DocExpiryReportComponent } from './doc-expiry-report.component';
+import { JobBoardusageReportComponent } from './jobboard-usage-report.component';
 
 const ReportRoutes: Routes = [
     /* {
@@ -39,6 +40,7 @@ const ReportRoutes: Routes = [
     { path: 'reports/compliance', component: ComplianceReportComponent },
     { path: 'reports/pfa', component: PFAReportComponent },
     { path: 'reports/docexpiry', component: DocExpiryReportComponent },
+    { path: 'reports/jobboardusage', component: JobBoardusageReportComponent },
 ];
 
 @NgModule({

@@ -109,6 +109,7 @@ import { MultipleInvoicesComponent } from './all-invoice/multiple-invoices/multi
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
+import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.component';
 
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
@@ -225,7 +226,7 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'tsreport', component: NewTimeSheetReportComponent },
   { path: 'reports/ar-aging-report', component: ArAgingReportComponent },
-
+  { path: 'reports/jobboardusage', component: JobBoardusageReportComponent },
   { path: 'send-invoice', component: SendInvoiceComponent },
   { path: 'time-activity', component: TimeActivityComponent },
   { path: 'create-statements', component: CreateStatementsComponent },
