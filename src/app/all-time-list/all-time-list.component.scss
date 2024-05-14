@@ -105,16 +105,15 @@ tbody{
 }
 
 .nav-item .nav-link:hover {
-  background-color: rgba(241, 241, 241, 0.76); /* Change the alpha value to adjust transparency */
+  background-color: rgba(241, 241, 241, 0.76);
 }
 .tab-content {
-  margin-top: 20px; /* Adjust the value to control the space */
+  margin-top: 20px;
 }
 .nav-link {
-    font-size: 20px; /* Adjust the font size as needed */
+    font-size: 20px;
     color: #333; 
-    color: black;/* Dark color for the text */
-    /* Additional styles like font-weight, text-transform, etc., can be added here */
+    color: black;
 }
 
 .modal {

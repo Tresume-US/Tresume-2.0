@@ -25,15 +25,33 @@ export class ClientViewDetailsComponent implements OnInit {
   constructor( private router: Router, private route: ActivatedRoute, private cookieService: CookieService,private messageService: MessageService, private service: ClientViewDetailService) {
     
     this.TraineeID = this.cookieService.get('TraineeID');
-    // this.OrgID = this.cookieService.get('OrgID');
+    this.OrgID = this.cookieService.get('OrgID');
     this.ClientID = this.route.snapshot.params['ClientID'];
    }
 
   ngOnInit(): void {
     this.ClientViewDetails();
+    this.fetchAllInvoiceList();
   }
-
   
+  allInvoices: any[] = [];
+  fetchAllInvoiceList() {
+    let Req = {
+      OrgID: this.OrgID,
+    };
+    this.service.getAllInvoiceList(Req).subscribe((x: any) => {
+      this.allInvoices = x.result;
+    
+      this.loading = false;
+      this.noResultsFound = this.allInvoices.length === 0;
+    }),
+    (error: any) => {
+      // Error callback
+      console.error('Error occurred:', error);
+      // Handle error here
+      this.loading = false; // Set loading to false on error
+    };
+  }
 
   ClientViewDetails() {
     let Req = {
@@ -54,4 +72,83 @@ export class ClientViewDetailsComponent implements OnInit {
     };
   }
 
+  receivedamt: number;
+  invoiceid: number;
+  showPopup = false;
+
+  
+  openPopup(invoiceId: number) {
+    this.showPopup = true;
+    this.invoiceid = invoiceId;
+  }
+  cancel() {
+    this.showPopup = false; // This hides the popup
+    // Any other cancellation logic can go here
+  }
+
+
+
+  saveAmount() {
+    // console.log('Invoice ID:', this.invoiceid);
+    // console.log('Received payment amount:', this.receivedamt);
+    const req = {
+      id: this.invoiceid,
+      receivedamt: this.receivedamt
+    };
+
+    console.log(req);
+    this.service.updateReceivedPayment(req).subscribe(
+      (response: any) => {
+        this.handleSuccess(response);
+        this.ClientViewDetails();
+        // this.fetchPaidInvoiceList();
+        // this.fetchUnpaidInvoiceList();
+        this.fetchAllInvoiceList();
+      },
+      (error: any) => {
+        this.handleError(error);
+        // this.fetchPaidInvoiceList();
+        // this.fetchUnpaidInvoiceList();
+        this.fetchAllInvoiceList();
+      }
+      
+    );
+    
+    this.showPopup = false;
+  }
+
+  updateReceivedPayment() {
+    let req = {
+      receivedamt: this.receivedamt,
+      invoiceid:this.invoiceid,
+    };
+    console.log(this.receivedamt); 
+
+    console.log(req);
+    this.service.updateReceivedPayment(req).subscribe(
+      (response: any) => {
+        this.handleSuccess(response);
+        this.ClientViewDetails();
+      },
+      (error: any) => {
+        this.handleError(error);
+      }
+    );
+  }
+
+  private handleSuccess(response: any): void {
+    this.messageService.add({ severity: 'success', summary: response.message });
+    console.log(response);
+    this.loading = false;
+  }
+
+  private handleError(error: any): void {
+    let errorMessage = 'An error occurred';
+    if (error.error && error.error.message) {
+      errorMessage = error.error.message;
+    }
+    this.messageService.add({ severity: 'error', summary: errorMessage });
+    console.error('Error occurred:', error);
+    this.loading = false;
+  }
 }
