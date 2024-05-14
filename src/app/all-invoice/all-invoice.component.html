@@ -390,7 +390,7 @@
                 <table class="table ">
                   <thead>
                       <tr class="text-center">
-                        <td><input type="checkbox" (change)="selectAll($event.target.checked)"></td>
+                        <!-- <td><input type="checkbox" (change)="selectAll($event.target.checked)"></td> -->
                           <!-- <th>Invoice ID</th> -->
                           <th>Invoice No</th>
                           <th>Date</th>
@@ -405,18 +405,19 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let invoice of filteredInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
-                      <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
+                    <tr *ngFor="let invoice of filteredInvoices" [class.selected]="invoice.selected">
+                      <!-- <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td> -->
                       <!-- <td>{{ invoice.id}}</td> -->
-                      <td>{{ invoice.invoiceNo }}</td>
-                      <td>{{ invoice.date | date: "MM/dd/y" : "UTC" }}</td>
-                      <td>Invoice</td>
-                      <td>{{ invoice.clientname }}</td>
-                      <td>{{ invoice.memo }}</td>
-                      <td>{{ invoice.total}}</td>
-                      <td>{{ invoice.receivedamt }}</td>
-                      <td>{{ invoice.total - invoice.receivedamt }}</td>
-                      <td [ngClass]="{
+                     
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.date | date: "MM/dd/y" : "UTC" }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">Invoice</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
+                      <td  (click)="selectRow(invoice.clientid)" [ngClass]="{
                         'paid': invoice.ispaid,
                         'unpaid': !invoice.ispaid,
                         'overdue': isOverdue(invoice.date)
@@ -481,7 +482,7 @@
                 <thead>
                   <tr>
                     <!-- Header cells -->
-                    <td><input type="checkbox" (change)="selectAll1($event.target.checked)"></td>
+                    <!-- <td><input type="checkbox" (change)="selectAll1($event.target.checked)"></td> -->
                     <!-- <th>Invoice ID</th> -->
                     <th>Invoice No</th>
                     <th>Date</th>
@@ -496,24 +497,25 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let invoice of filteredPaidInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
-                        <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
+                    <tr *ngFor="let invoice of filteredPaidInvoices" (click)="selectRow(invoice.clientid)" [class.selected]="invoice.selected" >
+                        <!-- <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td> -->
                         <!-- <td>{{ invoice.id}}</td> -->
-                        <td>{{ invoice.invoiceNo }}</td>
-                        <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
-                        <td>Invoice</td>
-                        <td>{{ invoice.clientname }}</td>
-                        <td>{{ invoice.memo }}</td>
-                        <td>{{ invoice.total}}</td>
-                        <td>{{ invoice.receivedamt }}</td>
-                        <td>{{ invoice.total - invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+                        <td (click)="selectRow(invoice.clientid)">Invoice</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
                         <!-- <td [ngClass]="{
                           'paid': invoice.status,
                           'unpaid': !invoice.status,
                           'overdue': isOverdue(invoice.date)
                         }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td>-->
                         <td>
-                          <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
+                          <!-- <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button> -->
+                          <i class="fa fa-trash" (click)="cancelInvoice(invoice.id)"></i>
                         </td>
                       
                     <tr *ngIf="filteredPaidInvoices.length === 0">
@@ -567,7 +569,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td>
+                    <!-- <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td> -->
                     <!-- <th>Invoice ID</th> -->                   
                     <th>Invoice No</th>
                     <th>Date</th>
@@ -583,17 +585,17 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let invoice of CancelledInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
-                        <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
+                    <tr *ngFor="let invoice of CancelledInvoices" [class.selected]="invoice.selected">
+                        <!-- <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td> -->
                         <!-- <td>{{ invoice.id}}</td> -->
-                        <td>{{ invoice.invoiceNo }}</td>
-                        <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
-                        <td>Invoice</td>
-                        <td>{{ invoice.clientname }}</td>
-                        <td>{{ invoice.memo }}</td>
-                        <td>{{ invoice.total}}</td>
-                        <td>{{ invoice.receivedamt }}</td>
-                        <td>{{ invoice.total - invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+                        <td (click)="selectRow(invoice.clientid)">Invoice</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
                         <!-- <td>
                           <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                         </td> -->
@@ -607,7 +609,7 @@
 
               </table>
               <div style="text-align: center; font-style: italic; margin-top: 20px;">
-                <p style="    margin-left: 17rem;">These invoices will be retained for 2 weeks; after that, it will be deleted automatically.</p>
+                <p style="margin-left: 17rem;">These invoices will be retained for 2 weeks; after that, it will be deleted automatically.</p>
             </div>
           </div>
         </div>
@@ -643,24 +645,25 @@
                   </thead>
 
                   <tbody>
-                      <tr *ngFor="let invoice of filteredUnpaidInvoices" (click)="selectRow(invoice)" [class.selected]="invoice.selected">
+                      <tr *ngFor="let invoice of filteredUnpaidInvoices" [class.selected]="invoice.selected">
                           <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
-                          <td>{{ invoice.id}}</td>
-                          <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
-                          <td>Invoice</td>
-                          <td>{{ invoice.invoiceNo }}</td>
-                          <td>{{ invoice.clientname }}</td>
-                          <td>{{ invoice.memo }}</td>
-                          <td>{{ invoice.total}}</td>
-                          <td>{{ invoice.receivedamt }}</td>
-                          <td>{{ invoice.total - invoice.receivedamt }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.id}}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+                          <td (click)="selectRow(invoice.clientid)">Invoice</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
                           <!-- <td [ngClass]="{
                             'paid': invoice.status,
                             'unpaid': !invoice.status,
                             'overdue': isOverdue(invoice.date)
                           }">{{ invoice.status ? 'Paid' : 'Unpaid' }}</td> -->
                           <td>
-                            <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
+                            <!-- <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button> -->
+                            <i class="fa fa-trash" (click)="cancelInvoice(invoice.id)"></i>
                           </td>
                           <tr *ngIf="filteredUnpaidInvoices.length === 0">
                             <td colspan="12" class="text-center" style="font-size: 16px;">

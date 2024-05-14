@@ -42,7 +42,7 @@ router.post("/getPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1 AND im.status=1";
+        "SELECT im.clientid,im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.ispaid = 1 AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -113,7 +113,7 @@ router.post("/getunPaidInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0 AND im.status=1";
+        "SELECT im.clientid,im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid ='" + req.body.OrgID + "' AND im.ispaid = 0 AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
@@ -147,7 +147,7 @@ router.post("/getAllInvoiceList", async (req, res) => {
       var request = new sql.Request();
 
       var query =
-        "SELECT im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.status=1";
+        "SELECT im.duedate,im.clientid,im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.status=1";
 
       console.log(query);
       request.query(query, function (err, recordset) {
