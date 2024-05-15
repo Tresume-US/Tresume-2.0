@@ -2089,6 +2089,40 @@ app.post("/approveFiles", function (req, res) {
   }
 });
 
+
+app.post("/expirydata", function (req, res) {
+  sql.connect(config, function (err) {
+    try {
+      if (err) throw err;
+      
+      var request = new sql.Request();
+      request.query(
+        "SELECT * FROM CandidateDocument_New WHERE TRAINEEID = '" +
+        req.body.traineeId +
+        "'  AND Active = 1",
+        function (err, recordset) {
+          try {
+            if (err) throw err;
+
+            var result = {
+              flag: 1,
+              result: recordset.recordsets[0],
+            };
+
+            res.send(result);
+          } catch (err) {
+            console.log("Error in query execution:", err);
+            res.status(500).send("Internal Server Error");
+          }
+        }
+      );
+    } catch (err) {
+      console.log("Error in database connection:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+});
+
 app.post("/generateonboardSession", function (req, res) {
   try {
     sql.connect(config, function (err) {

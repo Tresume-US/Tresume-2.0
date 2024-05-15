@@ -89,6 +89,7 @@ export class WizardWorkflowComponent implements OnInit {
     orgName: string = '';
     validationReqList = [20, 36, 11, 42, 44];
     fileRoute: string;
+    data: any;
 
     constructor(private route: ActivatedRoute, private service: OnboardingService, private _formBuilder: FormBuilder,
         private appService: AppService, breakpointObserver: BreakpointObserver, private router: Router,
@@ -170,6 +171,15 @@ export class WizardWorkflowComponent implements OnInit {
                     this.model.Input = response[0].UserName;
                 }
             });
+            this.service.expirydata(req)
+                .subscribe({
+                next: (response: any) => {
+                    this.data = response.result;
+                },
+                error: (error: any) => {
+                    console.error('Error fetching expiry data:', error);
+                },
+                });
         });
         let req={
             OrgID:this.OrgID 
@@ -189,9 +199,35 @@ export class WizardWorkflowComponent implements OnInit {
             this.orgName = x.result[0].organizationName;
             this.orgLogo = x.result[0].logo;
             console.log(data);
-
         });
+
+        
+        // this.CurrentOnboarding();
     }
+
+    // CurrentOnboarding(){
+    //     const req: any ={
+    //         traineeId:this.traineeId,
+    //     }
+    //     this.service.expirydata(req).subscribe((x:any)=>{
+    //         this.data = x.result;
+    //     })
+    // }
+    CurrentOnboarding() {
+        let traineeId = this.traineeId;
+
+        let req = { traineeId };
+      
+        this.service.expirydata(req)
+          .subscribe({
+            next: (response: any) => {
+              this.data = response.result;
+            },
+            error: (error: any) => {
+              console.error('Error fetching expiry data:', error);
+            },
+          });
+      }
 
     enableStepper(id: any) {
         let requestItem: any = {
@@ -667,6 +703,7 @@ export class WizardWorkflowComponent implements OnInit {
 
     }
 
+    
     sendEmailonAdhocReq() {
         let requestItem: any = {
             onboardID: this.onboardId,

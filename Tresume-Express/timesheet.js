@@ -1932,16 +1932,13 @@ router.post('/autofillDetails', async (req, res) => {
 });
 
 router.post('/sendEmail', async (req, res) => {
-  const { tableData, projectName, weekStartDate, weekEndDate , timesheet_role,CandidateNumber,TotalHours,Project,candidateName, timesheetId} = req.body;
+  const { tableData, projectName, weekStartDate, weekEndDate , timesheet_role,CandidateNumber,TotalHours,Project,candidateName, timesheetId, timesheetAdmin} = req.body;
 
   const approveLink = `http://localhost:4200/update-timesheet/:${timesheetId}/2`;
 
-  // Check if tableData is defined
   if (!tableData) {
     return res.status(400).send('Table data is missing in the request.');
   }
-
-  // Nodemailer configuration
 
   const transporter = nodemailer.createTransport({
     port: 465,
@@ -2000,10 +1997,9 @@ router.post('/sendEmail', async (req, res) => {
     </tbody>
   </table>
   <br>
-  <a href=${approveLink} target="_blank" style="color:green;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Approve</b></a>
-  <a href="https://www.tresume.us" target="_blank" style="color:red;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Reject</b></a>
   `;
-  
+  // <a href=${approveLink} target="_blank" style="color:green;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Approve</b></a>
+  // <a href="https://www.tresume.us" target="_blank" style="color:red;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Reject</b></a>
   } else if (timesheet_role == 2) {
     var tableHtml = `
     <h3><i> Updated the timesheet data.<i> </h3>
@@ -2056,7 +2052,7 @@ router.post('/sendEmail', async (req, res) => {
   
   const mailOptions = {
     from: 'support@tresume.us',
-    to: 'venkat@tresume.us',
+    to: ' ${timesheetAdmin}',
     subject: 'Table Data',
     html: tableHtml
   };

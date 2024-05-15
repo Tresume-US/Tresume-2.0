@@ -137,6 +137,10 @@ export class OnboardingService {
         return this.http.post<ResponseDetails>(this.endpoint + 'onboardSession' , request);
     }
 
+    expirydata(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'expirydata' , request);
+    }
+
     // getDocumentPath(id: any): Observable<ResponseDetails> {
     //     return this.http.get<ResponseDetails>(this.endpoint + 'getDocPath/' + id);
     // }

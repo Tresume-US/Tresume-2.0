@@ -2175,4 +2175,48 @@ function formatValue(value) {
 }
 // Email Tracker - Venkat ( End )
 
+router.post("/deleteHrmsdata", async (req, res) => {
+  try {
+    const traineeDeleted = await deactivateTrainee(req.body.TraineeID);
+    if (traineeDeleted) {
+      const result = {
+        flag: 1,
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+      };
+      res.send(result);
+    }
+  } catch (error) {
+    console.error("Error deleting trainee:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while deleting the trainee!",
+    };
+    res.status(500).send(result);
+  }
+});
+
+async function deactivateTrainee(TraineeID) {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const queryResult = await request.query(
+      `UPDATE Trainee SET Active = 0 WHERE TraineeID = '${TraineeID}'`
+    );
+
+    if (queryResult.rowsAffected[0] === 0) {
+      throw new Error("No records found!");
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error while deleting trainee:", error);
+    throw error;
+  }
+}
+
+
 module.exports = router;
