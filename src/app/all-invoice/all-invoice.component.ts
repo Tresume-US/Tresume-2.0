@@ -1,6 +1,6 @@
 
 
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AllInvoiceService } from './all-invoice.service';
@@ -28,6 +28,7 @@ CancelledInvoices: any;
   deleteAction() {
     throw new Error('Method not implemented.');
   }
+  routeType: any;
   loading: boolean = false;
   isRowSelected = false;
   isContentVisible = false;
@@ -105,9 +106,16 @@ CancelledInvoices: any;
     });
   }
 
-  selectRow(invoice: any): void {
-    invoice.selected = !invoice.selected;
+  selectRow(clientId: any): void {
+    this.filteredPaidInvoices.forEach(invoice => {
+      // if (invoice.clientid === clientId) {
+      //   invoice.selected = !invoice.selected;
+      // }
+    });
+  
+    this.router.navigate(['/clientdetails', clientId]);
   }
+  
 
   saveAmount() {
     // console.log('Invoice ID:', this.invoiceid);
@@ -275,16 +283,18 @@ CancelledInvoices: any;
   }
 
   constructor(
-    private dialog: MatDialog, private cookieService: CookieService, private messageService: MessageService, private service: AllInvoiceService,
+    private dialog: MatDialog, private cookieService: CookieService, private messageService: MessageService, private service: AllInvoiceService,private router: Router,    private route: ActivatedRoute
 
   ) {
 
     this.OrgID = this.cookieService.get('OrgID');
     this.TraineeID = this.cookieService.get('TraineeID');
+    this.routeType = this.route.snapshot.params["routeType"];
   }
 
   ngOnInit(): void {
     this.OrgID = this.cookieService.get('OrgID');
+    this.routeType = this.route.snapshot.params["routeType"];
     this.loading = true;
     this.fetchPaidInvoiceList();
     this.fetchUnpaidInvoiceList();
@@ -415,10 +425,7 @@ applyPaidFilter() {
     this.showPopup = false; // This hides the popup
     // Any other cancellation logic can go here
   }
-  
-
-
-  
+    
   cancelInvoice(id: any): void {
     let Req = {
       Id: id,
@@ -434,6 +441,7 @@ applyPaidFilter() {
         this.fetchPaidInvoiceList();
         this.fetchUnpaidInvoiceList();
         this.fetchAllInvoiceList();
+        this.fetchCancelledInvoices();
         this.loading=false;
       } else {
         this.messageService.add({

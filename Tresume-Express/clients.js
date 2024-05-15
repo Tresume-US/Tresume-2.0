@@ -259,7 +259,7 @@ router.post('/getClientDetailsList', async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    const query = "SELECT   V.*,  CONCAT(T.firstname, ' ', T.lastname) AS PrimaryOwner FROM   clients V INNER JOIN   Trainee T ON V.primaryowner = T.traineeid WHERE V.active = 1  AND V.primaryowner = '" + req.body.TraineeID + "' AND V.ClientID='" + req.body.clientid + "' ";
+    const query = "SELECT V.*, CONCAT(T.firstname, ' ', T.lastname) AS PrimaryOwner, I.* FROM clients V INNER JOIN Trainee T ON V.primaryowner = T.traineeid INNER JOIN invoice_Master I ON T.traineeid = I.traineeid WHERE V.active = 1 AND V.primaryowner = '" + req.body.TraineeID + "' AND V.ClientID='" + req.body.clientid + "'";
 
     console.log(query);
 
