@@ -397,9 +397,9 @@
                           <th>Type</th>
                           <th>Client/Project</th>
                           <th>Memo</th>
-                          <th>Total Amount</th>
+                          <!-- <th>Total Amount</th>
                        <th>Received Amount</th>
-                       <th>Balance Amount</th>
+                       <th>Balance Amount</th> -->
                           <th>Status</th>
                           <th>Action</th>
                       </tr>
@@ -414,9 +414,9 @@
                       <td  (click)="selectRow(invoice.clientid)">Invoice</td>
                       <td  (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
                       <td  (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
-                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                      <!-- <td  (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
                       <td  (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
-                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
+                      <td  (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td> -->
                       <td  (click)="selectRow(invoice.clientid)" [ngClass]="{
                         'paid': invoice.ispaid,
                         'unpaid': !invoice.ispaid,
@@ -489,9 +489,9 @@
                     <th>Type</th>
                     <th>Client/Project</th>
                     <th>Memo</th>
-                    <th>Total Amount</th>
+                    <!-- <th>Total Amount</th>
                       <th>Received Amount</th>
-                      <th>Balance Amount</th>
+                      <th>Balance Amount</th> -->
                     <!-- <th>Status</th> -->
                     <th>Action</th>
                   </tr>
@@ -505,9 +505,9 @@
                         <td (click)="selectRow(invoice.clientid)">Invoice</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
-                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                        <!-- <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
-                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td> -->
                         <!-- <td [ngClass]="{
                           'paid': invoice.status,
                           'unpaid': !invoice.status,
@@ -576,9 +576,9 @@
                     <th>Type</th>
                     <th>Client/Project</th>
                     <th>Memo</th>
-                    <th>Total Amount</th>
+                    <!-- <th>Total Amount</th>
                     <th>Received Amount</th>
-                    <th>Balance Amount</th>
+                    <th>Balance Amount</th> -->
                     <!-- <th>Status</th> -->
                     <!-- <th>Action</th> -->
                   </tr>
@@ -593,9 +593,9 @@
                         <td (click)="selectRow(invoice.clientid)">Invoice</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
-                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                        <!-- <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
                         <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
-                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
+                        <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td> -->
                         <!-- <td>
                           <button class="btn" (click)="openPopup(invoice.id)">Received Payment</button>
                         </td> -->
@@ -629,16 +629,17 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td>
-                      <th>Invoice ID</th>
+                      <!-- <td><input type="checkbox" (change)="selectAll2($event.target.checked)"></td> -->
+                      <!-- <th>Invoice ID</th> -->
+                      <th>Invoice No</th>
                       <th>Date</th>
                       <th>Type</th>
-                      <th>Invoice No</th>
+                      
                       <th>Client/Project</th>
                       <th>Memo</th>
-                      <th>Total Amount</th>
+                      <!-- <th>Total Amount</th>
                       <th>Received Amount</th>
-                      <th>Balance Amount</th>
+                      <th>Balance Amount</th> -->
                       <!-- <th>Status</th> -->
                       <th>Action</th>
                     </tr>
@@ -646,16 +647,17 @@
 
                   <tbody>
                       <tr *ngFor="let invoice of filteredUnpaidInvoices" [class.selected]="invoice.selected">
-                          <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td>
-                          <td (click)="selectRow(invoice.clientid)">{{ invoice.id}}</td>
+                          <!-- <td><input type="checkbox" [(ngModel)]="invoice.selected" (click)="$event.stopPropagation()"></td> -->
+                          <!-- <td (click)="selectRow(invoice.clientid)">{{ invoice.id}}</td> -->
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
                           <td (click)="selectRow(invoice.clientid)">{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
                           <td (click)="selectRow(invoice.clientid)">Invoice</td>
-                          <td (click)="selectRow(invoice.clientid)">{{ invoice.invoiceNo }}</td>
+                        
                           <td (click)="selectRow(invoice.clientid)">{{ invoice.clientname }}</td>
                           <td (click)="selectRow(invoice.clientid)">{{ invoice.memo }}</td>
-                          <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
+                          <!-- <td (click)="selectRow(invoice.clientid)">{{ invoice.total}}</td>
                           <td (click)="selectRow(invoice.clientid)">{{ invoice.receivedamt }}</td>
-                          <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td>
+                          <td (click)="selectRow(invoice.clientid)">{{ invoice.total - invoice.receivedamt }}</td> -->
                           <!-- <td [ngClass]="{
                             'paid': invoice.status,
                             'unpaid': !invoice.status,

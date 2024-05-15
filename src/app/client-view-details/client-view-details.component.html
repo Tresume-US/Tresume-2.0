@@ -67,8 +67,8 @@
                 <td>{{invoice.invoiceNo}}</td>
                 <td>{{invoice.clientname}}</td>
                 <td>{{ invoice.duedate | date : "MM/dd/y" : "UTC"}}</td>
-                <td><span> ${{invoice.total}}</span> <i class="fas fa-exclamation-circle" style="color: rgb(195, 74, 74);"></i> <span> overdue 15 days</span></td>
-                <td (click)="openPopup(invoice.id)" class="received-amt">Received Payment </td>
+                <td><span> ${{invoice.total}}</span> <i class="fas fa-exclamation-circle" style="color: #c34a4a;"></i> <span> overdue 15 days</span></td>
+                <td><span class="received-amt" (click)="openPopup(invoice.id)">Edit</span> | <span (click)="openPopup(invoice.id)" class="received-amt">Receive Payment</span></td>
             </tr>
         </tbody>
     </table>
@@ -81,4 +81,16 @@
       <button (click)="cancel()">Cancel</button>
     </div>
   </div>
-  
+
+
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-start ">
+        <div class="d-flex align-items-start flex-column ">
+            <!-- Display the total amount calculated -->
+            <div class="amt pl-2"><b>${{ getTotalAmount() }}</b></div>
+            <div class="m-0 pl-4">Total Amount</div>
+        </div>
+    </div>
+</div>
+<p-toast position="bottom-right"></p-toast>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

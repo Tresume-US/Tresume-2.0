@@ -30,16 +30,19 @@ export class ClientViewDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.loading = true;
     this.ClientViewDetails();
-    this.fetchAllInvoiceList();
+    this.fetchclientsInvoice();
   }
   
   allInvoices: any[] = [];
-  fetchAllInvoiceList() {
+  fetchclientsInvoice() {
     let Req = {
       OrgID: this.OrgID,
+      clientID:this.ClientID,
     };
-    this.service.getAllInvoiceList(Req).subscribe((x: any) => {
+    this.loading = true;
+    this.service.getclientsInvoice(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
     
       this.loading = false;
@@ -59,6 +62,7 @@ export class ClientViewDetailsComponent implements OnInit {
       clientid:this.ClientID
     };
     console.log(Req)
+    this.loading = true;
     this.service.getClientDetailsList(Req).subscribe((x: any) => {
       this.ClientDetails = x.result;
       this.noResultsFound = this.ClientDetails.length === 0;
@@ -103,13 +107,13 @@ export class ClientViewDetailsComponent implements OnInit {
         this.ClientViewDetails();
         // this.fetchPaidInvoiceList();
         // this.fetchUnpaidInvoiceList();
-        this.fetchAllInvoiceList();
+        this.fetchclientsInvoice();
       },
       (error: any) => {
         this.handleError(error);
         // this.fetchPaidInvoiceList();
         // this.fetchUnpaidInvoiceList();
-        this.fetchAllInvoiceList();
+        this.fetchclientsInvoice();
       }
       
     );
@@ -151,4 +155,9 @@ export class ClientViewDetailsComponent implements OnInit {
     console.error('Error occurred:', error);
     this.loading = false;
   }
+
+  getTotalAmount(): number {
+    return this.ClientDetails.reduce((total, client) => total + parseFloat(client.total), 0);
+}
+
 }
