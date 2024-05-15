@@ -46,6 +46,9 @@ export class HrmsComponent implements OnInit {
   useremail: any;
   isAdmin: string;
   searchterm: string = '';
+  deleteIndex: number;
+  showConfirmationDialog3: boolean;
+  isConfirmationModalVisible: boolean = false;
 
   onFollowUpOptionChange() {
   }
@@ -138,6 +141,8 @@ export class HrmsComponent implements OnInit {
 
   }
   
+
+
   multiorgID:any;
   getOrganization() {
     const Req = {
@@ -684,6 +689,77 @@ export class HrmsComponent implements OnInit {
     });
 
   }
+  openConfirmationModal() {
+    this.isConfirmationModalVisible = true;
+  }
+
+  closeConfirmationModal() {
+    this.isConfirmationModalVisible = false;
+  }
+
+  // deleteItem(TraineeID:any) {
+  //   console.log("Item deleted!");
+  //   let Req = {
+  //     TraineeID: this.candidateID,
+  //   };
+  //   this.service.deleteHrmsdata(Req).subscribe((x: any) => {
+  //     var flag = x.flag;
+  //     console.log(x);
+  //     this.fetchhrmscandidatelist();
+
+  //     if (flag === 1) {
+  //       this.messageService.add({
+  //         severity: 'success',
+  //         summary: 'interviewdata Deleted Sucessfully',
+  //       });
+  //     } else {
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Please try again later',
+  //       });
+  //     }
+  //   });
+  //   this.closeConfirmationModal();
+
+  // }
+  deleteItem(TraineeID: any) {
+    console.log("Item deleted!");
+    let Req = {
+      TraineeID: TraineeID, // Using the parameter passed to the function
+    };
+    this.service.deleteHrmsdata(Req).subscribe((x: any) => {
+      var flag = x.flag;
+      console.log(x);
+      this.fetchhrmscandidatelist();
+
+      if (flag === 1) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'interviewdata Deleted Sucessfully',
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please try again later',
+        });
+      }
+    });
+    this.closeConfirmationModal();
+  }
+  initializeCandidateID() {
+    this.candidateID = this.route.snapshot.params["traineeID"];
+  }
+  // Call this method before calling deleteItem
+  onDeleteButtonClick(candidate: any) {
+    // Ensure candidateID is initialized before calling deleteItem
+    if (!this.candidateID) {
+      this.initializeCandidateID();
+    }
+    // Now call deleteItem with the candidate's TraineeID
+    this.deleteItem(candidate.TraineeID);
+  }
 }
+
+
 
 

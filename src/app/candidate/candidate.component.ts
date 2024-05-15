@@ -72,7 +72,7 @@ export class CandidateComponent implements OnInit {
                 { id: 22, name: 'I-20', group: 'Work Authorization' },
                 { id: 10, name: 'EAD', group: 'Work Authorization' },
                 { id: 7, name: 'CPT', group: 'Work Authorization' },
-                { id: 11, name: 'Green Card', group: 'Work Authorization' },
+                { id: 11, name: 'US Passport / Green Card / Work Authorization', group: 'Work Authorization' },
                 { id: 23, name: 'I-983', group: 'Work Authorization' },
                 { id: 9, name: 'H1B Approval', group: 'H1B' },
                 { id: 24, name: 'H1B (Others)', group: 'H1B' },

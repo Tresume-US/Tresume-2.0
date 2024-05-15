@@ -210,6 +210,9 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                                                     </div>
                                                     <div *ngIf="item.isUpload" class="d-flex align-items-center">
                                                         <!-- <strong>Review</strong> -->
+                                                        <div *ngIf="item.isUpload" class="d-flex align-items-center">
+                                                            <label for="" style="margin-right: 10rem;">Expiry Date : {{ data[0].DocExpiryDate | date }}</label>
+                                                            </div>
                                                         <a class="btn btn-app bg-secondary ml-auto"
                                                             (click)="viewDoc(item.DocTypeID)" target="_blank" >
                                                             <i class="fas fa-eye" ></i> View
@@ -338,7 +341,10 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
             </div>
             <div style="display: flex; justify-content: space-evenly; padding-top: 30px;">
                 <button mat-button class="btn btn-primary action-button" (click)="uploadAdhocDoc(adhocDocItem)">
-                    Upload and Request
+                    Upload
+                </button>
+                <button mat-button class="btn btn-primary action-button" (click)="uploadAdhocDoc(adhocDocItem)">
+                    Request
                 </button>
             </div>
         </div>

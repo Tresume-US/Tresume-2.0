@@ -580,12 +580,14 @@ export class CreateAllTimeListComponent implements OnInit {
               weekEndDate: selectedWeek[1],
               TotalHours:row.totalHours,
               candidateName: candidateNameValue,
-              timesheetId: x.id
+              timesheetId: x.id,
+              timesheetAdmin : this.adminid 
             };
             
             console.log("Total Hours:", row.totalHours);
             console.log("Project:", row.projectid);
             console.log("Candidate Name:", candidateNameValue);
+            console.log("Timesheet Admin:", this.adminid );
 
             this.Service.sendEmail(req2).subscribe(
               (x: any) => {
