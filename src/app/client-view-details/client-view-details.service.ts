@@ -13,8 +13,8 @@ export class ClientViewDetailService {
     getClientDetailsList(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getClientDetailsList', request);
     }
-    getAllInvoiceList(request: any): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getAllInvoiceList', request);
+    getclientsInvoice(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getclientsInvoice', request);
     }
     updateReceivedPayment(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'updateReceivedPayment', request);

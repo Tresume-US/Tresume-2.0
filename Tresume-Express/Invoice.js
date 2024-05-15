@@ -524,4 +524,37 @@ router.post("/getInvoiceReport", async (req, res) => {
     }
 });
 
+router.post("/getclientsInvoice", async (req, res) => {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      var request = new sql.Request();
+
+      var query =
+        "SELECT im.duedate,im.clientid,im.id, im.created_at as date, im.invoiceNo, C.clientname,im.receivedamt, im.statement as memo, im.total,im.ispaid FROM   invoice_Master AS im JOIN clients AS C ON im.clientid = C.clientid  WHERE im.orgid = '" + req.body.OrgID + "' AND im.clientid =  '" + req.body.clientID + "' AND im.status=1";
+
+      console.log(query);
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+
+        var result = {
+          flag: 1,
+          result: recordset.recordsets[0],
+        };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
+
 module.exports = router;
