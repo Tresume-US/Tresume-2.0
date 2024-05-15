@@ -4659,7 +4659,7 @@ app.post("/getOnboardingCount", function (req, res) {
   }
 });
 
-function parsePhraseToQuery(phrase) {
+function parsePhraseToQuery(phrase,inseidesearch) {
   const words = phrase
     .split(/(\(|\)|\b(?:and|or)\b)/i)
     .filter((word) => word.trim() !== "")
@@ -4688,6 +4688,9 @@ function parsePhraseToQuery(phrase) {
       ].trim()}%' OR firstname like '%${words[
         i
       ].trim()}%' OR lastname like '%${words[i].trim()}%'`;
+      if(inseidesearch == 1){
+        query+=` OR htmlresume like '%${words[i].trim()}%'`
+      }
     }
   }
 
@@ -4697,7 +4700,8 @@ function parsePhraseToQuery(phrase) {
 app.post("/getResumes2", function (req, res) {
   try {
     var traineeId = req.body.traineeId;
-    var keyword = parsePhraseToQuery(req.body.keyword);
+    var insidesearch = req.body.insidesearch ? 1 : 0;
+    var keyword = parsePhraseToQuery(req.body.keyword,insidesearch);
     var location = req.body.location;
     var title = req.body.jobTitle;
     var daysWithin = req.body.daysWithin;
@@ -4707,6 +4711,7 @@ app.post("/getResumes2", function (req, res) {
     var OrgID = req.body.OrgID;
     var recruiter = req.body.recruiter;
     var securityclearance = req.body.securityclearance
+    
     console.log(Jobboard);
 
     const timeoutDuration = 60000; // Timeout duration in milliseconds (60 seconds)
@@ -4759,7 +4764,7 @@ app.post("/getResumes2", function (req, res) {
               sql += ` AND CurrentLocation LIKE '%` + location + `%'`;
             }
             if (title) {
-              sql += ` OR Title LIKE '%` + title + `%'`;
+              sql += ` AND Title LIKE '%` + title + `%'`;
             }
             if (daysWithin) {
               sql +=

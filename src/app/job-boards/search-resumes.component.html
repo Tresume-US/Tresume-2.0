@@ -4,9 +4,9 @@
       <div class="container">
         <div class="row justify-content-end">
           <div class="col-md-4">
-            <!-- <div class="form-group text-center mt-4">
+            <div class="form-group text-center mt-4">
               <button type="button" class="btn btn-wdth text-white" (click)="openPopup()" style="margin-left: 14rem;">Add Candidate</button>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -94,6 +94,7 @@
                       <p-checkbox  name="searchType" value="2" [(ngModel)]="securityclearance" inputId="semantic"></p-checkbox >
                       <label class="labelType" for="semantic">Security Clearance</label>
                     </div>
+                    
                     <!-- Add other form fields with ngModel here -->
                   </div>
                 </form>
@@ -221,6 +222,11 @@
             <br>
             <p-checkbox  name="searchType" value="2" [(ngModel)]="securityclearance" inputId="semantic"></p-checkbox >
             <label class="labelType" for="semantic">Security Clearance</label>
+          </div>
+          <div class="col-md-3" style="padding: 5px 20px">
+            <br>
+            <p-checkbox  name="searchType" value="2" [(ngModel)]="insidesearch" inputId="semantic"></p-checkbox >
+            <label class="labelType" for="semantic">Search inside Resume</label>
           </div>
         </div>
         <!-- <div class="row">

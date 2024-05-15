@@ -162,6 +162,7 @@ formData: any = {};
   enddate: Date;
   userName: any;
   securityclearance:boolean;
+  insidesearch:boolean;
   fileBlob: string | ArrayBuffer | null;
   fileHTML: string;
 
@@ -474,7 +475,8 @@ formData: any = {};
       Jobboard: this.selectedJobboard,
       recruiter: this.selectedRecruiter.value,
       OrgID: this.OrgID,
-      securityclearance:this.securityclearance
+      securityclearance:this.securityclearance,
+      insidesearch:this.insidesearch
     };
     console.log(req);
     this.service.getResumes2(req).subscribe((x) => {
