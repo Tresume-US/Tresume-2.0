@@ -14,10 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 
 })
 export class CreateInvoiceComponent implements OnInit {
+saveTable() {
+throw new Error('Method not implemented.');
+}
   clients: any[] = [/* Your client data */];
   selectedClient: any;
   isClientSelected: boolean = false;
-
   showDatePicker: boolean = false;
   fromDate: string = '';
   toDate: string = '';
@@ -53,7 +55,6 @@ export class CreateInvoiceComponent implements OnInit {
   balanceDue: number = 0;
   selectedState: any;
   states: any[] = [];
-
   messageOnInvoice: string = "`Remit Payment To: Asta CRS, Inc.Please mail checks to: Asta Crs Inc 44121 Leesburg Pike,STE 230, Ashburn VA 20147  Attn: Prabhakar Thangarajah  Ph: 703-889-8511 Fax: 703-889-8585`"
  //PaymentTerms: any;
   PaymentTerms: any = [
@@ -127,7 +128,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   addService() {
-    if (!this.selectedclient) {
+    if (!this.selectedclient) {   
       alert('Please select a client before Adding a Service!');
     }
   }
@@ -147,6 +148,7 @@ export class CreateInvoiceComponent implements OnInit {
     }
     this.selectedRowIndex = index;
     this.invoiceLines[index].editable = true;
+    console.log('Toggled editable for index:', index);
   }
 
   addDefaultRows(count: number) {
@@ -154,7 +156,14 @@ export class CreateInvoiceComponent implements OnInit {
       this.addLine();
     }
   }
-
+  saveLine(index: number) {
+    const editedLine = this.invoiceLines[index];
+    console.log("Edited line:", editedLine);
+    // You can perform additional actions here, such as sending the edited line to a server or updating other components.
+  }
+  
+  
+  
   addLine() {
     this.invoiceLines.push({
       sno: '',
