@@ -156,6 +156,48 @@ router.post('/getTalentBenchList', async (req, res) => {
   }
 });
 
+router.post("/deleteTalentbenchdata", async (req, res) => {
+  try {
+    const Deleted = await deactivateTrainee(req.body.TBID);
+    if (Deleted) {
+      const result = {
+        flag: 1,
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+      };
+      res.send(result);
+    }
+  } catch (error) {
+    console.error("Error deleting trainee:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while deleting the trainee!",
+    };
+    res.status(500).send(result);
+  }
+});
+async function deactivateTrainee(TBID) {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    const queryResult = await request.query(
+      `UPDATE Talentbench SET Active = 0 WHERE TBID = '${TBID}'`
+    );
+
+    if (queryResult.rowsAffected[0] === 0) {
+      throw new Error("No records found!");
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error while deleting trainee:", error);
+    throw error;
+  }
+}
+
 
 // router.post('/getTalentBenchList', async (req, res) => {
 //   try {

@@ -687,16 +687,7 @@ export class HrmsComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
-  openConfirmationModal() {
-    this.isConfirmationModalVisible = true;
-  }
-
-  closeConfirmationModal() {
-    this.isConfirmationModalVisible = false;
-  }
-
   // deleteItem(TraineeID:any) {
   //   console.log("Item deleted!");
   //   let Req = {
@@ -723,20 +714,19 @@ export class HrmsComponent implements OnInit {
 
   // }
   deleteItem(TraineeID: any) {
-    console.log("Item deleted!");
     let Req = {
-      TraineeID: TraineeID, // Using the parameter passed to the function
+      TraineeID: TraineeID, 
     };
     this.service.deleteHrmsdata(Req).subscribe((x: any) => {
       var flag = x.flag;
       console.log(x);
-      this.fetchhrmscandidatelist();
 
       if (flag === 1) {
         this.messageService.add({
           severity: 'success',
           summary: 'interviewdata Deleted Sucessfully',
         });
+      this.fetchhrmscandidatelist();
       } else {
         this.messageService.add({
           severity: 'error',
@@ -744,7 +734,6 @@ export class HrmsComponent implements OnInit {
         });
       }
     });
-    this.closeConfirmationModal();
   }
   initializeCandidateID() {
     this.candidateID = this.route.snapshot.params["traineeID"];

@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { ElementRef, Renderer2 } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 
 @Component({
   selector: 'app-talent-bench',
@@ -45,6 +46,7 @@ export class TalentBenchComponent implements OnInit {
   pagesToShow: number = 10;
   searchInput:string = '';
   selectedOrgID: any;
+  isConfirmationModalVisible: boolean;
   constructor(private dialog: MatDialog, private cookieService: CookieService, private service: TalentBenchService, private messageService: MessageService, private formBuilder: FormBuilder,private route: ActivatedRoute, private renderer: Renderer2, private el: ElementRef,private datePipe: DatePipe) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
@@ -746,5 +748,27 @@ this.loading = true;
       }
   
       return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    }
+
+    deleteTBID(TBID:any){
+      const Req = {
+        TBID: TBID, 
+      };
+      this.service.deleteTalentbenchdata(Req).subscribe((x: any) => {
+        var flag = x.flag;
+        console.log(x);
+        if (flag === 1) {
+        this.fetchtalentbenchlist();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Deleted Sucessfully',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Please try again later',
+          });
+        }
+      });
     }
 }
