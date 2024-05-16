@@ -30,6 +30,10 @@ export class TalentBenchService {
   return this.http.post<ResponseDetails>(this.endpoint + 'fetchrecruiter', request);
 }
 
+deleteTalentbenchdata(request: any): Observable<ResponseDetails> {
+  return this.http.post<ResponseDetails>(this.endpoint + 'deleteTalentbenchdata', request);
+}
+
 // DownloadSubmission(request: any): Observable<ResponseDetails> {
 //   return this.http.post<ResponseDetails>(this.endpoint + 'DownloadSubmission', request);
 // }

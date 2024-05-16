@@ -113,31 +113,31 @@
                 <div class="column" style="text-align: end;margin-right: 40px;">
                   <a class="badge badge-warning"  style="font-size: 16px; color: #49274A;margin-right: 15px;"><i class="fas fa-globe"> </i> {{ candidate.organizationname }}</a>
                     <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']" style="font-size: 20px;"></i>
-                    <i class="fa fa-trash fa-fw pt-2" style="font-size: 20px;margin-left: 10px;" (click)="openConfirmationModal()"></i>                  
+                    <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID" style="font-size: 20px;margin-left: 14px;"></i>
                   </div>
               </div>
-              
-              <div class="modal" [class.show]="isConfirmationModalVisible" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+
+              <div class="modal fade" [id]="'exampleModal-' + candidate.TraineeID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog larger">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" style="font-size: larger;font-family: ui-monospace">Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeConfirmationModal()">
+                      <h5 class="modal-title" id="exampleModalLabel" style="font-size: larger;">Confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      Do you really want to delete? This action cannot be reversed.
+                      Are you sure you want to remove the candidate from the talent bench? This action cannot be reversed.
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeConfirmationModal()">Cancel</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       <button type="button" class="btn btn-danger" (click)="deleteItem(candidate.TraineeID)">Delete</button>
                     </div>
                   </div>
                 </div>
               </div>
-
-
+              
+              
               <hr style="margin-top: 8px;">
               <div class="row">
                 <div class="col-md-5">
