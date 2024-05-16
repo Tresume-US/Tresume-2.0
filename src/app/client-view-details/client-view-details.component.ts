@@ -160,4 +160,13 @@ export class ClientViewDetailsComponent implements OnInit {
     return this.ClientDetails.reduce((total, client) => total + parseFloat(client.total), 0);
 }
 
+getReceivedAmount(): number {
+  return this.ClientDetails.reduce((total, client) => total + parseFloat(client.receivedamt), 0);
+}
+
+getPendingAmount(): number {
+  return this.ClientDetails.reduce((total, client) => total + (parseFloat(client.total) - parseFloat(client.receivedamt)), 0);
+}
+
+
 }
