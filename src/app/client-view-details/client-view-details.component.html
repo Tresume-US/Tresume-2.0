@@ -1,96 +1,141 @@
 <div class="container-fluid p-4">
-    <div class="row justify-content-between" *ngIf="ClientDetails.length > 0">
-        <div class="col-md-9 card slanted-card">
-            <div class="slanted-line"></div>
-            <div class="mat-header-content m-4">
-                <div class="card-title"><strong>{{ ClientDetails[0].ClientName }}</strong></div>
-                <div style="display: flex;">
-                    <div style="display: block;" class="m-1">
-                        <div class="text-center p-1"><i class="fas fa-mobile-alt"></i> {{ ClientDetails[0].ContactNumber
-                            }}
-                        </div>
-                        <div class="p-1"><i class="fas fa-envelope"></i> {{ ClientDetails[0].EmailID }}</div>
-                        <div class="p-1"><i class="fas fa-home"></i> {{ ClientDetails[0].Address }}</div>
-                    </div>
-                    <div style="display: block;" class="m-1">
-                        <div class="p-1"><i class="fas fa-briefcase"></i> {{ ClientDetails[0].Industry }}</div>
-                        <div class="p-1"><i class="fas fa-user"></i> {{ ClientDetails[0].Country }}</div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: flex-end; align-items: flex-end; width: 100%; height: 100%;">
-                    <div class="website">
-                        <a href="{{ ClientDetails[0].Website }}" target="_blank"> <i class="fas fa-globe" style="color: blue;"></i>  {{ ClientDetails[0].Website }}</a>
-                    </div>
-                </div>
-            </div>
+  <div class="row justify-content-between" *ngIf="ClientDetails.length > 0">
+    <div class="col-md-9 card slanted-card">
+      <div class="slanted-line"></div>
+      <div class="mat-header-content m-4">
+        <div class="card-title">
+          <strong>{{ ClientDetails[0].ClientName }}</strong>
         </div>
-    
-        <div class="col-md-2 card">
-            <div class="mat-header-content m-4 d-flex flex-column content2 p-0">
-                <div class="h6 text-center">SUMMARY</div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex align-items-start flex-column ">
-                        <div class="amt pl-2 received"><b>${{ ClientDetails[0].receivedamt }}</b></div>
-                        <div class="m-0 pl-4">Received Amount</div>
-                    </div>
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex align-items-start ">
-                        <div class="d-flex align-items-start flex-column ">
-                            <div class="amt pl-2 pending"><b>${{ ClientDetails[0].total - ClientDetails[0].receivedamt
-                                    }}</b></div>
-                            <div class="m-0 pl-4">Pending Amount</div>
-                        </div>
-                    </div>
-                </div>
+        <div style="display: flex">
+          <div style="display: block" class="m-1">
+            <div class="text-center p-1">
+              <i class="fas fa-mobile-alt"></i>
+              {{ ClientDetails[0].ContactNumber }}
             </div>
+            <div class="p-1">
+              <i class="fas fa-envelope"></i> {{ ClientDetails[0].EmailID }}
+            </div>
+            <div class="p-1">
+              <i class="fas fa-home"></i> {{ ClientDetails[0].Address }}
+            </div>
+          </div>
+          <div style="display: block" class="m-1">
+            <div class="p-1">
+              <i class="fas fa-briefcase"></i> {{ ClientDetails[0].Industry }}
+            </div>
+            <div class="p-1">
+              <i class="fas fa-user"></i> {{ ClientDetails[0].Country }}
+            </div>
+          </div>
         </div>
+        <div
+          style="
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+          "
+        >
+          <div class="website">
+            <a href="{{ ClientDetails[0].Website }}" target="_blank">
+              <i class="fas fa-globe" style="color: blue"></i>
+              {{ ClientDetails[0].Website }}</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="col-md-2 card">
+      <div class="mat-header-content m-4 d-flex flex-column content2 p-0">
+        <div class="h6 text-center">SUMMARY</div>
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-start flex-column">
+            <!-- Display the total received amount -->
+            <div class="amt pl-2 received">
+              <b>${{ getReceivedAmount() }}</b>
+            </div>
+            <div class="m-0 pl-4">Received Amount</div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-start">
+            <div class="d-flex align-items-start flex-column">
+              <!-- Display the total pending amount -->
+              <div class="amt pl-2 pending">
+                <b>${{ getPendingAmount() }}</b>
+              </div>
+              <div class="m-0 pl-4">Pending Amount</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row p-4">
-    <table>
-        <thead>
-            <tr>
-                <th>DATE</th>
-                <th>TYPE</th>
-                <th>No.</th>
-                <th>CLIENT/PROJECT</th>
-                <th>MEMO</th>
-                <th>AMOUNT STATUS</th>
-                <th>ACTION</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let invoice of allInvoices">
-                <td>{{ invoice.date | date : "MM/dd/y" : "UTC"}}</td>
-                <td>Invoice</td>
-                <td>{{invoice.invoiceNo}}</td>
-                <td>{{invoice.clientname}}</td>
-                <td>{{ invoice.duedate | date : "MM/dd/y" : "UTC"}}</td>
-                <td><span> ${{invoice.total}}</span> <i class="fas fa-exclamation-circle" style="color: #c34a4a;"></i> <span> overdue 15 days</span></td>
-                <td><span class="received-amt" (click)="openPopup(invoice.id)">Edit</span> | <span (click)="openPopup(invoice.id)" class="received-amt">Receive Payment</span></td>
-            </tr>
-        </tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>DATE</th>
+        <th>TYPE</th>
+        <th>No.</th>
+        <th>CLIENT/PROJECT</th>
+        <th>MEMO</th>
+        <th>AMOUNT STATUS</th>
+        <th>ACTION</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoice of allInvoices">
+        <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+        <td>Invoice</td>
+        <td>{{ invoice.invoiceNo }}</td>
+        <td>{{ invoice.clientname }}</td>
+        <td>{{ invoice.duedate | date : "MM/dd/y" : "UTC" }}</td>
+        <td>
+          <span> ${{ invoice.total }}</span>
+          <i class="fas fa-exclamation-circle" style="color: #c34a4a"></i>
+          <span> overdue 15 days</span>
+        </td>
+        <td>
+          <span class="received-amt" (click)="openPopup(invoice.id)">Edit</span>
+          |
+          <span (click)="openPopup(invoice.id)" class="received-amt"
+            >Receive Payment</span
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div *ngIf="showPopup" class="popup-overlay">
-    <div class="popup">
-      <input type="number" [(ngModel)]="receivedamt" placeholder="Enter amount">
-      <button (click)="saveAmount()" [disabled]="!receivedamt && receivedamt !== 0">Save</button>    
-      <button (click)="cancel()">Cancel</button>
+  <div class="popup">
+    <input type="number" [(ngModel)]="receivedamt" placeholder="Enter amount" />
+    <button
+      (click)="saveAmount()"
+      [disabled]="!receivedamt && receivedamt !== 0"
+    >
+      Save
+    </button>
+    <button (click)="cancel()">Cancel</button>
+  </div>
+</div>
+
+<!-- <div class="d-flex flex-column">
+  <div class="d-flex align-items-start">
+    <div class="d-flex align-items-start flex-column">
+      <div class="amt pl-2">
+        <b>${{ getTotalAmount() }}</b>
+      </div>
+      <div class="m-0 pl-4">Total Amount</div>
     </div>
   </div>
-
-
-  <div class="d-flex flex-column">
-    <div class="d-flex align-items-start ">
-        <div class="d-flex align-items-start flex-column ">
-            <!-- Display the total amount calculated -->
-            <div class="amt pl-2"><b>${{ getTotalAmount() }}</b></div>
-            <div class="m-0 pl-4">Total Amount</div>
-        </div>
-    </div>
-</div>
+</div> -->
 <p-toast position="bottom-right"></p-toast>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>

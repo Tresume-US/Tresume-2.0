@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { CreateInvoiceService } from './create-invoice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -142,26 +143,36 @@ throw new Error('Method not implemented.');
      });
   }
 
-  toggleEditable(index: number) {
-    if (this.selectedRowIndex !== null) {
-      this.invoiceLines[this.selectedRowIndex].editable = false;
-    }
-    this.selectedRowIndex = index;
-    this.invoiceLines[index].editable = true;
-    console.log('Toggled editable for index:', index);
+  toggleEditable(index: number): void {
+    this.invoiceLines.forEach((line, i) => {
+      if (i === index) {
+        line.editable = !line.editable;
+        if (line.editable && line.serviceDate) {
+          // Ensure date is in 'YYYY-MM-DD' format for input[type=date]
+          line.serviceDate = formatDate(line.serviceDate, 'yyyy-MM-dd', 'en-US',);
+        }
+      } else {
+        line.editable = false;
+      }
+    });
   }
+
 
   addDefaultRows(count: number) {
     for (let i = 0; i < count; i++) {
       this.addLine();
     }
   }
-  saveLine(index: number) {
+
+  saveLine(index: number): void {
+    // Save logic here
     const editedLine = this.invoiceLines[index];
+    // Convert date back to a preferred format if necessary or process as is
     console.log("Edited line:", editedLine);
-    // You can perform additional actions here, such as sending the edited line to a server or updating other components.
+    // Set editable to false after save
+    editedLine.editable = false;
   }
-  
+
   
   
   addLine() {

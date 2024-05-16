@@ -1,6 +1,6 @@
 <div class="container-fluid p-3">
   <div class="head d-flex justify-content-between p-3">
-    <h2> CREATE INVOICE</h2>
+    <h2>CREATE INVOICE</h2>
   </div>
 
   <body style="font-size: 14px">
@@ -18,8 +18,7 @@
             </div>
         </div> -->
 
-          
-            <!-- <label for="client" class="dropdown-label">Client</label>
+          <!-- <label for="client" class="dropdown-label">Client</label>
             <select class="form-control custom-select" style="width: 100%;" name="client" required #client="ngModel"
               [(ngModel)]="selectedclient" style="width: 9rem" (change)="onclientChanges()">
               <option *ngFor="let client of clients" [ngValue]="client">{{ client.ClientName }}-{{client.ProjectName}}
@@ -29,26 +28,25 @@
               <div *ngIf="client.errors.required" class="text-danger">Client selection is required</div>
             </div> -->
 
+          <!-- Bala coding start -->
 
-<!-- Bala coding start -->
-
-            <div class="dropdown-container">
-              <mat-form-field>
-                <label for="client" class="dropdown-label">Client</label>
-                <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
-                (selectionChange)="onclientChanges()" [ngModelOptions]="{standalone: true}">
-                  <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}-{{client.ProjectName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div *ngIf="client.invalid && client.touched">
-                <div *ngIf="client.errors?.required" class="text-danger">Client selection is required</div>
+          <div class="dropdown-container">
+            <mat-form-field>
+              <label for="client" class="dropdown-label">Client</label>
+              <mat-select [(value)]="selectedclient" #client="ngModel" [(ngModel)]="selectedclient"
+                (selectionChange)="onclientChanges()" [ngModelOptions]="{ standalone: true }">
+                <mat-option *ngFor="let client of clients" [value]="client">{{ client.ClientName }}-{{
+                  client.ProjectName }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="client.invalid && client.touched">
+              <div *ngIf="client.errors?.required" class="text-danger">
+                Client selection is required
               </div>
             </div>
-            
-            
-            
-<!-- Bala coding End -->
-            
+          </div>
+
+          <!-- Bala coding End -->
 
           <!-- <div class="clientemail mt-0 ml-3">
           <label for="clientEmail" class="dropdown-label">Client Email</label>
@@ -61,37 +59,43 @@
               </div>
             </div>
         </div> -->
-          <div class=" clientemail ml-3">
+          <div class="clientemail ml-3">
             <label for="clientEmail" class="dropdown-label">Client Email</label>
             <div class="input-group">
               <input type="text" name="clientEmail" id="clientEmail" placeholder="Email" class="form-control"
-                [(ngModel)]="clientEmail" style="height: 40px;" required>
+                [(ngModel)]="clientEmail" style="height: 40px" required />
               <div class="input-group-append">
-                <a href="#" class="btn btn-outline-secondary" (click)="togglePopup($event)" style="width: 5rem;">
-                  <p style="margin: 0;
-                    padding-top: 3px;">Cc(2)/Bcc</p>
+                <a href="#" class="btn btn-outline-secondary" (click)="togglePopup($event)" style="width: 5rem">
+                  <p style="margin: 0; padding-top: 3px">Cc(2)/Bcc</p>
                 </a>
               </div>
             </div>
-            <div *ngIf="invoiceForm.controls.clientEmail.touched && invoiceForm.controls.clientEmail.invalid">
-              <div *ngIf="invoiceForm.controls.clientEmail.errors.required" class="text-danger">Client Email is Required
+            <div *ngIf="
+                invoiceForm.controls.clientEmail.touched &&
+                invoiceForm.controls.clientEmail.invalid
+              ">
+              <div *ngIf="invoiceForm.controls.clientEmail.errors.required" class="text-danger">
+                Client Email is Required
               </div>
             </div>
           </div>
 
-
           <div class="popup" *ngIf="showPopup" (clickOutside)="closePopup()">
-            <div class="popover bs-popover-bottom" role="tooltip" style="max-height: 550px; position: relative;">
-              <div class="close-icon" (click)="closePopup()"
-                style="position: absolute; top: 5px; right: 5px; cursor: pointer;">
+            <div class="popover bs-popover-bottom" role="tooltip" style="max-height: 550px; position: relative">
+              <div class="close-icon" (click)="closePopup()" style="
+                  position: absolute;
+                  top: 5px;
+                  right: 5px;
+                  cursor: pointer;
+                ">
                 <i class="fas fa-times"></i>
               </div>
-              <div class="popover-body" style="max-height: 500px; overflow-y: auto;">
+              <div class="popover-body" style="max-height: 500px; overflow-y: auto">
                 <div class="form-group">
                   <label for="cc">Cc</label>
                   <mat-chip-list #ccChipList>
                     <input type="text" placeholder="Enter emails" [(ngModel)]="ccEmails" [matChipInputFor]="ccChipList"
-                      matChipInput separatorKeyCodes="[ENTER, COMMA]">
+                      matChipInput separatorKeyCodes="[ENTER, COMMA]" />
                     <mat-chip *ngFor="let cc of ccEmails" [selectable]="true" [removable]="true"
                       (removed)="removeCc(cc)">
                       {{ cc }}
@@ -103,7 +107,7 @@
                   <label for="bcc">Bcc</label>
                   <mat-chip-list #bccChipList>
                     <input type="text" placeholder="Enter emails" [(ngModel)]="bccEmails"
-                      [matChipInputFor]="bccChipList" matChipInput separatorKeyCodes="[ENTER, COMMA]">
+                      [matChipInputFor]="bccChipList" matChipInput separatorKeyCodes="[ENTER, COMMA]" />
                     <mat-chip *ngFor="let bcc of bccEmails" [selectable]="true" [removable]="true"
                       (removed)="removeBcc(bcc)">
                       {{ bcc }}
@@ -112,8 +116,10 @@
                   </mat-chip-list>
                 </div>
               </div>
-              <button class="btn btn-primary btn-sm" style="margin-left: 9rem;; margin-bottom: 2px;"
-                (click)="closePopup()">Add</button>
+              <button class="btn btn-primary btn-sm" style="margin-left: 9rem; margin-bottom: 2px"
+                (click)="closePopup()">
+                Add
+              </button>
             </div>
           </div>
 
@@ -126,7 +132,7 @@
                 Required</div>
             </div>
         </div> -->
-          <div class=" billingaddress mt-0 ml-3">
+          <div class="billingaddress mt-0 ml-3">
             <label for="Billingaddress" class="ml-0">Billing address</label>
             <div class="input-group">
               <textarea class="form-control" name="Billingaddress" id="Billingaddress" placeholder="Enter Address"
@@ -137,9 +143,13 @@
                   </span>
               </div> -->
             </div>
-            <div *ngIf="invoiceForm.controls.Billingaddress.touched && invoiceForm.controls.Billingaddress.invalid">
-              <div *ngIf="invoiceForm.controls.Billingaddress.errors.required" class="text-danger">Billing Address is
-                Required</div>
+            <div *ngIf="
+                invoiceForm.controls.Billingaddress.touched &&
+                invoiceForm.controls.Billingaddress.invalid
+              ">
+              <div *ngIf="invoiceForm.controls.Billingaddress.errors.required" class="text-danger">
+                Billing Address is Required
+              </div>
             </div>
           </div>
 
@@ -147,12 +157,16 @@
             <div class="form-group">
               <label for="InvoiceDate" class="ml-0">Invoice Date</label>
               <input type="date" name="selectedInvoiceDate" id="selectedInvoiceDate" class="form-control ml-0"
-                [(ngModel)]="selectedInvoiceDate" required>
-              <div
-                *ngIf="invoiceForm.controls.selectedInvoiceDate.touched && invoiceForm.controls.selectedInvoiceDate.invalid">
-                <div *ngIf="invoiceForm.controls.selectedInvoiceDate.errors.required" class="text-danger">Invoice date
-                  is
-                  required</div>
+                [(ngModel)]="selectedInvoiceDate" required />
+              <div *ngIf="
+                  invoiceForm.controls.selectedInvoiceDate.touched &&
+                  invoiceForm.controls.selectedInvoiceDate.invalid
+                ">
+                <div *ngIf="
+                    invoiceForm.controls.selectedInvoiceDate.errors.required
+                  " class="text-danger">
+                  Invoice date is required
+                </div>
               </div>
             </div>
           </div>
@@ -161,10 +175,14 @@
             <div class="form-group">
               <label for="DueDate" class="ml-0">Due Date</label>
               <input type="date" class="form-control ml-0" name="selectedDueDate" id="selectedDueDate"
-                [(ngModel)]="selectedDueDate" required>
-              <div *ngIf="invoiceForm.controls.selectedDueDate.touched && invoiceForm.controls.selectedDueDate.invalid">
-                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">Due date is
-                  required</div>
+                [(ngModel)]="selectedDueDate" required />
+              <div *ngIf="
+                  invoiceForm.controls.selectedDueDate.touched &&
+                  invoiceForm.controls.selectedDueDate.invalid
+                ">
+                <div *ngIf="invoiceForm.controls.selectedDueDate.errors.required" class="text-danger">
+                  Due date is required
+                </div>
               </div>
             </div>
           </div>
@@ -176,12 +194,13 @@
 
       <div class="row mt-3">
         <div class="col-md-6 text-right">
-          <p class="font-weight-bold" style="font-size: 24px;"> Balance Due: {{ balanceDue | currency }}</p>
+          <p class="font-weight-bold" style="font-size: 24px">
+            Balance Due: {{ balanceDue | currency }}
+          </p>
         </div>
         <div class="col-md-6 text-center">
           <button type="button" class="btn mr-4" data-toggle="modal" data-target="#myModal2" (click)="addService()">
-            <i class="fas fa-arrow-right"></i> Add Service
-          </button>`
+            <i class="fas fa-arrow-right"></i> Add Service</button>`
         </div>
       </div>
 
@@ -190,14 +209,14 @@
           <div class="form-group">
             <label for="dropdown" class="ml-0">Terms</label>
             <select id="terms" class="form-control ml-0" [(ngModel)]="selectedTerm" (change)="onDropdownChange($event)"
-              style="width: 9rem" [ngModelOptions]="{standalone: true}">
+              style="width: 9rem" [ngModelOptions]="{ standalone: true }">
               <option value="0">Select Terms</option>
-              <option *ngFor="let term of PaymentTerms" [value]="term.value">{{ term.option }}</option>
+              <option *ngFor="let term of PaymentTerms" [value]="term.value">
+                {{ term.option }}
+              </option>
             </select>
           </div>
         </div>
-
-
 
         <!-- <div class="modal5" tabindex="-1" role="dialog" [ngClass]="{'d-block': showModal}" style="display: none;">
           <div class="modal5-dialog" role="document">
@@ -227,7 +246,6 @@
           </div>
         </div> -->
 
-
         <!-- <div class="ml-3">
           <div class="form-group">
             <label for="invoiceNo">Invoice No.</label>
@@ -243,15 +261,17 @@
           <div class="form-group">
             <label for="invoiceNo">Invoice No.</label>
             <input type="text" id="InvoiceNo" name="InvoiceNo" class="form-control" placeholder="Enter Invoice No"
-              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px;" required>
-            <div *ngIf="invoiceForm.controls.InvoiceNo.touched && invoiceForm.controls.InvoiceNo.invalid">
-              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">Invoice number is required
+              [(ngModel)]="InvoiceNo" style="width: 9rem; height: 40px" required />
+            <div *ngIf="
+                invoiceForm.controls.InvoiceNo.touched &&
+                invoiceForm.controls.InvoiceNo.invalid
+              ">
+              <div *ngIf="invoiceForm.controls.InvoiceNo.errors.required" class="text-danger">
+                Invoice number is required
               </div>
             </div>
           </div>
         </div>
-
-
 
         <!-- <div class="ml-3">
         <div class="form-group">
@@ -280,14 +300,19 @@
                 <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
               </select> -->
               <select class="form-control custom-select" name="location" [(ngModel)]="selectedState"
-                [ngModelOptions]="{standalone: true}" style="height: 40px; width: 9rem;" required #location="ngModel">
-                <option *ngFor="let timesheet of timesheetlist" [value]="timesheet.location" selected>{{
-                  timesheet.location }}</option>
-                <option *ngFor="let state of states" [value]="state">{{ state.state }}</option>
+                [ngModelOptions]="{ standalone: true }" style="height: 40px; width: 9rem" required #location="ngModel">
+                <option *ngFor="let timesheet of timesheetlist" [value]="timesheet.location" selected>
+                  {{ timesheet.location }}
+                </option>
+                <option *ngFor="let state of states" [value]="state">
+                  {{ state.state }}
+                </option>
               </select>
             </div>
             <div *ngIf="location.invalid && location.touched">
-              <div *ngIf="location.errors.required" class="text-danger">Location selection is required</div>
+              <div *ngIf="location.errors.required" class="text-danger">
+                Location selection is required
+              </div>
             </div>
           </div>
         </div>
@@ -308,25 +333,26 @@
         </div>
       </div> -->
 
-
         <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-          style="height: 300px; overflow-y: auto;">
+          style="height: 300px; overflow-y: auto">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              <div class="modal-body" style="max-height: 1000px; overflow-y: auto;">
+              <div class="modal-body" style="max-height: 1000px; overflow-y: auto">
                 <h2>Add to invoice</h2>
                 <div class="form-group">
                   <label for="candidates">Candidate Name:</label>
                   <select class="form-control" id="candidates" [(ngModel)]="candidateid"
-                    (change)="oncandidatechange($event.target.value)"  [ngModelOptions]="{standalone: true}">
+                    (change)="oncandidatechange($event.target.value)" [ngModelOptions]="{ standalone: true }">
                     <option value="0">Select the Candidate</option>
                     <option *ngFor="let candidatelistnames of candidatelistname"
-                      value="{{candidatelistnames.traineeid}}" [value]="candidatelistnames.traineeid">{{
-                      candidatelistnames.name }}</option>
+                      value="{{ candidatelistnames.traineeid }}" [value]="candidatelistnames.traineeid">
+                      {{ candidatelistnames.name }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -336,89 +362,102 @@
                     <option value="option2">This month</option>
                     <option value="option3">Last month</option>
                     <option value="custom">Custom date</option>
-                </select>
-                
-                <div *ngIf="showCustomDate">
-                  <input type="text" class="form-control mt-3" placeholder="From Date" [(ngModel)]="fromDate" bsDatepicker>
-                  <input type="text" class="form-control mt-3" placeholder="To Date" [(ngModel)]="toDate" bsDatepicker>
-              </div>
-            </div>
+                  </select>
+
+                  <div *ngIf="showCustomDate">
+                    <input type="text" class="form-control mt-3" placeholder="From Date" [(ngModel)]="fromDate"
+                      bsDatepicker />
+                    <input type="text" class="form-control mt-3" placeholder="To Date" [(ngModel)]="toDate"
+                      bsDatepicker />
+                  </div>
+                </div>
                 <div class="form-group mb-3">
                   <label for="filterBy">Time filter:</label>
-                  <select class="form-control" (change)="onOptionChanges($event.target.value)" [(ngModel)]="selectedOption"  [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" (change)="onOptionChanges($event.target.value)"
+                    [(ngModel)]="selectedOption" [ngModelOptions]="{ standalone: true }">
                     <option value="0">Group time by service</option>
                     <option value="1">Don't group time</option>
-
                   </select>
                 </div>
                 <div *ngIf="!showAdditionalInputs">
-                  <div class="btn" (click)="addalltimesheet(daywisetimesheetlist)">Add All</div>
+                  <div class="btn" (click)="addalltimesheet(daywisetimesheetlist)">
+                    Add All
+                  </div>
                   <div class="card mb-3" *ngFor="let timesheet of daywisetimesheetlist">
-                      <div class="card-body">
-                          <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                          <div class="row">
-                              <div class="col mt-3 d-flex justify-content-between">
-                                  <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
-                                      "UTC"}}</p>
-                                  <p>{{timesheet.totalhrs}} hrs</p>
-                              </div>
-                          </div>
-                          <div class="row" style="margin-top: -11px;">
-                              <div class="col">
-                                  <p class="card-text">${{timesheet.billableamt}}</p>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">
-                                  <p class="card-text">{{timesheet.candidatename}}</p>
-                              </div>
-                          </div>
-                          <div class="row mt-3">
-                              <div class="col d-flex justify-content-between">
-                                  <div class="btn" (click)="addtimesheet(timesheet)">Add</div>
-                                  <!-- <button class="btn ">Open</button> -->
-                              </div>
-                          </div>
+                    <div class="card-body">
+                      <h3 class="card-title" style="text-decoration: underline">
+                        Billable time
+                      </h3>
+                      <br />
+                      <div class="row">
+                        <div class="col mt-3 d-flex justify-content-between">
+                          <p class="card-text" style="margin-left: -6rem">
+                            {{ timesheet.fromdate | date : "MM/dd/y" : "UTC" }}
+                          </p>
+                          <p>{{ timesheet.totalhrs }} hrs</p>
+                        </div>
                       </div>
+                      <div class="row" style="margin-top: -11px">
+                        <div class="col">
+                          <p class="card-text">${{ timesheet.billableamt }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <p class="card-text">{{ timesheet.candidatename }}</p>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col d-flex justify-content-between">
+                          <div class="btn" (click)="addtimesheet(timesheet)">
+                            Add
+                          </div>
+                          <!-- <button class="btn ">Open</button> -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
-              </div>
-              <div *ngIf="showAdditionalInputs">
+                </div>
+                <div *ngIf="showAdditionalInputs">
                   <div class="card mb-3" *ngFor="let timesheet of timesheetlist">
-                      <div class="card-body">
-                          <h3 class="card-title" style="text-decoration: underline;">Billable time</h3> <br>
-                          <div class="row">
-                              <div class="col mt-3 d-flex justify-content-between">
-                                  <p class="card-text" style="margin-left: -6rem;">{{timesheet.fromdate | date: "MM/dd/y" :
-                                      "UTC"}}</p>
-                                  <p>{{timesheet.totalhrs}} hrs</p>
-                              </div>
-                          </div>
-                          <div class="row" style="margin-top: -11px;">
-                              <div class="col">
-                                  <p class="card-text">${{timesheet.totalamt}}</p>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col">
-                                  <p class="card-text">{{timesheet.candidatename}}</p>
-                              </div>
-                          </div>
-                          <div class="row mt-3">
-                              <div class="col d-flex justify-content-between">
-                                  <div class="btn" (click)="addtimesheet(timesheet)">Add</div>
-                                  <!-- <button class="btn ">Open</button> -->
-                              </div>
-                          </div>
+                    <div class="card-body">
+                      <h3 class="card-title" style="text-decoration: underline">
+                        Billable time
+                      </h3>
+                      <br />
+                      <div class="row">
+                        <div class="col mt-3 d-flex justify-content-between">
+                          <p class="card-text" style="margin-left: -6rem">
+                            {{ timesheet.fromdate | date : "MM/dd/y" : "UTC" }}
+                          </p>
+                          <p>{{ timesheet.totalhrs }} hrs</p>
+                        </div>
                       </div>
+                      <div class="row" style="margin-top: -11px">
+                        <div class="col">
+                          <p class="card-text">${{ timesheet.totalamt }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <p class="card-text">{{ timesheet.candidatename }}</p>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col d-flex justify-content-between">
+                          <div class="btn" (click)="addtimesheet(timesheet)">
+                            Add
+                          </div>
+                          <!-- <button class="btn ">Open</button> -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
-              </div>
-              
-
+                </div>
 
                 <!-- <p style="color: #999; font-style: italic;"
                 *ngIf="selectedFilter == 'option1' || selectedFilter == 'option2' || selectedFilter == 'option3'">There
                 aren't any billable items for that date range.</p> -->
-
               </div>
             </div>
           </div>
@@ -448,70 +487,72 @@
         </div>
       </div>
     </div> -->
-    <div class="col-md-12 d-flex mt-3" style="padding: 20px;">
-      <table class="table text-center" style="width: 100%;">
-        <!-- Table Header -->
-        <thead>
-          <tr>
-            <th>S/No</th>
-            <th>Service Date</th>
-            <th>Product/Service</th>
-            <th>Description</th>
-            <th>Qty</th>
-            <th>Rate</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-    
-        <!-- Table Body -->
-        <tbody>
-          <tr *ngFor="let line of invoiceLines; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>
-              <ng-container *ngIf="!line.editable">{{ line.serviceDate | date: "MM/dd/y" : "UTC"}}</ng-container>
-              <input type="date" [(ngModel)]="line.serviceDate" class="form-control" *ngIf="line.editable" />
-            </td>
-            <td>
-              <ng-container *ngIf="!line.editable">{{ line.productService }}</ng-container>
-              <select class="form-control" [(ngModel)]="line.productService" *ngIf="line.editable">
-                <option *ngFor="let service of productService">{{ service }}</option>
-              </select>
-            </td>
-            <td>
-              <ng-container *ngIf="!line.editable">{{ line.description }}</ng-container>
-              <input type="text" [(ngModel)]="line.description" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />            </td>
-            <td>
-              <ng-container *ngIf="!line.editable">{{ line.qty }}</ng-container>
-              <input type="number" [(ngModel)]="line.qty" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />
-            </td>
-            
-            <td>
-              <ng-container *ngIf="!line.editable">{{ line.rate }}</ng-container>
-              <input type="number" [(ngModel)]="line.rate" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />
-            </td>
-            <td>
-              <!-- Edit Icon -->
-              <ng-container *ngIf="!line.editable">
-                <i class="fa fa-pencil-alt fa-lg mr-2" (click)="toggleEditable(i)"></i>
-              </ng-container>
-              <!-- Save Icon -->
-              <ng-container *ngIf="line.editable">
-                <i class="fa fa-save fa-lg mr-2" (click)="saveLine(i)"></i>
-              </ng-container>
-              <!-- Delete Icon -->
-              <i class="fa fa-trash fa-lg" (click)="removeLine(i)"></i>
-            </td>
-            
-          </tr>
-        </tbody>
-      </table>
-    
-      <!-- Save Button -->
-      <!-- <button class="btn btn-primary" (click)="save()" *ngIf="invoiceLines.length > 0">Save</button> -->
-    </div>
+      <div class="col-md-12 d-flex mt-3" style="padding: 20px">
+        <table class="table text-center" style="width: 100%">
+          <!-- Table Header -->
+          <thead>
+            <tr>
+              <th>S/No</th>
+              <th>Service Date</th>
+              <th>Product/Service</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Rate</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <!-- Table Body -->
+          <tbody>
+            <tr *ngFor="let line of invoiceLines; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <ng-container *ngIf="!line.editable">{{ line.serviceDate | date : "MM/dd/y" : "UTC" }}</ng-container>
+                <input *ngIf="line.editable" type="date" [(ngModel)]="line.serviceDate" class="form-control" [ngModelOptions]="{ standalone: true }" />
+              </td>              
+              <td>
+                <ng-container *ngIf="!line.editable">{{ line.productService }}</ng-container>
+                <select *ngIf="line.editable" class="form-control" [(ngModel)]="line.productService" [ngModelOptions]="{ standalone: true }">
+                  <option *ngFor="let service of productService" [ngModelOptions]="{ standalone: true }"> {{ line.productService }}  </option>
+                </select>
+              </td>
+              <td>
+                <ng-container *ngIf="!line.editable">{{ line.description }}</ng-container>
+                <input *ngIf="line.editable" type="text" [(ngModel)]="line.description" class="form-control" [ngModelOptions]="{ standalone: true }" />
+              </td>
+              <td>
+                <ng-container *ngIf="!line.editable">{{ line.qty }}</ng-container>
+                <input *ngIf="line.editable" type="number" [(ngModel)]="line.qty" class="form-control" [ngModelOptions]="{ standalone: true }"
+                   />
+              </td>
+
+              <td>
+                <ng-container *ngIf="!line.editable">{{ line.rate }}</ng-container>
+                <input *ngIf="line.editable" type="number" [(ngModel)]="line.rate" class="form-control"
+                  [ngModelOptions]="{ standalone: true }" />
+              </td>
+              <td>
+                <!-- Edit Icon -->
+                <ng-container *ngIf="!line.editable">
+                  <i class="fa fa-pencil-alt fa-lg mr-2" (click)="toggleEditable(i)"></i>
+                </ng-container>
+                <!-- Save Icon -->
+                <ng-container *ngIf="line.editable">
+                  <i class="fa fa-save fa-lg mr-2" (click)="saveLine(i)"></i>
+                </ng-container>
+                <!-- Delete Icon -->
+                <i class="fa fa-trash fa-lg" (click)="removeLine(i)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Save Button -->
+        <!-- <button class="btn btn-primary" (click)="save()" *ngIf="invoiceLines.length > 0">Save</button> -->
+      </div>
       <!-- Subtotal Row -->
       <div class="row mt-3">
-        <div class="col-md-6 text-right">Subtotal: </div>
+        <div class="col-md-6 text-right">Subtotal:</div>
         <div class="col-md-5 text-left">{{ subtotal | currency }}</div>
       </div>
 
@@ -530,13 +571,13 @@
 
       <!-- Total Row -->
       <div class="row mt-3">
-        <div class="col-md-6 text-right">Total: </div>
+        <div class="col-md-6 text-right">Total:</div>
         <div class="col-md-6 text-left">{{ total | currency }}</div>
       </div>
 
       <!-- Balance Due Row -->
       <div class="row mt-3">
-        <div class="col-md-6 text-right">Balance Due: </div>
+        <div class="col-md-6 text-right">Balance Due:</div>
         <div class="col-md-6 text-left">{{ balanceDue | currency }}</div>
       </div>
 
@@ -578,7 +619,7 @@
       </div>
     </div> -->
 
-      <div class="modal1" tabindex="-1" role="dialog" [ngClass]="{'show': showConfirmationModal}"
+      <div class="modal1" tabindex="-1" role="dialog" [ngClass]="{ show: showConfirmationModal }"
         *ngIf="showConfirmationModal">
         <div class="modal1-dialog" role="document">
           <div class="modal1-content">
@@ -587,14 +628,17 @@
             </button>
             <div class="modal1-header">
               <h1 class="modal1-title">Are you sure?</h1>
-
             </div>
-            <div class="modal1-body" style="margin-top: 40px;">
+            <div class="modal1-body" style="margin-top: 40px">
               Would you do like to unlike the billable time?
             </div>
-            <div class="modal1-footerbtn" style="margin-top: 34px;">
-              <button type="button" class="btn btn-secondary" (click)="closeModal1()">No, keep it</button>
-              <button type="button" class="btn btn-danger" (click)="deleteItems()">Yes, unlike it</button>
+            <div class="modal1-footerbtn" style="margin-top: 34px">
+              <button type="button" class="btn btn-secondary" (click)="closeModal1()">
+                No, keep it
+              </button>
+              <button type="button" class="btn btn-danger" (click)="deleteItems()">
+                Yes, unlike it
+              </button>
             </div>
           </div>
         </div>
@@ -602,8 +646,8 @@
 
       <div class="row mt-1 ml-4">
         <div class="col">
-          <button class="btn  mr-2" (click)="addLine()">Add Line</button>
-          <button class="btn " (click)="clearLines()">Clear All Lines</button>
+          <button class="btn mr-2" (click)="addLine()">Add Line</button>
+          <button class="btn" (click)="clearLines()">Clear All Lines</button>
           <!-- Add Subtotal Button -->
           <!-- <button class="btn mr-2 " style="margin-left: 8px;" (click)="calculateSubtotal()">Add Subtotal</button> -->
         </div>
@@ -636,40 +680,41 @@
               name="messageOnStatement"></textarea>
           </div>
 
-
-
           <!-- File Upload -->
           <div class="mt-4 mb-2 ml-3">
             <label for="attachments">Attachments</label>
             <form class="form" (ngSubmit)="uploadFiles()" #uploadForm="ngForm">
-                <label class="form__container" id="upload-container" style="height: 6rem;">Choose or Drag & Drop Files
-                    <input type="file" class="form__file" multiple (change)="onFilesSelected($event)" #fileInput="ngModel"
-                        name="files" ngModel required />
-                </label>
-                <div *ngIf="fileInput.invalid && fileInput.errors.required" class="error-message mandatory-field">This
-                    field is mandatory!.</div>
-                <div id="files-list-container">
-                    <ul>
-                        <li *ngFor="let file of files; let i = index">
-                            {{ file.name }} | {{ (file.size / 1024).toFixed(2) }} KB
-                            <button type="button" class="remove-btn" (click)="removeFile(i)">Remove</button>
-                        </li>
-                    </ul>
-                </div>
-                <div *ngIf="maxSize">
-                    <p class="primary">Maximum file size: {{ maxSize }} MB</p>
-                    <!-- <button class="btn" type="submit">Upload</button> -->
-                </div>
+              <label class="form__container" id="upload-container" style="height: 6rem">Choose or Drag & Drop Files
+                <input type="file" class="form__file" multiple (change)="onFilesSelected($event)" #fileInput="ngModel"
+                  name="files" ngModel required />
+              </label>
+              <div *ngIf="fileInput.invalid && fileInput.errors.required" class="error-message mandatory-field">
+                This field is mandatory!.
+              </div>
+              <div id="files-list-container">
+                <ul>
+                  <li *ngFor="let file of files; let i = index">
+                    {{ file.name }} | {{ (file.size / 1024).toFixed(2) }} KB
+                    <button type="button" class="remove-btn" (click)="removeFile(i)">
+                      Remove
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="maxSize">
+                <p class="primary">Maximum file size: {{ maxSize }} MB</p>
+                <!-- <button class="btn" type="submit">Upload</button> -->
+              </div>
             </form>
-        </div>
-
+          </div>
         </div>
       </div>
 
-
-      <div class="row-md-12 mt-3 ml-5 mb-3" style="display: flex;">
+      <div class="row-md-12 mt-3 ml-5 mb-3" style="display: flex">
         <div class="col-md-4 d-flex ml-2">
-          <button class="btn btn btn-block fbtn" routerLink="/all-invoice">Cancel</button>
+          <button class="btn btn btn-block fbtn" routerLink="/all-invoice">
+            Cancel
+          </button>
         </div>
         <div class="col-md-4 d-flex ml-2">
           <!-- <button class="btn btn btn-block fbtn">Print or Preview</button> -->
@@ -677,9 +722,13 @@
         <div class="col-md-4 d-flex ml-2">
           <div class="d-flex dropdown">
             <button class="btn btn dropdown-toggle fbtn" type="button" id="saveAndNewDropdown" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">Save</button>
+              aria-haspopup="true" aria-expanded="false">
+              Save
+            </button>
             <div class="dropdown-menu" aria-labelledby="saveAndNewDropdown">
-              <button class="save-close-btn" (click)="saveAndClose($event);">Save and close</button>
+              <button class="save-close-btn" (click)="saveAndClose($event)">
+                Save and close
+              </button>
 
               <!-- <button class="save-close-btn" [ngClass]="{'disabled-style': invoiceForm.invalid}"
               (click)="getExistingInvoiceNo()" [disabled]="!invoiceForm.valid">Save and close</button><br>
@@ -689,7 +738,6 @@
               <!-- <a class="dropdown-item" (click)="addinvoice()">Save and close</a> -->
               <!-- <a class="dropdown-item" href="#">Save and send</a> -->
               <!-- <button (click)="getExistingInvoiceNo()" class="btn">save</button> -->
-
             </div>
           </div>
         </div>
