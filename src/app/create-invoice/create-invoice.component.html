@@ -181,7 +181,7 @@
         <div class="col-md-6 text-center">
           <button type="button" class="btn mr-4" data-toggle="modal" data-target="#myModal2" (click)="addService()">
             <i class="fas fa-arrow-right"></i> Add Service
-          </button>
+          </button>`
         </div>
       </div>
 
@@ -448,69 +448,67 @@
         </div>
       </div>
     </div> -->
-
-      <div class="col-md-12 d-flex mt-3" style="padding: 20px;">
-        <table class="table text-center" style="width: 100%;">
-          <thead>
-            <tr>
-              <th>S/No</th>
-              <th>Service Date</th>
-              <th>Product/Service</th>
-              <th>Description</th>
-              <th>Qty</th>
-              <th>Rate</th>
-              <!-- <th>Amount</th>
-            <th>Attachment</th> -->
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <!-- Table Body -->
-          <tbody>
-            <tr *ngFor="let line of invoiceLines; let i = index" (click)="toggleEditable(i)">
-              <td>{{ i + 1 }}</td>
-              <!-- <td *ngIf="!line.editable">{{ line.sno }}</td>
-            <td *ngIf="line.editable"><input type="text" [(ngModel)]="line.sno" class="form-control" /></td> -->
-
-              <td *ngIf="!line.editable">{{ line.serviceDate | date: "MM/dd/y" : "UTC"}}</td>
-              <td *ngIf="line.editable">
-                <input type="date" [(ngModel)]="line.serviceDate" class="form-control"
-                  (keydown.enter)="$event.preventDefault()" />
-              </td>
-
-
-              <td><ng-container *ngFor="let service of productService">{{ service }}</ng-container></td>
-
-              <td *ngIf="!line.editable">{{ line.description }}</td>
-              <td *ngIf="line.editable">
-                <input type="text" [(ngModel)]="line.description" class="form-control"
-                  (keydown.enter)="$event.preventDefault()" />
-              </td>
-              <td *ngIf="!line.editable">{{ line.qty }}</td>
-              <td *ngIf="line.editable">
-                <input type="number" [(ngModel)]="line.qty" class="form-control" (ngModelChange)="updateAmount(line)"
-                  (keydown.enter)="$event.preventDefault()" />
-              </td>
-
-              <td *ngIf="!line.editable">{{ line.rate }}</td>
-              <td *ngIf="line.editable">
-                <input type="number" [(ngModel)]="line.rate" class="form-control" (ngModelChange)="updateAmount(line)"
-                  (keydown.enter)="$event.preventDefault()" />
-              </td>
-
-
-              <!-- <td *ngIf="!line.editable">{{ line.qty * line.rate }}</td> -->
-              <!-- <td *ngIf="line.editable"></td> -->
-              <!-- <td> </td> -->
-
-              <!-- Remove Button -->
-              <td> <i class="fa fa-trash fa-lg" (click)="removeLine(i)"></i></td>
-
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
+    <div class="col-md-12 d-flex mt-3" style="padding: 20px;">
+      <table class="table text-center" style="width: 100%;">
+        <!-- Table Header -->
+        <thead>
+          <tr>
+            <th>S/No</th>
+            <th>Service Date</th>
+            <th>Product/Service</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+    
+        <!-- Table Body -->
+        <tbody>
+          <tr *ngFor="let line of invoiceLines; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <ng-container *ngIf="!line.editable">{{ line.serviceDate | date: "MM/dd/y" : "UTC"}}</ng-container>
+              <input type="date" [(ngModel)]="line.serviceDate" class="form-control" *ngIf="line.editable" />
+            </td>
+            <td>
+              <ng-container *ngIf="!line.editable">{{ line.productService }}</ng-container>
+              <select class="form-control" [(ngModel)]="line.productService" *ngIf="line.editable">
+                <option *ngFor="let service of productService">{{ service }}</option>
+              </select>
+            </td>
+            <td>
+              <ng-container *ngIf="!line.editable">{{ line.description }}</ng-container>
+              <input type="text" [(ngModel)]="line.description" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />            </td>
+            <td>
+              <ng-container *ngIf="!line.editable">{{ line.qty }}</ng-container>
+              <input type="number" [(ngModel)]="line.qty" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />
+            </td>
+            
+            <td>
+              <ng-container *ngIf="!line.editable">{{ line.rate }}</ng-container>
+              <input type="number" [(ngModel)]="line.rate" class="form-control" [ngModelOptions]="{standalone: true}" *ngIf="line.editable" />
+            </td>
+            <td>
+              <!-- Edit Icon -->
+              <ng-container *ngIf="!line.editable">
+                <i class="fa fa-pencil-alt fa-lg mr-2" (click)="toggleEditable(i)"></i>
+              </ng-container>
+              <!-- Save Icon -->
+              <ng-container *ngIf="line.editable">
+                <i class="fa fa-save fa-lg mr-2" (click)="saveLine(i)"></i>
+              </ng-container>
+              <!-- Delete Icon -->
+              <i class="fa fa-trash fa-lg" (click)="removeLine(i)"></i>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+    
+      <!-- Save Button -->
+      <!-- <button class="btn btn-primary" (click)="save()" *ngIf="invoiceLines.length > 0">Save</button> -->
+    </div>
       <!-- Subtotal Row -->
       <div class="row mt-3">
         <div class="col-md-6 text-right">Subtotal: </div>
