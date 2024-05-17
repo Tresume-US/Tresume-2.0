@@ -19,6 +19,7 @@ export class AllclientComponent implements OnInit {
   TraineeID: string = '';
   clients: any[];
   noResultsFound: boolean = false;
+  orgID: string ='';
   routeType: any;
 
   constructor(private fb: FormBuilder, private cookieService: CookieService, private service: AllClientService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
@@ -28,6 +29,7 @@ export class AllclientComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.TraineeID = this.cookieService.get('TraineeID');
+    this.orgID = this.cookieService.get('OrgID')
     this.fetchclientlist();
   }
 
@@ -39,6 +41,7 @@ export class AllclientComponent implements OnInit {
   fetchclientlist() {
     let Req = {
       TraineeID: this.TraineeID,
+      // OrgID:this.orgID
     };
     this.service.getTraineeClientList(Req).subscribe((x: any) => {
       this.clients = x.result;
