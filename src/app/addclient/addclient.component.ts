@@ -239,6 +239,7 @@ export class AddclientComponent implements OnInit {
       Access: this.addClient.value.Access,
       RequiredDocuments: documents,
       Notes: this.Notes,
+      orgID: this.OrgID
     };
     console.log(Req);
     this.service.addClienta(Req).subscribe(

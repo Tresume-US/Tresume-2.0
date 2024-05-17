@@ -89,22 +89,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let invoice of allInvoices">
-        <td>{{ invoice.date | date : "MM/dd/y" : "UTC" }}</td>
+        <td>{{ invoice.date | date: 'MM/dd/y' : 'UTC' }}</td>
         <td>Invoice</td>
         <td>{{ invoice.invoiceNo }}</td>
         <td>{{ invoice.clientname }}</td>
-        <td>{{ invoice.duedate | date : "MM/dd/y" : "UTC" }}</td>
+        <td>{{ invoice.duedate | date: 'MM/dd/y' : 'UTC' }}</td>
         <td>
-          <span> ${{ invoice.total }}</span>
-          <i class="fas fa-exclamation-circle" style="color: #c34a4a"></i>
-          <span> overdue 15 days</span>
+          <span>${{ invoice.total }}</span>
+          <i class="fas fa-exclamation-circle" style="color: #c34a4a" *ngIf="calculateDays(invoice.duedate).includes('overdue')"></i>
+          <span>{{ calculateDays(invoice.duedate) }}</span>
         </td>
         <td>
-          <span class="received-amt" (click)="openPopup(invoice.id)">Edit</span>
-          |
-          <span (click)="openPopup(invoice.id)" class="received-amt"
-            >Receive Payment</span
-          >
+          <span class="received-amt" (click)="openPopup(invoice.id)">Edit</span> |
+          <span (click)="openPopup(invoice.id)" class="received-amt">Receive Payment</span>
         </td>
       </tr>
     </tbody>

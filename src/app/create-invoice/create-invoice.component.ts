@@ -165,11 +165,8 @@ throw new Error('Method not implemented.');
   }
 
   saveLine(index: number): void {
-    // Save logic here
     const editedLine = this.invoiceLines[index];
-    // Convert date back to a preferred format if necessary or process as is
     console.log("Edited line:", editedLine);
-    // Set editable to false after save
     editedLine.editable = false;
   }
 

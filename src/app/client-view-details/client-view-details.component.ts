@@ -3,12 +3,13 @@ import { ClientViewDetailService } from './client-view-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-view-details',
   templateUrl: './client-view-details.component.html',
   styleUrls: ['./client-view-details.component.scss'],
-  providers: [CookieService, ClientViewDetailService, MessageService],
+  providers: [CookieService, ClientViewDetailService, MessageService, DatePipe],
 })
 
 
@@ -22,7 +23,7 @@ export class ClientViewDetailsComponent implements OnInit {
   noResultsFound: boolean=true;
   loading: boolean = false;
   ClientDetails:any[];
-  constructor( private router: Router, private route: ActivatedRoute, private cookieService: CookieService,private messageService: MessageService, private service: ClientViewDetailService) {
+  constructor( private router: Router, private route: ActivatedRoute, private cookieService: CookieService,private messageService: MessageService, private service: ClientViewDetailService,private datePipe: DatePipe) {
     
     this.TraineeID = this.cookieService.get('TraineeID');
     this.OrgID = this.cookieService.get('OrgID');
@@ -168,5 +169,21 @@ getPendingAmount(): number {
   return this.ClientDetails.reduce((total, client) => total + (parseFloat(client.total) - parseFloat(client.receivedamt)), 0);
 }
 
+
+
+calculateDays(duedate: string): string {
+  const currentDate = new Date();
+  const dueDate = new Date(duedate);
+  const timeDiff = dueDate.getTime() - currentDate.getTime();
+  const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  if (dayDiff < 0) {
+    return `overdue ${Math.abs(dayDiff)} days`;
+  } else if (dayDiff === 0) {
+    return 'due today';
+  } else {
+    return `due in ${dayDiff} days`;
+  }
+}
 
 }
