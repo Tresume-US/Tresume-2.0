@@ -231,7 +231,11 @@ getCity() {
 
   PostJob(type:any){
     this.loading = true;
-    this.Legalstatus = this.selectedLegalstatus.map((item: { value: any; }) => item.value).join(',');
+    if (this.selectedLegalstatus && this.selectedLegalstatus.length > 0) {
+      this.Legalstatus = this.selectedLegalstatus.map((item: { value: any; }) => item.value).join(',');
+    }else{
+      this.Legalstatus = '';
+    }
     console.log( this.internaltaxterms);
     console.log( this.selectedPrimaryRecruiter);
     console.log( this.jobtitle);
