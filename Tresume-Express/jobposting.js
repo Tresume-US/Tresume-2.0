@@ -248,37 +248,37 @@ router.post('/PostJob', async (req, res) => {
     var jobbaordaccount = req.body.jobboardaccount;
 
     // Construct the SQL query with parameters
-    // const query = `
-    // INSERT INTO [dbo].[Job]
-    // ([RecruiterID], [JobTitle], [Company], [City], [State], [Country], [ZipCode], [Address],
-    // [AreaCode], [JobDescription], [JobCode], [Skills], [PayRate], [PayRateTypeID],
-    // [PayRateCurrencyTypeID], [PayRateTaxTermID], [BillRate], [BillRateTypeID],
-    // [BillRateCurrencyTypeID], [BillRateTaxTermID], [JobTypeID], [LegalStatus], [JobStausID],
-    // [NoOfPosition], [RespondDate], [ClientID], [EndClient], [ClientJobID], [PriorityID],
-    // [Duration], [InterviewMode], [SecruityClearance], [PrimaryRecruiterID], [RecruitmentManagerID],
-    // [SalesManagerID], [AccountManagerID], [TaxTermID], [Comments], [Active], [CreateTime],
-    // [CreateBy], [LastUpdateTime], [LastUpdateBy], [MinYearsOfExpInMonths], [JobStatus], [OrgID])
-    // VALUES
-    // ('${req.body.RecruiterID}', '${req.body.JobTitle}', '${req.body.Company}', '${req.body.City}',
-    // '${req.body.State}', '${req.body.Country}', '${req.body.ZipCode}', '${req.body.Address}',
-    // '${req.body.AreaCode}', '${req.body.JobDescription}', '${req.body.JobCode}', '${req.body.Skills}',
-    // '${req.body.PayRate}', '${req.body.PayRateTypeID}', '${req.body.PayRateCurrencyTypeID}',
-    // '${req.body.PayRateTaxTermID}', '${req.body.BillRate}', '${req.body.BillRateTypeID}',
-    // '${req.body.BillRateCurrencyTypeID}', '${req.body.BillRateTaxTermID}', '${req.body.JobTypeID}',
-    // '${req.body.LegalStatus}', '${req.body.JobStausID}', '${req.body.NoOfPosition}',
-    // '${req.body.RespondDate}', '${req.body.ClientID}', '${req.body.EndClient}', '${req.body.ClientJobID}',
-    // '${req.body.PriorityID}', '${req.body.Duration}', '${req.body.InterviewMode}', '${req.body.SecruityClearance}',
-    // '${req.body.PrimaryRecruiterID}', '${req.body.RecruitmentManagerID}', '${req.body.SalesManagerID}',
-    // '${req.body.AccountManagerID}', '${req.body.TaxTermID}', '${req.body.Comments}', '${req.body.Active}',
-    // GETDATE(), '${req.body.CreateBy}', GETDATE(), '${req.body.LastUpdateBy}', '${req.body.MinYearsOfExpInMonths}',
-    // '${req.body.JobStatus}', '${req.body.OrgID}')
+    const query = `
+    INSERT INTO [dbo].[Job]
+    ([RecruiterID], [JobTitle], [Company], [City], [State], [Country], [ZipCode], [Address],
+    [AreaCode], [JobDescription], [JobCode], [Skills], [PayRate], [PayRateTypeID],
+    [PayRateCurrencyTypeID], [PayRateTaxTermID], [BillRate], [BillRateTypeID],
+    [BillRateCurrencyTypeID], [BillRateTaxTermID], [JobTypeID], [LegalStatus], [JobStausID],
+    [NoOfPosition], [RespondDate], [ClientID], [EndClient], [ClientJobID], [PriorityID],
+    [Duration], [InterviewMode], [SecruityClearance], [PrimaryRecruiterID], [RecruitmentManagerID],
+    [SalesManagerID], [AccountManagerID], [TaxTermID], [Comments], [Active], [CreateTime],
+    [CreateBy], [LastUpdateTime], [LastUpdateBy], [MinYearsOfExpInMonths], [JobStatus], [OrgID])
+    VALUES
+    ('${req.body.RecruiterID}', '${req.body.JobTitle}', '${req.body.Company}', '${req.body.City}',
+    '${req.body.State}', '${req.body.Country}', '${req.body.ZipCode}', '${req.body.Address}',
+    '${req.body.AreaCode}', '${req.body.JobDescription}', '${req.body.JobCode}', '${req.body.Skills}',
+    '${req.body.PayRate}', '${req.body.PayRateTypeID}', '${req.body.PayRateCurrencyTypeID}',
+    '${req.body.PayRateTaxTermID}', '${req.body.BillRate}', '${req.body.BillRateTypeID}',
+    '${req.body.BillRateCurrencyTypeID}', '${req.body.BillRateTaxTermID}', '${req.body.JobTypeID}',
+    '${req.body.LegalStatus}', '${req.body.JobStausID}', '${req.body.NoOfPosition}',
+    '${req.body.RespondDate}', '${req.body.ClientID}', '${req.body.EndClient}', '${req.body.ClientJobID}',
+    '${req.body.PriorityID}', '${req.body.Duration}', '${req.body.InterviewMode}', '${req.body.SecruityClearance}',
+    '${req.body.PrimaryRecruiterID}', '${req.body.RecruitmentManagerID}', '${req.body.SalesManagerID}',
+    '${req.body.AccountManagerID}', '${req.body.TaxTermID}', '${req.body.Comments}', '${req.body.Active}',
+    GETDATE(), '${req.body.CreateBy}', GETDATE(), '${req.body.LastUpdateBy}', '${req.body.MinYearsOfExpInMonths}',
+    '${req.body.JobStatus}', '${req.body.OrgID}')
 
-    // `;
+    `;
 
-    // console.log(query);
+    console.log(query);
 
-    // // Execute the query
-    // await request.query(query);
+    // Execute the query
+    await request.query(query);
 
     for(var i=0;i<jobbaordaccount.length;i++){
       console.log(jobbaordaccount[i].JobBoardID);
