@@ -1,0 +1,21 @@
+<!doctype batch totalreplace>
+<doc>
+<positionid>1338</positionid>
+<diceid>yourdiceid</diceid>
+<taxterm></taxterm>
+<allowrecruiterapplies>Y</allowrecruiterapplies>
+<country>US</country>
+<state></state>
+<postalcode>23232</postalcode>
+<location>ssdasdasd</location>
+<areacode>232</areacode>
+<company>sdfsdf</company>
+<companystate></companystate>
+<companyzip>23232</companyzip>
+<addr1>ssdasdasd</addr1>
+<payrate>12</payrate>
+<jobtitle>sdfsdf</jobtitle>
+<skillsreq>sdfsf</skillsreq>
+<comments><p>test</p></comments>
+<applylink>https://tresume.us/applyjob/1338</applylink>
+</doc>

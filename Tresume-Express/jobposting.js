@@ -24,10 +24,10 @@ const config = {
 
 const transporter = nodemailer.createTransport({
   port: 465,
-  host: "smtp.mail.yahoo.com",
+  host: "smtp.hostinger.com",
   auth: {
-    user: "support@tresume.us",
-    pass: "xzkmvglehwxeqrpd",
+    user: "jobpostings@dmsol.in",
+    pass: "Tresume@123",
   },
   secure: true,
 });
@@ -245,100 +245,103 @@ router.post('/PostJob', async (req, res) => {
   try {
     await sql.connect(config);
     const request = new sql.Request();
-    console.log(req);
+    var jobbaordaccount = req.body.jobboardaccount;
+
     // Construct the SQL query with parameters
-    const query = `
-    INSERT INTO [dbo].[Job]
-    ([RecruiterID], [JobTitle], [Company], [City], [State], [Country], [ZipCode], [Address],
-    [AreaCode], [JobDescription], [JobCode], [Skills], [PayRate], [PayRateTypeID],
-    [PayRateCurrencyTypeID], [PayRateTaxTermID], [BillRate], [BillRateTypeID],
-    [BillRateCurrencyTypeID], [BillRateTaxTermID], [JobTypeID], [LegalStatus], [JobStausID],
-    [NoOfPosition], [RespondDate], [ClientID], [EndClient], [ClientJobID], [PriorityID],
-    [Duration], [InterviewMode], [SecruityClearance], [PrimaryRecruiterID], [RecruitmentManagerID],
-    [SalesManagerID], [AccountManagerID], [TaxTermID], [Comments], [Active], [CreateTime],
-    [CreateBy], [LastUpdateTime], [LastUpdateBy], [MinYearsOfExpInMonths], [JobStatus], [OrgID])
-    VALUES
-    ('${req.body.RecruiterID}', '${req.body.JobTitle}', '${req.body.Company}', '${req.body.City}',
-    '${req.body.State}', '${req.body.Country}', '${req.body.ZipCode}', '${req.body.Address}',
-    '${req.body.AreaCode}', '${req.body.JobDescription}', '${req.body.JobCode}', '${req.body.Skills}',
-    '${req.body.PayRate}', '${req.body.PayRateTypeID}', '${req.body.PayRateCurrencyTypeID}',
-    '${req.body.PayRateTaxTermID}', '${req.body.BillRate}', '${req.body.BillRateTypeID}',
-    '${req.body.BillRateCurrencyTypeID}', '${req.body.BillRateTaxTermID}', '${req.body.JobTypeID}',
-    '${req.body.LegalStatus}', '${req.body.JobStausID}', '${req.body.NoOfPosition}',
-    '${req.body.RespondDate}', '${req.body.ClientID}', '${req.body.EndClient}', '${req.body.ClientJobID}',
-    '${req.body.PriorityID}', '${req.body.Duration}', '${req.body.InterviewMode}', '${req.body.SecruityClearance}',
-    '${req.body.PrimaryRecruiterID}', '${req.body.RecruitmentManagerID}', '${req.body.SalesManagerID}',
-    '${req.body.AccountManagerID}', '${req.body.TaxTermID}', '${req.body.Comments}', '${req.body.Active}',
-    GETDATE(), '${req.body.CreateBy}', GETDATE(), '${req.body.LastUpdateBy}', '${req.body.MinYearsOfExpInMonths}',
-    '${req.body.JobStatus}', '${req.body.OrgID}')
+    // const query = `
+    // INSERT INTO [dbo].[Job]
+    // ([RecruiterID], [JobTitle], [Company], [City], [State], [Country], [ZipCode], [Address],
+    // [AreaCode], [JobDescription], [JobCode], [Skills], [PayRate], [PayRateTypeID],
+    // [PayRateCurrencyTypeID], [PayRateTaxTermID], [BillRate], [BillRateTypeID],
+    // [BillRateCurrencyTypeID], [BillRateTaxTermID], [JobTypeID], [LegalStatus], [JobStausID],
+    // [NoOfPosition], [RespondDate], [ClientID], [EndClient], [ClientJobID], [PriorityID],
+    // [Duration], [InterviewMode], [SecruityClearance], [PrimaryRecruiterID], [RecruitmentManagerID],
+    // [SalesManagerID], [AccountManagerID], [TaxTermID], [Comments], [Active], [CreateTime],
+    // [CreateBy], [LastUpdateTime], [LastUpdateBy], [MinYearsOfExpInMonths], [JobStatus], [OrgID])
+    // VALUES
+    // ('${req.body.RecruiterID}', '${req.body.JobTitle}', '${req.body.Company}', '${req.body.City}',
+    // '${req.body.State}', '${req.body.Country}', '${req.body.ZipCode}', '${req.body.Address}',
+    // '${req.body.AreaCode}', '${req.body.JobDescription}', '${req.body.JobCode}', '${req.body.Skills}',
+    // '${req.body.PayRate}', '${req.body.PayRateTypeID}', '${req.body.PayRateCurrencyTypeID}',
+    // '${req.body.PayRateTaxTermID}', '${req.body.BillRate}', '${req.body.BillRateTypeID}',
+    // '${req.body.BillRateCurrencyTypeID}', '${req.body.BillRateTaxTermID}', '${req.body.JobTypeID}',
+    // '${req.body.LegalStatus}', '${req.body.JobStausID}', '${req.body.NoOfPosition}',
+    // '${req.body.RespondDate}', '${req.body.ClientID}', '${req.body.EndClient}', '${req.body.ClientJobID}',
+    // '${req.body.PriorityID}', '${req.body.Duration}', '${req.body.InterviewMode}', '${req.body.SecruityClearance}',
+    // '${req.body.PrimaryRecruiterID}', '${req.body.RecruitmentManagerID}', '${req.body.SalesManagerID}',
+    // '${req.body.AccountManagerID}', '${req.body.TaxTermID}', '${req.body.Comments}', '${req.body.Active}',
+    // GETDATE(), '${req.body.CreateBy}', GETDATE(), '${req.body.LastUpdateBy}', '${req.body.MinYearsOfExpInMonths}',
+    // '${req.body.JobStatus}', '${req.body.OrgID}')
 
-    `;
+    // `;
 
-    console.log(query);
+    // console.log(query);
 
-    // Execute the query
-    await request.query(query);
+    // // Execute the query
+    // await request.query(query);
 
-    if(req.body.DicePostjob == 1){
-      
-        const taxterm = reqBody.JobTypeID === 1 ? 'FULLTIME' :
-        reqBody.JobTypeID === 2 ? 'CON_W2' :
-        reqBody.JobTypeID === 3 ? 'PARTTIME' : '';
+    for(var i=0;i<jobbaordaccount.length;i++){
+      console.log(jobbaordaccount[i].JobBoardID);
+      if(jobbaordaccount[i].JobBoardID == 2){
+        
+          const taxterm = req.body.JobTypeID === 1 ? 'FULLTIME' :
+          req.body.JobTypeID === 2 ? 'CON_W2' :
+          req.body.JobTypeID === 3 ? 'PARTTIME' : '';
 
-        const reqBody = {
-        positionid: req.body.JobCode,
-        diceid: 'yourdiceid',
-        taxterm: taxterm,
-        allowrecruiterapplies: 'Y',
-        country: 'US',
-        state: req.body.State,
-        postalcode: req.body.ZipCode,
-        location: req.body.Address,
-        areacode: req.body.AreaCode,
-        company: req.body.Company,
-        companystate: req.body.State,
-        companyzip: req.body.ZipCode,
-        addr1: req.body.Address,
-        payrate: req.body.PayRate,
-        jobtitle: req.body.JobTitle,
-        skillsreq: req.body.Skills,
-        comments: req.body.JobDescription,
-        applylink:'https://tresume.us/applyjob/'+req.body.JobCode
-        };
+          const reqBody = {
+          positionid: req.body.JobCode,
+          diceid: 'yourdiceid',
+          taxterm: taxterm,
+          allowrecruiterapplies: 'Y',
+          country: 'US',
+          state: req.body.State,
+          postalcode: req.body.ZipCode,
+          location: req.body.Address,
+          areacode: req.body.AreaCode,
+          company: req.body.Company,
+          companystate: req.body.State,
+          companyzip: req.body.ZipCode,
+          addr1: req.body.Address,
+          payrate: req.body.PayRate,
+          jobtitle: req.body.JobTitle,
+          skillsreq: req.body.Skills,
+          comments: req.body.JobDescription,
+          applylink:'https://tresume.us/applyjob/'+req.body.JobCode
+          };
 
-        const batchContent = generateBatchFile(reqBody);
+          const batchContent = generateBatchFile(reqBody);
 
-        fs.writeFile('batchFile.txt', batchContent, (err) => {
-        if (err) {
-        console.error('Error writing batch file:', err);
-        return;
-        }
+          fs.writeFile('jobs.txt', batchContent, (err) => {
+          if (err) {
+          console.error('Error writing batch file:', err);
+          return;
+          }
 
-        console.log('Batch file created successfully');
+          console.log('Batch file created successfully');
 
-        const mailOptions = {
-        from: 'support@tresume.us',
-        to: 'wilson@dmsol.in',
-        subject: 'Batch Posting Request',
-        text: 'Please find attached the batch file for job posting',
-        attachments: [
-        {
-        filename: 'batchFile.txt',
-        path: './batchFile.txt'
-        }
-        ]
-        };
+          const mailOptions = {
+          from: 'jobpostings@dmsol.in',
+          to: 'wilson@dmsol.in',
+          subject: 'Batch Posting Request',
+          text: 'Please find attached the batch file for job posting',
+          attachments: [
+          {
+          filename: 'jobs.txt',
+          path: './jobs.txt'
+          }
+          ]
+          };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-        console.error('Error sending email:', error);
-        } else {
-        console.log('Email sent:', info.response);
-        }
-        });
-        });
+          transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+          console.error('Error sending email:', error);
+          } else {
+          console.log('Email sent:', info.response);
+          }
+          });
+          });
+      }
     }
-
     // Send success response
     res.status(200).json({ success: true, message: 'Job inserted successfully.' });
   } catch (err) {
@@ -511,7 +514,7 @@ router.post('/DiceJobPost', async (req, res) => {
   const batchContent = generateBatchFile(reqBody);
   
   // Write the batch content to a text file
-  fs.writeFile('batchFile.txt', batchContent, (err) => {
+  fs.writeFile('jobs.txt', batchContent, (err) => {
     if (err) {
       console.error('Error writing batch file:', err);
       return;
@@ -521,14 +524,14 @@ router.post('/DiceJobPost', async (req, res) => {
   
     // Send email with the batch file attached
     const mailOptions = {
-      from: 'support@tresume.us',
+      from: 'jobpostings@dmsol.in',
       to: 'wilson@dmsol.in',
       subject: 'Batch Posting Request',
       text: 'Please find attached the batch file for job posting',
       attachments: [
         {
-          filename: 'batchFile.txt',
-          path: './batchFile.txt'
+          filename: 'jobs.txt',
+          path: './jobs.txt'
         }
       ]
     };

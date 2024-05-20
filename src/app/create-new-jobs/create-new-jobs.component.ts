@@ -297,10 +297,12 @@ getCity() {
       console.log(Req);
       this.service.PostJob(Req).subscribe(
           (x: any) => {
+            this.loading = false;
               this.messageService.add({ severity: 'success', summary: 'Job Posted Successfully' });
               this.router.navigate(['/jobpostings']);
           },
           (error: any) => {
+            
               // Error callback
               this.messageService.add({ severity: 'danger', summary: 'Job Not Posted. Please Try Again' });
               console.error('Error occurred:', error);
