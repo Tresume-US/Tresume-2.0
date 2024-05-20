@@ -1936,6 +1936,14 @@ router.post('/sendEmail', async (req, res) => {
 
   const approveLink = `http://localhost:4200/update-timesheet/:${timesheetId}/2`;
 
+  await sql.connect(config);
+  const request = new sql.Request();
+  const query = `SELECT username from trainee where traineeid = ${timesheetAdmin}`;
+
+  console.log(query);
+  const result = await request.query(query);
+  var recepienteamil = result.recordset[0].username
+  console.log(recepienteamil);
   if (!tableData) {
     return res.status(400).send('Table data is missing in the request.');
   }
@@ -1953,6 +1961,8 @@ router.post('/sendEmail', async (req, res) => {
 
   if (timesheet_role == 3) {
     var tableHtml = `
+    <h3 style="text-align: center; font-family: Roboto, Arial, sans-serif;">TimeSheet
+    </h3>
     <p>Candidate id: ${CandidateNumber}</p>
     <p>Week Start Date: ${weekStartDate}</p>
     <p>Week End Date: ${weekEndDate}</p>
@@ -1960,16 +1970,16 @@ router.post('/sendEmail', async (req, res) => {
     <table border="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
     <thead style="background-color: #e5d6f3;">
       <tr>
-        <th style="padding: 8px; border: 1px solid #ddd;">Candidate Name</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Project Name</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Mon</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Tue</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Wed</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Thu</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Fri</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Sat</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Sun</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Total Hours</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Candidate Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Project Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Mon</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Tue</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Wed</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Thu</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Fri</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Sat</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Sun</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Total Hours</th>
       </tr>
     </thead>
     <tbody>
@@ -1979,16 +1989,16 @@ router.post('/sendEmail', async (req, res) => {
       const backgroundColor = index % 2 === 0 ? '#ffffff' : '#f2f2f2'; 
       tableHtml += `
         <tr style="background-color: ${backgroundColor};">
-          <td style="padding: 8px; border: 1px solid #ddd;">${candidateName}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${projectName}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.mon}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.tues}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.wed}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.thu}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.fri}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.sat}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.sun}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${TotalHours}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${candidateName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${projectName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.mon}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.tues}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.wed}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.thu}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.fri}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.sat}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.sun}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${TotalHours}</td>
         </tr>
       `;
     });
@@ -2002,26 +2012,24 @@ router.post('/sendEmail', async (req, res) => {
   // <a href="https://www.tresume.us" target="_blank" style="color:red;font-size:20px;cursor:pointer;margin-left: 15px;margin-right: 15px;"><b>Reject</b></a>
   } else if (timesheet_role == 2) {
     var tableHtml = `
-    <h3><i> Updated the timesheet data.<i> </h3>
-    <br>
     <p>Candidate Name: ${candidateName}</p>
     <p>Project Name: ${projectName}</p>
     <p>Week Start Date: ${weekStartDate}</p>
     <p>Week End Date: ${weekEndDate}</p>
     <br>
-    <table border="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+    <table border="0" style="border-collapse: collapse; width: 100%; margin-top: 20px;font-size:12px">
     <thead style="background-color: #e5d6f3;">
       <tr>
-        <th style="padding: 8px; border: 1px solid #ddd;">Candidate ID</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Project Name</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Mon</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Tue</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Wed</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Thu</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Fri</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Sat</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Sun</th>
-        <th style="padding: 8px; border: 1px solid #ddd;">Total Hours</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Candidate ID</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Project Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Mon</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Tue</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Wed</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Thu</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Fri</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Sat</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Sun</th>
+        <th style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">Total Hours</th>
       </tr>
     </thead>
     <tbody>
@@ -2031,16 +2039,16 @@ router.post('/sendEmail', async (req, res) => {
       const backgroundColor = index % 2 === 0 ? '#ffffff' : '#f2f2f2';
       tableHtml += `
         <tr style="background-color: ${backgroundColor};">
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.id}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${projectName}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.mon}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.tues}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.wed}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.thu}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.fri}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.sat}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.sun}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${row.totalHours}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${candidateName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${projectName}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.mon}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.tues}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.wed}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.thu}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.fri}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.sat}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.sun}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;font-size: 10px;font-family: Roboto, Arial, sans-serif;">${row.totalHours}</td>
         </tr>
       `;
     });
@@ -2052,9 +2060,79 @@ router.post('/sendEmail', async (req, res) => {
   
   const mailOptions = {
     from: 'support@tresume.us',
-    to: ' ${timesheetAdmin}',
-    subject: 'Table Data',
-    html: tableHtml
+    to: recepienteamil,
+    subject: 'Timesheet submitted for '+weekStartDate+' to '+weekEndDate+ ' - '+candidateName,
+    html: `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tresume</title>
+    <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: Roboto, Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background-color: #49274a;
+            padding: 20px 0;
+     
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+        }
+        .content {
+            padding: 40px 20px;
+            background-color: #f7f9fa;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+        .footer {
+            text-align: center;
+            background-color: #e7e7e7;
+            padding: 20px 0;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        .footer p {
+            font-size: 12px;
+            color: #8d8d8d;
+        }
+        .footer img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    </style>
+    </head>
+    <body style="background-color: #49274a;">
+    <div class="container">
+        <div class="header">
+            <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
+        </div>
+        <div class="content">
+            ${tableHtml}
+        </div>
+        <div class="footer">
+            <p>POWERED BY <img src="https://tresume.us/assets/img/logo.png" alt="Tresume Logo" height="30"></p>
+            <p> 44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
+            <p>(703) 9863350 | support@tresume.us </p>
+            <p style="font-weight: bold; font-size: 12px; color: #a4a4a4;">© 2024 Tresume. Ltd. All rights reserved</p>
+        </div>
+    </div>
+    </body>
+    </html>
+    
+    `
   };
 
   try {
