@@ -712,30 +712,39 @@ export class SearchResumesMonsterComponent implements OnInit {
             this.service.jobBoardAudit(auditReq).subscribe(x => { });
         }
 
-        this.service.getMonsterSearch(req).subscribe((x: any) => {
-            this.loading = false;
-            this.resultsFound = false;
-            let response = x;
-            this.rowData = response.candidates;
-            if (this.rowData.length > 0) {
+        this.service.getMonsterSearch(req).subscribe(
+            (x: any) => {
+              this.loading = false;
+              this.resultsFound = false;
+              let response = x;
+              this.rowData = response.candidates;
+              if (this.rowData.length > 0) {
                 this.resultsFound = true;
                 this.totalResults = response.boards[0].matched;
-                this.rowData.map((items: any) => {
-                    items.migrated = this.migratedProfiles.find(x => x.ATSID == items.identity.textResumeID) ? true : false;
-                    if (this.showcrediterror == true) {
-                        items.showmigrated = this.migratedProfiles.find(x => x.ATSID == items.EdgeID) ? true : false;
-                    }
-                    let item: any = items.relevance;
-                    if (item.skills) {
-                        items.skills = [];
-                        item.skills.forEach((itm: any) => {
-                            items.skills.push(itm.name);
-                        });
-                    }
+                this.rowData.forEach((items: any) => {
+                  items.migrated = this.migratedProfiles.find(x => x.ATSID == items.identity.textResumeID) ? true : false;
+                  if (this.showcrediterror) {
+                    items.showmigrated = this.migratedProfiles.find(x => x.ATSID == items.EdgeID) ? true : false;
+                  }
+                  let item: any = items.relevance;
+                  if (item.skills) {
+                    items.skills = [];
+                    item.skills.forEach((itm: any) => {
+                      items.skills.push(itm.name);
+                    });
+                  }
                 });
+              }
+              console.log('this.rowData', this.rowData);
+            },
+            (error: any) => {
+              // Error callback
+              console.error('Error occurred:', error);
+              // Handle error here
+              this.loading = false; // Set loading to false on error
             }
-            console.log('this.rowData', this.rowData)
-        });
+          );
+          
     }
 
     pageChanged(event: PageChangedEvent): void {
