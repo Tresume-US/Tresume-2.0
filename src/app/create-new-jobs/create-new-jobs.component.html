@@ -154,7 +154,7 @@
                     <div class="col-md-6 ">
                       <div class="form-group text-center">
                         <select [(ngModel)]="selectedcPayType" [ngModelOptions]="{ standalone: true }" name="payType" id="payType" class="form-control">
-                          <option value="">Select</option>
+                          <option value="0">Select</option>
                           <option *ngFor="let payType of payTypes" [value]="payType.PayTypeID">{{ payType.Value }}</option>
                         </select>
                       </div>
@@ -163,7 +163,7 @@
                     <div class="col-md-6 ">
                       <div class="form-group text-center">
                         <select [(ngModel)]="selectedcTaxTerms" name="taxTerm" id="taxTerm" class="form-control">
-                          <option value="">Select</option>
+                          <option value="0">Select</option>
                           <option *ngFor="let term of taxTerms" [value]="term.TaxTermID">{{ term.Value }}</option>
                         </select>
                       </div>
@@ -197,7 +197,7 @@
                     <div class="col-md-6">
                       <div class="form-group text-center">
                         <select [(ngModel)]="selectedPayType" name="payType" id="payType" class="form-control">
-                          <option value="">Select</option>
+                          <option value="0">Select</option>
                           <option *ngFor="let payType of payTypes" [value]="payType.PayTypeID">{{ payType.Value }}</option>
                         </select>
                       </div>
@@ -206,7 +206,7 @@
                     <div class="col-md-6 ">
                       <div class="form-group text-center">
                         <select [(ngModel)]="selectedTaxTerms" name="taxTerm" id="taxTerm" class="form-control">
-                          <option value="">Select</option>
+                          <option value="0">Select</option>
                           <option *ngFor="let term of taxTerms" [value]="term.TaxTermID">{{ term.Value }}</option>
                         </select>
                       </div>
@@ -227,7 +227,7 @@
                   <div class="form-group text-center">
                     <label for="JobType">Job Type</label>
                     <select [(ngModel)]="selectedJobType" [ngModelOptions]="{ standalone: true }" name="JobType" id="JobType" class="form-control">
-                      <option value="">Select</option>
+                      <option value="0">Select</option>
                       <option *ngFor="let option of jobTypeOptions" [value]="option.JobTypeID">{{ option.Value }}</option>
                     </select>
                   </div>
@@ -237,7 +237,7 @@
                     <label class="post_jobs_contant post_jobs_font_clr">Priority</label>
                     <br>
                     <select [(ngModel)]="selectedPriority" [ngModelOptions]="{ standalone: true }" name="Priority" id="Priority" class="form-control">
-                      <option value="">Select</option>
+                      <option value="0">Select</option>
                       <option *ngFor="let option of priorityOptions" [value]="option.PriorityID">{{ option.Value }}</option>
                     </select>
                   </div>

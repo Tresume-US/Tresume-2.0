@@ -32,8 +32,8 @@ export class CreateNewJobsComponent{
   jobtitle:string='';
   zipcode:string='';
   citycode:string='';
-  billrate:string='';
-  payrate:string='';
+  billrate:string='0';
+  payrate:string='0';
   basicInfo: any;
   reqInfo: any;
   orgInfo: any;
@@ -62,19 +62,19 @@ export class CreateNewJobsComponent{
   
   currencies: string[] = [];
 
-  selectedPayType: string = 'hour';
-  selectedcPayType: string = 'hour';
+  selectedPayType: string = '1';
+  selectedcPayType: string = '1';
   payTypes: string[] = ['hour', 'day', 'week', 'bi-week', 'month', 'year'];
 
 
-  selectedTaxTerms: string = '';
-  selectedcTaxTerms: string = '';
+  selectedTaxTerms: string = '0';
+  selectedcTaxTerms: string = '0';
   taxTerms: any[];
   internaltaxterms:string='';
   selectedRespondBy: Date; 
-  selectedJobType: string = ''; 
+  selectedJobType: string = '0'; 
   jobTypeOptions: any[];
-  selectedPriority: string = '';
+  selectedPriority: string = '0';
   priorityOptions: any[];
   selectedJobStatus: any = '';
   jobStatusOptions: any[];  
