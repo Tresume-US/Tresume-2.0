@@ -1783,3 +1783,23 @@ ul.navbar-nav.mr-auto {
   width: 100%;
 }
 
+
+
+.banner-area {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust the height as needed */
+  overflow: hidden;
+}
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-white {
+  background-color: #fff0 !important;
+}
