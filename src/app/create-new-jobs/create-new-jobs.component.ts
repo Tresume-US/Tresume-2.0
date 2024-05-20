@@ -95,7 +95,7 @@ export class CreateNewJobsComponent{
     { value: 'Zoom', label: 'Zoom' },
     { value: 'Other', label: 'Other' }
   ];
-  selectedExperience: number; 
+  selectedExperience: number=0; 
   public content:any;
    selectedTaxTerm: any;
   selectedDepartment: any;
