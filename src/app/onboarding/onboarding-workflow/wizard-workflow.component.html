@@ -343,7 +343,7 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                 <button mat-button class="btn btn-primary action-button" (click)="uploadAdhocDoc(adhocDocItem)">
                     Upload
                 </button>
-                <button mat-button class="btn btn-primary action-button" (click)="uploadAdhocDoc(adhocDocItem)">
+                <button mat-button class="btn btn-primary action-button" (click)="sendeamil()">
                     Request
                 </button>
             </div>
@@ -396,7 +396,10 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                 </div>
                 <div style="display: flex; justify-content: space-evenly; padding-top: 30px;">
                     <button mat-button class="btn btn-primary action-button" (click)="uploadAdhocDoc(adhocDocItem)">
-                        Upload and Request
+                        Upload
+                    </button>
+                    <button mat-button class="btn btn-primary action-button" (click)="sendeamil()">
+                        Request
                     </button>
                 </div>
             </div>
@@ -494,7 +497,10 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
             </div>
             <div style="display: flex; justify-content: space-evenly; padding-top: 30px;">
                 <button mat-button class="btn btn-primary action-button" (click)="uploadeSignDoc(adhocDocItem)">
-                    Upload and Request
+                    Upload
+                </button>
+                <button mat-button class="btn btn-primary action-button" (click)="sendeamil()">
+                    Request
                 </button>
             </div>
         </div>
