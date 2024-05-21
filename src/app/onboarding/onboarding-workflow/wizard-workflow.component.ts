@@ -353,18 +353,19 @@ export class WizardWorkflowComponent implements OnInit {
             this.stepperPercentage = (this.stepper2.selectedIndex / (this.stepper2.steps.length - 1)) * 100;
         }
         else {
-            let requestItem: any = {
-                onboardID: this.onboardId,
-                docTypeName: item.DocTypeName,
-                docTypeID: item.DocTypeID,
-                requested: this.requested[i] ? 1 : 0,
-                docNote: item?.note || '',
-                additionalChecklistID: ''
-            }
+            alert("Please Upload a File");
+            // let requestItem: any = {
+            //     onboardID: this.onboardId,
+            //     docTypeName: item.DocTypeName,
+            //     docTypeID: item.DocTypeID,
+            //     requested: this.requested[i] ? 1 : 0,
+            //     docNote: item?.note || '',
+            //     additionalChecklistID: ''
+            // }
 
-            this.service.savefilepath(requestItem).subscribe(x => {
+            // this.service.savefilepath(requestItem).subscribe(x => {
 
-            });
+            // });
         }
         /* let requestItem: any = {
             onboardID: this.onboardId,
@@ -378,6 +379,10 @@ export class WizardWorkflowComponent implements OnInit {
 
         }); */
 
+    }
+
+    sendeamil(){
+        this.sendEmailonAdhocReq();
     }
 
     afterUploads() {
