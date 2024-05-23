@@ -19,9 +19,12 @@ export class HomeComponent implements OnInit {
   }
 
 
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   const offset = window.scrollY;
-  //   this.isScrolled = offset > 50;
-  // }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const offset = window.scrollY;
+    this.isScrolled = offset > 50;
+  }
+
+
 }
+
