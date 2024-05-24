@@ -506,7 +506,7 @@
   </button>
   <div class="collapse navbar-collapse pt-5" id="navbarSupportedContent" [ngClass]="{ show: isNavbarCollapsed }">
     <ul class="navbar-nav">
-      <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           Products
         </a>
@@ -535,9 +535,60 @@
 
       <li class="nav-item">
         <a class="login-btn-web bn5" style="margin: 0; color: black" routerLink="/login">Login</a>
-        
-      </li>
+      </li> -->
+
     </ul>
+  </div>
+  <div class="float-end" style="display: flex;">
+    <li class="nav-item mr-5">
+      <a class="login-btn-web bn5" style=" color: black" routerLink="/login">Login</a>
+    </li>
+    <li>
+      <div class="menucontainer">
+        <!-- Menu Icon -->
+        <div class="menu-icon mt-0" (click)="toggleMenu()">
+          <div *ngIf="!menuOpen" class="bn5 bn8"><i class="fas fa-bars"></i></div>
+          <div *ngIf="menuOpen" class=" bn5 bn8"><i class="fas fa-times"></i></div>
+        </div>
+
+        <!-- Menu Overlay -->
+        <div class="menu-overlay" [ngClass]="{'open': menuOpen}">
+          <ul class="menu-list">
+            <li class="nav-item active">
+              <a class="nav-link" routerLink="/market">Marketplace</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/contact">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="login" routerLink="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+  </div>
+
+  <div class="dots-container" style="margin-top: 23%;">
+    <a href="#ats" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#talentsuit" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#workforce" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#timesheet" class="dot-link">
+      <div class="dot"></div>
+    </a>
   </div>
 </nav>
 
@@ -546,68 +597,11 @@
     <source src="assets/videos/landing.mp4" type="video/mp4" />
   </video>
 </div>
-
-<section class="ats">
-  <h2 class="text-center tittle mt-0 pt-4" style="color: white;">Manual to Tresume Magical ATS:</h2>
-  <span class="animate-border mr-auto ml-auto mb-4"></span>
-  <div class="row">
-    <div class="col-md-4" style="padding-top: 10%;">
-      <p style="
-          padding: 7px;
-          text-align: justify;
-          font-size: 18px;
-          margin-bottom: 30px;
-          font-family: monospace;
-        ">
-        Introducing Tresume, the epitome of recruitment innovation, designed to
-        propel your hiring process into a realm of unparalleled excellence. Our
-        state-of-the-art TalentPro Applicant Tracking System harnesses the power
-        of cutting-edge AI technology, elevating efficiency and optimization to
-        extraordinary heights. Unleash the full potential of RecruitXcel and
-        experience a seamless JobConnect journey like never before. With its
-        intuitive interface and advanced functionalities, this HireSmart tool
-        redefines how you attract and engage top-notch talent.
-      </p>
-    </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4" style="padding-top: 10%;">
-      <ul class="list-unstyled">
-        <li style="font-size: 18px; margin-bottom: 30px; font-family: monospace">
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Say goodbye to manual job posting and tedious candidate selection, as
-          our SkillTrack ATS effortlessly streamlines every aspect of the hiring
-          process.
-        </li>
-        <li style="font-size: 18px; margin-bottom: 30px; font-family: monospace">
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Harness the might of our meticulously crafted TalentTrac AI
-          algorithms, finely tuned to intelligently match candidates with
-          precise job requirements.
-        </li>
-        <li style="font-size: 18px; margin-bottom: 30px; font-family: monospace">
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          SwiftHire liberates your valuable time and energy, ensuring that you
-          focus on what truly matters – finding the perfect fit for your
-          organization.
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- <div class="col-md-6">
-      <img src="../../../assets/img/ats.png" alt="Image" class="img-fluid" style="margin-left: 53px;" />
-    </div> -->
-</section>
-
-<!-- app.component.html or the relevant template file -->
-<section id="dice" class="content pb-4" [ngClass]="{ 'section-with-border': isScrolled }" style="background-color: rgb(230, 105, 103)">
-  <div class="container pt-4">
-    <h2 class="text-center tittle" style="color: white;">
-      All Integrations > Premium Dice Job Board
-    </h2>
-    <span class="animate-border mr-auto ml-auto mb-4"></span>
-  </div>
-  <div class="row">
-    <div class="col-md-3 m-4">
+<section class="ats pb-5 transition-section">
+  <h2 class="text-center tittle mt-0 pt-4 " style="color: white;">Tresume Magical ATS</h2>
+  <span class="animate-border mr-auto ml-auto mb-5"></span>
+  <div class="row" style="margin-left:17%;">
+    <div class="col-md-3">
       <div class="card" style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)">
         <div class="text-center">
           <img src="../../../assets/img/dice.png" style="height: 6rem; width: 14rem" alt="Logo" />
@@ -622,131 +616,28 @@
         </div>
       </div>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-7">
-      <h1 style="font-size: 30px; font-weight: bold">Dice Job Board</h1>
-      <p style="
-          font-size: 20px;
-          padding: 20px;
-          font-weight: 400;
-          font-style: italic;
-          letter-spacing: 2px;
-          text-align: justify;
-        ">
-        Integrating Dice Job Board with your platform is a strategic move to
-        enhance your recruitment capabilities. Dice is a specialized tech job
-        board, focusing on connecting technology professionals with leading
-        employers in the industry. By incorporating Dice into your system, you
-        gain access to a vast pool of tech talent and streamline your hiring
-        process..
-      </p>
-      <h1 style="font-size: 30px; font-weight: bold">Overview</h1>
-      <ul style="
-          font-size: 15px;
-          letter-spacing: 2px;
-          font-weight: 400;
-          font-style: normal;
-          list-style: none;
-          padding-left: 0;
-        ">
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Tech-Focused Talent Pool: Dice specializes in tech roles, ensuring
-          that your job listings reach a highly targeted and qualified audience
-          in the technology sector.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Skill-Centric Matching: Leverage Dice's advanced algorithms for
-          skill-centric matching, connecting you with candidates whose expertise
-          aligns with your job requirements.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Industry-Specific Visibility: Enhance the visibility of your
-          tech-related job opportunities by showcasing them on Dice, a platform
-          known and trusted by technology professionals.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Efficient Hiring Process: Streamline your recruitment process by
-          seamlessly posting and managing tech job listings on both your
-          platform and Dice simultaneously.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Real-Time Updates: Ensure that your tech job listings stay up-to-date
-          across platforms with real-time synchronization between your job board
-          and Dice.
-        </li>
-      </ul>
+    <div class="col-md-3" style="margin-top: 8%;">
+      <div class="card" style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)">
+        <div class="text-center">
+          <img src="../../../assets/img/monster_logo.svg" alt="Logo" />
+          <div class="card-body" style="display: flex; flex-flow: column;">
+            <h2 class="card-title">Monster</h2>
+            <h3 class="card-subtitle mb-3 text-muted" style="font-weight: bold">
+              Premium Job Board
+            </h3>
+            <div class="button-group">
+              <a href="/"><button class="bn632-hover bn24">Book a Demo</button></a>
+              <a href="/"><button class="bn632-hover bn24">Start Free Trial</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
-
-<section id="cb" class="content pb-4" style="background-color: #808080;">
-  <h2 class="text-center tittle pt-3" style="color: white;"> All Integrations > Premium Career Builder Job Board </h2>
-  <span class="animate-border mr-auto ml-auto mb-4"></span>
-  <div class="row ml-4">
-    <div class="col-md-8">
-      <h1 style="font-size: 30px; font-weight: bold">Career Builder</h1>
-      <p style="
-            font-size: 20px;
-            padding: 20px;
-            font-weight: 400;
-            font-style: italic;
-            letter-spacing: 2px;
-            text-align: justify;
-          ">
-        Integrating CareerBuilder Job Board with your platform is a strategic
-        move to amplify your recruitment capabilities. CareerBuilder is a
-        widely recognized online employment website, connecting job seekers
-        with employers across various industries. By incorporating
-        CareerBuilder into your system, you gain access to a diverse talent
-        pool and enhance your hiring process..
-      </p>
-      <h1 style="font-size: 30px; font-weight: bold">Overview</h1>
-      <ul style="
-            font-size: 15px;
-            letter-spacing: 2px;
-            font-weight: 400;
-            font-style: normal;
-            list-style: none;
-            padding-left: 0;
-          ">
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Diverse Talent Pool: CareerBuilder boasts a vast and diverse pool of
-          job seekers across different industries, providing you with a wide
-          range of candidates for your job listings.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Targeted Recruitment: Utilize Monster's advanced filtering and
-          matching algorithms to connect with candidates who possess the
-          skills and experience you're looking for.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Industry Visibility: Increase the visibility of your job
-          opportunities by showcasing them on CareerBuilder, a platform
-          trusted by job seekers and employers alike.
-        </li>
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Efficient Hiring Process: Streamline your recruitment workflow by
-          seamlessly posting and managing job listings on both your platform
-          and CareerBuilder simultaneously.
-        </li>
-      </ul>
-
-    </div>
-    <!-- <div class="col-md-1"></div> -->
-    <div class="col-md-3 ml-5 mt-5">
+    <div class="col-md-3">
       <div class="card" style="
-            box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75);
-          
-          ">
+          box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75);
+        
+        ">
         <div class="text-center">
           <img src="../../../assets/img/cb.png" alt="Logo" />
           <div class="card-body" style="display: flex; flex-flow: column; margin-right: 120px">
@@ -761,91 +652,12 @@
       </div>
     </div>
   </div>
+
 </section>
 
-<section id="Monster" class="content pb-4" style="background-color: #ADD8E6;">
-  <h2 class="text-center tittle  pt-3">
-    All Integrations > Premium Monster Job Board
-  </h2>
-  <span class="animate-border mr-auto ml-auto mb-4"></span>
-  <div class="row">
-    <div class="col-md-3 left-card m-5" style="margin-top: 30px;">
-      <div class="card" style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)">
-        <div class="text-center">
-          <img src="../../../assets/img/monster_logo.svg" alt="Logo" />
-          <div class="card-body" style="display: flex; flex-flow: column;">
-            <h2 class="card-title">Monster</h2>
-            <h3 class="card-subtitle mb-3 text-muted" style="font-weight: bold">
-              Premium Job Board
-            </h3>
-            <div class="button-group">
-              <a href="/"><button class="bn632-hover bn24">Book a Demo</button></a>
-              <a href="/"><button class="bn632-hover bn24">Start Free Trial</button></a>
-            </div>
+<!-- app.component.html or the relevant template file -->
 
-            <!-- <p class="card-text" style="font-style: italic;font-size: 20px;">Monster: Your job search superhero. Unite top
-                        talent and eager employers effortlessly with our turbocharged Free Job Board integration.
-                        Your secret weapon for building the dream team. Unleash the power of Monster on your
-                        webpage—let the recruiting adventures begin! 🚀</p> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-7 ml-5">
-      <h1 style="font-size: 30px; font-weight: bold">Monster</h1>
-      <p style="
-          font-size: 20px;
-          padding: 20px;
-          font-weight: 400;
-          font-style: italic;
-          letter-spacing: 2px;
-          text-align: justify;
-        ">
-        In today's competitive job market, connecting with top talent is
-        essential for the success of any organization. By integrating Monster,
-        a leading job search and recruitment platform, with your Free Job
-        Board, you can supercharge your hiring process and attract the right
-        candidates effortlessly.
-      </p>
-      <h1 style="font-size: 30px; font-weight: bold">Over View:</h1>
-      <ul class="list-unstyled" style="
-          font-size: 15px;
-          letter-spacing: 2px;
-          font-weight: 400;
-          font-style: normal;
-        ">
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Wider Reach: Leverage Monster's extensive reach to showcase your job
-          opportunities to millions of job seekers globally.
-        </li>
-        <br />
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Targeted Recruitment: Utilize Monster's advanced filtering and
-          matching algorithms to connect with candidates who possess the
-          skills and experience you're looking for.
-        </li>
-        <br />
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Streamlined Process: Simplify your recruitment workflow by
-          seamlessly posting and managing your job listings from your Free Job
-          Board directly to Monster.
-        </li>
-        <br />
-        <li>
-          <i class="fas fa-check-circle text-success" style="font-size: 20px; vertical-align: middle"></i>
-          Increased Visibility: Stand out among competitors by featuring your
-          jobs on Monster's high-traffic platform, giving your vacancies the
-          exposure they deserve.
-        </li>
-        <br />
-      </ul>
-    </div>
-  </div>
-</section>
-<section id="talentsuit" class="content pb-4" style="background-color: green">
+<section id="talentsuit" class="content pb-4" >
   <h2 class="text-center tittle  pt-3">
     Talent Suite
   </h2>
@@ -877,111 +689,7 @@
         " />
     </div>
   </div>
-  <h2 class="text-center tittle">Key Features And Benefits</h2>
-  <span class="animate-border mr-auto ml-auto mb-4"></span>
-  <div class="row">
-    <div class="col-md-6 ml-4">
-      <img src="../../../assets/img/doci.jpg" alt="Workforce Image" style="
-            max-width: 106%;
-            height: 98%;
-            box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
-            border-radius: 20px;
-          " />
 
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-      <div class="text-content" style="margin-left: 6rem">
-        <h1 style="font-size: 40px; font-weight: bold">
-          Centralized Platform
-        </h1>
-        <br /><br />
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-          With Tresume Talent Suite, access all our solutions and features
-          from a single, user-friendly platform. Streamline your HR
-          processes, save time, and improve productivity with an integrated
-          talent management system.
-        </h5>
-        <br />
-      </div>
-    </div>
-  </div>
-  <div class="row mt-4 ml-4">
-    <div class="col-md-4">
-      <div class="text-content">
-        <h1 style="font-size: 35px; font-weight: bold; margin-top: 3rem">
-          Scalability and Customization
-        </h1>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-          Whether you're a small business or an enterprise, Tresume Talent
-          Suite offers scalability to meet your organization's growing needs.
-          Customize your talent management workflows, reports, and
-          configurations to align with your unique requirements.
-        </h5>
-      </div>
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-6">
-      <img src="../../../assets/img/general.png" alt="Workforce Image" style="
-        max-width: 130%;
-        height: 80%;
-        box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
-        border-radius: 20px;
-      " />
-    </div>
-  </div>
-<div class="row ml-4">
-  <div class="col-md-6">
-      <img src="../../../assets/img/dashboard.jpg" alt="Workforce Image" style="
-          max-width: 114%;
-          box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
-          height: 90%;
-          border-radius: 20px;
-        " />
-  </div>
-  <div class="col-md-1"></div>
-  <div class="col-md-4">
-    <div class="text-content" style="margin-left: 6rem">
-      <h1 style="font-size: 40px; font-weight: bold">
-        Data-Driven Insights
-      </h1>
-      <br /><br />
-      <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-        Make informed decisions with our powerful analytics and reporting
-        capabilities. Gain valuable insights into your talent acquisition
-        metrics, workforce performance, and other key HR indicators,
-        empowering you to continuously optimize your strategies.
-      </h5>
-      <br /><br />
-    </div>
-  </div>
-</div>
-<div class="row ml-4">
-  <div class="col-md-4">
-    <div class="text-content">
-      <h1 style="font-size: 35px; font-weight: bold">
-        User-Friendly Interface
-      </h1>
-      <br /><br />
-      <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-        Keep track of the onboarding progress for each candidate with our
-        intuitive task tracking system. HR teams can easily monitor the
-        status of document collection, track completion rates, and identify
-        any outstanding items.
-      </h5>
-      <br /><br />
-    </div>
-  </div>
-  <div class="col-md-1"></div>
-  <div class="col-md-6">
-    <img src="../../../assets/img/ui.png" alt="Workforce Image" style="
-        max-width: 130%;
-        height: 80%;
-        border-radius: 20px;
-        box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
-      " />
-  </div>
-</div>
 </section>
 
 <section id="workforce" class="content pb-4" style="background-color: pink">
@@ -989,199 +697,199 @@
     Workforce
   </h2>
   <span class="animate-border mr-auto ml-auto mb-4"></span>
-    <div class="row ml-4">
-      <div class="col-md-4">
-        <div class="text-content">
-          <h1 style="font-size: 40px; font-weight: bold">
-            Simplifying Onboarding
-          </h1>
-          <h2 style="font-size: 40px; font-weight: bold">
-            Document Management
-          </h2>
-          <br /><br />
-          <h5 style="
+  <div class="row ml-4">
+    <div class="col-md-4">
+      <div class="text-content">
+        <h1 style="font-size: 40px; font-weight: bold">
+          Simplifying Onboarding
+        </h1>
+        <h2 style="font-size: 40px; font-weight: bold">
+          Document Management
+        </h2>
+        <br /><br />
+        <h5 style="
               letter-spacing: 2px;
               font-size: 15px;
               letter-spacing: 2px;
               text-align: justify;
             ">
-            Managing the onboarding process and ensuring compliance with
-            document collection can be a complex and time-consuming task. With
-            Tresume's Workforce module, we simplify onboarding and document
-            management by automating processes and providing a centralized
-            platform for collecting and managing onboarding documents.
-          </h5>
-          <br /><br />
-          <div class="button-group">
-            <a routerLink="/login"><button class="bn632-hover bn24">Book a Demo</button></a>
-            <a routerLink="/login"><button class="bn632-hover bn24">Start Free Trial</button></a>
-          </div>
+          Managing the onboarding process and ensuring compliance with
+          document collection can be a complex and time-consuming task. With
+          Tresume's Workforce module, we simplify onboarding and document
+          management by automating processes and providing a centralized
+          platform for collecting and managing onboarding documents.
+        </h5>
+        <br /><br />
+        <div class="button-group">
+          <a routerLink="/login"><button class="bn632-hover bn24">Book a Demo</button></a>
+          <a routerLink="/login"><button class="bn632-hover bn24">Start Free Trial</button></a>
         </div>
       </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-6">
-        <img src="../../../assets/img/wrk.png" alt="Workforce Image" style="
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <img src="../../../assets/img/wrk.png" alt="Workforce Image" style="
             max-width: 130%;
             height: 80%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             border-radius: 20px;
           " />
-      </div>
     </div>
-    <h2 class="text-center tittle">Key Features And Benefits</h2>
-    <span class="animate-border mr-auto ml-auto mb-4"></span>
-    <br /><br />
-    <div class="row ml-4">
-      <div class="col-md-6">
-        <img src="../../../assets/img/workk.png" alt="Workforce Image" style="
+  </div>
+  <h2 class="text-center tittle">Key Features And Benefits</h2>
+  <span class="animate-border mr-auto ml-auto mb-4"></span>
+  <br /><br />
+  <div class="row ml-4">
+    <div class="col-md-6">
+      <img src="../../../assets/img/workk.png" alt="Workforce Image" style="
             max-width: 114%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             border-radius: 20px;
             height: 90%;
           " />
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-4">
-        <div class="text-content" style="margin-left: 6rem">
-          <h1 style="font-size: 40px; font-weight: bold">
-            Document Collection
-          </h1>
-          <br /><br />
-          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-            Streamline the collection of onboarding documents for different
-            positions within your organization. Our platform allows you to
-            create customized checklists, ensuring tha all necessary documents
-            are collected from candidates, such as resumes, identification
-            proofs, certifications, and more
-          </h5>
-          <br /><br />
-        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+      <div class="text-content" style="margin-left: 6rem">
+        <h1 style="font-size: 40px; font-weight: bold">
+          Document Collection
+        </h1>
+        <br /><br />
+        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
+          Streamline the collection of onboarding documents for different
+          positions within your organization. Our platform allows you to
+          create customized checklists, ensuring tha all necessary documents
+          are collected from candidates, such as resumes, identification
+          proofs, certifications, and more
+        </h5>
+        <br /><br />
       </div>
     </div>
-    <hr />
-    <br /><br /><br />
-    <div class="row ml-4">
-      <div class="col-md-4">
-        <div class="text-content">
-          <h1 style="font-size: 35px; font-weight: bold">
-            Automated Reminders
-          </h1>
-          <h1 style="font-size: 35px; font-weight: bold">Notifications</h1>
-          <br /><br />
-          <h5 style="
+  </div>
+  <hr />
+  <br /><br /><br />
+  <div class="row ml-4">
+    <div class="col-md-4">
+      <div class="text-content">
+        <h1 style="font-size: 35px; font-weight: bold">
+          Automated Reminders
+        </h1>
+        <h1 style="font-size: 35px; font-weight: bold">Notifications</h1>
+        <br /><br />
+        <h5 style="
               letter-spacing: 2px;
               font-size: 15px;
               letter-spacing: 2px;
               text-align: justify;
             ">
-            Never miss an important document again. Tresume's Workforce module
-            sends automated reminders and notifications to candidates and HR
-            teams, ensuring a timely collection of required documents and
-            reducing manual follow-ups.
-          </h5>
-          <br /><br />
-        </div>
+          Never miss an important document again. Tresume's Workforce module
+          sends automated reminders and notifications to candidates and HR
+          teams, ensuring a timely collection of required documents and
+          reducing manual follow-ups.
+        </h5>
+        <br /><br />
       </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-6">
-        <img src="../../../assets/img/wrk.png" alt="Workforce Image" style="
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <img src="../../../assets/img/wrk.png" alt="Workforce Image" style="
             max-width: 130%;
             height: 80%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             border-radius: 20px;
           " />
-      </div>
     </div>
-    <br /><br />
-    <div class="row ml-4">
-      <div class="col-md-6">
-        <img src="../../../assets/img/document.png" alt="Workforce Image" style="
+  </div>
+  <br /><br />
+  <div class="row ml-4">
+    <div class="col-md-6">
+      <img src="../../../assets/img/document.png" alt="Workforce Image" style="
             max-width: 114%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             height: 90%;
             border-radius: 20px;
           " />
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-4">
-        <div class="text-content" style="margin-left: 6rem">
-          <h1 style="font-size: 40px; font-weight: bold">
-            Secure Document Storage
-          </h1>
-          <br /><br />
-          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-            Safely store and organize all onboarding documents in a secure and
-            centralized location.Our platform ensures data privacy and
-            compliance with industry regulations, providing peace of mind for HR
-            teams and candidates.
-          </h5>
-          <br /><br />
-        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+      <div class="text-content" style="margin-left: 6rem">
+        <h1 style="font-size: 40px; font-weight: bold">
+          Secure Document Storage
+        </h1>
+        <br /><br />
+        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
+          Safely store and organize all onboarding documents in a secure and
+          centralized location.Our platform ensures data privacy and
+          compliance with industry regulations, providing peace of mind for HR
+          teams and candidates.
+        </h5>
+        <br /><br />
       </div>
     </div>
-    <br /><br />
-    <div class="row ml-4">
-      <div class="col-md-4">
-        <div class="text-content">
-          <h1 style="font-size: 35px; font-weight: bold">
-            Task Tracking and Completion
-          </h1>
-          <br /><br />
-          <h5 style="
+  </div>
+  <br /><br />
+  <div class="row ml-4">
+    <div class="col-md-4">
+      <div class="text-content">
+        <h1 style="font-size: 35px; font-weight: bold">
+          Task Tracking and Completion
+        </h1>
+        <br /><br />
+        <h5 style="
               letter-spacing: 2px;
               font-size: 15px;
               letter-spacing: 2px;
               text-align: justify;
             ">
-            Keep track of the onboarding progress for each candidate with our
-            intuitive task tracking system. HR teams can easily monitor the
-            status of document collection, track completion rates, and identify
-            any outstanding items.
-          </h5>
-          <br /><br />
-        </div>
+          Keep track of the onboarding progress for each candidate with our
+          intuitive task tracking system. HR teams can easily monitor the
+          status of document collection, track completion rates, and identify
+          any outstanding items.
+        </h5>
+        <br /><br />
       </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-6">
-        <img src="../../../assets/img/track.png" alt="Workforce Image" style="
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <img src="../../../assets/img/track.png" alt="Workforce Image" style="
             max-width: 130%;
             height: 85%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             border-radius: 20px;
           " />
-      </div>
     </div>
-    <div class="row ml-4">
-      <div class="col-md-6">
-        <img src="../../../assets/img/custom.png" alt="Workforce Image" style="
+  </div>
+  <div class="row ml-4">
+    <div class="col-md-6">
+      <img src="../../../assets/img/custom.png" alt="Workforce Image" style="
             max-width: 104%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
             border-radius: 20px;
             height: 90%;
           " />
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-4">
-        <div class="text-content" style="margin-left: 6rem">
-          <h1 style="font-size: 40px; font-weight: bold">
-            Customizable Workflows
-          </h1>
-          <br /><br />
-          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
-            Tailor the onboarding process to match your organization's unique
-            requirements. Tresume's Workforce module allows you to create
-            customizable workflows, defining the specific steps and document
-            requirements for each position, ensuring a standardized onboarding
-            experience. Tresume's Workforce module simplifies onboarding and
-            document management, reducing administrative burden, ensuring
-            compliance, and providing a smooth onboarding experience for both
-            candidates and HR teams.
-          </h5>
-          <br /><br />
-        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+      <div class="text-content" style="margin-left: 6rem">
+        <h1 style="font-size: 40px; font-weight: bold">
+          Customizable Workflows
+        </h1>
+        <br /><br />
+        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify">
+          Tailor the onboarding process to match your organization's unique
+          requirements. Tresume's Workforce module allows you to create
+          customizable workflows, defining the specific steps and document
+          requirements for each position, ensuring a standardized onboarding
+          experience. Tresume's Workforce module simplifies onboarding and
+          document management, reducing administrative burden, ensuring
+          compliance, and providing a smooth onboarding experience for both
+          candidates and HR teams.
+        </h5>
+        <br /><br />
       </div>
     </div>
-  
+  </div>
+
 </section>
 
 <section id="timesheet" class="content" style="background-color: rgb(180, 8, 94)">
@@ -1189,9 +897,9 @@
     Harnessing the Benefits of Digital Tresume Timesheets:
   </h2>
   <span class="animate-border mr-auto ml-auto mb-4"></span>
-    <div class="row pl-4">
+  <div class="row pl-4">
     <div class="col-md-6" style="font-size: 16px;">
-      <p  style="font-size: 20px;
+      <p style="font-size: 20px;
       font-style: italic; font-weight: 500;padding: 7px;letter-spacing: 2px;
 text-align: justify;line-height: 29px;">
         Introducing TimeTrack(Time Sheet), the ultimate solution that simplifies time tracking and management,
@@ -1201,15 +909,24 @@ text-align: justify;line-height: 29px;">
         specific projects or tasks, and submit timesheets for approval. The system ensures accuracy and
         transparency, allowing managers to review and verify timesheets efficiently.
       </p>
-      <ul style="font-size: 15px; letter-spacing: 2px; font-weight: 400; font-style: normal; padding-left: 0; list-style: none;">
-        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success" style="font-size: 20px;"></i> Comprehensive reporting for labor cost analysis, project progress monitoring, and resource allocation optimization with TimeSync.</li>
-<br>
-        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success" style="font-size: 20px;"></i> Real-time notifications for timely timesheet submissions with TimeNinja. Hassle-free tracking and prompt accounting of all time records using TimeSage.</li>
-<br>
-        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success" style="font-size: 20px;"></i>Detailed audit trails and transparent reporting with TimeSync. Analytics insights into labor costs and resource utilization with TimeSheet. Optimize operations, meet deadlines, and simplify tracking with TimeGenius, TimeSprint, and TimePlus. Drive efficiency and success into the future with TimeOptimize.</li>
+      <ul
+        style="font-size: 15px; letter-spacing: 2px; font-weight: 400; font-style: normal; padding-left: 0; list-style: none;">
+        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success" style="font-size: 20px;"></i>
+          Comprehensive reporting for labor cost analysis, project progress monitoring, and resource allocation
+          optimization with TimeSync.</li>
+        <br>
+        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success" style="font-size: 20px;"></i>
+          Real-time notifications for timely timesheet submissions with TimeNinja. Hassle-free tracking and prompt
+          accounting of all time records using TimeSage.</li>
+        <br>
+        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle text-success"
+            style="font-size: 20px;"></i>Detailed audit trails and transparent reporting with TimeSync. Analytics
+          insights into labor costs and resource utilization with TimeSheet. Optimize operations, meet deadlines, and
+          simplify tracking with TimeGenius, TimeSprint, and TimePlus. Drive efficiency and success into the future with
+          TimeOptimize.</li>
         <br>
       </ul>
-<br>
+      <br>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4 text-center">

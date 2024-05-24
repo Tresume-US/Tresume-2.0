@@ -24,7 +24,12 @@ export class HomeComponent implements OnInit {
     const offset = window.scrollY;
     this.isScrolled = offset > 50;
   }
+  menuOpen = false;
 
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+  
 
 }
 

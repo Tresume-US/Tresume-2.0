@@ -3628,16 +3628,11 @@ video {
   width: 100%; 
 }
 .ats {
-  background: url('/assets/img/ats_bg.png') no-repeat center center;
+  background: url('/assets/img/screen12.jpg') no-repeat center center;
   background-size: cover;
-  height: 100vh; /* Adjust as necessary */
+  height: auto; /* Adjust as necessary */
   width: 100%;
   color: #e9dbdb;
-  border-top: 0 solid transparent;
-  transition: border-top 0.5s ease-in-out;
-}
-#dice {
-  background-color: wheat;
   border-top: 0 solid transparent;
   transition: border-top 0.5s ease-in-out;
 }
@@ -3655,6 +3650,141 @@ video {
 #Contact{
   height: auto;
 }
-#monster{
-  height: auto;
+#talentsuit{
+  background: url('/assets/img/screen3.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+
+#timesheet{
+  background: url('/assets/img/screen03.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust as needed */
+  overflow: hidden;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dots-container {
+  position: absolute;
+  top: 50%;
+  left: 20px; /* Adjust the left position as needed */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between dots */
+}
+
+.dot-link {
+  display: block;
+  text-decoration: none;
+}
+
+.dot {
+  width: 10px; /* Size of the dot */
+  height: 10px; /* Size of the dot */
+  background-color: white; /* Color of the dot */
+  border-radius: 50%;
+}
+.dot-link:hover .dot {
+  background-color: #cccccc; /* Change color on hover */
+}
+.border{
+  border: 1px solid white;
+}
+
+/* Container for menu icon and overlay */
+.menucontainer {
+  position: relative;
+}
+
+/* Menu Icon */
+.menu-icon {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Icon Background */
+.bn8 {
+  background-color: white;
+  border-radius: 50%;
+  padding: 15px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+/* Open Menu Overlay */
+.menu-overlay.open {
+  transform: translateX(0);
+}
+
+/* Menu List */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+// .menu-list li {
+//   margin: 10px 0;
+// }
+
+.menu-list li a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.menu-list li a:hover {
+  text-decoration: underline;
+}
+// .transition-section {
+//   position: relative;
+//   transition: top 5 ease-in-out; /* Transition for the top property */
+// }
+.transition-section:hover {
+  background-color: #e0e0e0; /* Change background color */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
 }
