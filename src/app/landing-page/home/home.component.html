@@ -1,190 +1,363 @@
-<nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
-  <a routerLink="/homelanding" class="navbar-brand">
-      <img src="../assets/img/logo.png" style="height: 90px;" alt="">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
+<nav
+  role="navigation"
+  class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
+  [ngClass]="{ scrolled: isScrolled }"
+  style="color: white; padding-bottom: 0"
+>
+  <div class="pt-5">
+    <a routerLink="/homelanding" class="navbar-brand">
+      <img src="../assets/img/Tresume_logo.png" style="height: 90px" alt="" />
+    </a>
+  </div>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="toggleNavbar()"
+  >
+    <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
-      <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Products
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
-                  <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
-                  <a class="dropdown-item" routerLink="/workforce">Workforce</a>
-                  <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
-              </div>
-          </li>
-          <li class="nav-item active">
+  <div
+    class="collapse navbar-collapse pt-5"
+    id="navbarSupportedContent"
+    [ngClass]="{ show: isNavbarCollapsed }"
+  >
+    <ul class="navbar-nav">
+      <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          Products
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#ats">Applicant Tracking System</a>
+          <a class="dropdown-item" href="#talentsuit">Talent Suite</a>
+          <a class="dropdown-item" href="#workforce">Workforce</a>
+          <a class="dropdown-item" href="#timesheet">Timesheet</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/market">Marketplace</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/features">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact">Contact Us</a>
+      </li>
+      <li class="nav-item">
+        <a href="login" class="nav-link login-btn-mobile">Login</a>     
+      </li>
+
+      <li class="nav-item">
+        <a class="login-btn-web bn5" style="margin: 0; color: black" routerLink="/login">Login</a>
+      </li> -->
+    </ul>
+  </div>
+  <div class="float-end" style="display: flex">
+    <li class="nav-item mr-5">
+      <a class="login-btn-web bn5" style="color: black" routerLink="/login"
+        >Login</a
+      >
+    </li>
+    <li>
+      <div class="menucontainer">
+        <!-- Menu Icon -->
+        <div class="menu-icon mt-0" (click)="toggleMenu()">
+          <div *ngIf="!menuOpen" class="bn5 bn8">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div *ngIf="menuOpen" class="bn5 bn8">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+
+        <!-- Menu Overlay -->
+        <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
+          <ul class="menu-list">
+            <li class="nav-item active">
               <a class="nav-link" routerLink="/market">Marketplace</a>
-          </li>
-          <li class="nav-item">
+            </li>
+            <li class="nav-item">
               <a class="nav-link" routerLink="/features">Features</a>
-          </li>
-          <li class="nav-item">
+            </li>
+            <li class="nav-item">
               <a class="nav-link" routerLink="/about">About</a>
-          </li>
-          <li class="nav-item">
+            </li>
+            <li class="nav-item">
               <a class="nav-link" routerLink="/contact">Contact Us</a>
-          </li>
-          <li class="nav-item ">
-            <a href="login" class="nav-link login-btn-mobile">Login</a>
-          </li>
+            </li>
+            <li class="nav-item">
+              <a href="login" routerLink="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </div>
 
-          <li class="nav-item ">
-            <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
+  <!-- <div class="dots-container" style="margin-top: 23%">
+    <a href="#ats" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#talentsuit" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#workforce" class="dot-link">
+      <div class="dot"></div>
+    </a>
+    <a href="#timesheet" class="dot-link">
+      <div class="dot"></div>
+    </a>
+  </div> -->
 
-          </li>
-      </ul>
+  <div class="dots-container" style="margin-top: 23%">
+    <a href="#ats" class="dot-link" (click)="scrollToSection('ats')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'ats' }"></div>
+    </a>
+    <a href="#talentsuit" class="dot-link" (click)="scrollToSection('talentsuit')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'talentsuit' }"></div>
+    </a>
+    <a href="#workforce" class="dot-link" (click)="scrollToSection('workforce')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'workforce' }"></div>
+    </a>
+    <a href="#timesheet" class="dot-link" (click)="scrollToSection('timesheet')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'timesheet' }"></div>
+    </a>
   </div>
 </nav>
 
-<div class="banner-area">
-  <div id="bootcarousel" class="carousel inc-top-heading slide carousel-fade animate_text" data-ride="carousel">
-    <div class="carousel-inner text-light carousel-zoom">
-      <div class="item active">
-        <div class="slider-thumb bg-cover" style="background-image: url('assets/img/bg-1.jpg'); background-color: #3498db;">
-        </div>
-        <div class="box-table shadow dark" style="padding: 20px; color: #fff;">
-          <div class="box-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="content" style="margin-top: -4rem;">
-                    <h3 data-animation="animated slideInRight" style="text-align: justify; font-size: 30px;">
-                    <p style="font-size: 33px;
-                    font-weight: 700;">  Tresume - The Ultimate 360&deg; ATS and Workforce</p>
-                      <p style="font-size: 33px;
-                      font-weight: 700;">Management System for Smart and Efficient Recruitment
-                      </p>
-                    </h3>
-                    <h1 data-animation="animated slideInLeft">
-                      <span>Empowering</span> Your  <span>Hiring</span> Process
-                    </h1>
-                    <!-- <p>
-                      Tresume offers a cutting-edge Applicant Tracking System (ATS) platform that seamlessly integrates with top job boards,
-                      providing you with a comprehensive solution for your hiring needs. Streamline your recruitment process, discover
-                      talented candidates, and stay ahead in the competitive job market.
-                    </p> -->
-                    <a routerLink="/login"><button class="bn632-hover bn24">Book a Demo</button></a>
-                    <a routerLink="/login"><button class="bn632-hover bn24">Learn more</button></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="slider-thumb bg-cover" style="background-image: url('assets/img/bg');"></div>
-        <div class="box-table shadow dark">
-          <div class="box-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="content">
-                    <h3 data-animation="animated slideInUp">Include more sales</h3>
-                    <h1 data-animation="animated slideInDown">make unique <span>planning</span> for your business</h1>
-                    <a data-animation="animated slideInUp" class="btn btn-light effect btn-md" href="#">View
-                      Projects</a>
-                    <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="#">Learn more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="slider-thumb bg-cover" style="background-image: url('assets/img/bg-3.jpg');"></div>
-        <div class="box-table shadow dark">
-          <div class="box-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="content">
-                    <h3 data-animation="animated slideInLeft">More convenient than others</h3>
-                    <h1 data-animation="animated slideInRight">Find Value And <span>Build</span> confidence</h1>
-                    <a data-animation="animated slideInUp" class="btn btn-light effect btn-md" href="#">View
-                      Projects</a>
-                    <a data-animation="animated slideInUp" class="btn btn-theme effect btn-md" href="#">Learn more</a>
-                  </div>
-                </div>
-              </div>
+<div class="video-container">
+  <video autoplay muted loop playsinline>
+    <source src="assets/videos/landing.mp4" type="video/mp4" />
+  </video>
+</div>
+<section id="ats" class="ats pb-5 transition-section">
+  <h2 class="text-center tittle mt-0 pt-4" style="color: white">ATS</h2>
+  <span class="animate-border mr-auto ml-auto mb-5"></span>
+  <div class="row" style="margin-left: 17%">
+    <div class="col-md-3">
+      <div
+        class="card"
+        style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)"
+      >
+        <div class="text-center">
+          <img
+            src="../../../assets/img/dice.png"
+            style="height: 6rem; width: 14rem"
+            alt="Logo"
+          />
+          <div
+            class="card-body"
+            style="display: flex; flex-flow: column; margin-right: 120px"
+          >
+            <h2 class="card-title">Dice Job Board</h2>
+            <h3 class="card-subtitle mb-3 text-muted">Premium Job Board</h3>
+            <div class="button-group">
+              <a href="/"
+                ><button class="bn632-hover bn24">Book a Demo</button></a
+              >
+              <a href="/"
+                ><button class="bn632-hover bn24">Start Free Trial</button></a
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Wrapper for slides -->
-    <!-- Left and right controls -->
-    <!-- <a class="left carousel-control shadow" href="#bootcarousel" data-slide="prev">
-      <i class="fa fa-angle-left"></i>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control shadow" href="#bootcarousel" data-slide="next">
-      <i class="fa fa-angle-right"></i>
-      <span class="sr-only">Next</span>
-    </a> -->
+    <div class="col-md-3" style="margin-top: 8%">
+      <div
+        class="card"
+        style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)"
+      >
+        <div class="text-center">
+          <img src="../../../assets/img/monster_logo.svg" alt="Logo" />
+          <div class="card-body" style="display: flex; flex-flow: column">
+            <h2 class="card-title">Monster</h2>
+            <h3 class="card-subtitle mb-3 text-muted" style="font-weight: bold">
+              Premium Job Board
+            </h3>
+            <div class="button-group">
+              <a href="/"
+                ><button class="bn632-hover bn24">Book a Demo</button></a
+              >
+              <a href="/"
+                ><button class="bn632-hover bn24">Start Free Trial</button></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="card"
+        style="box-shadow: 8px 9px 20px -6px rgba(0, 0, 0, 0.75)"
+      >
+        <div class="text-center">
+          <img src="../../../assets/img/cb.png" alt="Logo" />
+          <div
+            class="card-body"
+            style="display: flex; flex-flow: column; margin-right: 120px"
+          >
+            <h2 class="card-title">Career Builder</h2>
+            <h3 class="card-subtitle mb-3 text-muted">Premium Job Board</h3>
+            <div class="button-group">
+              <a href="/"
+                ><button class="bn632-hover bn24">Book a Demo</button></a
+              >
+              <a href="/"
+                ><button class="bn632-hover bn24">Start Free Trial</button></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<br><br><br>
-<div class="section-heading text-center mb-1">
-  <h2 class="tittle">Why choose our ATS</h2>
-  <span class="animate-border mx-auto mb-4"></span>
-</div>
-<div class="feature-tabs-wrap">
-  <ul class="border-bottom-0 feature-tabs feature-tabs-center nav d-flex justify-content-center" data-tabs="tabs">
-    <li class="nav-item">
-      <a class="nav-link text-center">
-        <i class="fa fa-bullhorn" aria-hidden="true"></i>
-        <span class="ti-announcement icon-sm"></span>
-        <p class="mb-0 down">Better and Streamlined Hiring Process</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-center">
-        <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
-        <span class="ti-light-bulb icon-sm"></span>
-        <p class="mb-0 down">Reduce Time to Hire by AI Automation</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-center">
-        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-        <span class="ti-email icon-sm"></span>
-        <p class="mb-0 down">Utilize Talent Sourcing across platforms</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-center">
-        <i class="fa fa-shield" aria-hidden="true"></i>
-        <span class="ti-shield icon-sm"></span>
-        <p class="mb-0 down">Organized Tracking and Reports</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-center">
-        <i class="fa fa-code-fork" aria-hidden="true"></i>
-        <span class="ti-vector icon-sm"></span>
-        <p class="mb-0 down">Easy Communication with candidates</p>
-      </a>
-    </li>
-  </ul>
-</div>
-<br><br><br>
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-6">
-      <img src="../../../assets/img/offer.png" alt="Image" class="img-fluid">
+</section>
+
+<!-- app.component.html or the relevant template file -->
+
+<section id="talentsuit" class="content">
+  <div class="row pt-5">
+    <div class="col-md-6 ml-5">
+      <img
+        src="../../../assets/img/talentbench.jpg"
+        alt="Workforce Image"
+        style="
+          max-width: 130%;
+          height: 80%;
+          box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
+          border-radius: 20px;
+        "
+      />
     </div>
-    <div class="col-md-6 second">
-      <h2 class="tittle">Features We Offer</h2>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 text-content mt-5">
+      <div style="font-size: 35px; font-weight: bold; line-height: 41px">
+        <h2 class="text-center tittle pt-3">Talent Suite</h2>
+        <span class="animate-border mr-auto ml-auto mb-4"></span>
+      </div>
+      <div class="button-group text-center">
+        <a routerLink="/login"
+          ><button class="bn632-hover bn24">Book a Demo</button></a
+        >
+        <a routerLink="/login"
+          ><button class="bn632-hover bn24">Start Free Trial</button></a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workforce" class="content">
+  <div class="row ml-4 pt-5">
+    <div class="col-md-4 mt-5">
+      <div class="text-content">
+        <h2 class="text-center tittle pt-3">Workforce</h2>
+        <span class="animate-border mr-auto ml-auto mb-4"></span>
+
+        <div class="button-group text-center">
+          <a routerLink="/login"
+            ><button class="bn632-hover bn24">Book a Demo</button></a
+          >
+          <a routerLink="/login"
+            ><button class="bn632-hover bn24">Start Free Trial</button></a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <img
+        src="../../../assets/img/wrk.png"
+        alt="Workforce Image"
+        style="
+          max-width: 130%;
+          height: 80%;
+          box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
+          border-radius: 20px;
+        "
+      />
+    </div>
+  </div>
+</section>
+
+<section id="timesheet" class="content">
+  <div class="row pl-4">
+    <div class="col-md-4 text-center">
+      <img src="../../../assets/img/ats3.png" alt="Image" class="img-fluid" />
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3 mt-5">
+      <h2 class="text-center tittle pt-5 mt-5">Timesheets</h2>
+      <h3 class="text-center sub-title">What gets measured gets managed</h3>
       <span class="animate-border mr-auto ml-auto mb-4"></span>
+    </div>
+  </div>
+</section>
+<!-- <br /><br /><br /> -->
+<section id="reason-to-ats" class="pb-5 pt-5">
+  <div class="section-heading text-center mb-1">
+    <h2 class="tittle">Why choose our ATS</h2>
+    <span class="animate-border mx-auto mb-4"></span>
+  </div>
+  <div class="feature-tabs-wrap">
+    <ul
+      class="border-bottom-0 feature-tabs feature-tabs-center nav d-flex justify-content-center"
+      data-tabs="tabs"
+    >
+      <li class="nav-item">
+        <a class="nav-link text-center">
+          <i class="fa fa-bullhorn" aria-hidden="true"></i>
+          <span class="ti-announcement icon-sm"></span>
+          <p class="mb-0 down">Better and Streamlined Hiring Process</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center">
+          <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+          <span class="ti-light-bulb icon-sm"></span>
+          <p class="mb-0 down">Reduce Time to Hire by AI Automation</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center">
+          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          <span class="ti-email icon-sm"></span>
+          <p class="mb-0 down">Utilize Talent Sourcing across platforms</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center">
+          <i class="fa fa-shield" aria-hidden="true"></i>
+          <span class="ti-shield icon-sm"></span>
+          <p class="mb-0 down">Organized Tracking and Reports</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-center">
+          <i class="fa fa-code-fork" aria-hidden="true"></i>
+          <span class="ti-vector icon-sm"></span>
+          <p class="mb-0 down">Easy Communication with candidates</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- <br /><br /><br /> -->
+<!-- <section>
+  <div class="row">
+    <div class="col-md-6 second">
+      <h2 style="  color: #93628d;font-size: 2rem;">Features We Offer</h2>
+      <span class="animate-border mb-4"></span>
       <div>
         <ul class="FeatureDesc">
           <li>
@@ -194,18 +367,26 @@
             <p>Analysis based candidate matching</p>
           </li>
           <li>
-            <p> Hiring Process Management tools</p>
+            <p>Hiring Process Management tools</p>
           </li>
           <li>
             <p>Recruiting Team Performance Tracking</p>
           </li>
         </ul>
       </div>
+    
+    </div>
+    <div class="col-md-6">
+      <img
+        src="../../../assets/img/offer.png"
+        alt="Image"
+        class="img-fluid"
+      />
     </div>
   </div>
-</div>
-<div class="Course">
-  <div class="container">
+</section> -->
+<!-- <div class="Course"> -->
+  <!-- <div class="container">
     <div class="row">
       <div class="col-md-4">
         <div class="card card-1">
@@ -213,8 +394,11 @@
             <i class="fa fa-bullhorn" aria-hidden="true"></i>
             <span class="ti-announcement icon-sm"></span>
             <h3 class="mb-0">Better and Streamlined Hiring Process</h3>
-            <br>
-            <p>An applicant tracking system is the key to streamlining your hiring process</p>
+            <br />
+            <p>
+              An applicant tracking system is the key to streamlining your
+              hiring process
+            </p>
           </a>
         </div>
       </div>
@@ -224,18 +408,23 @@
             <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
             <span class="ti-light-bulb icon-sm"></span>
             <h3 class="mb-0">Reduce Time to Hire by AI Automation</h3>
-            <br>
-            <p class="bottom">Make the right hires, faster with the world's leading talent acquistion sotware</p>
+            <br />
+            <p class="bottom">
+              Make the right hires, faster with the world's leading talent
+              acquistion sotware
+            </p>
           </a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-3">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <span class="ti-email icon-sm"></span>
             <h3 class="mb-0">Utilize Talent Sourcing across platforms</h3>
-            <p class="bottom1">Using Talent Sourcing Platforms To Save Recruiter Time</p>
+            <p class="bottom1">
+              Using Talent Sourcing Platforms To Save Recruiter Time
+            </p>
           </a>
         </div>
       </div>
@@ -243,35 +432,41 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card card-1">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-shield" aria-hidden="true"></i>
             <h3 class="mb-0">Organized Tracking and Reports</h3>
-            <p class="bottom2">ATS software with better reporting and analysis capabilities could help improve your
-              hiring</p>
+            <p class="bottom2">
+              ATS software with better reporting and analysis capabilities could
+              help improve your hiring
+            </p>
           </a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-2">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-code-fork" aria-hidden="true"></i>
             <span class="ti-email icon-sm"></span>
-            <h3 class="mb-0" style="    font-weight: 600;">Easy Communication with candidates</h3>
-            <p class="bottom3">The ART has an automated effective system that figure out the correct time for the
-              recruiter to reach
-              out to the candidate</p>
+            <h3 class="mb-0" style="font-weight: 600">
+              Easy Communication with candidates
+            </h3>
+            <p class="bottom3">
+              The ART has an automated effective system that figure out the
+              correct time for the recruiter to reach out to the candidate
+            </p>
           </a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-3">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <span class="ti-email icon-sm"></span>
             <h3 class="mb-0">Hiring Process Management Tools</h3>
-            <p class="bottom4">It might the content exactly the solution you're looking for. To see a complete list of
-              applicant
-              Tracking and recruiting platforms</p>
+            <p class="bottom4">
+              It might the content exactly the solution you're looking for. To
+              see a complete list of applicant Tracking and recruiting platforms
+            </p>
           </a>
         </div>
       </div>
@@ -279,41 +474,46 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card card-1">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-shield" aria-hidden="true"></i>
             <h3 class="mb-0">Source And Receive Applicant Across Platform</h3>
-            <p class="bottom4"> Easily collaborate with hiring teams to evaluate applicants, gather feedback and
-              decide who's best, all
-              in one system</p>
+            <p class="bottom4">
+              Easily collaborate with hiring teams to evaluate applicants,
+              gather feedback and decide who's best, all in one system
+            </p>
           </a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-2">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-code-fork" aria-hidden="true"></i>
             <span class="ti-email icon-sm"></span>
             <h3 class="mb-0">Recruiter Team Performance Tracking</h3>
-            <p class="bottom5">Every job posting can be associated with the hiring team that is working on it.</p>
+            <p class="bottom5">
+              Every job posting can be associated with the hiring team that is
+              working on it.
+            </p>
           </a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card card-3">
-          <a class="nav-link text-center ">
+          <a class="nav-link text-center">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <span class="ti-email icon-sm"></span>
             <h3 class="mb-0">Analysis Based Candidate Matching</h3>
-            <p class="bottom6">Move faster on a platform that automates process and manual tasks, like scheduling
-              interviews and
-              getting approvals.</p>
+            <p class="bottom6">
+              Move faster on a platform that automates process and manual tasks,
+              like scheduling interviews and getting approvals.
+            </p>
           </a>
         </div>
       </div>
     </div>
-  </div>
-  <br><br>
-  <div class="container">
+  </div> -->
+  <!-- <br /><br /> -->
+  <!-- <div class="container">
     <h2 class="tittle">How it Works!</h2>
     <span class="animate-border mr-auto ml-auto mb-4"></span>
     <div class="row">
@@ -324,7 +524,8 @@
               <div class="timeline-icon"><i class="fa fa-globe"></i></div>
               <h3 class="title">Post Your Job</h3>
               <p class="description">
-                Submit your job vacancy in the simplest and fastest way possible.
+                Submit your job vacancy in the simplest and fastest way
+                possible.
               </p>
               <div class="timeline-year">Step 1</div>
             </a>
@@ -334,7 +535,8 @@
               <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
               <h3 class="title">Get Topnotch Applications</h3>
               <p class="description">
-                Receive loads of job applications from relevant, skillful candidates.
+                Receive loads of job applications from relevant, skillful
+                candidates.
               </p>
               <div class="timeline-year">Step 2</div>
             </a>
@@ -344,7 +546,8 @@
               <div class="timeline-icon"><i class="fa fa-globe"></i></div>
               <h3 class="title">Screen and Shortlist the Profiles</h3>
               <p class="description">
-                Screen and Shortlist the Profiles from relevant, skillful candidates.
+                Screen and Shortlist the Profiles from relevant, skillful
+                candidates.
               </p>
               <div class="timeline-year">Step 3</div>
             </a>
@@ -352,7 +555,7 @@
           <div class="timeline">
             <a href="#" class="timeline-content">
               <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
-              <h3 class="title"> Hire theme</h3>
+              <h3 class="title">Hire theme</h3>
               <p class="description">
                 Conduct the interview, hire the best talent in the industry.
               </p>
@@ -362,9 +565,10 @@
           <div class="timeline">
             <a href="#" class="timeline-content">
               <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
-              <h3 class="title"> Engine Ranking</h3>
+              <h3 class="title">Engine Ranking</h3>
               <p class="description">
-                Interactively seize innovative platforms vis-a-vis ubiquitous portals.
+                Interactively seize innovative platforms vis-a-vis ubiquitous
+                portals.
               </p>
               <div class="timeline-year">Step 5</div>
             </a>
@@ -372,18 +576,20 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->
 <footer class="footer-section">
   <div class="container">
-    <div class="footer-cta pt-2 ">
+    <div class="footer-cta pt-2">
       <div class="row">
         <div class="col-xl-4 col-md-4 mb-30">
           <div class="single-cta">
             <i class="fas fa-map-marker-alt"></i>
             <div class="cta-text">
               <h4>Find us</h4>
-              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+              <span
+                >44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States
+                Of America
               </span>
             </div>
           </div>
@@ -413,22 +619,53 @@
         <div class="col-xl-4 col-lg-4 mb-50">
           <div class="footer-widget">
             <div class="footer-logo">
-              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+              <a href="index.html"
+                ><img
+                  src="../../../assets/img/tresumelog.png"
+                  style="margin-left: 7rem"
+                  class="img-fluid"
+                  alt="logo"
+              /></a>
             </div>
             <div class="footer-text">
-              <p>With the right ATS recruiting system, you can increase the number of placements and grow your
-                business.
-                Tresume advanced recruit analytics helps you back up all your presentations with data. Create
-                forecast
-                for next quarter and keep track of important metrics.</p>
+              <p>
+                With the right ATS recruiting system, you can increase the
+                number of placements and grow your business. Tresume advanced
+                recruit analytics helps you back up all your presentations with
+                data. Create forecast for next quarter and keep track of
+                important metrics.
+              </p>
             </div>
             <div class="footer-social-icon">
               <span>Follow us</span>
               <ul class="social_icon">
-                <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
-                <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+                <li>
+                  <a
+                    href="https://www.facebook.com/p/Tresume-100057032697312/"
+                    target="_blank"
+                  >
+                    <i class="fa fa-facebook"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/Tresume2" target="_blank"
+                    ><i class="fa fa-twitter"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/company/tresume/"
+                    target="_blank"
+                    ><i class="fa fa-linkedin-square"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/@tresumeus3304/featured"
+                    target="_blank"
+                    ><i class="fa fa-youtube"></i
+                  ></a>
+                </li>
               </ul>
             </div>
           </div>
@@ -439,13 +676,13 @@
               <h3>Useful Links</h3>
             </div>
             <ul>
-              <li><a routerLink="/about"  href="#">About Us</a></li>
+              <li><a routerLink="/about" href="#">About Us</a></li>
               <li><a routerLink="/market" href="#">MarketPlace</a></li>
               <li><a routerLink="/features" href="#">Features</a></li>
               <li><a routerLink="/contact" href="#">Contact us</a></li>
-              <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+              <li><a routerLink="/workforce" href="#">WorkForce</a></li>
               <li><a routerLink="/timesheet">TimeSheet</a></li>
-              <li><a  routerLink="/ats">ATS</a></li>
+              <li><a routerLink="/ats">ATS</a></li>
               <li><a routerLink="/talent-suite">Talent Suite</a></li>
             </ul>
           </div>
@@ -456,11 +693,20 @@
               <h3>Subscribe</h3>
             </div>
             <div class="footer-text mb-25">
-              <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+              <p>
+                Don’t miss to subscribe to our new feeds, kindly fill the form
+                below.
+              </p>
             </div>
             <div class="subscribe-form">
-              <form action="#" >
-                <li style="text-align: center;font-size: 22px;"><a routerLink="/contact" style="color: white; font-weight: bold;">Contact us</a></li>
+              <form action="#">
+                <li style="text-align: center; font-size: 22px">
+                  <a
+                    routerLink="/contact"
+                    style="color: white; font-weight: bold"
+                    >Contact us</a
+                  >
+                </li>
               </form>
             </div>
           </div>
@@ -480,7 +726,7 @@
           <div class="footer-menu">
             <ul>
               <li><a href="#">Home</a></li>
-                <li><a href="#">Terms</a></li>
+              <li><a href="#">Terms</a></li>
               <li><a href="#">Privacy</a></li>
               <li><a href="#">Policy</a></li>
               <li><a href="#">Contact</a></li>
