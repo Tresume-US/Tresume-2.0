@@ -35,7 +35,7 @@
                       <td>{{ client.ClientName }}</td>
                       <td>{{ client.EmailID }}</td>
                       <td>{{ client.Website }}</td>
-                      <td>{{ client.PrimaryOwner[1] }}</td>
+                      <td>{{ client.PrimaryOwner[0] }}</td>
                       <td *ngIf="routeType == 1">
                         <div>
                             <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientdetails',client.ClientID]"></i>

@@ -59,8 +59,9 @@ export class ClientViewDetailsComponent implements OnInit {
 
   ClientViewDetails() {
     let Req = {
-      TraineeID: this.TraineeID,
-      clientid:this.ClientID
+      // TraineeID: this.TraineeID,
+      clientid:this.ClientID,
+      OrgID: this.OrgID,
     };
     console.log(Req)
     this.loading = true;
