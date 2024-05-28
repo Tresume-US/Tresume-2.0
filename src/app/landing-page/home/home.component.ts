@@ -1,20 +1,32 @@
-import { Component, HostListener, OnInit , Renderer2, OnDestroy} from '@angular/core';
+import { Component, HostListener, OnInit , Renderer2, OnDestroy,ElementRef, ViewChild,AfterViewInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit  {
+  @ViewChild('video', { static: false }) video: ElementRef<HTMLVideoElement>;
 
   activeSection: string = '';
   private observer: IntersectionObserver;
 
   constructor(private renderer: Renderer2) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(){
     window.scrollTo(0,0);
     this.setupIntersectionObserver();
+    const videoElement = this.video.nativeElement;
+    videoElement.muted = true;
+    videoElement.autoplay = true;
+    videoElement.loop = true;
+    videoElement.playsInline = true;
+
+    // Attempt to play the video programmatically
+    videoElement.load();
+    videoElement.play().catch(error => {
+      console.log('Error attempting to play the video:', error);
+    });
   }
   ngOnDestroy(): void {
     this.observer.disconnect();

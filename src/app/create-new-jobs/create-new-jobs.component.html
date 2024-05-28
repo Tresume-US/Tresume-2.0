@@ -33,7 +33,7 @@
               <form >
                 <div class="row">
                   <div class="col-md-4 form-group text-center">
-                    <label for="basicinfo1">Company Name</label>
+                    <label for="basicinfo1">Company Name *</label>
                     <!-- <input type="text" class="form-control" id="basicinfo1" [(ngModel)]="companyname"
                       [ngModelOptions]="{ standalone: true }" placeholder="Ex.Tresume" > -->
                     <input type="text" class="form-control" id="basicinfo1" placeholder="Ex.Tresume" [(ngModel)]="companyname"
@@ -237,7 +237,7 @@
                     <label class="post_jobs_contant post_jobs_font_clr">Priority</label>
                     <br>
                     <select [(ngModel)]="selectedPriority" [ngModelOptions]="{ standalone: true }" name="Priority" id="Priority" class="form-control">
-                      <option value="0">Select</option>
+                      <option value="">Select</option>
                       <option *ngFor="let option of priorityOptions" [value]="option.PriorityID">{{ option.Value }}</option>
                     </select>
                   </div>
@@ -312,7 +312,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group text-center">
-                    <label class="post_jobs_contant post_jobs_font_clr">Legal Status</label>
+                    <label class="post_jobs_contant post_jobs_font_clr">Legal Status *</label>
                     <br>
                     <div class="col-md-4 multiSelect">
                       <p-multiSelect [options]="statusOptions" [(ngModel)]="selectedLegalstatus" [ngModelOptions]="{ standalone: true }" optionLabel="name" (onChange)="onChange($event)">
@@ -381,7 +381,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group text-start">
-                      <label class="post_jobs_contant post_jobs_font_clr">Primary recruiter</label>
+                      <label class="post_jobs_contant post_jobs_font_clr">Primary recruiter *</label>
                       <select name="JobStatus" id="JobStatus"
                         class="form-control" [(ngModel)]="selectedPrimaryRecruiter" [ngModelOptions]="{ standalone: true }">
                         <option value="">Select Primary recruiter</option>
@@ -520,7 +520,7 @@
                     </div>
                   </span><br>
                   <strong>Pay Rate :</strong>
-                  <span id="RecruiterContent_lblPay"></span>{{selectedPayType}}<br>
+                  <span id="RecruiterContent_lblPay"></span>{{payrate}}<br>
                   <strong>Bill Rate :</strong>
                   <span id="RecruiterContent_lblBill">{{billrate}}</span><br>
                 </address>

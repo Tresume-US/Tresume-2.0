@@ -1,0 +1,21 @@
+<!doctype batch totalreplace>
+<doc>
+<positionid>1452</positionid>
+<diceid>91142245</diceid>
+<taxterm></taxterm>
+<allowrecruiterapplies>Y</allowrecruiterapplies>
+<country>US</country>
+<state></state>
+<postalcode>987654</postalcode>
+<location>test</location>
+<areacode></areacode>
+<company>Asta</company>
+<companystate></companystate>
+<companyzip>987654</companyzip>
+<addr1>test</addr1>
+<payrate>0</payrate>
+<jobtitle>Java Developer</jobtitle>
+<skillsreq>java</skillsreq>
+<comments><p>test</p></comments>
+<applylink>https://tresume.us/applyjob/1452</applylink>
+</doc>

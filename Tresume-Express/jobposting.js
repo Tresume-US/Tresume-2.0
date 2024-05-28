@@ -290,7 +290,7 @@ router.post('/PostJob', async (req, res) => {
 
           const reqBody = {
           positionid: req.body.JobCode,
-          diceid: 'yourdiceid',
+          diceid: '91142245',
           taxterm: taxterm,
           allowrecruiterapplies: 'Y',
           country: 'US',
@@ -318,12 +318,12 @@ router.post('/PostJob', async (req, res) => {
           }
 
           console.log('Batch file created successfully');
-
+          var body = "username: jobpostings@dmsol.in<br>password: Tresume@123";
           const mailOptions = {
           from: 'jobpostings@dmsol.in',
-          to: 'wilson@dmsol.in',
+          to: 'dicejobs@dice.com',
           subject: 'Batch Posting Request',
-          text: 'Please find attached the batch file for job posting',
+          html: body,
           attachments: [
           {
           filename: 'jobs.txt',
@@ -491,7 +491,7 @@ router.post('/DiceJobPost', async (req, res) => {
 
     const reqBody = {
     positionid: req.body.JobCode,
-    diceid: 'yourdiceid',
+    diceid: '91142245',
     taxterm: taxterm,
     allowrecruiterapplies: 'Y',
     country: 'US',
@@ -521,13 +521,13 @@ router.post('/DiceJobPost', async (req, res) => {
     }
     
     console.log('Batch file created successfully');
-  
+    var body = "username: jobpostings@dmsol.in<br>password: Tresume@123";
     // Send email with the batch file attached
     const mailOptions = {
       from: 'jobpostings@dmsol.in',
-      to: 'wilson@dmsol.in',
+      to: 'dicejobs@dice.com',
       subject: 'Batch Posting Request',
-      text: 'Please find attached the batch file for job posting',
+      html: body,
       attachments: [
         {
           filename: 'jobs.txt',
