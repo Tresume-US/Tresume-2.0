@@ -477,8 +477,8 @@ div#bootcarousel {
   font-weight: 600;
   color: #fff;
   cursor: pointer;
-  margin: 20px;
-  height: 55px;
+  margin-bottom: 20px;
+  height: 45px;
   text-align: center;
   border: none;
   background-size: 300% 100%;
@@ -487,13 +487,16 @@ div#bootcarousel {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
-
+.button-group{
+  margin-top: 5%;
+}
 .bn632-hover:hover {
   background-position: 100% 0;
   moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+ 
 }
 
 .bn632-hover:focus {
@@ -501,15 +504,10 @@ div#bootcarousel {
 }
 
 .bn632-hover.bn24 {
-  background-image: linear-gradient(
-      to right,
-      #D24F9A,
-      #79265f,
-      #D24F9A,
-      #97618d
-    );
+  background-image: linear-gradient(to right, #D24F9A, #79265f, #D24F9A, #97618d);
   box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
 }
+
 @media (min-width: 992px) {
   .navbar-expand-lg .navbar-collapse {
       display: flex !important;
@@ -517,6 +515,19 @@ div#bootcarousel {
       justify-content: space-around !important;
   }
 }
+
+
+// .card-hover:hover .bn632-hover.bn24 {
+//   background-image: linear-gradient(to right, #34D1BF, #148F77, #34D1BF, #1ABC9C);
+//   box-shadow: 0 4px 15px 0 rgba(52, 209, 191, 0.75);
+// }
+.card-hover:hover .bn632-hover.bn24 {
+  background-image: none; /* Removes the gradient */
+  background-color: #fff; /* Sets the background to white */
+  color: #000; /* Changes text color to black for better contrast */
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2); /* Adjusted shadow to match the new background */
+}
+
 //course
 .Course {
   width: 100%;
@@ -582,7 +593,7 @@ h3 {
 .animate-border {
   position: relative;
   display: block;
-  width: 200px;
+  width: 100px;
   height: 3px;
   background: $brand-primary;
   overflow: hidden;
@@ -706,10 +717,10 @@ li.nav-item {
 
 .card {
   border-radius: 4px;
-  background: #fff;
+  // background: #fff;
   box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
   transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
-  padding: 14px 80px 18px 36px;
+  // padding: 14px 80px 18px 36px;
   cursor: pointer;
 }
 
@@ -724,12 +735,12 @@ li.nav-item {
   font-weight: 600;
 }
 
-.card img {
-  position: absolute;
-  top: 20px;
-  right: 15px;
-  max-height: 120px;
-}
+// .card img {
+//   position: absolute;
+//   top: 20px;
+//   right: 15px;
+//   max-height: 120px;
+// }
 
 .card-1 {
   background: url(../../../assets/img/card.png);
@@ -826,9 +837,9 @@ p {
   font-style: italic;
 }
 h2.tittle {
-  font-size: 2rem;
+  font-size: 4rem;
   text-align: center;
-  color: #93628d;
+  color: white;
   font-weight: 600;
 }
 
@@ -2051,5 +2062,32 @@ video {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
 }
 
-
-
+.ats-card{
+  height: 60px;
+  width: 150px;
+  margin-bottom: 10px;
+}
+.maincard-ats{
+  margin-left: 17%;
+}
+.card-text {
+  margin-top: 10px;
+  color: black;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds a shadow effect */
+}
+.monster-card{
+margin-top: 10%;
+}
+.cb-img{
+width: auto;
+}
+.sub-title{
+  // border: 1px solid white;
+  font-size: 2rem;
+  text-align: left;
+  font-weight: 100;
+  font-family: "Courier New", Courier, monospace;
+}
