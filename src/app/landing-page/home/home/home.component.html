@@ -1,0 +1,423 @@
+<nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
+  <a routerLink="/homelanding" class="navbar-brand">
+      <img src="../assets/img/Tresume_logo.png" style="height: 90px;" alt="">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
+      <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                  Products
+              </a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                  <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                  <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                  <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+              </div>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" routerLink="/market">Marketplace</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/features">Features</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/about">About</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/contact">Contact Us</a>
+          </li>
+          <li class="nav-item ">
+            <a href="login" class="nav-link login-btn-mobile">Login</a>
+          </li>
+
+          <li class="nav-item ">
+            <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
+
+          </li>
+      </ul>
+  </div>
+</nav>
+
+<div class="video-container">
+  <video autoplay muted loop playsinline>
+    <source src="assets/videos/landing2.mp4" type="video/mp4">
+  </video>
+</div>
+
+<section id="Products" class="content background-image">
+</section>
+
+<section id="Marketplace" class="content">
+</section>
+
+<section id="Features" class="content">
+</section>
+<section id="About" class="content">
+</section>
+<section id="Contact" class="content">
+</section> 
+
+ <br><br><br>
+<div class="section-heading text-center mb-1">
+  <h2 class="tittle">Why choose our ATS</h2>
+  <span class="animate-border mx-auto mb-4"></span>
+</div>
+<div class="feature-tabs-wrap">
+  <ul class="border-bottom-0 feature-tabs feature-tabs-center nav d-flex justify-content-center" data-tabs="tabs">
+    <li class="nav-item">
+      <a class="nav-link text-center">
+        <i class="fa fa-bullhorn" aria-hidden="true"></i>
+        <span class="ti-announcement icon-sm"></span>
+        <p class="mb-0 down">Better and Streamlined Hiring Process</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-center">
+        <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+        <span class="ti-light-bulb icon-sm"></span>
+        <p class="mb-0 down">Reduce Time to Hire by AI Automation</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-center">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        <span class="ti-email icon-sm"></span>
+        <p class="mb-0 down">Utilize Talent Sourcing across platforms</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-center">
+        <i class="fa fa-shield" aria-hidden="true"></i>
+        <span class="ti-shield icon-sm"></span>
+        <p class="mb-0 down">Organized Tracking and Reports</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-center">
+        <i class="fa fa-code-fork" aria-hidden="true"></i>
+        <span class="ti-vector icon-sm"></span>
+        <p class="mb-0 down">Easy Communication with candidates</p>
+      </a>
+    </li>
+  </ul>
+</div>
+<br><br><br>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="../../../assets/img/offer.png" alt="Image" class="img-fluid">
+    </div>
+    <div class="col-md-6 second">
+      <h2 class="tittle">Features We Offer</h2>
+      <span class="animate-border mr-auto ml-auto mb-4"></span>
+      <div>
+        <ul class="FeatureDesc">
+          <li>
+            <p>Source and receive applicants across platforms</p>
+          </li>
+          <li>
+            <p>Analysis based candidate matching</p>
+          </li>
+          <li>
+            <p> Hiring Process Management tools</p>
+          </li>
+          <li>
+            <p>Recruiting Team Performance Tracking</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="Course">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-1">
+          <a class="nav-link text-center">
+            <i class="fa fa-bullhorn" aria-hidden="true"></i>
+            <span class="ti-announcement icon-sm"></span>
+            <h3 class="mb-0">Better and Streamlined Hiring Process</h3>
+            <br>
+            <p>An applicant tracking system is the key to streamlining your hiring process</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-2">
+          <a class="nav-link text-center">
+            <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+            <span class="ti-light-bulb icon-sm"></span>
+            <h3 class="mb-0">Reduce Time to Hire by AI Automation</h3>
+            <br>
+            <p class="bottom">Make the right hires, faster with the world's leading talent acquistion sotware</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-3">
+          <a class="nav-link text-center ">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <span class="ti-email icon-sm"></span>
+            <h3 class="mb-0">Utilize Talent Sourcing across platforms</h3>
+            <p class="bottom1">Using Talent Sourcing Platforms To Save Recruiter Time</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-1">
+          <a class="nav-link text-center ">
+            <i class="fa fa-shield" aria-hidden="true"></i>
+            <h3 class="mb-0">Organized Tracking and Reports</h3>
+            <p class="bottom2">ATS software with better reporting and analysis capabilities could help improve your
+              hiring</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-2">
+          <a class="nav-link text-center ">
+            <i class="fa fa-code-fork" aria-hidden="true"></i>
+            <span class="ti-email icon-sm"></span>
+            <h3 class="mb-0" style="    font-weight: 600;">Easy Communication with candidates</h3>
+            <p class="bottom3">The ART has an automated effective system that figure out the correct time for the
+              recruiter to reach
+              out to the candidate</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-3">
+          <a class="nav-link text-center ">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <span class="ti-email icon-sm"></span>
+            <h3 class="mb-0">Hiring Process Management Tools</h3>
+            <p class="bottom4">It might the content exactly the solution you're looking for. To see a complete list of
+              applicant
+              Tracking and recruiting platforms</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-1">
+          <a class="nav-link text-center ">
+            <i class="fa fa-shield" aria-hidden="true"></i>
+            <h3 class="mb-0">Source And Receive Applicant Across Platform</h3>
+            <p class="bottom4"> Easily collaborate with hiring teams to evaluate applicants, gather feedback and
+              decide who's best, all
+              in one system</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-2">
+          <a class="nav-link text-center ">
+            <i class="fa fa-code-fork" aria-hidden="true"></i>
+            <span class="ti-email icon-sm"></span>
+            <h3 class="mb-0">Recruiter Team Performance Tracking</h3>
+            <p class="bottom5">Every job posting can be associated with the hiring team that is working on it.</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-3">
+          <a class="nav-link text-center ">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <span class="ti-email icon-sm"></span>
+            <h3 class="mb-0">Analysis Based Candidate Matching</h3>
+            <p class="bottom6">Move faster on a platform that automates process and manual tasks, like scheduling
+              interviews and
+              getting approvals.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="container">
+    <h2 class="tittle">How it Works!</h2>
+    <span class="animate-border mr-auto ml-auto mb-4"></span>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main-timeline">
+          <div class="timeline">
+            <a href="#" class="timeline-content">
+              <div class="timeline-icon"><i class="fa fa-globe"></i></div>
+              <h3 class="title">Post Your Job</h3>
+              <p class="description">
+                Submit your job vacancy in the simplest and fastest way possible.
+              </p>
+              <div class="timeline-year">Step 1</div>
+            </a>
+          </div>
+          <div class="timeline">
+            <a href="#" class="timeline-content">
+              <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
+              <h3 class="title">Get Topnotch Applications</h3>
+              <p class="description">
+                Receive loads of job applications from relevant, skillful candidates.
+              </p>
+              <div class="timeline-year">Step 2</div>
+            </a>
+          </div>
+          <div class="timeline">
+            <a href="#" class="timeline-content">
+              <div class="timeline-icon"><i class="fa fa-globe"></i></div>
+              <h3 class="title">Screen and Shortlist the Profiles</h3>
+              <p class="description">
+                Screen and Shortlist the Profiles from relevant, skillful candidates.
+              </p>
+              <div class="timeline-year">Step 3</div>
+            </a>
+          </div>
+          <div class="timeline">
+            <a href="#" class="timeline-content">
+              <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
+              <h3 class="title"> Hire theme</h3>
+              <p class="description">
+                Conduct the interview, hire the best talent in the industry.
+              </p>
+              <div class="timeline-year">Step 4</div>
+            </a>
+          </div>
+          <div class="timeline">
+            <a href="#" class="timeline-content">
+              <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
+              <h3 class="title"> Engine Ranking</h3>
+              <p class="description">
+                Interactively seize innovative platforms vis-a-vis ubiquitous portals.
+              </p>
+              <div class="timeline-year">Step 5</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer-section">
+  <div class="container">
+    <div class="footer-cta pt-2 ">
+      <div class="row">
+        <div class="col-xl-4 col-md-4 mb-30">
+          <div class="single-cta">
+            <i class="fas fa-map-marker-alt"></i>
+            <div class="cta-text">
+              <h4>Find us</h4>
+              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 mb-30">
+          <div class="single-cta">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <div class="cta-text">
+              <h4>Call us</h4>
+              <span>(703)9863350</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-4 mb-30">
+          <div class="single-cta">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <div class="cta-text">
+              <h4>Mail us</h4>
+              <span>nithya@tresume.us</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-content pt-2 pb-1">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 mb-50">
+          <div class="footer-widget">
+            <div class="footer-logo">
+              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+            </div>
+            <div class="footer-text">
+              <p>With the right ATS recruiting system, you can increase the number of placements and grow your
+                business.
+                Tresume advanced recruit analytics helps you back up all your presentations with data. Create
+                forecast
+                for next quarter and keep track of important metrics.</p>
+            </div>
+            <div class="footer-social-icon">
+              <span>Follow us</span>
+              <ul class="social_icon">
+                <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
+                <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
+                <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+          <div class="footer-widget">
+            <div class="footer-widget-heading">
+              <h3>Useful Links</h3>
+            </div>
+            <ul>
+              <li><a routerLink="/about"  href="#">About Us</a></li>
+              <li><a routerLink="/market" href="#">MarketPlace</a></li>
+              <li><a routerLink="/features" href="#">Features</a></li>
+              <li><a routerLink="/contact" href="#">Contact us</a></li>
+              <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+              <li><a routerLink="/timesheet">TimeSheet</a></li>
+              <li><a  routerLink="/ats">ATS</a></li>
+              <li><a routerLink="/talent-suite">Talent Suite</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+          <div class="footer-widget">
+            <div class="footer-widget-heading">
+              <h3>Subscribe</h3>
+            </div>
+            <div class="footer-text mb-25">
+              <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+            </div>
+            <div class="subscribe-form">
+              <form action="#" >
+                <li style="text-align: center;font-size: 22px;"><a routerLink="/contact" style="color: white; font-weight: bold;">Contact us</a></li>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyright-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+          <div class="copyright-text">
+            <p>Copy Rights 2023 TResume</p>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+          <div class="footer-menu">
+            <ul>
+              <li><a href="#">Home</a></li>
+                <li><a href="#">Terms</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Policy</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

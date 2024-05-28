@@ -76,6 +76,13 @@ export class HomeComponent implements AfterViewInit  {
     this.menuOpen = !this.menuOpen;
   }
   
+  // scrollToSection(section: string) {
+  //   this.activeSection = section;
+  //   const element = document.getElementById(section);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }
 
 }
 
