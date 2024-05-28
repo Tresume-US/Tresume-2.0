@@ -67,14 +67,14 @@ export class CreateNewJobsComponent{
   payTypes: string[] = ['hour', 'day', 'week', 'bi-week', 'month', 'year'];
 
 
-  selectedTaxTerms: string = '0';
-  selectedcTaxTerms: string = '0';
+  selectedTaxTerms: string = '1';
+  selectedcTaxTerms: string = '1';
   taxTerms: any[];
   internaltaxterms:string='';
   selectedRespondBy: Date; 
-  selectedJobType: string = '0'; 
+  selectedJobType: string = '1'; 
   jobTypeOptions: any[];
-  selectedPriority: string = '0';
+  selectedPriority: string = '3';
   priorityOptions: any[];
   selectedJobStatus: any = '';
   jobStatusOptions: any[];  
@@ -220,6 +220,11 @@ getCity() {
       this.RecruiterStatusOptionsons = x.recruiters;
       this.admins = x.admins;
       this.jobbaordaccount = x.jobbaordaccount
+
+      for(var i=0;i<this.jobbaordaccount.length;i++){
+        this.JobboardSelection(this.jobbaordaccount[i]);
+      }
+
       console.log(x)
     }),(error: any) => {
       // Error callback
