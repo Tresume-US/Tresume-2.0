@@ -1,3 +1,4 @@
+
 // navbar
 $brand-primary: #49274a;
 
@@ -924,7 +925,6 @@ h5 {
 
 
 .navbar-nav .nav-link:hover {
-
   color: purple;
 }
 
@@ -1685,6 +1685,7 @@ ul.navbar-nav.mr-auto {
 //     color: #f0f0f0 !important;
 //   }
 
+
 .navbar {
   &.navbar-light {
     .nav-item {
@@ -1698,7 +1699,8 @@ ul.navbar-nav.mr-auto {
       // font-family: 'Arvo', serif;
 
       a {
-        color: black;
+        // color: black;
+        color: white;
         text-decoration: none;
         font-family: -webkit-body;
         font-size: 23px;
@@ -1714,7 +1716,7 @@ ul.navbar-nav.mr-auto {
       }
 
       .dropdown-menu {
-        background: white;
+        background: black;
         box-shadow: 0px 3px 5px -1px #ccc;
         min-width: 250px;
         padding-top: 20px;
@@ -1782,4 +1784,272 @@ ul.navbar-nav.mr-auto {
 .navbar-nav .nav-link:hover::before {
   width: 100%;
 }
+
+
+
+// .banner-area {
+//   position: relative;
+//   width: 100%;
+//   height: 100vh; /* Adjust the height as needed */
+//   overflow: hidden;
+// }
+// .bg-video {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+// }
+
+.bg-white {
+  background-color: #fff0 !important;
+}
+
+/* Ensure the container takes up the full viewport */
+// .video-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh; /* Full viewport height */
+// }
+
+video {
+  max-width: 100%; /* Prevents the video from exceeding the container's width */
+  max-height: 100%; /* Prevents the video from exceeding the container's height */
+}
+// .background-image {
+//   background-image: url('/src/assets/img/screen1.png');
+//   background-size: cover; /* Adjust as needed */
+//   background-position: center; /* Adjust as needed */
+//   background-repeat: no-repeat; /* Adjust as needed */
+// }
+.background-image{
+  background-image: url('/src/assets/img/screen1.png'); /* Path to your background image */
+  // background-size: cover; /* Ensures the image covers the whole section */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  width: 500px; /* Ensures the section takes the full width of its container */
+  height: 500px; /* Makes the section height equal to 100% of the viewport height */
+}
+
+
+#Products.content.background-image {
+  background-image: url('https://i.pinimg.com/736x/2f/cc/4d/2fcc4da297068da39d5b4e158d0e7e70.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensure the image covers the section */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; 
+  height: 100vh;
+  width: 100%; 
+}
+#ats {
+  background: url('/assets/img/screen12.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+#workforce{
+  background: url('/assets/img/screen07.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+#reason-to-ats{
+  background: url('/assets/img/screen07.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+
+/* Class to add the transition effect */
+.section-with-border {
+  border-top: 5px solid #ff6347; /* Example color */
+}
+#Features{
+  height: auto;
+}
+#About{
+  height: auto;
+}
+#Contact{
+  height: auto;
+}
+#talentsuit{
+  background: url('/assets/img/screen01.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+
+#timesheet{
+  background: url('/assets/img/screen03.jpg') no-repeat center center;
+  background-size: cover;
+  height: auto; /* Adjust as necessary */
+  width: 100%;
+  color: #e9dbdb;
+  border-top: 0 solid transparent;
+  transition: border-top 0.5s ease-in-out;
+}
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust as needed */
+  overflow: hidden;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.dots-container {
+  position: absolute;
+  top: 50%;
+  left: 20px; /* Adjust the left position as needed */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between dots */
+}
+
+.dot-link {
+  display: block;
+  text-decoration: none;
+}
+
+.dot {
+  width: 10px; /* Size of the dot */
+  height: 10px; /* Size of the dot */
+  background-color: white; /* Color of the dot */
+  border-radius: 50%;
+}
+
+.dot-link:hover .dot,
+.dot.active-dot {
+  background-color: #cccccc; /* Change color on hover and active */
+}
+
+
+// .dots-container {
+//   position: absolute;
+//   top: 50%;
+//   left: 20px; /* Adjust the left position as needed */
+//   transform: translateY(-50%);
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px; /* Space between dots */
+// }
+
+// .dot-link {
+//   display: block;
+//   text-decoration: none;
+// }
+
+// .dot {
+//   width: 10px; /* Size of the dot */
+//   height: 10px; /* Size of the dot */
+//   background-color: white; /* Color of the dot */
+//   border-radius: 50%;
+// }
+// .dot-link:hover .dot {
+//   background-color: #cccccc; /* Change color on hover */
+// }
+.border{
+  border: 1px solid white;
+}
+
+/* Container for menu icon and overlay */
+.menucontainer {
+  position: relative;
+}
+
+/* Menu Icon */
+.menu-icon {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Icon Background */
+.bn8 {
+  background-color: white;
+  border-radius: 50%;
+  padding: 15px;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+/* Open Menu Overlay */
+.menu-overlay.open {
+  transform: translateX(0);
+}
+
+/* Menu List */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+// .menu-list li {
+//   margin: 10px 0;
+// }
+
+.menu-list li a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.menu-list li a:hover {
+  text-decoration: underline;
+}
+// .transition-section {
+//   position: relative;
+//   transition: top 5 ease-in-out; /* Transition for the top property */
+// }
+.transition-section:hover {
+  background-color: #e0e0e0; /* Change background color */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
+}
+
+
 
