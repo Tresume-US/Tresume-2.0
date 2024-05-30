@@ -13,71 +13,64 @@
         <accordion [isAnimated]="true">
             <accordion-group heading="Filter" [isOpen]=true>
                 <div class="row">
+                    <!-- Section 1 -->
                     <div class="col-md-6">
                         <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
-                            <label for="date-range">Date Range</label>
-                            <input id="date-range" type="text" placeholder="Select the dates to filter"
-                                class="form-control col-md-2" formControlName="dates" bsDaterangepicker
-                                [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
-                                (bsValueChange)="onValueChange($event)">
-                            <label for="recruiter">Recruiter</label>
-                            <select formControlName="recruiter" class="form-control col-md-2">
-                                <option disabled>Select Recruiter</option>
-                                <option [value]="">All</option>
-                                <option *ngFor="let item of recruiter" [value]="item.TraineeID">{{item.Name}}</option>
-                            </select>
-                     
-                        </form>
-                        <div class="row">
-                            <div style="padding: 15px 8px;">
-                                <button type="submit" class="btn btn-primary" [disabled]="!filterForm.valid"
-                                    (click)="onFilter()">
-                                    Filter
-                                </button>
+                            <div class="form-group">
+                                <label for="date-range">Date Range</label>
+                                <input id="date-range" type="text" placeholder="Select the dates to filter"
+                                    class="form-control" formControlName="dates" bsDaterangepicker
+                                    [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
+                                    (bsValueChange)="onValueChange($event)">
                             </div>
-                            <!-- <div style="padding: 15px 8px;">
-                                <button type="button" class="btn btn-info" (click)="onExport()">
-                                    Export as CSV
-                                </button>
-                            </div> -->
-                        </div>
+                            <div class="form-group">
+                                <label for="recruiter">Recruiter</label>
+                                <select formControlName="recruiter" class="form-control">
+                                    <option disabled>Select Recruiter</option>
+                                    <option [value]="">All</option>
+                                    <option *ngFor="let item of recruiter" [value]="item.TraineeID">{{item.Name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" [disabled]="!filterForm.valid" (click)="onFilter()">Filter</button>
+                            </div>
+                        </form>
                     </div>
+                    <!-- Section 2 -->
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="funnel-container">
                                     <div class="funnel-stage submissions">
-                                      <div class="stage-title">Total Submissions</div>
-                                      <div class="stage-value">{{submissionlist.length}}</div>
+                                        <div class="stage-title">Total Submissions</div>
+                                        <div class="stage-value">{{submissionlist.length}}</div>
                                     </div>
                                     <div class="funnel-stage interviews">
-                                      <div class="stage-title">Total Interviews Scheduled</div>
-                                      <div class="stage-value">{{interviewlist.length}}</div>
+                                        <div class="stage-title">Total Interviews Scheduled</div>
+                                        <div class="stage-value">{{interviewlist.length}}</div>
                                     </div>
                                     <div class="funnel-stage placements">
-                                      <div class="stage-title">Total Placements</div>
-                                      <div class="stage-value">{{placementlist.length}}</div>
+                                        <div class="stage-title">Total Placements</div>
+                                        <div class="stage-value">{{placementlist.length}}</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="ratios-box">
                                     <div class="ratio">
-                                      <strong>Submission to Interview Ratio:</strong>
-                                      {{ (interviewlist.length / submissionlist.length) * 100 | number: '1.0-2' }}%
+                                        <strong>Submission to Interview Ratio:</strong>
+                                        {{ (interviewlist.length / submissionlist.length) * 100 | number: '1.0-2' }}%
                                     </div>
                                     <div class="ratio">
-                                      <strong>Interview to Placement Ratio:</strong>
-                                      {{ (placementlist.length / interviewlist.length) * 100 | number: '1.0-2' }}%
+                                        <strong>Interview to Placement Ratio:</strong>
+                                        {{ (placementlist.length / interviewlist.length) * 100 | number: '1.0-2' }}%
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </div>
-                       
-                         
-                          
                     </div>
                 </div>
+                
                 
             </accordion-group>
         </accordion>
