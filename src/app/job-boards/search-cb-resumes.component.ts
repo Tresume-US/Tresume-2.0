@@ -252,14 +252,16 @@ export class SearchResumesCBComponent implements OnInit {
 
         this.initGrid();
         //this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE2OTE0MTkyMDcsImlhdCI6MTY5MTQxOTIwNywiZXhwIjoxNjkxNDIxMzA3LCJhdWQiOiJyZWFkIiwic2NvcGUiOlsicmVhZCJdLCJhbXIiOlsicHdkIl0sImNsaWVudF9pZCI6IkM4YjE4YTQzYyIsImNsaWVudF9vd25lcl9pZCI6Ik9iYzNkZDA2ZDNlODJjYyIsInN1YiI6IlU3OTVIWjc0MURWM1NTODBIMkMiLCJhdXRoX3RpbWUiOjE2OTE0MTM4NTIsImlkcCI6ImxvY2FsIiwidXNlcl90eXBlIjoiRW1wbG95ZXJDb21wYW55IiwiYWNjb3VudHMiOlsiQTc5ME01NjZKNEpKMkxRRDMxViJdLCJhY2NvdW50ZGlkIjoiQTc5ME01NjZKNEpKMkxRRDMxViIsInNpZCI6IkY2Q0Y4REE2NTEwNzE5MEY0NEM2ODc0NkFBMDRDQ0Q3In0.Yuj-KQ9I6A__oFJ-4RFwGUhPjRxML9OCc1bS3C4c3JNVGhrF9IVOZW4Fm6ucCOWWf6Ty0wP5yFKt1pWyEXaYHTxB-wQ7YnidLAlO6AGeKVrDbA1CUXg0y1QfFmkd4cEv1LNYmAkqt7KjCwmaaULZo1coX_nw7PlYbDIz7EEk_l5r0A4GN-UFqZIVzeux888dMmX-nevqceVBeNn2mM5dpjmwu3c46_G62QJuNwa4ENupdpHfnPzd2eWVrmoGX-Ir5PzJJSApwAAd_1pKMHdbZos10pD_bg8IQkvKN2osnIZi4DA9FLht1djKXwLTJ5qDE4GvVvoFyWWiMFxxTHIiyw';
-        this.service.getCBAuthToken().subscribe((x: any) => {
-            if (x.code != 460) {
-                this.accessToken = x.access_token;
-            }
-            else {
-                this.messageService.add({ severity: 'warning', summary: 'Server Issue from Career Builder. Please try again later.' });
-            }
-        });
+        this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTcwNzY1OTUsImlhdCI6MTcxNzA3NjU5NSwiZXhwIjoxNzE3MDc4Njk1LCJzY29wZSI6WyJvcGVuaWQiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJDYTliODhiOTUiLCJjbGllbnRfb3duZXJfaWQiOiJPNDU2ZmVmNGZkNGE3ZjEiLCJjbGllbnRfcmVnaW9uIjoicHJvZHVzIiwic3ViIjoiVURENkJKNkc1SFdSOTNKTDdKSiIsImF1dGhfdGltZSI6MTcxNzA3NjUzOCwiaWRwIjoibG9jYWwiLCJ1c2VyX3R5cGUiOiJFbXBsb3llckNvbXBhbnkiLCJhY2NvdW50cyI6WyJBNzkwTTU2Nko0SkoyTFFEMzFWIl0sImFjY291bnRkaWQiOiJBNzkwTTU2Nko0SkoyTFFEMzFWIiwic2lkIjoiOUZDQ0VFODQ1QTUwOTRBMUE2QjQ1MTQyOTRDOTFDNkIifQ.X9GbIMP3Iip6VF4RkryuHdyO62kunkdVWOGD9T_j8nMhm0-0bLMqnT8catwvoq8wJ06vOt8K6rh5r9cfRW6JVYxM8AkDS9y1gkMsD_oM4nyGeqHpqyYau-zuHFCv6BJHGaCUDtrSrXa65jTPFxzvciovGCf3mBcdw5O4tskDQjht2XWBcXqKMB2gMFOzjblB6xZivn8Hcqa-C4kVlTnUpwQPUJdilJ01fZ38e5J6nK_RuWWMTJMJmI-rdRKQyqhzJdMl0BSjXRbrG3tJysOteaP3CkIUOnOZBLLfuCiB95KF0W7_lrgFWsHzcLuoWhqC8qr4odt1R-NSqyV6S5JMhQ';
+        // this.service.getCBAuthToken().subscribe((x: any) => {
+        //     if (x.code != 460) {
+        //         // this.accessToken = x.access_token;
+        //         this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTcwMTI3ODQsImlhdCI6MTcxNzAxMjc4NCwiZXhwIjoxNzE3MDE0ODg0LCJzY29wZSI6WyJvcGVuaWQiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJDYTliODhiOTUiLCJjbGllbnRfb3duZXJfaWQiOiJPNDU2ZmVmNGZkNGE3ZjEiLCJjbGllbnRfcmVnaW9uIjoicHJvZHVzIiwic3ViIjoiVURENkJKNkc1SFdSOTNKTDdKSiIsImF1dGhfdGltZSI6MTcxNzAxMTkyOCwiaWRwIjoibG9jYWwiLCJ1c2VyX3R5cGUiOiJFbXBsb3llckNvbXBhbnkiLCJhY2NvdW50cyI6WyJBNzkwTTU2Nko0SkoyTFFEMzFWIl0sImFjY291bnRkaWQiOiJBNzkwTTU2Nko0SkoyTFFEMzFWIiwic2lkIjoiNDBGQzU3MUZDOEY0REUzNjYwMTRGRjU3MTNENkZDMzcifQ.BM3PWy-V3UohyM2VS8HE3zB7ERk4FNfo-vgBBmVEh947bj8H5hNBj5ND5PzYgABCT-t6PjSo49xWh1DrGfJtTnx8rQY8uHSv0lS0__EE30l62_VdDQHuFyC1VQR_GC8y-EebgOSulh4TfPIRJaUGcjAnPEEN8Pd7XoWKcM3ta5ew2dUannURQCvAyvOUubcVPHj-4ywT91LtzkI5n7Ay05Cz723ZsCCT6OrI9A0Uh3ZGrxazBTchNOjhxCC53W8B7tZ3c7yppZNuljjBPqXcYvCzKFZyvdwXMVfOZ41B5o-nJAdihFnSRdVTh4QcRMvmE2OTAA6oPwotfsnuitNtCg';
+        //     }
+        //     else {
+        //         this.messageService.add({ severity: 'warning', summary: 'Server Issue from Career Builder. Please try again later.' });
+        //     }
+        // });
         console.log(this.traineeId);
 
         let migrateCheckReq = {

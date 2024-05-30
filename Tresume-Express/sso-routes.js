@@ -389,4 +389,28 @@ router.post('/updatepassword', async (req, res) => {
   }
 });
 
+
+router.get('/getCB-token', async (req, res) => {
+  const data = new URLSearchParams();
+  data.append('grant_type', 'authorization_code');
+  data.append('client_id', 'Ca9b88b95');
+  data.append('client_secret', 'ITATVWZFQhy2iVO111IuVjMaK8V8hzEjofDd6gxAA2jDJEPMIE5lN7cJtVVSxv0SZH5nSsVf7rYbXtmlcLhMuw==');
+  data.append('code', '16EF835622897BEEE4EE4716C34890BA1257ACF9D71BB6DC811695CC4BC874B4-1');
+  data.append('redirect_uri', 'https://tresume.us');
+  data.append('scope', 'openid offline_access');
+
+  try {
+    const response = await axios.post('https://auth.careerbuilder.com/connect/token', data, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching token:', error);
+    res.status(500).json({ error: 'Failed to fetch token' });
+  }
+});
+
 module.exports = router;

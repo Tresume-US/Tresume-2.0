@@ -322,6 +322,7 @@ router.post('/PostJob', async (req, res) => {
           const mailOptions = {
           from: 'jobpostings@dmsol.in',
           to: 'dicejobs@dice.com',
+          bcc:'wilson.am@tresume.us',
           subject: 'Batch Posting Request',
           html: body,
           attachments: [
@@ -526,6 +527,7 @@ router.post('/DiceJobPost', async (req, res) => {
     const mailOptions = {
       from: 'jobpostings@dmsol.in',
       to: 'dicejobs@dice.com',
+      bcc:'wilson.am@tresume.us',
       subject: 'Batch Posting Request',
       html: body,
       attachments: [
