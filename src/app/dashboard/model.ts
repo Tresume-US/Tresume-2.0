@@ -1,4 +1,7 @@
 export interface ResponseDetails {
+    interviewlist: any;
+    placementlist: any;
+    submissionlist: any;
     flag?: any;
     result?: any;
 }

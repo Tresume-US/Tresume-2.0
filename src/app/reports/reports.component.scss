@@ -2,3 +2,61 @@
     padding: 20px;
     line-height: 30px;
 }
+
+.funnel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .funnel-stage {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .submissions {
+    background-color: #ff6384;
+    width: 100%;
+  }
+  
+  .interviews {
+    background-color: #36a2eb;
+    width: 75%;
+  }
+  
+  .placements {
+    background-color: #cc65fe;
+    width: 50%;
+  }
+  
+  .stage-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  .stage-value {
+    font-size: 1.5em;
+  }
+  
+  .ratios-box {
+    border: 2px solid #000;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .ratio {
+    margin-bottom: 10px;
+  }
+  

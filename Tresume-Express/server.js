@@ -27,7 +27,7 @@ const apiUrl = envconfig.apiUrl;
 const port = envconfig.port;
 var cors = require("cors");
 app.use(cors());
-
+const pool = require("./database");
 const cron = require("node-cron");
 
 const onboardRoutes = require("./onboarding-routes");
@@ -247,6 +247,7 @@ var config1 = {
   trustServerCertificate: true,
   connectionTimeout: 60000,
 };
+
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -5357,6 +5358,54 @@ app.post("/JobboardUsageReport", function (req, res) {
   } catch (error) {
     console.log(error);
     return res.status(500).send("Internal server error");
+  }
+});
+
+app.post('/performancereport', async (req, res) => {
+  try {
+    if(req.body.recruiterId == 'All'){
+      const [
+        submissionlist,interviewlist,placementlist
+     ] = await Promise.all([
+         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Submission s ON t.traineeid = s.markerterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid = "+req.body.orgID),
+         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN         placements s ON CAST(t.traineeid AS VARCHAR) = s.marketername JOIN Trainee rt ON rt.TraineeID = s.TraineeID          WHERE rt.Active=1 and s.ACTIVE = 1 and t.organizationid = "+req.body.orgID),
+         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Traineeinterview s ON t.traineeid = s.recruiterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid ="+req.body.orgID),
+         
+     ]);
+
+     const responseData = {
+         submissionlist: submissionlist.recordset,
+         placementlist: placementlist.recordset,
+         interviewlist: interviewlist.recordset,
+
+         
+     };
+
+     res.json(responseData);
+    }else{
+      const [
+        submissionlist,interviewlist,placementlist
+     ] = await Promise.all([
+      pool.query("select CONCAT(t.Firstname, ' ', t.LastName) as Candidate,s.clientname  from submission as s inner join trainee as t on t.traineeid = s.traineeid where s.MarkerterID ='"+req.body.recruiterId+"' AND s.createtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
+      pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate, p.clientname FROM placements as p  inner join trainee as t on t.traineeid = p.traineeid where CAST(p.marketername AS VARCHAR) ='"+req.body.recruiterId+"' AND p.createdtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
+      pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate,i.clientname FROM Traineeinterview as i inner join trainee as t on t.traineeid = i.traineeid where i.recruiterid ='"+req.body.recruiterId+"' AND i.createtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
+         
+     ]);
+
+     const responseData = {
+         submissionlist: submissionlist.recordset,
+         placementlist: placementlist.recordset,
+         interviewlist: interviewlist.recordset,
+
+         
+     };
+
+     res.json(responseData);
+    }
+      
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal server error' });
   }
 });
 

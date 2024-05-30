@@ -519,7 +519,144 @@
           </div>
         </div>
       </mat-tab>
+  <!-- Content for Submission tab -->
+  <mat-tab label="Submission" class="mt-5"
+  *ngIf="routeType == 1 || routeType == 3">
+  <div class="container">
+    <!-- app.component.html -->
+    <button class="btn btn1 mt-3 ml-4" (click)="downloadExcel()">Download
+      DSR</button>
+    <form [formGroup]="myFormSubmission">
+      <div class="form-group mt-4">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title"
+              name="title" placeholder="Title"
+              formControlName="title">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('title').invalid && myFormSubmission.get('title').touched }"> -->
+            <!-- <div *ngIf="myFormSubmission.get('title').invalid && myFormSubmission.get('title').touched"
+              class="validation-message" style="color: red;">
+              * Please enter valid Title.
+            </div> -->
+          </div>
+          <div class="col-md-4">
+            <label for="submissionDate">Submission Date</label>
+            <input type="date" class="form-control" id="submissionDate"
+              name="submissionDate"
+              placeholder="Submission Date"
+              formControlName="submissionDate">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('submissionDate').invalid && myFormSubmission.get('submissionDate').touched }"> -->
+            <!-- <div
+              *ngIf="myFormSubmission.get('submissionDate').hasError('required') && myFormSubmission.get('submissionDate').touched"
+              class="validation-message" style="color: red;">
+              *Please select a Submission Date.
+            </div>
+            <div
+              *ngIf="myFormSubmission.get('submissionDate').hasError('futureDate') && myFormSubmission.get('submissionDate').touched"
+              class="validation-message" style="color: red;">
+              *Please select a future date for the Submission.
+            </div> -->
+          </div>
+          <div class="col-md-4">
+            <label for="notes">Notes</label>
+            <input type="text" class="form-control" id="notes"
+              name="notes" placeholder="Notes"
+              formControlName="notes">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('notes').invalid && myFormSubmission.get('notes').touched }"> -->
+            <!-- <div *ngIf="myFormSubmission.get('notes').invalid && myFormSubmission.get('notes').touched"
+              class="validation-message" style="color: red;">
+              * Please enter valid Note.
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="vendorName">Vendor Name</label>
+            <input type="text" class="form-control" id="vendorName"
+              name="vendorName" placeholder="Vendor Name"
+              formControlName="vendorName">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('vendorName').invalid && myFormSubmission.get('vendorName').touched }"> -->
+            <!-- <div *ngIf="myFormSubmission.get('vendorName').invalid && myFormSubmission.get('vendorName').touched"
+              class="validation-message" style="color: red;">
+              * Please enter valid Vendor Name.
+            </div> -->
+          </div>
+          <div class="col-md-4">
+            <label for="rate">Rate</label>
+            <input type="number" class="form-control" id="rate"
+              name="rate" placeholder="Rate"
+              formControlName="rate">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('rate').invalid && myFormSubmission.get('rate').touched }"> -->
+            <!-- <div *ngIf="myFormSubmission.get('rate').invalid && myFormSubmission.get('rate').touched"
+              class="validation-message" style="color: red;">
+              * Should be Greater than 1$.
+            </div> -->
+          </div>
+          <div class="col-md-4">
+            <label for="clientName">Client Name</label>
+            <input type="text" class="form-control" id="clientName"
+              name="clientName" placeholder="Client Name"
+              formControlName="clientName">
+            <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('clientName').invalid && myFormSubmission.get('clientName').touched }"> -->
+            <!-- <div *ngIf="myFormSubmission.get('clientName').invalid && myFormSubmission.get('clientName').touched"
+              class="validation-message" style="color: red;">
+              * Please enter valid Client Name.
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row mt-4 pl-3">
+    <div class="col">
+      <div class="table-container">
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>SubmissionDate</th>
+              <th>Marketer Name</th>
+              <th>VendorName</th>
+              <th>ClientName</th>
+              <th>Note</th>
+              <th>Rate</th>
+              <th>Created at</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let submission of submissionList">
+              <td>{{ submission.Title }}</td>
+              <td>{{ submission.SubmissionDate | date : "MM/dd/y" : "UTC"}} </td>
+              <td>{{ submission.MarketerName }}</td>
+              <td>{{ submission.VendorName }}</td>
+              <td>{{ submission.ClientName }}</td>
+              <td>{{ submission.Note }}</td>
+              <td>{{ submission.Rate }}</td>
+              <td>{{ submission.CreateTime | date:'MM/dd/yy hh:mm a' }}</td>
+              <td>
+                <i class="fa fa-trash fa-lg ml-3 mr-2"
+                  (click)="deletesubmissiondata(submission.submissionid)"></i>
+              </td>
+              <!-- <td>
+                      <div class="input-group">
+                        <input type="date" class="form-control"
+                          [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                          placeholder="Follow Up On" style="width: 100px;">
+                        <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/1/'+ submission.TraineeID]" style="font-size: 24px;"></i>
+                      </div>
+                    </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
+</mat-tab>
       <!-- INTERVIEW TAB -->
       <mat-tab label="Interview" class="mt-5"
         *ngIf="routeType == 1 || routeType == 3">
@@ -755,144 +892,7 @@
           </div>
         </div>
       </mat-tab>
-      <!-- Content for Submission tab -->
-      <mat-tab label="Submission" class="mt-5"
-        *ngIf="routeType == 1 || routeType == 3">
-        <div class="container">
-          <!-- app.component.html -->
-          <button class="btn btn1 mt-3 ml-4" (click)="downloadExcel()">Download
-            DSR</button>
-          <form [formGroup]="myFormSubmission">
-            <div class="form-group mt-4">
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="title">Title</label>
-                  <input type="text" class="form-control" id="title"
-                    name="title" placeholder="Title"
-                    formControlName="title">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('title').invalid && myFormSubmission.get('title').touched }"> -->
-                  <!-- <div *ngIf="myFormSubmission.get('title').invalid && myFormSubmission.get('title').touched"
-                    class="validation-message" style="color: red;">
-                    * Please enter valid Title.
-                  </div> -->
-                </div>
-                <div class="col-md-4">
-                  <label for="submissionDate">Submission Date</label>
-                  <input type="date" class="form-control" id="submissionDate"
-                    name="submissionDate"
-                    placeholder="Submission Date"
-                    formControlName="submissionDate">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('submissionDate').invalid && myFormSubmission.get('submissionDate').touched }"> -->
-                  <!-- <div
-                    *ngIf="myFormSubmission.get('submissionDate').hasError('required') && myFormSubmission.get('submissionDate').touched"
-                    class="validation-message" style="color: red;">
-                    *Please select a Submission Date.
-                  </div>
-                  <div
-                    *ngIf="myFormSubmission.get('submissionDate').hasError('futureDate') && myFormSubmission.get('submissionDate').touched"
-                    class="validation-message" style="color: red;">
-                    *Please select a future date for the Submission.
-                  </div> -->
-                </div>
-                <div class="col-md-4">
-                  <label for="notes">Notes</label>
-                  <input type="text" class="form-control" id="notes"
-                    name="notes" placeholder="Notes"
-                    formControlName="notes">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('notes').invalid && myFormSubmission.get('notes').touched }"> -->
-                  <!-- <div *ngIf="myFormSubmission.get('notes').invalid && myFormSubmission.get('notes').touched"
-                    class="validation-message" style="color: red;">
-                    * Please enter valid Note.
-                  </div> -->
-                </div>
-              </div>
-            </div>
-            <div class="form-group mt-3">
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="vendorName">Vendor Name</label>
-                  <input type="text" class="form-control" id="vendorName"
-                    name="vendorName" placeholder="Vendor Name"
-                    formControlName="vendorName">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('vendorName').invalid && myFormSubmission.get('vendorName').touched }"> -->
-                  <!-- <div *ngIf="myFormSubmission.get('vendorName').invalid && myFormSubmission.get('vendorName').touched"
-                    class="validation-message" style="color: red;">
-                    * Please enter valid Vendor Name.
-                  </div> -->
-                </div>
-                <div class="col-md-4">
-                  <label for="rate">Rate</label>
-                  <input type="number" class="form-control" id="rate"
-                    name="rate" placeholder="Rate"
-                    formControlName="rate">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('rate').invalid && myFormSubmission.get('rate').touched }"> -->
-                  <!-- <div *ngIf="myFormSubmission.get('rate').invalid && myFormSubmission.get('rate').touched"
-                    class="validation-message" style="color: red;">
-                    * Should be Greater than 1$.
-                  </div> -->
-                </div>
-                <div class="col-md-4">
-                  <label for="clientName">Client Name</label>
-                  <input type="text" class="form-control" id="clientName"
-                    name="clientName" placeholder="Client Name"
-                    formControlName="clientName">
-                  <!-- [ngClass]="{ 'invalid-input': myFormSubmission.get('clientName').invalid && myFormSubmission.get('clientName').touched }"> -->
-                  <!-- <div *ngIf="myFormSubmission.get('clientName').invalid && myFormSubmission.get('clientName').touched"
-                    class="validation-message" style="color: red;">
-                    * Please enter valid Client Name.
-                  </div> -->
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="row mt-4 pl-3">
-          <div class="col">
-            <div class="table-container">
-              <table class="table text-center">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>SubmissionDate</th>
-                    <th>Marketer Name</th>
-                    <th>VendorName</th>
-                    <th>ClientName</th>
-                    <th>Note</th>
-                    <th>Rate</th>
-                    <th>Created at</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let submission of submissionList">
-                    <td>{{ submission.Title }}</td>
-                    <td>{{ submission.SubmissionDate | date : "MM/dd/y" : "UTC"}} </td>
-                    <td>{{ submission.MarketerName }}</td>
-                    <td>{{ submission.VendorName }}</td>
-                    <td>{{ submission.ClientName }}</td>
-                    <td>{{ submission.Note }}</td>
-                    <td>{{ submission.Rate }}</td>
-                    <td>{{ submission.CreateTime | date:'MM/dd/yy hh:mm a' }}</td>
-                    <td>
-                      <i class="fa fa-trash fa-lg ml-3 mr-2"
-                        (click)="deletesubmissiondata(submission.submissionid)"></i>
-                    </td>
-                    <!-- <td>
-                            <div class="input-group">
-                              <input type="date" class="form-control"
-                                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
-                                placeholder="Follow Up On" style="width: 100px;">
-                              <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/1/'+ submission.TraineeID]" style="font-size: 24px;"></i>
-                            </div>
-                          </td> -->
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </mat-tab>
+    
       <!-- Content for Financial Info tab -->
       <mat-tab label="Financial Info" class="mt-5" *ngIf="routeType == 1">
         <div class="container">

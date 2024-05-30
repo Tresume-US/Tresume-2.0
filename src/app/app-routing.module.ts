@@ -110,7 +110,7 @@ import { InvoiceReportComponent } from './invoice-report/invoice-report.componen
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.component';
-
+import { PerformanceReportsComponent } from './reports/performance-report.component';
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: 'compliancedashboard', component: ComplianceDashboardComponent, canActivate: [AuthGuard]   },
@@ -233,6 +233,7 @@ const routes: Routes = [
   { path: 'multiple-invoices', component: MultipleInvoicesComponent },
   { path: 'corpdocument', component: CorporateDocumentComponent },
   { path: 'clientdetails/:ClientID', component: ClientViewDetailsComponent },
+  { path: 'reports/performance', component: PerformanceReportsComponent },
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  

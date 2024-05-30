@@ -395,7 +395,7 @@ router.get('/getCB-token', async (req, res) => {
   data.append('grant_type', 'authorization_code');
   data.append('client_id', 'Ca9b88b95');
   data.append('client_secret', 'ITATVWZFQhy2iVO111IuVjMaK8V8hzEjofDd6gxAA2jDJEPMIE5lN7cJtVVSxv0SZH5nSsVf7rYbXtmlcLhMuw==');
-  data.append('code', '16EF835622897BEEE4EE4716C34890BA1257ACF9D71BB6DC811695CC4BC874B4-1');
+  data.append('code', 'A88D3AB863659D86C271507A4454816C1F9CA27DC078180569A5890F97BD93C1-1');
   data.append('redirect_uri', 'https://tresume.us');
   data.append('scope', 'openid offline_access');
 

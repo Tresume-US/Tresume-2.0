@@ -1,0 +1,155 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Performance Report</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <accordion [isAnimated]="true">
+            <accordion-group heading="Filter" [isOpen]=true>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+                            <label for="date-range">Date Range</label>
+                            <input id="date-range" type="text" placeholder="Select the dates to filter"
+                                class="form-control col-md-2" formControlName="dates" bsDaterangepicker
+                                [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
+                                (bsValueChange)="onValueChange($event)">
+                            <label for="recruiter">Recruiter</label>
+                            <select formControlName="recruiter" class="form-control col-md-2">
+                                <option disabled>Select Recruiter</option>
+                                <option [value]="">All</option>
+                                <option *ngFor="let item of recruiter" [value]="item.TraineeID">{{item.Name}}</option>
+                            </select>
+                     
+                        </form>
+                        <div class="row">
+                            <div style="padding: 15px 8px;">
+                                <button type="submit" class="btn btn-primary" [disabled]="!filterForm.valid"
+                                    (click)="onFilter()">
+                                    Filter
+                                </button>
+                            </div>
+                            <!-- <div style="padding: 15px 8px;">
+                                <button type="button" class="btn btn-info" (click)="onExport()">
+                                    Export as CSV
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="funnel-container">
+                                    <div class="funnel-stage submissions">
+                                      <div class="stage-title">Total Submissions</div>
+                                      <div class="stage-value">{{submissionlist.length}}</div>
+                                    </div>
+                                    <div class="funnel-stage interviews">
+                                      <div class="stage-title">Total Interviews Scheduled</div>
+                                      <div class="stage-value">{{interviewlist.length}}</div>
+                                    </div>
+                                    <div class="funnel-stage placements">
+                                      <div class="stage-title">Total Placements</div>
+                                      <div class="stage-value">{{placementlist.length}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="ratios-box">
+                                    <div class="ratio">
+                                      <strong>Submission to Interview Ratio:</strong>
+                                      {{ (interviewlist.length / submissionlist.length) * 100 | number: '1.0-2' }}%
+                                    </div>
+                                    <div class="ratio">
+                                      <strong>Interview to Placement Ratio:</strong>
+                                      {{ (placementlist.length / interviewlist.length) * 100 | number: '1.0-2' }}%
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                       
+                         
+                          
+                    </div>
+                </div>
+                
+            </accordion-group>
+        </accordion>
+    </div>
+    
+</section>
+
+<div class="container">
+    <!-- <ag-grid-angular style="width: 100%; height: 622px;" class="ag-theme-alpine" [rowData]="rowData"
+        [columnDefs]="columnDefs" [gridOptions]="gridOptions" (gridReady)="onGridReady($event)">
+    </ag-grid-angular> -->
+    <div class="row">
+    
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center">Submission List</th>
+                        </tr>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Client Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of submissionlist">
+                            <td>{{data.Candidate}}</td>
+                            <td>{{data.clientname}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 centered-table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center">Interview List</th>
+                        </tr>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Client Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of interviewlist">
+                            <td>{{data.Candidate}}</td>
+                            <td>{{data.clientname}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 centered-table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center">Placement List</th>
+                        </tr>
+                        <tr>
+                            <th>Candidate Name</th>
+                            <th>Client Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of placementlist">
+                            <td>{{data.Candidate}}</td>
+                            <td>{{data.clientname}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+ 
+        
+    </div>
+</div>
+

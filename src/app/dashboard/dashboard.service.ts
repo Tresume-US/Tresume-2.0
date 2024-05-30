@@ -54,6 +54,11 @@ export class DashboardService {
     getAllRecruiters(id: any): Observable<ResponseDetails> {
         return this.http.get<ResponseDetails>(this.endpoint + 'getAllRecruiters/' + id);
     }
+
+    getperformancereport(request: any): Observable<ResponseDetails> {
+        let requestDetails: any = { fromDate: request.fromDate, toDate: request.toDate, recruiterId: request.recruiterId, orgID: request.orgID };
+        return this.http.post<ResponseDetails>(this.endpoint + 'performancereport', requestDetails);
+    }
 }
 
 export interface RequestItem {
