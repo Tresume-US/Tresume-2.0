@@ -485,7 +485,7 @@ div#bootcarousel {
   border-radius: 50px;
   -o-transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out; 
 }
 .button-group{
   margin-top: 5%;
@@ -496,8 +496,7 @@ div#bootcarousel {
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all 0.4s ease-in-out;
- 
-}
+ }
 
 .bn632-hover:focus {
   outline: none;
@@ -1856,7 +1855,7 @@ video {
 #ats {
   background: url('/assets/img/screen12.jpg') no-repeat center center;
   background-size: cover;
-  height: auto; /* Adjust as necessary */
+  height: 100%; /* Adjust as necessary */
   width: 100%;
   color: #e9dbdb;
   border-top: 0 solid transparent;
@@ -1865,16 +1864,20 @@ video {
 #workforce{
   background: url('/assets/img/screen07.jpg') no-repeat center center;
   background-size: cover;
-  height: auto; /* Adjust as necessary */
+  height: 100vh;
   width: 100%;
   color: #e9dbdb;
   border-top: 0 solid transparent;
   transition: border-top 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 #reason-to-ats{
   background: url('/assets/img/screen07.jpg') no-repeat center center;
   background-size: cover;
-  height: auto; /* Adjust as necessary */
+  height: 100vh; /* Adjust as necessary */
   width: 100%;
   color: #e9dbdb;
   border-top: 0 solid transparent;
@@ -1894,20 +1897,32 @@ video {
 #Contact{
   height: auto;
 }
-#talentsuit{
+// #talentsuit{
+//   background: url('/assets/img/screen01.jpg') no-repeat center center;
+//   background-size: cover;
+//   height: 100%; /* Adjust as necessary */
+//   width: 100%;
+//   color: #e9dbdb;
+//   border-top: 0 solid transparent;
+//   transition: border-top 0.5s ease-in-out;
+// }
+
+#talentsuit {
   background: url('/assets/img/screen01.jpg') no-repeat center center;
   background-size: cover;
-  height: auto; /* Adjust as necessary */
+  height: 100vh; /* Full height of the viewport */
   width: 100%;
   color: #e9dbdb;
   border-top: 0 solid transparent;
   transition: border-top 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 #timesheet{
   background: url('/assets/img/screen03.jpg') no-repeat center center;
   background-size: cover;
-  height: auto; /* Adjust as necessary */
+  height: 100vh; /* Adjust as necessary */
   width: 100%;
   color: #e9dbdb;
   border-top: 0 solid transparent;
@@ -2090,4 +2105,19 @@ width: auto;
   text-align: left;
   font-weight: 100;
   font-family: "Courier New", Courier, monospace;
+}
+
+.quote-container {
+  margin-top: 15px; /* Reset the top margin */
+  color: white;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 30px;
+  text-shadow: 2px 2px 4px rgba(242, 238, 241, 0.882); /* Adds a shadow effect */
+  text-align: center; /* Center text alignment */
+  padding: 25px; /* Adds padding inside the text container */
+}
+
+.quote-text {
+  line-height: 1.6; /* Increases space between lines */
 }

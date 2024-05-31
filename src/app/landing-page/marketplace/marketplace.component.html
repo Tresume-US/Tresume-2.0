@@ -1,184 +1,164 @@
-
-<section id="team" class="pb-5">
-  <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
-    <a routerLink="/homelanding" class="navbar-brand">
-        <img src="../assets/img/logo.png" style="height: 90px;" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
-        <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                    Products
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
-                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
-                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
-                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
-                </div>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" routerLink="/market">Marketplace</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/features">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/about">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/contact">Contact Us</a>
-            </li>
-            <li class="nav-item ">
-              <a href="login" class="nav-link login-btn-mobile">Login</a>
-            </li>
-
-            <li class="nav-item ">
-              <a class=" login-btn-web bn5" style="margin: 0;" routerLink="/login">Login</a>
-
-            </li>
-        </ul>
+<header>
+  <nav role="navigation" class="navbar navbar-expand-lg navbar-light fixed-top" [ngClass]="{ scrolled: isScrolled }"
+    style="color: white; padding-bottom: 0">
+    <div class="pt-5">
+      <a routerLink="/homelanding" class="navbar-brand">
+        <img src="../assets/img/Tresume_logo.png" style="height: 90px" alt="" />
+      </a>
     </div>
-  </nav>
-    <div class="background-video video-container">
-        <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
-            <source src="../../../assets/videos/consult.mp4" type="video/mp4">
-        </video>
-        <div class="container-fluid">
-          <div class="row">
-            <div style="width: 100%; background-color: #a24f9a91; display: flex; justify-content: center; align-items: center;" class="content-over-video overlay">
-              <h1 id="welcomeText" style="height: 92px; padding-top: 33px; font-size: 50px; color: white; font-weight: 500;">
-                <span>WELCOME</span>
-                <span class="space">TO</span>
-                <span class="space">OUR</span>
-                <span class="space">JOB</span>
-                <span class="space">MARKETPLACE</span>
-              </h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+      (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ show: isNavbarCollapsed }">
+      <!-- Navbar links here -->
+    </div>
+    <div class="float-end" style="display: flex; align-items: center">
+      <li class="nav-item" style="list-style: none; margin-right: 15px">
+        <a class="login-btn-web bn5" style="color: black" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item mr-5" style="list-style: none">
+        <div class="menucontainer">
+          <!-- Menu Icon -->
+          <div class="menu-icon" (click)="toggleMenu()">
+            <div *ngIf="!menuOpen" class="bn5 bn8">
+              <i class="fas fa-bars"></i>
+            </div>
+            <div *ngIf="menuOpen" class="bn5 bn8">
+              <i class="fas fa-times"></i>
             </div>
           </div>
-        </div>
-    </div>
-    <br>
-    <br><br>
-    <div class="container-fluid introContent">
-        <div class="row">
-            <!-- Content on the left side -->
-            <div class="col-md-6">
-                <div class="content">
-                    <h1 style="    text-align: end;">Welcome to our <span
-                            style="color: purple; font-size: 44px; font-family: sans-serif; font-weight: lighter;"><i>Job
-                                Marketplace</i></span></h1>
-                    <p>At Tresume, we are dedicated to connecting job seekers with the best opportunities available. Our
-                        job
-                        marketplace brings together leading job platforms, allowing you to access a wide range of job
-                        listings from
-                        a single platform. Through our integrated partnerships with Dice, CareerBuilder, Monster, and
-                        Jooble, we
-                        provide you with an extensive selection of job opportunities across various industries.</p>
-                    <div class="btn" style="display: flex;">
-                        <a routerLink="/login" class="bn5">Book a Demo</a>
-                        <a routerLink="/login" class="bn5">Features</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <img src="../../../assets/img/jobmarket.png" alt="Tresume Image" class="img-fluid">
-            </div>
-        </div>
-    </div>
-    <br>
-    <br><br>
-    <div class="container">
-        <h2 class="tittle">Job boards</h2>
-        <div class="row">
-            <div *ngFor="let card of cards" class="col-lg-4 mb-4">
-                <div class="card" style="width: 18rem; height: 18rem;box-shadow: 11px 8px 22px -12px rgba(0,0,0,0.77);">
-                    <img class="card-img-top" style="width: 237px;height: 111px;" [src]="card.imageSrc" alt="{{ card.title }} image">
-                    <div class="card-body">
-                        <h5 class="card-title" style="font-size: 22px;">{{ card.title }}</h5>
-                        <p class="card-text">{{ card.text }}</p>
-                        <a [href]="card.link" class="btn btn-primary"
-                            style="background-color: purple;border: none;">Read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h2 class="tittle">Others</h2>
-        <div class="row">
-            <div *ngFor="let card of others" class="col-lg-4 mb-4">
-                <div class="card" style="width: 18rem; height: 18rem;box-shadow: 11px 8px 22px -12px rgba(0,0,0,0.77);">
-                    <img class="card-img-top" style="width: 237px;height: 111px;" [src]="card.imageSrc" alt="{{ card.title }} image">
-                    <div class="card-body">
-                        <h5 class="card-title" style="    font-size: 20px;">{{ card.title }}</h5>
-                        <p class="card-text">{{ card.text }}</p>
-                        <a [href]="card.link" class="btn btn-primary"
-                            style="background-color: purple;border: none;">Read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br><br><br>
-    <div class="container">
-        <!-- Card 2 -->
-        <div class="card mb-4">
-            <div class="arrow">
-                →
-            </div>
-            <h2 style="color: purple;">Expanded Reach</h2>
-            <h2 class="down" style="    font-weight: 400;
-            font-style: italic;">By integrating with top job platforms, we bring together
-                thousands of job listings from multiple sources, giving you access to a broader range of opportunities.
-                Say
-                goodbye to the hassle of visiting multiple websites and let our marketplace simplify your job search.
-            </h2>
-        </div>
-        <!-- Card 3 -->
-        <div class="card mb-4">
-            <div class="arrow">
-                →
-            </div>
-            <h2 style="color: purple;">Efficiency and Time Savings</h2>
-            <h2 class="down" style="    font-weight: 400;
-            font-style: italic;">Instead of searching through individual
-                platforms, our marketplace allows you to conveniently browse and apply for jobs from one centralized
-                location.
-                Save time and effort by streamlining your job search process.
-            </h2>
-        </div>
-        <!-- Card 4 -->
-        <div class="card mb-4">
-            <div class="arrow">
-                →
-            </div>
-            <h2 style="color: purple;">Diverse Industries and Roles</h2>
-            <h2 class="down" style="    font-weight: 400;
-            font-style: italic;">Whether you're seeking opportunities in
-                technology, finance, healthcare, or any other industry, our marketplace offers a diverse range of job
-                listings
-                across various sectors. From entry-level positions to executive roles, we've got you covered.
-            </h2>
-        </div>
-    </div>
 
+          <!-- Menu Overlay -->
+          <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
+            <ul class="menu-list">
+              <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="login" routerLink="/login">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </div>
+  </nav>
+</header>
+
+<div class="background-video video-container">
+  <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content">
+    <source src="../../../assets/videos/consult.mp4" type="video/mp4" />
+  </video>
+  <div class="container-fluid">
+    <div class="row">
+      <div style="
+          width: 100%;
+          background-color: #a24f9a91;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        " class="content-over-video overlay">
+        <h1 id="welcomeText" style="
+            height: 92px;
+            padding-top: 33px;
+            font-size: 50px;
+            color: white;
+            font-weight: 500;
+          ">
+          <span>WELCOME</span>
+          <span class="space">TO</span>
+          <span class="space">OUR</span>
+          <span class="space">JOB</span>
+          <span class="space">MARKETPLACE</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="marketplace">
+  <div class="row" style="height: 150px;"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="job-board-anime">
+        <!-- <h2 class="tittle">Job boards</h2> -->
+        <div class="row card-stack-container">
+          <div *ngFor="let card of cards; let i = index" class="card-wrapper col-md-3">
+            <div class="card custom-card" [ngClass]="{'highlight': selectedCardIndex === i}" (click)="selectCard(i)">
+              <div class="card-title-vertical">{{ card.title }}</div> <!-- Vertical title -->
+              <img class="card-img-top p-3 "  [style.display]="i === 5 ? 'none' : 'block'" style="width: 200px; height: 100px;" [src]="card.imageSrc" alt="{{ card.title }} image" />
+              <div class="card-body p-1">
+                <p class="card-text text-dark">{{ card.text }}</p>
+                <a [href]="card.link" class="btn">Read more</a>
+              </div>
+            </div>
+          </div>        
+        </div>
+      </div>
+    </div>    
+    <div class="col-md-5">
+      <img src="../../../assets/img/jobmarket.png" alt="Tresume Image" class="img-fluid" />
+    </div>
+  </div>
 </section>
 
 
 
+<!-- <div class="container">
+  <div class="card mb-4">
+    <div class="arrow">→</div>
+    <h2 style="color: purple">Expanded Reach</h2>
+    <h2 class="down" style="font-weight: 400; font-style: italic">
+      By integrating with top job platforms, we bring together thousands of
+      job listings from multiple sources, giving you access to a broader range
+      of opportunities. Say goodbye to the hassle of visiting multiple
+      websites and let our marketplace simplify your job search.
+    </h2>
+  </div>
+  <div class="card mb-4">
+    <div class="arrow">→</div>
+    <h2 style="color: purple">Efficiency and Time Savings</h2>
+    <h2 class="down" style="font-weight: 400; font-style: italic">
+      Instead of searching through individual platforms, our marketplace
+      allows you to conveniently browse and apply for jobs from one
+      centralized location. Save time and effort by streamlining your job
+      search process.
+    </h2>
+  </div>
+  <div class="card mb-4">
+    <div class="arrow">→</div>
+    <h2 style="color: purple">Diverse Industries and Roles</h2>
+    <h2 class="down" style="font-weight: 400; font-style: italic">
+      Whether you're seeking opportunities in technology, finance, healthcare,
+      or any other industry, our marketplace offers a diverse range of job
+      listings across various sectors. From entry-level positions to executive
+      roles, we've got you covered.
+    </h2>
+  </div>
+</div> -->
+
 <footer class="footer-section">
   <div class="container">
-    <div class="footer-cta pt-5 ">
+    <div class="footer-cta pt-5">
       <div class="row">
         <div class="col-xl-4 col-md-4 mb-30">
           <div class="single-cta">
             <i class="fas fa-map-marker-alt"></i>
             <div class="cta-text">
               <h4>Find us</h4>
-              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States
+                Of America
               </span>
             </div>
           </div>
@@ -208,22 +188,36 @@
         <div class="col-xl-4 col-lg-4 mb-50">
           <div class="footer-widget">
             <div class="footer-logo">
-              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;    height: 79px;" class="img-fluid" alt="logo"></a>
+              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style="margin-left: 7rem; height: 79px"
+                  class="img-fluid" alt="logo" /></a>
             </div>
             <div class="footer-text">
-              <p>With the right ATS recruiting system, you can increase the number of placements and grow your
-                business.
-                Tresume advanced recruit analytics helps you back up all your presentations with data. Create
-                forecast
-                for next quarter and keep track of important metrics.</p>
+              <p>
+                With the right ATS recruiting system, you can increase the
+                number of placements and grow your business. Tresume advanced
+                recruit analytics helps you back up all your presentations with
+                data. Create forecast for next quarter and keep track of
+                important metrics.
+              </p>
             </div>
             <div class="footer-social-icon">
               <span>Follow us</span>
               <ul class="social_icon">
-                <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
-                <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+                <li>
+                  <a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank">
+                    <i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/Tresume2" target="_blank"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/company/tresume/" target="_blank"><i
+                      class="fa fa-linkedin-square"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/@tresumeus3304/featured" target="_blank"><i
+                      class="fa fa-youtube"></i></a>
+                </li>
               </ul>
             </div>
           </div>
@@ -234,13 +228,13 @@
               <h3>Useful Links</h3>
             </div>
             <ul>
-              <li><a routerLink="/about"  href="#">About Us</a></li>
+              <li><a routerLink="/about" href="#">About Us</a></li>
               <li><a routerLink="/market" href="#">Marketplace</a></li>
               <li><a routerLink="/features" href="#">Features</a></li>
               <li><a routerLink="/contact" href="#">Contact us</a></li>
-              <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+              <li><a routerLink="/workforce" href="#">WorkForce</a></li>
               <li><a routerLink="/timesheet">TimeSheet</a></li>
-              <li><a  routerLink="/ats">ATS</a></li>
+              <li><a routerLink="/ats">ATS</a></li>
               <li><a routerLink="/talent-suite">Talent Suite</a></li>
             </ul>
           </div>
@@ -251,11 +245,16 @@
               <h3>Subscribe</h3>
             </div>
             <div class="footer-text mb-25">
-              <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+              <p>
+                Don’t miss to subscribe to our new feeds, kindly fill the form
+                below.
+              </p>
             </div>
             <div class="subscribe-form">
-              <form action="#" >
-                <li style="text-align: center;font-size: 22px;"><a routerLink="/contact" style="color: white; font-weight: bold;">Contact us</a></li>
+              <form action="#">
+                <li style="text-align: center; font-size: 22px">
+                  <a routerLink="/contact" style="color: white; font-weight: bold">Contact us</a>
+                </li>
               </form>
             </div>
           </div>
@@ -274,11 +273,11 @@
         <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
           <div class="footer-menu">
             <ul>
-              <li><a >Home</a></li>
-              <li><a >Terms</a></li>
-              <li><a >Privacy</a></li>
-              <li><a >Policy</a></li>
-              <li><a >Contact</a></li>
+              <li><a>Home</a></li>
+              <li><a>Terms</a></li>
+              <li><a>Privacy</a></li>
+              <li><a>Policy</a></li>
+              <li><a>Contact</a></li>
             </ul>
           </div>
         </div>
