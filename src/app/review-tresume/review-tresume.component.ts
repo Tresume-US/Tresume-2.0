@@ -205,13 +205,15 @@ export class ReviewTresumeComponent implements OnChanges {
         this.saveGeneralFormData();
         break;
       case 1:
-        this.saveInterviewFormData();
+        this.saveSubmissionFormData();
         break;
       case 2:
-        this.savePlacementFormData();
+        this.saveInterviewFormData();
+        
         break;
       case 3:
-        this.saveSubmissionFormData();
+        this.savePlacementFormData();
+        
         break;
       case 4:
         this.saveFinancialInfoFormData();
@@ -506,7 +508,7 @@ export class ReviewTresumeComponent implements OnChanges {
     if (tabIndex >= 0) {
       this.currentTabIndex = tabIndex;
       this.tabIndex = tabIndex;
-      if(tabIndex === 2 || tabIndex ===6 || tabIndex===7){
+      if(tabIndex === 3 || tabIndex ===6 || tabIndex===7){
         this.showSaveButton = false
       }else{
         this.showSaveButton = true;

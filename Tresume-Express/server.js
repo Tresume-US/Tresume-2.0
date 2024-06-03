@@ -3120,7 +3120,7 @@ app.post("/checkIfProfileMigrated", function (req, res) {
 });
 
 
-/* app.post("/getCBAuthToken", function (req, res) {
+ app.post("/getCBAuthToken", function (req, res) {
   axios
     .post("https://auth.careerbuilder.com/connect/token", {
       grant_type: "refresh_token",
@@ -3137,43 +3137,43 @@ app.post("/checkIfProfileMigrated", function (req, res) {
     .catch((error) => {
       res.send(error);
     });
-}); */
+}); 
 
-app.post("/getCBAuthToken", function (req, res) {
-  try {
-    console.log('CB');
-    const requestData = {
-      grant_type: "refresh_token",
-      client_id: "Cd2543bf6",
-      client_secret:
-        "mmYQ7+pkLk1VQq+to5Pc1t+4agJ8f/WhyhSccR5yHdhfZhdFgYdI6mLyZhmNmWZCxg6D7PAWXuS5VaJENtlVvw==",
-      refresh_token:
-        "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTcwMTI3ODQsImlhdCI6MTcxNzAxMjc4NCwiZXhwIjoxNzE3MDEzMDg0LCJhdWQiOiJDYTliODhiOTUiLCJhbXIiOlsicHdkIl0sImF0X2hhc2giOiJLOUo2VGZ5dnVMRFpLaXJGS0UwUFJnIiwic2lkIjoiNDBGQzU3MUZDOEY0REUzNjYwMTRGRjU3MTNENkZDMzciLCJzdWIiOiJVREQ2Qko2RzVIV1I5M0pMN0pKIiwiYXV0aF90aW1lIjoxNzE3MDExOTI4LCJpZHAiOiJsb2NhbCIsImVtYWlsIjoibml0aHlhQGFzdGFjcnMuY29tIiwiYWNjb3VudHMiOlsiQTc5ME01NjZKNEpKMkxRRDMxViJdLCJjdXJyZW50X2FjY291bnRfZGlkIjoiQTc5ME01NjZKNEpKMkxRRDMxViIsImdpdmVuX25hbWUiOiJOaXRoeWEiLCJmYW1pbHlfbmFtZSI6Ik4ifQ.k5EU151W0mCWBfiTseDJWndMuEBQ88jbpcgvY67Uk-sb9Zwku86Ry1axCzzPzoPokvbNXp-vGHUi2Yf8NHLml6eHq5li1deXmWhJytBAJBi7nhhnKyiBMY2ssQ6gf6tEjvKOM0qIofAT9OEE5cny-8g3k8W5WMtY2kHO6olsyr7qwNX0SFJqGNC9bYdJFNysv8SdTfSY0W-lPfTu3hK9wa1ZGggh4Obz8xBs7iIWdaig683mTDrBawGoe9IA4M-519CnTeoX9PmKXnyxe5erSK3IO_DfvhGT71MdlYBrvwXXl4CHNtmkLqjilszDEpolQFHSzq46UVzDLk1HW0EVDQ",
-      scope: "offline_access",
-    };
+// app.post("/getCBAuthToken", function (req, res) {
+//   try {
+//     console.log('CB');
+//     const requestData = {
+//       grant_type: "refresh_token",
+//       client_id: "Ca9b88b95",
+//       client_secret:
+//         "ITATVWZFQhy2iVO111IuVjMaK8V8hzEjofDd6gxAA2jDJEPMIE5lN7cJtVVSxv0SZH5nSsVf7rYbXtmlcLhMuw",
+//       refresh_token:
+//         "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiSldUIn0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTcwMTI3ODQsImlhdCI6MTcxNzAxMjc4NCwiZXhwIjoxNzE3MDEzMDg0LCJhdWQiOiJDYTliODhiOTUiLCJhbXIiOlsicHdkIl0sImF0X2hhc2giOiJLOUo2VGZ5dnVMRFpLaXJGS0UwUFJnIiwic2lkIjoiNDBGQzU3MUZDOEY0REUzNjYwMTRGRjU3MTNENkZDMzciLCJzdWIiOiJVREQ2Qko2RzVIV1I5M0pMN0pKIiwiYXV0aF90aW1lIjoxNzE3MDExOTI4LCJpZHAiOiJsb2NhbCIsImVtYWlsIjoibml0aHlhQGFzdGFjcnMuY29tIiwiYWNjb3VudHMiOlsiQTc5ME01NjZKNEpKMkxRRDMxViJdLCJjdXJyZW50X2FjY291bnRfZGlkIjoiQTc5ME01NjZKNEpKMkxRRDMxViIsImdpdmVuX25hbWUiOiJOaXRoeWEiLCJmYW1pbHlfbmFtZSI6Ik4ifQ.k5EU151W0mCWBfiTseDJWndMuEBQ88jbpcgvY67Uk-sb9Zwku86Ry1axCzzPzoPokvbNXp-vGHUi2Yf8NHLml6eHq5li1deXmWhJytBAJBi7nhhnKyiBMY2ssQ6gf6tEjvKOM0qIofAT9OEE5cny-8g3k8W5WMtY2kHO6olsyr7qwNX0SFJqGNC9bYdJFNysv8SdTfSY0W-lPfTu3hK9wa1ZGggh4Obz8xBs7iIWdaig683mTDrBawGoe9IA4M-519CnTeoX9PmKXnyxe5erSK3IO_DfvhGT71MdlYBrvwXXl4CHNtmkLqjilszDEpolQFHSzq46UVzDLk1HW0EVDQ",
+//       scope: "offline_access",
+//     };
 
-    const formData = qs.stringify(requestData);
+//     const formData = qs.stringify(requestData);
 
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/x-www-form-urlencoded",
+//       },
+//     };
 
-    axios
-      .post("https://api.careerbuilder.com/oauth/token", formData, config)
-      .then((result) => {
-        res.send(result.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).send("Error fetching CareerBuilder access token");
-      });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
-  }
-});
+//     axios
+//       .post("https://api.careerbuilder.com/oauth/token", formData, config)
+//       .then((result) => {
+//         res.send(result.data);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         res.status(500).send("Error fetching CareerBuilder access token");
+//       });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 app.post("/CBSearch", function (req, res) {
   let response = null;
