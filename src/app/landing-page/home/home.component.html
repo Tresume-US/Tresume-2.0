@@ -1,3 +1,4 @@
+<section id="intro" class="intro content">
 <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
   [ngClass]="{ scrolled: isScrolled }" style="color: white; padding-bottom: 0">
   <div class="pt-5">
@@ -100,6 +101,9 @@
   </div> -->
 
   <div class="dots-container" style="margin-top: 23%">
+    <a class="dot-link" (click)="scrollToSection('intro')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'intro' }"></div>
+    </a>
     <a class="dot-link" (click)="scrollToSection('ats')">
       <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'ats' }"></div>
     </a>
@@ -112,6 +116,10 @@
     <a class="dot-link" (click)="scrollToSection('timesheet')">
       <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'timesheet' }"></div>
     </a>
+    <a class="dot-link" (click)="scrollToSection('reason-to-ats')">
+      <div class="dot" [ngClass]="{ 'active-dot': activeSection === 'reason-to-ats' }"></div>
+    </a>
+
   </div>
 </nav>
 
@@ -121,6 +129,7 @@
     Your browser does not support the video tag.
   </video>
 </div>
+</section>
 <section id="ats" class="ats pb-5 transition-section">
   <h2 class="text-center tittle mt-0 pt-4" style="color: white">ATS</h2>
   <span class="animate-border mr-auto ml-auto mb-5"></span>
@@ -162,12 +171,18 @@
       </div>
     </div>
   </div>
+  <div class="row quote-container">
+    <p class="quote-text">
+      As your business grows, our ATS grows with you. Handle larger volumes of applicants without compromising
+      efficiency.
+    </p>
+  </div>
 </section>
 
 <!-- app.component.html or the relevant template file -->
 
 <section id="talentsuit" class="talentsuit content">
-  <div class="row pt-5">
+  <div class="row ml-5 mt-5">
     <div class="col-md-6 ml-5">
       <img src="../../../assets/img/talentbench.jpg" alt="Workforce Image" style="
           max-width: 130%;
@@ -177,9 +192,9 @@
         " />
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-4 text-content mt-5">
+    <div class="col-md-4 text-content">
       <div>
-        <h2 class="text-center tittle pt-3">Talent Suite</h2>
+        <h2 class="text-center tittle pt-3 mt-4">Talent Suite</h2>
         <span class="animate-border mr-auto ml-auto mb-4"></span>
         <h3 class="text-center sub-title">
           Optimize your talent management process. Find, develop, and retain top
@@ -197,8 +212,8 @@
 </section>
 
 <section id="workforce" class="workforce content">
-  <div class="row ml-4 pt-5">
-    <div class="col-md-4 mt-5">
+  <div class="row ml-5 mt-5">
+    <div class="col-md-4 ml-5">
       <div class="text-content">
         <h2 class="text-center tittle pt-3">Workforce</h2>
         <span class="animate-border mr-auto ml-auto mb-4"></span>
@@ -206,13 +221,13 @@
           Efficiently manage your entire workforce. Streamline operations and
           boost productivity.
         </h3>
+      </div>
         <div class="button-group text-center">
           <!-- <a routerLink="/login"
             ><button class="bn632-hover bn24">Book a Demo</button></a
           > -->
           <a routerLink="/workforce"><button class="bn632-hover bn24">Learn more</button></a>
         </div>
-      </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-6">
@@ -227,7 +242,7 @@
 </section>
 
 <section id="timesheet" class="timesheet content">
-  <div class="row pl-5 pt-3">
+  <div class="row pl-5 pt-5">
     <div class="col-md-4 text-center">
       <img src="../../../assets/img/ats3.png" alt="Image" class="img-fluid" />
     </div>
@@ -250,7 +265,7 @@
 </section>
 <!-- <br /><br /><br /> -->
 <section id="reason-to-ats" class="pb-5 pt-5">
-  <div class="section-heading text-center mb-1">
+  <div class="section-heading text-center mb-1 pt-5">
     <h2 class="tittle">Why choose our ATS</h2>
     <span class="animate-border mx-auto mb-4"></span>
   </div>
