@@ -51,6 +51,7 @@ const jobapplication = require("./jobapplication");
 const submittedcandidates = require("./submittedcandidates");
 const Invoice = require("./Invoice");
 const CorporateDocument = require("./corporate-document");
+const CBapi = require("./cb");
 
 app.use("/", onboardRoutes);
 app.use("/", candidateRoutes);
@@ -73,7 +74,7 @@ app.use("/", jobapplication);
 app.use("/", Invoice);
 app.use("/", submittedcandidates);
 app.use("/", CorporateDocument);
-
+app.use("/", CBapi);
 app.use(
   session({
     secret: "Tresume@123",

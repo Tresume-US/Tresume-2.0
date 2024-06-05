@@ -236,6 +236,7 @@ export class SearchResumesCBComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loading = true;
         this.cookieValue = this.cookieService.get('userName1')
         //division
         this.OrgID = this.cookieService.get('OrgID');
@@ -251,17 +252,22 @@ export class SearchResumesCBComponent implements OnInit {
         this.jobID = 4;
 
         this.initGrid();
-        //this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE2OTE0MTkyMDcsImlhdCI6MTY5MTQxOTIwNywiZXhwIjoxNjkxNDIxMzA3LCJhdWQiOiJyZWFkIiwic2NvcGUiOlsicmVhZCJdLCJhbXIiOlsicHdkIl0sImNsaWVudF9pZCI6IkM4YjE4YTQzYyIsImNsaWVudF9vd25lcl9pZCI6Ik9iYzNkZDA2ZDNlODJjYyIsInN1YiI6IlU3OTVIWjc0MURWM1NTODBIMkMiLCJhdXRoX3RpbWUiOjE2OTE0MTM4NTIsImlkcCI6ImxvY2FsIiwidXNlcl90eXBlIjoiRW1wbG95ZXJDb21wYW55IiwiYWNjb3VudHMiOlsiQTc5ME01NjZKNEpKMkxRRDMxViJdLCJhY2NvdW50ZGlkIjoiQTc5ME01NjZKNEpKMkxRRDMxViIsInNpZCI6IkY2Q0Y4REE2NTEwNzE5MEY0NEM2ODc0NkFBMDRDQ0Q3In0.Yuj-KQ9I6A__oFJ-4RFwGUhPjRxML9OCc1bS3C4c3JNVGhrF9IVOZW4Fm6ucCOWWf6Ty0wP5yFKt1pWyEXaYHTxB-wQ7YnidLAlO6AGeKVrDbA1CUXg0y1QfFmkd4cEv1LNYmAkqt7KjCwmaaULZo1coX_nw7PlYbDIz7EEk_l5r0A4GN-UFqZIVzeux888dMmX-nevqceVBeNn2mM5dpjmwu3c46_G62QJuNwa4ENupdpHfnPzd2eWVrmoGX-Ir5PzJJSApwAAd_1pKMHdbZos10pD_bg8IQkvKN2osnIZi4DA9FLht1djKXwLTJ5qDE4GvVvoFyWWiMFxxTHIiyw';
-        this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTc0MzM2NDUsImlhdCI6MTcxNzQzMzY0NSwiZXhwIjoxNzE3NDM1NzQ1LCJzY29wZSI6WyJvcGVuaWQiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJDYTliODhiOTUiLCJjbGllbnRfb3duZXJfaWQiOiJPNDU2ZmVmNGZkNGE3ZjEiLCJjbGllbnRfcmVnaW9uIjoicHJvZHVzIiwic3ViIjoiVURENkJKNkc1SFdSOTNKTDdKSiIsImF1dGhfdGltZSI6MTcxNzQyNzk1MCwiaWRwIjoibG9jYWwiLCJ1c2VyX3R5cGUiOiJFbXBsb3llckNvbXBhbnkiLCJhY2NvdW50cyI6WyJBNzkwTTU2Nko0SkoyTFFEMzFWIl0sImFjY291bnRkaWQiOiJBNzkwTTU2Nko0SkoyTFFEMzFWIiwic2lkIjoiN0M3QUVBQUQ2NjIyQ0Y0RUY2RUZBM0NEQ0E2QzgxOTgifQ.VPeIz7GTtlrClH9nD0tHgY6BhYEJ_RjT-ReAhKjAmCKWxb7aD4_hXc4xW4-UHgFbnZjJYvKB3RPvdh7CsWUAfOILqrI6zLG7L4UmNWY4BZZlLD39U5obd4DXBYrSp3w_GXKt8andO8CbZMofyRiM1hKRPu_izU_6F0KFNB7ccpX8P4HGLubtQverdqq4v0i674tBT3ZaypVWtMFr93WGSQ0hb9aOkv01Kzw_5ZT2x3ywAtH-aP1lrCXyoYgcoGe0o4WpQKE2aIGVyCuyu5COqDHvWBpqIms-5deJ21WF9tjQZwVeU8VNvXmu9cH6ASt6iGl6rEafj-0-eewbih5MIg';
-        // this.service.getCBAuthToken().subscribe((x: any) => {
-        //     if (x.code != 460) {
-        //         // this.accessToken = x.access_token;
-        //         this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTcwMTI3ODQsImlhdCI6MTcxNzAxMjc4NCwiZXhwIjoxNzE3MDE0ODg0LCJzY29wZSI6WyJvcGVuaWQiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJDYTliODhiOTUiLCJjbGllbnRfb3duZXJfaWQiOiJPNDU2ZmVmNGZkNGE3ZjEiLCJjbGllbnRfcmVnaW9uIjoicHJvZHVzIiwic3ViIjoiVURENkJKNkc1SFdSOTNKTDdKSiIsImF1dGhfdGltZSI6MTcxNzAxMTkyOCwiaWRwIjoibG9jYWwiLCJ1c2VyX3R5cGUiOiJFbXBsb3llckNvbXBhbnkiLCJhY2NvdW50cyI6WyJBNzkwTTU2Nko0SkoyTFFEMzFWIl0sImFjY291bnRkaWQiOiJBNzkwTTU2Nko0SkoyTFFEMzFWIiwic2lkIjoiNDBGQzU3MUZDOEY0REUzNjYwMTRGRjU3MTNENkZDMzcifQ.BM3PWy-V3UohyM2VS8HE3zB7ERk4FNfo-vgBBmVEh947bj8H5hNBj5ND5PzYgABCT-t6PjSo49xWh1DrGfJtTnx8rQY8uHSv0lS0__EE30l62_VdDQHuFyC1VQR_GC8y-EebgOSulh4TfPIRJaUGcjAnPEEN8Pd7XoWKcM3ta5ew2dUannURQCvAyvOUubcVPHj-4ywT91LtzkI5n7Ay05Cz723ZsCCT6OrI9A0Uh3ZGrxazBTchNOjhxCC53W8B7tZ3c7yppZNuljjBPqXcYvCzKFZyvdwXMVfOZ41B5o-nJAdihFnSRdVTh4QcRMvmE2OTAA6oPwotfsnuitNtCg';
-        //     }
-        //     else {
-        //         this.messageService.add({ severity: 'warning', summary: 'Server Issue from Career Builder. Please try again later.' });
-        //     }
-        // });
+        // this.accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk3OGYxMjUzMGNiMjMzZWVkYTQwOTI1OGNiYzhjNTA3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2F1dGguY2FyZWVyYnVpbGRlci5jb20iLCJuYmYiOjE3MTc0NDY1MjMsImlhdCI6MTcxNzQ0NjUyMywiZXhwIjoxNzE3NDQ4NjIzLCJzY29wZSI6WyJvcGVuaWQiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJDYTliODhiOTUiLCJjbGllbnRfb3duZXJfaWQiOiJPNDU2ZmVmNGZkNGE3ZjEiLCJjbGllbnRfcmVnaW9uIjoicHJvZHVzIiwic3ViIjoiVURENkJKNkc1SFdSOTNKTDdKSiIsImF1dGhfdGltZSI6MTcxNzQyNzk1MCwiaWRwIjoibG9jYWwiLCJ1c2VyX3R5cGUiOiJFbXBsb3llckNvbXBhbnkiLCJhY2NvdW50cyI6WyJBNzkwTTU2Nko0SkoyTFFEMzFWIl0sImFjY291bnRkaWQiOiJBNzkwTTU2Nko0SkoyTFFEMzFWIiwic2lkIjoiN0M3QUVBQUQ2NjIyQ0Y0RUY2RUZBM0NEQ0E2QzgxOTgifQ.DO8tRu1Jll6N59uRzsag591ndKNSGWpgfUk_3MKhE6wdZw_32vLO3zrz61nyZL-HQ5swa5U24XaCBVw-6Ep7crJfiG54Nagx7SSzBmrlM1bHDqZi-plsc1Yei51YyM3j3Wip-MAZZhiQ53NnuYpHofDsSYNlZWh-CT0Vjh21hELdM6kcu5M1mh8eZfJVY2mWZcpmIgAhTXdBdwx1dEB_Nfvo4tlr4-F1Voktw7kegO0j-qhdTxgirK69HmmIGUja3vc9ZHu2bE_Dt6KMkZletW079YCGk-2YIQjugR-P1rs2uJZG5StzAjgD0n-SGCLZa09dKxxsUWZ16M7kRihKpw';
+        this.service.getCBAuthToken().subscribe((x: any) => {
+            if (x.code != 460) {
+                this.accessToken = x.access_token;
+
+            }
+            else {
+                this.messageService.add({ severity: 'warning', summary: 'Server Issue from Career Builder. Please try again later.' });
+            }
+            this.loading = false;
+        }, error => {
+            this.loading = false;
+            this.messageService.add({ severity: 'warning', summary: 'Server Issue from Career Builder. Please try again later.' });
+            // Handle error if needed
+        });
+
         console.log(this.traineeId);
 
         let migrateCheckReq = {

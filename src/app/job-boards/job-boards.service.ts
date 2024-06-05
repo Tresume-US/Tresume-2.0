@@ -66,7 +66,7 @@ export class JobBoardsService {
     /* CB API */
 
     getCBAuthToken(): Observable<ResponseDetails> {
-        return this.http.post<ResponseDetails>(this.endpoint + 'getCBAuthToken', null);
+        return this.http.post<ResponseDetails>(this.endpoint + 'CBrefresh', null);
     }
 
     getCBResumes(request: any): Observable<ResponseDetails> {
