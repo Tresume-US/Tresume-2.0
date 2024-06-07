@@ -172,7 +172,60 @@ router.post("/getAllInvoiceList", async (req, res) => {
 
 router.post("/updateReceivedPayment", async function (req, res) {
   try {
-    var query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) + '" + req.body.receivedamt + "' WHERE id = '" + req.body.id + "';";
+    const invoices = req.body; 
+
+    await sql.connect(config);
+    const request = new sql.Request();
+
+    for (let invoice of invoices) {
+      const query = `UPDATE invoice_master SET receivedamt = '${invoice.receivedamt}' WHERE id = '${invoice.id}';`;
+      console.log(query);
+      await request.query(query);
+    }
+
+    const data = {
+      flag: 1,
+      message: "Data Updated",
+    };
+
+    res.send(data);
+  } catch (error) {
+    const data = {
+      flag: 0,
+      message: "Internal Server Error",
+    };
+    res.status(500).send(data);
+  }
+});
+
+
+router.post("/updateAmount", async function (req, res) {
+  try {
+    var query = "";
+    console.log(query);
+
+    await sql.connect(config);
+    var request = new sql.Request();
+    var result = await request.query(query);
+
+    const data = {
+      flag: 1,
+      message: "Data Updated",
+    };
+
+    res.send(data);
+  } catch (error) {
+    const data = {
+      flag: 1,
+      message: "Internal Server Error",
+    };
+    res.status(500).send(data);
+  }
+});
+
+router.post("/subtractPayment", async function (req, res) {
+  try {
+    var query = "UPDATE invoice_master SET receivedamt = COALESCE(receivedamt, 0) - '" + req.body.receivedamt + "' WHERE id = '" + req.body.id + "';";
     console.log(query);
 
     await sql.connect(config);

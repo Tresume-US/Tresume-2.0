@@ -10,6 +10,12 @@
     margin-left: auto;
     background-color: #ede7f6;    
 }
+.btn{
+    background-color: #380838;
+    color: white;
+    font-size: 12px;
+    padding: 5px 10px;
+    }
 .mat-header-content {
     display: flex;
     flex-direction: column;
@@ -98,9 +104,6 @@ th, td {
 tr:hover {
     background-color: #f5f5f5;
 }
-
-
-
 
 /* Overlay styles */
 .popup-overlay {
