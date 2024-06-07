@@ -19,6 +19,12 @@ export class ClientViewDetailService {
     updateReceivedPayment(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'updateReceivedPayment', request);
       }
+    subtractPayment(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'subtractPayment', request);
+    }
+    updateAmount(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateAmount', request);
+    }
 
 }
 export interface ResponseDetails {

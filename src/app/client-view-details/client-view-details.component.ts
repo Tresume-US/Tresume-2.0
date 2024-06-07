@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ClientViewDetailService } from './client-view-details.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
 import { DatePipe } from '@angular/common';
+import { concatAll } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-view-details',
@@ -14,53 +15,52 @@ import { DatePipe } from '@angular/common';
 
 
 export class ClientViewDetailsComponent implements OnInit {
-
+  @ViewChild('exampleModal') exampleModal: ElementRef;
   clients: any[];
   routeType: any[];
   ClientID: any[];
   TraineeID: string = '';
   OrgID: string = '';
-  noResultsFound: boolean=true;
+  noResultsFound: boolean = true;
   loading: boolean = false;
-  ClientDetails:any[];
-  constructor( private router: Router, private route: ActivatedRoute, private cookieService: CookieService,private messageService: MessageService, private service: ClientViewDetailService,private datePipe: DatePipe) {
-    
+  ClientDetails: any[];
+  additionalAmount: any = 0
+  constructor(private router: Router, private route: ActivatedRoute, private cookieService: CookieService, private messageService: MessageService, private service: ClientViewDetailService, private datePipe: DatePipe) {
+
     this.TraineeID = this.cookieService.get('TraineeID');
     this.OrgID = this.cookieService.get('OrgID');
     this.ClientID = this.route.snapshot.params['ClientID'];
-   }
+  }
 
   ngOnInit(): void {
     this.loading = true;
     this.ClientViewDetails();
     this.fetchclientsInvoice();
   }
-  
+
   allInvoices: any[] = [];
   fetchclientsInvoice() {
     let Req = {
       OrgID: this.OrgID,
-      clientID:this.ClientID,
+      clientID: this.ClientID,
     };
     this.loading = true;
     this.service.getclientsInvoice(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
-    
+
       this.loading = false;
       this.noResultsFound = this.allInvoices.length === 0;
     }),
-    (error: any) => {
-      // Error callback
-      console.error('Error occurred:', error);
-      // Handle error here
-      this.loading = false; // Set loading to false on error
-    };
+      (error: any) => {
+        console.error('Error occurred:', error);
+        this.loading = false;
+      };
   }
 
   ClientViewDetails() {
     let Req = {
       // TraineeID: this.TraineeID,
-      clientid:this.ClientID,
+      clientid: this.ClientID,
       OrgID: this.OrgID,
     };
     console.log(Req)
@@ -68,31 +68,67 @@ export class ClientViewDetailsComponent implements OnInit {
     this.service.getClientDetailsList(Req).subscribe((x: any) => {
       this.ClientDetails = x.result;
       this.noResultsFound = this.ClientDetails.length === 0;
-    this.loading = false;
+      this.loading = false;
     }),
-    (error: any) => {
-      // Error callback
-      console.error('Error occurred:', error);
-      // Handle error here
-      this.loading = false; // Set loading to false on error
-    };
+      (error: any) => {
+        console.error('Error occurred:', error);
+        this.loading = false;
+      };
   }
 
   receivedamt: number;
   invoiceid: number;
   showPopup = false;
+  openPopupbox = false;
 
-  
   openPopup(invoiceId: number) {
     this.showPopup = true;
     this.invoiceid = invoiceId;
   }
+  Popup() {
+    this.openPopupbox = true;
+  }
   cancel() {
-    this.showPopup = false; // This hides the popup
-    // Any other cancellation logic can go here
+    this.showPopup = false;
   }
 
+  Addamount() {
+    this.allInvoices.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
 
+    for (let invoice of this.allInvoices) {
+      let remainingAmount = invoice.total - invoice.receivedamt;
+      console.log("additionalAmount :" + this.additionalAmount);
+      console.log("Received Amount :" + remainingAmount);
+      let amountToAllocate = Math.min(this.additionalAmount, remainingAmount);
+
+      if (amountToAllocate > 0) {
+        invoice.receivedamt = parseFloat(invoice.receivedamt) + amountToAllocate;
+        this.additionalAmount -= amountToAllocate;
+      }
+      if (this.additionalAmount === 0) {
+        break;
+      }
+    }
+    console.log(this.allInvoices);
+    (this.exampleModal.nativeElement as any).modal('hide');
+  }
+
+  SavePayment() {
+    let req = this.allInvoices.map(invoice => ({
+      id: invoice.id,
+      receivedamt: invoice.receivedamt
+    }));
+
+    this.service.updateReceivedPayment(req).subscribe(
+      (response: any) => {
+        this.handleSuccess(response);
+        this.ClientViewDetails();
+      },
+      (error: any) => {
+        this.handleError(error);
+      }
+    );
+  }
 
   saveAmount() {
     // console.log('Invoice ID:', this.invoiceid);
@@ -117,29 +153,30 @@ export class ClientViewDetailsComponent implements OnInit {
         // this.fetchUnpaidInvoiceList();
         this.fetchclientsInvoice();
       }
-      
+
     );
-    
+
     this.showPopup = false;
   }
 
-  updateReceivedPayment() {
-    let req = {
-      receivedamt: this.receivedamt,
-      invoiceid:this.invoiceid,
+  subtractAmount() {
+    const req = {
+      id: this.invoiceid,
+      receivedamt: this.receivedamt
     };
-    console.log(this.receivedamt); 
-
     console.log(req);
-    this.service.updateReceivedPayment(req).subscribe(
+    this.service.subtractPayment(req).subscribe(
       (response: any) => {
         this.handleSuccess(response);
         this.ClientViewDetails();
+        this.fetchclientsInvoice();
       },
       (error: any) => {
         this.handleError(error);
+        this.fetchclientsInvoice();
       }
     );
+    this.showPopup = false;
   }
 
   private handleSuccess(response: any): void {
@@ -160,31 +197,34 @@ export class ClientViewDetailsComponent implements OnInit {
 
   getTotalAmount(): number {
     return this.ClientDetails.reduce((total, client) => total + parseFloat(client.total), 0);
-}
-
-getReceivedAmount(): number {
-  return this.ClientDetails.reduce((total, client) => total + parseFloat(client.receivedamt), 0);
-}
-
-getPendingAmount(): number {
-  return this.ClientDetails.reduce((total, client) => total + (parseFloat(client.total) - parseFloat(client.receivedamt)), 0);
-}
-
-
-
-calculateDays(duedate: string): string {
-  const currentDate = new Date();
-  const dueDate = new Date(duedate);
-  const timeDiff = dueDate.getTime() - currentDate.getTime();
-  const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-  if (dayDiff < 0) {
-    return `overdue ${Math.abs(dayDiff)} days`;
-  } else if (dayDiff === 0) {
-    return 'due today';
-  } else {
-    return `due in ${dayDiff} days`;
   }
-}
+
+  getReceivedAmount(): number {
+    return this.ClientDetails.reduce((total, client) => total + parseFloat(client.receivedamt), 0);
+  }
+
+  getPendingAmount(): number {
+    return this.ClientDetails.reduce((total, client) => total + (parseFloat(client.total) - parseFloat(client.receivedamt)), 0);
+  }
+
+
+
+  calculateDays(duedate: string): string {
+    const currentDate = new Date();
+    const dueDate = new Date(duedate);
+    const timeDiff = dueDate.getTime() - currentDate.getTime();
+    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    if (dayDiff < 0) {
+      return `overdue ${Math.abs(dayDiff)} days`;
+    } else if (dayDiff === 0) {
+      return 'due today';
+    } else {
+      return `due in ${dayDiff} days`;
+    }
+  }
+  getRemainingAmount(total: number, receivedAmt: number): number {
+    return total - receivedAmt;
+  }
 
 }

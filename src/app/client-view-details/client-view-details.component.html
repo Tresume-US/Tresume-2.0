@@ -28,20 +28,20 @@
             </div>
           </div>
         </div>
-        <div
-          style="
+        <div style="
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
             width: 100%;
             height: 100%;
-          "
-        >
+          ">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-right: 15px;">
+            Add Payment
+          </button>
           <div class="website">
             <a href="{{ ClientDetails[0].Website }}" target="_blank">
               <i class="fas fa-globe" style="color: blue"></i>
-              {{ ClientDetails[0].Website }}</a
-            >
+              {{ ClientDetails[0].Website }}</a>
           </div>
         </div>
       </div>
@@ -83,8 +83,10 @@
         <th>No.</th>
         <th>CLIENT/PROJECT</th>
         <th>MEMO</th>
+        <th>TOTAL AMOUNT</th>
         <th>AMOUNT STATUS</th>
-        <th>ACTION</th>
+        <th>RECEIVED PAYMENT</th>
+        <!-- <th>ACTION</th> -->
       </tr>
     </thead>
     <tbody>
@@ -94,33 +96,63 @@
         <td>{{ invoice.invoiceNo }}</td>
         <td>{{ invoice.clientname }}</td>
         <td>{{ invoice.duedate | date: 'MM/dd/y' : 'UTC' }}</td>
+        <td>{{ invoice.total }}</td>
         <td>
-          <span>${{ invoice.total }}</span>
-          <i class="fas fa-exclamation-circle" style="color: #c34a4a" *ngIf="calculateDays(invoice.duedate).includes('overdue')"></i>
+          <span>$</span><span> ({{ getRemainingAmount(invoice.total, invoice.receivedamt) }})</span>
+          <i class="fas fa-exclamation-circle" style="color: #c34a4a"
+            *ngIf="calculateDays(invoice.duedate).includes('overdue')"></i>
           <span>{{ calculateDays(invoice.duedate) }}</span>
         </td>
         <td>
+          <input type="text" value="{{ invoice.receivedamt }}" 
+                 style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background-color: #f9f9f9; width: 50%;" />
+      </td>
+        <!-- <td>
           <span class="received-amt" (click)="openPopup(invoice.id)">Edit</span> |
-          <span (click)="openPopup(invoice.id)" class="received-amt">Receive Payment</span>
-        </td>
+          <span (click)="openPopup(invoice.id)" class="received-amt">Adjust Payment</span>
+        </td> -->
       </tr>
     </tbody>
   </table>
 </div>
+<button type="button" class="btn btn-primary" style="float: right; margin-right: 50px; margin-top: 5px;" (click)="SavePayment()">
+  Save Payment
+</button>
+
 
 <div *ngIf="showPopup" class="popup-overlay">
   <div class="popup">
     <input type="number" [(ngModel)]="receivedamt" placeholder="Enter amount" />
-    <button
-      (click)="saveAmount()"
-      [disabled]="!receivedamt && receivedamt !== 0"
-    >
-      Save
+    <button (click)="saveAmount()" [disabled]="!receivedamt && receivedamt !== 0">
+      Add
     </button>
+    <button (click)="subtractAmount()">Subtract</button>
     <button (click)="cancel()">Cancel</button>
   </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Add Payment</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label style="margin-right: 15px;">Enter the amount : </label>
+        <input type="number" name="" id="" [(ngModel)]="additionalAmount">
+        
+      </div>
+      <div class="modal-footer">
+        <p>Note : The amount you entered will be automatically allocated to the pending payments, sorted by due date.</p>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="Addamount()" data-dismiss="modal">Add Amount</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- <div class="d-flex flex-column">
   <div class="d-flex align-items-start">
     <div class="d-flex align-items-start flex-column">
@@ -132,7 +164,4 @@
   </div>
 </div> -->
 <p-toast position="bottom-right"></p-toast>
-<ngx-loading
-  [show]="loading"
-  [config]="{ backdropBorderRadius: '3px' }"
-></ngx-loading>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

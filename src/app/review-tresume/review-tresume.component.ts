@@ -558,7 +558,7 @@ export class ReviewTresumeComponent implements OnChanges {
 
   ngOnInit(): void {
     // this.fetchinterviewlist();
-    // this.getPlacementList();
+    this.getPlacementList();
     // this.fetchCandidateInfo();
     // this.getSubmissionList() ;
     // this.getOrgUserList();
