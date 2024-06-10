@@ -4,7 +4,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { request } from 'http';
 
 @Component({
@@ -20,7 +20,7 @@ export class AllJobPostingsComponent implements OnInit {
   JobID: string = '';
   TraineeID: string = '';
   showConfirmationDialog: boolean = false;
-
+  jobID: any;
   jobs: any[];
   noResultsFound: boolean = true;
   recruiterNames: any;
@@ -36,8 +36,12 @@ export class AllJobPostingsComponent implements OnInit {
     this.TraineeID = this.cookieService.get('TraineeID');
     this.fetchjobpostinglist();
     this.getAssigneelist();
+   
   }
-  constructor(private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService) { }
+  constructor(private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
+    this.jobID = this.route.snapshot.params["jobID"];
+    
+   }
 
 
   ngOnChanges(): void {

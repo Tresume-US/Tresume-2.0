@@ -111,6 +111,7 @@ import { CorporateDocumentComponent } from './corporate-document/corporate-docum
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.component';
 import { PerformanceReportsComponent } from './reports/performance-report.component';
+import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: 'compliancedashboard', component: ComplianceDashboardComponent, canActivate: [AuthGuard]   },
@@ -234,6 +235,7 @@ const routes: Routes = [
   { path: 'corpdocument', component: CorporateDocumentComponent },
   { path: 'clientdetails/:ClientID', component: ClientViewDetailsComponent },
   { path: 'reports/performance', component: PerformanceReportsComponent },
+  { path: 'recruitersview/:jobId', component: RecruiterViewJobsComponent },
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  
