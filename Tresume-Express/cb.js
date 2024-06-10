@@ -18,41 +18,39 @@ const config = {
 const client_id = 'Ca9b88b95';
 const client_secret = 'ITATVWZFQhy2iVO111IuVjMaK8V8hzEjofDd6gxAA2jDJEPMIE5lN7cJtVVSxv0SZH5nSsVf7rYbXtmlcLhMuw==';
 const redirect_uri = 'https://tresume.us';
-const scope = 'read offline_access';
+const scope = 'openid offline_access';
 const auth_url = 'https://auth.careerbuilder.com/connect/authorize';
 const token_url = 'https://api.careerbuilder.com/connect/token';
 
-// Step 1: Redirect to the authorize endpoint
+
 router.get('/CBlogin', (req, res) => {
-    const state = 'random_state_string'; // This should be a random string for security purposes
+    const state = 'random_state_string'; 
     const authorizationUrl = `${auth_url}?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}`;
     res.redirect(authorizationUrl);
 });
 
-// Step 2: Handle the callback to get the authorization code
+
 router.get('/CBcallback', async (req, res) => {
     const code = req.query.code;
-    const state = req.query.state; // You can verify the state here if needed
+    const state = req.query.state; 
 
     try {
-        // Step 3: Exchange the authorization code for an access token
+
         const tokenResponse = await axios.post(token_url, new URLSearchParams({
             grant_type: 'authorization_code',
             client_id: client_id,
             client_secret: client_secret,
-            code: '6E43E3AA13C9BC09E01CBE8B02266FB74368EB63D0E9CA6225F9A49CBA3D4D82-1',
+            code: '673E96A9A670CB891DD43929867BA16F2E65BD25528CA02754E6DA2B9756560D-1',
             redirect_uri: redirect_uri,
-            scope: 'read offline_access'
+            scope: 'openid offline_access'
         }).toString(), {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
 
-        const tokens = tokenResponse.data;
+        const tokens = tokenResponse.data;  
+        console.log('Token:', tokens);
         console.log('Access Token:', tokens.access_token);
         console.log('Refresh Token:', tokens.refresh_token);
-
-        // Save tokens for future use
-        // ...
 
         res.send('Login successful! Access token and refresh token have been received.');
     } catch (error) {
