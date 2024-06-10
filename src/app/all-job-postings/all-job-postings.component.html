@@ -56,9 +56,7 @@
           <select name="Assignee" id="assignee" [(ngModel)]="job.TraineeID"  [ngModelOptions]="{standalone: true}" (change)="updateSelected($event.target.value,job.JobID)">
             <option value="" selected disabled>Select Assignee</option>
             <option *ngFor="let name of recruiterNames" [value]="name.TraineeID">{{name.FirstName }} {{name.LastName}}</option>
-
-        </select>
-        
+          </select>
           </td>
           <td>
             <span data-toggle="tooltip" data-placement="bottom" title="Edit">
@@ -68,6 +66,9 @@
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
               <i class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModal"></i>
+            </span>
+            <span data-toggle="tooltip" data-placement="bottom" title="mail">
+              <i class="fa fa-envelope" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
           </td>
         </tr>
@@ -102,5 +103,32 @@
     </div>
   </div>
 </div>
+
+<!-- Email PoPup -->
+
+<!-- email-modal.component.html -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="recipient-email" class="col-form-label">Recipient Email:</label>
+          <input type="email" class="form-control" id="recipient-email" formControlName="email">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Save changes</button>
+        <button type="button" class="btn " data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
