@@ -175,6 +175,7 @@ import { CorporateDocumentComponent } from './corporate-document/corporate-docum
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
+import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 
 
 
@@ -280,6 +281,7 @@ import { ClientViewDetailsComponent } from './client-view-details/client-view-de
       InvoiceReportComponent,
       CorporateDocumentComponent,
       ClientViewDetailsComponent,
+      RecruiterViewJobsComponent,
     // TimesheetViewdetailsComponent
 
   ],

@@ -1,22 +1,39 @@
 <header>
-  <nav role="navigation" class="navbar navbar-expand-lg navbar-light fixed-top" [ngClass]="{ scrolled: isScrolled }"
-    style="color: white; padding-bottom: 0">
+  <nav
+    role="navigation"
+    class="navbar navbar-expand-lg navbar-light fixed-top"
+    [ngClass]="{ scrolled: isScrolled }"
+    style="color: white; padding-bottom: 0"
+  >
     <div class="pt-5">
       <a routerLink="/homelanding" class="navbar-brand">
         <img src="../assets/img/Tresume_logo.png" style="height: 90px" alt="" />
       </a>
     </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-      (click)="toggleNavbar()">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNavbar()"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ show: isNavbarCollapsed }">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngClass]="{ show: isNavbarCollapsed }"
+    >
       <!-- Navbar links here -->
     </div>
     <div class="float-end" style="display: flex; align-items: center">
       <li class="nav-item" style="list-style: none; margin-right: 15px">
-        <a class="login-btn-web bn5" style="color: black" routerLink="/login">Login</a>
+        <a class="login-btn-web bn5" style="color: black" routerLink="/login"
+          >Login</a
+        >
       </li>
       <li class="nav-item mr-5" style="list-style: none">
         <div class="menucontainer">
@@ -57,25 +74,37 @@
 </header>
 
 <div class="background-video video-container">
-  <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content">
+  <video
+    autoplay
+    muted
+    loop
+    class="blur-video video-background"
+    style="width: 100%; height: fit-content"
+  >
     <source src="../../../assets/videos/consult.mp4" type="video/mp4" />
   </video>
   <div class="container-fluid">
     <div class="row">
-      <div style="
+      <div
+        style="
           width: 100%;
           background-color: #a24f9a91;
           display: flex;
           justify-content: center;
           align-items: center;
-        " class="content-over-video overlay">
-        <h1 id="welcomeText" style="
+        "
+        class="content-over-video overlay"
+      >
+        <h1
+          id="welcomeText"
+          style="
             height: 92px;
             padding-top: 33px;
             font-size: 50px;
             color: white;
             font-weight: 500;
-          ">
+          "
+        >
           <span>WELCOME</span>
           <span class="space">TO</span>
           <span class="space">OUR</span>
@@ -88,27 +117,52 @@
 </div>
 
 <section class="marketplace">
-  <div class="row" style="height: 150px;"></div>
   <div class="row">
     <div class="col-md-6">
       <div class="job-board-anime">
         <!-- <h2 class="tittle">Job boards</h2> -->
         <div class="row card-stack-container">
-          <div *ngFor="let card of cards; let i = index" class="card-wrapper col-md-3">
-            <div class="card custom-card" [ngClass]="{'highlight': selectedCardIndex === i}" (click)="selectCard(i)">
-              <div class="card-title-vertical">{{ card.title }}</div> <!-- Vertical title -->
-              <img class="card-img-top p-3 "  [style.display]="i === 5 ? 'none' : 'block'" style="width: 200px; height: 100px;" [src]="card.imageSrc" alt="{{ card.title }} image" />
+          <div
+            *ngFor="let card of cards; let i = index"
+            class="card-wrapper col-md-3"
+          >
+            <div
+              class="card custom-card"
+              [ngClass]="{
+                highlight: selectedCardIndex === i,
+                'special-card': i === 5
+              }"
+              (click)="selectCard(i)"
+            >
+              <div class="card-title-vertical">{{ card.title }}</div>
+              <!-- Vertical title -->
+              <img
+                class="card-img-top p-3"
+                [style.display]="i === 5 ? 'none' : 'block'"
+                style="width: 200px; height: 100px"
+                [src]="card.imageSrc"
+                alt="{{ card.title }} image"
+              />
               <div class="card-body p-1">
                 <p class="card-text text-dark">{{ card.text }}</p>
-                <a [href]="card.link" class="btn">Read more</a>
+                <a
+                  [href]="card.link"
+                  class="card-btn"
+                  [style.display]="i === 5 ? 'none' : 'block'"
+                  >Read more</a
+                >
               </div>
             </div>
-          </div>        
+          </div>
         </div>
       </div>
-    </div>    
+    </div>
     <div class="col-md-5">
-      <img src="../../../assets/img/jobmarket.png" alt="Tresume Image" class="img-fluid" />
+      <img
+        src="../../../assets/img/jobmarket.png"
+        alt="Tresume Image"
+        class="img-fluid"
+      />
     </div>
   </div>
 </section>
@@ -157,7 +211,8 @@
             <i class="fas fa-map-marker-alt"></i>
             <div class="cta-text">
               <h4>Find us</h4>
-              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States
+              <span
+                >44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States
                 Of America
               </span>
             </div>
@@ -188,8 +243,13 @@
         <div class="col-xl-4 col-lg-4 mb-50">
           <div class="footer-widget">
             <div class="footer-logo">
-              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style="margin-left: 7rem; height: 79px"
-                  class="img-fluid" alt="logo" /></a>
+              <a href="index.html"
+                ><img
+                  src="../../../assets/img/tresumelog.png"
+                  style="margin-left: 7rem; height: 79px"
+                  class="img-fluid"
+                  alt="logo"
+              /></a>
             </div>
             <div class="footer-text">
               <p>
@@ -204,19 +264,31 @@
               <span>Follow us</span>
               <ul class="social_icon">
                 <li>
-                  <a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank">
-                    <i class="fa fa-facebook"></i></a>
+                  <a
+                    href="https://www.facebook.com/p/Tresume-100057032697312/"
+                    target="_blank"
+                  >
+                    <i class="fa fa-facebook"></i
+                  ></a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/Tresume2" target="_blank"><i class="fa fa-twitter"></i></a>
+                  <a href="https://twitter.com/Tresume2" target="_blank"
+                    ><i class="fa fa-twitter"></i
+                  ></a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/company/tresume/" target="_blank"><i
-                      class="fa fa-linkedin-square"></i></a>
+                  <a
+                    href="https://www.linkedin.com/company/tresume/"
+                    target="_blank"
+                    ><i class="fa fa-linkedin-square"></i
+                  ></a>
                 </li>
                 <li>
-                  <a href="https://www.youtube.com/@tresumeus3304/featured" target="_blank"><i
-                      class="fa fa-youtube"></i></a>
+                  <a
+                    href="https://www.youtube.com/@tresumeus3304/featured"
+                    target="_blank"
+                    ><i class="fa fa-youtube"></i
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -253,7 +325,11 @@
             <div class="subscribe-form">
               <form action="#">
                 <li style="text-align: center; font-size: 22px">
-                  <a routerLink="/contact" style="color: white; font-weight: bold">Contact us</a>
+                  <a
+                    routerLink="/contact"
+                    style="color: white; font-weight: bold"
+                    >Contact us</a
+                  >
                 </li>
               </form>
             </div>
@@ -285,3 +361,4 @@
     </div>
   </div>
 </footer>
+
