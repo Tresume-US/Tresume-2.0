@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DashboardService, RequestItem } from '../dashboard/dashboard.service';
 import { ReportsService } from './reports.service';
 import { GridOptions, ColDef, RowNode, Column, GridApi } from 'ag-grid-community';
+import * as XLSX from 'xlsx';
 
 
 
@@ -159,4 +160,61 @@ export class PlacementsReportComponent implements OnInit {
         }, 10);
     }
 
+      // ... other component properties and methods
+
+  public pivotData: any[] = []; // Array to store pivoted data
+  public pivotColumnDefs: ColDef[] = []; // Array to store pivot column definitions
+
+  public onExportPivotCSV() {
+    // 1. Generate Pivot Table Data
+    this.pivotData = this.generatePivotTableData(this.rowData); // Replace with your logic to generate pivot table data
+
+    // 2. Define Pivot Column Definitions (optional, adjust based on your analysis goals)
+    this.pivotColumnDefs = [
+      { field: 'Recruiter Name', headerName: 'Recruiter Name' }, 
+      { field: 'Marketer Name', headerName: 'Marketer Name' }, 
+      { field: 'count', valueGetter: 'getPlacementCount', headerName: 'Number of Placements' },
+    ];
+
+    // 3. Convert Pivot Table Data to CSV using XLSX library
+    const csvData = this.convertPivotDataToCSV(this.pivotData, this.pivotColumnDefs);
+
+    // 4. Trigger CSV Download
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'placements_report_pivot.csv';
+    link.click();
+  }
+
+  private generatePivotTableData(data: any[]): any[] {
+    const pivotedData = [];
+
+    // Iterate through original data and group/aggregate based on your requirements:
+    for (const row of data) {
+      const pivotRow: { // Define the type of pivotRow
+        'Recruiter Name': string;
+        'Marketer Name': string;
+        count: number;
+      } = {
+        'Recruiter Name': row['Recruiter Name'], // Assuming you have a field named 'Recruiter Name'
+        'Marketer Name': row['Marketer Name'] || 'N/A', // Optional: Include marketer if available, otherwise 'N/A'
+        count: 1, // Assuming each row represents one placement
+      };
+
+      pivotedData.push(pivotRow);
+    }
+
+    return pivotedData;
+  }
+
+  private convertPivotDataToCSV(data: any[], columnDefs: ColDef[]): string {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const headerRow = columnDefs.map(colDef => colDef.headerName || colDef.field);
+    XLSX.utils.sheet_add_aoa(worksheet, [headerRow], { origin: 'A1' });
+
+    const csvContent = XLSX.utils.sheet_to_csv(worksheet);
+    return csvContent;
+  }
+  
 }
