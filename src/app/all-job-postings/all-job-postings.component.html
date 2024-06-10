@@ -62,7 +62,8 @@
           </td>
           <td>
             <span data-toggle="tooltip" data-placement="bottom" title="Edit">
-              <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a>
+              <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
+              <a [routerLink]="['/recruitersview', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
             </span>
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
