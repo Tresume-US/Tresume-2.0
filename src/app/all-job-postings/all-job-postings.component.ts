@@ -15,6 +15,7 @@ import { request } from 'http';
 })
 
 export class AllJobPostingsComponent implements OnInit {
+  emailForm: FormGroup;
   loading: boolean = false;
   OrgID: string = '';
   JobID: string = '';
@@ -26,6 +27,7 @@ export class AllJobPostingsComponent implements OnInit {
   recruiterNames: any;
   deleteIndex: any;
   IsAdmin: string;
+job: any;
 
   // roles: string[] = ["Recruiter", "Admin", "User"];
 
@@ -38,8 +40,13 @@ export class AllJobPostingsComponent implements OnInit {
     this.getAssigneelist();
    
   }
-  constructor(private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder,private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
     this.jobID = this.route.snapshot.params["jobID"];
+
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', Validators.required]
+    });
     
    }
 
