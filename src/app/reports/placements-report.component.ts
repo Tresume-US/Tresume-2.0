@@ -194,11 +194,14 @@ export class PlacementsReportComponent implements OnInit {
       { field: 'count', headerName: 'Number of Placements' },
     ];
   
-    // 7. Convert Pivot Table Data to CSV
     const pivotCsvData = this.convertPivotDataToCSV(this.pivotData, this.pivotColumnDefs);
-  
-    // 8. Combine original CSV data with pivot table data
-    const combinedCsvData = originalRows.join('\n') + '\n' + pivotCsvData;
+
+    // Split the pivot CSV data into rows and remove the trailing newline if it exists
+    const pivotRows = pivotCsvData.split('\n').filter(row => row.trim() !== '');
+
+    // Combine the pivot CSV data followed by a few empty lines and then the original CSV data
+    const combinedCsvData = pivotRows.join('\n') + '\n\n\n' + originalRows.join('\n');
+
   
     // 9. Trigger CSV Download
     const blob = new Blob([combinedCsvData], { type: 'text/csv;charset=utf-8' });
