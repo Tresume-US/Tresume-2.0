@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DashboardService, RequestItem } from '../dashboard/dashboard.service';
 import { ReportsService } from './reports.service';
 import { GridOptions, ColDef, RowNode, Column, GridApi } from 'ag-grid-community';
+import * as XLSX from 'xlsx';
 
 
 
@@ -155,5 +156,100 @@ export class InterviewsReportComponent implements OnInit {
 
         }, 10);
     }
+
+    public pivotData: any[] = [];
+  public pivotColumnDefs: ColDef[] = [];
+
+  public onExportPivotCSV() {
+      const originalCsvData: string | undefined = this.gridApi.getDataAsCsv();
+
+      if (!originalCsvData) {
+          console.error('Failed to export original Interview data');
+          return;
+      }
+
+      const originalRows = originalCsvData.split('\n');
+      const rowCount = originalRows.length - 1;
+
+      for (let i = 0; i < 3; i++) {
+          originalRows.push('');
+      }
+
+      this.pivotData = this.generatePivotTableData(this.rowData);
+
+      console.log(this.rowData)
+
+      this.pivotColumnDefs = [
+          { field: 'Recruiter Name', headerName: 'Recruiter Name' },
+          { field: 'count', headerName: 'Number of Interviews' },
+      ];
+
+      const pivotCsvData = this.convertPivotDataToCSV(this.pivotData, this.pivotColumnDefs);
+
+      const pivotRows = pivotCsvData.split('\n').filter(row => row.trim() !== '');
+
+      const combinedCsvData = pivotRows.join('\n') + '\n\n\n' + originalRows.join('\n');
+
+      const blob = new Blob([combinedCsvData], { type: 'text/csv;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Interview_report_pivot.csv';
+      link.click();
+  }
+
+  private generatePivotTableData(data: any[]): any[] {
+      const pivotedData: any[] = [];
+
+      const pivotMap = new Map<string, any>();
+
+      for (const row of data) {
+          const recruiterName = row['Recruiter Name']|| 'N/A';
+
+          const key = `${recruiterName}`;
+          if (pivotMap.has(key)) {
+              pivotMap.get(key).count += 1;
+          } else {
+              pivotMap.set(key, {
+                  'Recruiter Name': recruiterName,
+                  count: 1
+              });
+          }
+      }
+
+      pivotMap.forEach((value) => {
+          pivotedData.push(value);
+      });
+
+      return pivotedData;
+  }
+
+  private convertPivotDataToCSV(data: any[], columnDefs: any[]): string {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const headerRow = columnDefs.map(colDef => colDef.headerName || colDef.field);
+      XLSX.utils.sheet_add_aoa(worksheet, [headerRow], { origin: 'A1' });
+
+      const range = XLSX.utils.decode_range(worksheet['!ref'] || '');
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+          const address = XLSX.utils.encode_cell({ c: C, r: 0 });
+          if (!worksheet[address]) continue;
+          worksheet[address].s = {
+              fill: { fgColor: { rgb: "FFFFE0" } },
+              font: { bold: true }
+          };
+      }
+
+      const columnWidths = data.reduce((widths, row) => {
+          columnDefs.forEach((colDef, index) => {
+              const value = row[colDef.field] ? row[colDef.field].toString() : '';
+              widths[index] = Math.max(widths[index], value.length);
+          });
+          return widths;
+      }, columnDefs.map(colDef => colDef.headerName.length));
+
+      worksheet['!cols'] = columnWidths.map((w: number) => ({ wch: w + 2 }));
+
+      const csvContent = XLSX.utils.sheet_to_csv(worksheet);
+      return csvContent;
+  }
 
 }
