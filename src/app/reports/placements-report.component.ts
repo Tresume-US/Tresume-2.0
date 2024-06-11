@@ -166,55 +166,106 @@ export class PlacementsReportComponent implements OnInit {
   public pivotColumnDefs: ColDef[] = []; // Array to store pivot column definitions
 
   public onExportPivotCSV() {
-    // 1. Generate Pivot Table Data
+    // 1. Export original data to CSV
+    const originalCsvData: string | undefined = this.gridApi.getDataAsCsv();
+  
+    // 2. Check if originalCsvData is defined
+    if (!originalCsvData) {
+      console.error('Failed to export original CSV data');
+      return;
+    }
+  
+    // 3. Split the original CSV data into rows
+    const originalRows = originalCsvData.split('\n');
+    const rowCount = originalRows.length - 1; // Subtract 1 to ignore the header row
+  
+    // 4. Add 3 empty rows
+    for (let i = 0; i < 3; i++) {
+      originalRows.push('');
+    }
+  
+    // 5. Generate Pivot Table Data
     this.pivotData = this.generatePivotTableData(this.rowData); // Replace with your logic to generate pivot table data
-
-    // 2. Define Pivot Column Definitions (optional, adjust based on your analysis goals)
+  
+    // 6. Define Pivot Column Definitions
     this.pivotColumnDefs = [
       { field: 'Recruiter Name', headerName: 'Recruiter Name' }, 
       { field: 'Marketer Name', headerName: 'Marketer Name' }, 
-      { field: 'count', valueGetter: 'getPlacementCount', headerName: 'Number of Placements' },
+      { field: 'count', headerName: 'Number of Placements' },
     ];
-
-    // 3. Convert Pivot Table Data to CSV using XLSX library
-    const csvData = this.convertPivotDataToCSV(this.pivotData, this.pivotColumnDefs);
-
-    // 4. Trigger CSV Download
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+  
+    // 7. Convert Pivot Table Data to CSV
+    const pivotCsvData = this.convertPivotDataToCSV(this.pivotData, this.pivotColumnDefs);
+  
+    // 8. Combine original CSV data with pivot table data
+    const combinedCsvData = originalRows.join('\n') + '\n' + pivotCsvData;
+  
+    // 9. Trigger CSV Download
+    const blob = new Blob([combinedCsvData], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'placements_report_pivot.csv';
     link.click();
   }
-
+  
   private generatePivotTableData(data: any[]): any[] {
-    const pivotedData = [];
-
-    // Iterate through original data and group/aggregate based on your requirements:
+    const pivotedData: any[] = [];
+  
+    // Iterate through original data and group/aggregate based on your requirements
+    const pivotMap = new Map<string, any>();
+  
     for (const row of data) {
-      const pivotRow: { // Define the type of pivotRow
-        'Recruiter Name': string;
-        'Marketer Name': string;
-        count: number;
-      } = {
-        'Recruiter Name': row['Recruiter Name'], // Assuming you have a field named 'Recruiter Name'
-        'Marketer Name': row['Marketer Name'] || 'N/A', // Optional: Include marketer if available, otherwise 'N/A'
-        count: 1, // Assuming each row represents one placement
-      };
-
-      pivotedData.push(pivotRow);
+      const recruiterName = row['Recruiter Name'];
+      const marketerName = row['Marketer Name'] || 'N/A';
+  
+      const key = `${recruiterName}-${marketerName}`;
+      if (pivotMap.has(key)) {
+        pivotMap.get(key).count += 1;
+      } else {
+        pivotMap.set(key, {
+          'Recruiter Name': recruiterName,
+          'Marketer Name': marketerName,
+          count: 1
+        });
+      }
     }
-
+  
+    pivotMap.forEach((value) => {
+      pivotedData.push(value);
+    });
+  
     return pivotedData;
   }
-
-  private convertPivotDataToCSV(data: any[], columnDefs: ColDef[]): string {
+  
+  private convertPivotDataToCSV(data: any[], columnDefs: any[]): string {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const headerRow = columnDefs.map(colDef => colDef.headerName || colDef.field);
     XLSX.utils.sheet_add_aoa(worksheet, [headerRow], { origin: 'A1' });
-
+  
+    // Style header row and auto-adjust column widths
+    const range = XLSX.utils.decode_range(worksheet['!ref'] || '');
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const address = XLSX.utils.encode_cell({ c: C, r: 0 });
+      if (!worksheet[address]) continue;
+      worksheet[address].s = {
+        fill: { fgColor: { rgb: "FFFFE0" } }, // Light yellow background
+        font: { bold: true }
+      };
+    }
+  
+    const columnWidths = data.reduce((widths, row) => {
+      columnDefs.forEach((colDef, index) => {
+        const value = row[colDef.field] ? row[colDef.field].toString() : '';
+        widths[index] = Math.max(widths[index], value.length);
+      });
+      return widths;
+    }, columnDefs.map(colDef => colDef.headerName.length));
+  
+    worksheet['!cols'] = columnWidths.map((w: number) => ({ wch: w + 2 })); // Add padding
+  
     const csvContent = XLSX.utils.sheet_to_csv(worksheet);
     return csvContent;
   }
+  
   
 }
