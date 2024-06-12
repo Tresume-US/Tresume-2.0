@@ -12,7 +12,9 @@ const envconfig = require(`./config.${environment}.js`);
 const apiUrl = envconfig.apiUrl;
 router.use(bodyparser.json());
 const fs = require('fs');
-
+const app = express();
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 const config = {
   user: "sa",
   password: "Tresume@123",
@@ -50,6 +52,7 @@ router.post('/getJobPostingList', async (req, res) => {
           J.company AS Company, 
           CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, 
           J.payrate AS PayRate, 
+          J.JobDescription AS JobDescription, 
           SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, 
           COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, 
           J.createtime AS PostedOn, 
@@ -68,7 +71,7 @@ router.post('/getJobPostingList', async (req, res) => {
           ${recruiterCondition}
           AND J.Active = 1 
         GROUP BY 
-          J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, 
+          J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate,   J.JobDescription,
           J.createtime, T.FirstName, T.LastName, T2.TraineeID, JT.Value, T2.FirstName, J.JobStatus 
         ORDER BY 
           J.createtime DESC;
@@ -560,7 +563,46 @@ function generateBatchFile(reqBody) {
   return batchContent;
 }
 
+app.post('/JdEmailSent', async (req, res) => {
+  const { to, subject, content } = req.body;
 
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+
+    // Placeholder for SQL query
+    // const query = `SELECT username FROM trainee WHERE traineeid = ${timesheetAdmin}`;
+    // const result = await request.query(query);
+    // var recipientEmail = result.recordset[0].username;
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.mail.yahoo.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "support@tresume.us",
+        pass: "xzkmvglehwxeqrpd",
+      },
+    });
+
+    const mailOptions = {
+      from: 'support@tresume.us',
+      to: to,
+      subject: subject,
+      html: `<p>${content}</p>`
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    res.send({
+      flag: 1,
+      Message: 'Email sent successfully'
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to send email');
+  }
+});
 
 module.exports = router;
 

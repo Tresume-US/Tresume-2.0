@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { request } from 'http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-all-job-postings',
@@ -28,6 +29,10 @@ export class AllJobPostingsComponent implements OnInit {
   deleteIndex: any;
   IsAdmin: string;
 job: any;
+recipientEmail: string;
+selectedJobTitle: string;
+selectedJobID: string;
+selectedJobDescription: string;
 
   // roles: string[] = ["Recruiter", "Admin", "User"];
 
@@ -40,7 +45,7 @@ job: any;
     this.getAssigneelist();
    
   }
-  constructor(private fb: FormBuilder,private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder,private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute,private http: HttpClient) {
     this.jobID = this.route.snapshot.params["jobID"];
 
     this.emailForm = this.fb.group({
@@ -168,4 +173,37 @@ job: any;
   }
 
 
+  openEmailModal(jobTitle: string, jobID: string,JobDescription: string) {
+    this.selectedJobTitle = jobTitle;
+    this.selectedJobID = jobID;
+    this.selectedJobDescription= JobDescription;
+    console.log(jobTitle,jobID,JobDescription)
+  }
+
+  
+  sendEmail() {
+    const req = {
+      to: 'mariasherin@tresume.us',
+      subject: `Job Details: ${this.selectedJobTitle} (${this.selectedJobID})`,
+      content: `Here are the details of the job:\n\nTitle: ${this.selectedJobTitle}\nID: ${this.selectedJobID}\nDescription: ${this.selectedJobDescription}`
+    };
+  
+    this.loading = true;
+    this.http.post('http://your-server-address/JdEmailSent', req).subscribe(
+      (response: any) => {
+        this.loading = false;
+        if(response.flag === 1) {
+          alert('Email sent successfully');
+        } else {
+          alert('Failed to send email');
+        }
+      },
+      (error: any) => {
+        this.loading = false;
+        alert('Failed to send email');
+      }
+    );
+  }
+  
+  
 }
