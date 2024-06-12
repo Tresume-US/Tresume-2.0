@@ -67,7 +67,7 @@
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
               <i class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
-            <span data-toggle="tooltip" data-placement="bottom" title="mail">
+            <span data-toggle="tooltip" data-placement="bottom" title="mail"  (click)="openEmailModal(job.JobTitle, job.JobID,job.JobDescription)">
               <i class="fa fa-envelope" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
           </td>
@@ -119,12 +119,12 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="recipient-email" class="col-form-label">Recipient Email:</label>
-          <input type="email" class="form-control" id="recipient-email" formControlName="email">
+          <input type="email" class="form-control" id="recipient-email" [(ngModel)]="recipientEmail">
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">Save changes</button>
-        <button type="button" class="btn " data-dismiss="modal">Close</button>
+        <button type="button" class="btn" data-dismiss="modal"  (click)="sendEmail()">Send mail</button>
+        <button type="button" class="btn " data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
