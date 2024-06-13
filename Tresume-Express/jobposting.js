@@ -563,46 +563,148 @@ function generateBatchFile(reqBody) {
   return batchContent;
 }
 
-app.post('/JdEmailSent', async (req, res) => {
+router.post('/JdEmailSent', async (req, res) => {
   const { to, subject, content } = req.body;
-
   try {
+    // Connecting to SQL Server
     await sql.connect(config);
     const request = new sql.Request();
+    const query = `SELECT username FROM trainee WHERE traineeid = 1`; // Static ID for example purposes
 
-    // Placeholder for SQL query
-    // const query = `SELECT username FROM trainee WHERE traineeid = ${timesheetAdmin}`;
-    // const result = await request.query(query);
-    // var recipientEmail = result.recordset[0].username;
+    console.log(query);
+    const result = await request.query(query);
+    const recipientEmail = result.recordset[0].username;
+    console.log(recipientEmail);
 
+    // Nodemailer configuration
     const transporter = nodemailer.createTransport({
-      host: "smtp.mail.yahoo.com",
       port: 465,
-      secure: true,
+      host: "smtp.mail.yahoo.com",
       auth: {
         user: "support@tresume.us",
         pass: "xzkmvglehwxeqrpd",
       },
+      secure: true,
     });
 
+    // Sample email content
     const mailOptions = {
       from: 'support@tresume.us',
       to: to,
       subject: subject,
-      html: `<p>${content}</p>`
+      html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Tresume</title>
+      <style>
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: Roboto, Arial, sans-serif;
+          }
+          .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+          }
+          .header {
+              text-align: center;
+              background-color: #49274a;
+              padding: 20px 0;
+       
+          }
+          .logo {
+              display: block;
+              margin: 0 auto;
+          }
+          .content {
+              padding: 40px 20px;
+              background-color: #f7f9fa;
+              border-top-left-radius: 50px;
+              border-top-right-radius: 50px;
+          }
+          .footer {
+              text-align: center;
+              background-color: #e7e7e7;
+              padding: 20px 0;
+              border-bottom-left-radius: 50px;
+              border-bottom-right-radius: 50px;
+          }
+          .footer p {
+              font-size: 12px;
+              color: #8d8d8d;
+          }
+          .footer img {
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 5px;
+          }
+      </style>
+      </head>
+      <body style="background-color: #49274a;">
+      <div class="container">
+          <div class="header">
+              <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
+          </div>
+          <div class="content" style="font-size:16px;">
+          ${content}
+          </div>
+          <div class="footer">
+              <p>POWERED BY <img src="https://tresume.us/assets/img/logo.png" alt="Tresume Logo" height="30"></p>
+              <p> 44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
+              <p>(703) 9863350 | support@tresume.us </p>
+              <p style="font-weight: bold; font-size: 12px; color: #a4a4a4;">© 2024 Tresume. Ltd. All rights reserved</p>
+          </div>
+      </div>
+      </body>
+      </html>
+      `,
+
+
     };
 
+    // Sending the email
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent: ' + info.response);
-    res.send({
-      flag: 1,
-      Message: 'Email sent successfully'
-    });
+    res.send({ flag: 1, Message: 'Email sent successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).send('Failed to send email');
   }
 });
 
+router.post('/GetJobsbyJobID', async (req, res) => {
+  try {
+    sql.connect(config, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Database connection error' });
+      }
+
+      const query = `select * from job where jobid = ${req.body.JobID}`;
+
+      console.log(query);
+      
+      const request = new sql.Request();
+      const recordset = await request.query(query);
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+
+      res.send(result);
+    });
+  } catch (error) {
+    console.error(error);
+    const result = {
+      flag: 0,
+      message: 'Internal server error',
+    };
+    return res.send(result);
+  }
+});
 module.exports = router;
 

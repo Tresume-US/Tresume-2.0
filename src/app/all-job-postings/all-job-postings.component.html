@@ -59,9 +59,13 @@
           </select>
           </td>
           <td>
-            <span data-toggle="tooltip" data-placement="bottom" title="Edit">
+            <span data-toggle="tooltip" data-placement="bottom" title="Edit"  *ngIf="usertype === 'RECRUITER'">
               <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
               <a [routerLink]="['/recruitersview', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
+            </span>
+            <span data-toggle="tooltip" data-placement="bottom" title="Edit" *ngIf="usertype === 'TRESUMEUSER'" >
+              <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
+              <a [routerLink]="['/', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
             </span>
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
@@ -70,6 +74,8 @@
             <span data-toggle="tooltip" data-placement="bottom" title="mail"  (click)="openEmailModal(job.JobTitle, job.JobID,job.JobDescription)">
               <i class="fa fa-envelope" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
+
+        
           </td>
         </tr>
         <tr *ngIf="noResultsFound">
@@ -123,7 +129,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal"  (click)="sendEmail()">Send mail</button>
+        <button type="button" class="btn" data-dismiss="modal"  (click)="sendEmail()" [disabled]="!recipientEmail">Send mail</button>
         <button type="button" class="btn " data-dismiss="modal">Cancel</button>
       </div>
     </div>
