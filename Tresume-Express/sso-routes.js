@@ -290,7 +290,7 @@ router.post('/login', async (req, res) => {
       if (storedPassword && storedPassword.length === 64) {
         const decryptedPassword = decrypter(storedPassword);
         if (password === decryptedPassword) {
-          const query2 = `SELECT RD.RoleName, RD.ViewOnly, RD.FullAccess, RD.DashboardPermission, RD.RoleID, MD.IsAdmin 
+          const query2 = `SELECT RD.RoleName, RD.ViewOnly, RD.FullAccess, RD.DashboardPermission, RD.RoleID, MD.IsAdmin,MD.AccessOrg 
                           FROM MemberDetails MD 
                           INNER JOIN RolesNew RD ON MD.RoleID = RD.RoleID 
                           WHERE MD.UserEmail = '${username}' AND RD.Active = 1`;

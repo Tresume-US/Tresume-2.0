@@ -4,7 +4,461 @@
             <h2>DASHBOARD</h2>
         </div>
         <section class="content mt-3">
-            <div class="container-fluid">
+            <div class="ATS">
+                <h3>ATS</h3>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcdefb;">
+                            <div class="card-header">Total FTC</div>
+                            <div class="card-body">
+                                <h4 class="card-title">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #f3bcfb;">
+                            <div class="card-header">Total Submission</div>
+                            <div class="card-body">
+                                <h4 class="card-title">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcfbc2;">
+                            <div class="card-header">Total Interview</div>
+                            <div class="card-body">
+                                <h4 class="card-title">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcdefb;">
+                            <div class="card-header">Total Placements</div>
+                            <div class="card-body">
+                                <h4 class="card-title">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content mt-3">
+            <div class="ATS">
+                <h3>Job Boards</h3>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #d7e8f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9ecef;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #f3e5f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #fcebeb;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Career Builder <i
+                                        class="fas fa-briefcase"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #e5f3f3; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9f7fd;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Monster <i class="fas fa-monster"></i>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- HRMS -->
+        <section>
+            <div class="row">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">FTC</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
+                                            [legend]="lineChartLegend" [chartType]="barChartType"
+                                            [colors]="InterviewchartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Recruiter Name</th>
+                                        <th scope="col">Ftc Count</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="table-scroll">
+                                <table class="table text-center">
+                                    <tbody>
+                                        <tr *ngFor="let recruiter of adminFtcData;let i=index">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{ recruiter.Recruiter }}</td>
+                                            <td>{{ recruiter.RecruiterCount }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('ftc')">View More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DSR</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
+                                            [legend]="lineChartLegend" [chartType]="barChartType"
+                                            [colors]="InterviewchartColors">
+                                        </canvas>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">DSR Count</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminDsrData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.Marketer }}</td>
+                                        <td>{{ recruiter.SubmissionCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('dsr')">View More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Interviews</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
+                                            [legend]="lineChartLegend" [chartType]="barChartType"
+                                            [colors]="InterviewchartColors">
+                                        </canvas>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">Interview Count</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminInterviewData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.Recruiter }}</td>
+                                        <td>{{ recruiter.InterviewCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary"
+                            style="background-color: #000000; width: 100%; border: none;color: white;"
+                            (click)="routeLinks('interviews')">View More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Placements</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
+                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
+                                            [legend]="lineChartLegend" [chartType]="barChartType"
+                                            [colors]="InterviewchartColors">
+                                        </canvas>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">Placement Count</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminPlacementData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.MarketerName }}</td>
+                                        <td>{{ recruiter.MarketerCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('placements')">View More</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- JB -->
+        <section>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DICE
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                            [chartType]="doughnutChartType" [options]="chartOptions"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Career Builder
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                            [chartType]="doughnutChartType" [options]="chartOptions"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Monster
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                            [chartType]="doughnutChartType" [options]="chartOptions"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+<!-- <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4 col-6">
                         <div class="small-box box-color">
@@ -419,8 +873,4 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</div>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            </div> -->

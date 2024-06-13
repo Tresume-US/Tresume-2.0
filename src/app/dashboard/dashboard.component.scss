@@ -33,3 +33,16 @@ $brand-primary:#49274a;
     background-color: $brand-primary;
     border-color: $brand-primary;
 }
+.table-responsive {
+    border: 1px solid #dee2e6;
+  }
+  
+  .table-scroll {
+    max-height: 287px; /* Set the height you prefer */
+    overflow-y: auto;
+  }
+  
+  .table-scroll table {
+    margin-bottom: 0;
+  }
+  
