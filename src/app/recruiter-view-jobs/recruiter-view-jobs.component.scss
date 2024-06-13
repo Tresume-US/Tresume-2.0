@@ -1,0 +1,93 @@
+.container{
+    background-color: #fff;
+}
+.nav-tabs .nav-link {
+    color:black;
+}
+.main{
+  border-top: 3px solid #46103d;
+  border-bottom: 3px solid #46103d;
+}
+.nav-tabs .nav-item.show .nav-link.active, .nav-tabs .nav-link.active {
+    background-color: #f2f2f2;
+    color: black;
+}
+select.form-control option:hover {
+    background-color: purple;
+    color: white;
+  }
+  .container1{
+    margin-top:0px;
+  }
+
+  .container2{
+    margin-top:0px;
+  }
+  .req5{
+    padding-left: 50px;
+  }
+  .req34{
+    padding-left: 30px;
+  }
+  .req910{
+    padding-left: 30px;
+  }
+  .pay{
+    padding-left: 115px; 
+   }
+
+   .reqinfo{
+    padding: 25px 10px 10px 10px;
+   }
+.header{
+  padding: 25px 10px 10px 10px;
+}
+
+*{
+  box-sizing: border-box;
+ 
+}
+
+.selct0{
+ border: 1px solid #ced4da;;
+ height: 38px;
+ cursor: text;
+ background-color: #fff;
+}
+.ass-rec{
+  border: 1px solid #ced4da;;
+ height: 38px;
+ cursor: text;
+ background-color: #2d012d;
+ color: #fff;
+}
+.container-1{
+ padding: 30px;
+}
+.post-job-boards{
+ background-color:#fff ;
+ border: 1px solid #ced4da;
+ padding: 10px;
+}
+.btn{
+  color: white;
+  background-color: rgb(56, 8, 56);
+  border-color: rgb(56, 8, 56) ;
+}
+.custom-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.btnl{
+  margin-left: 10px;
+}
+.invalid-input {
+  border: 1px solid red;
+}
+.invalid-input {
+  border: 1px solid red;
+}
+

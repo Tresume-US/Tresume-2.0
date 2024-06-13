@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class AllJobPostingsComponent implements OnInit {
   emailForm: FormGroup;
   loading: boolean = false;
+
   OrgID: string = '';
   JobID: string = '';
   TraineeID: string = '';
@@ -28,6 +29,7 @@ export class AllJobPostingsComponent implements OnInit {
   recruiterNames: any;
   deleteIndex: any;
   IsAdmin: string;
+  usertype: string;
 job: any;
 recipientEmail: string;
 selectedJobTitle: string;
@@ -41,6 +43,10 @@ selectedJobDescription: string;
     this.OrgID = this.cookieService.get('OrgID');
     this.IsAdmin = this.cookieService.get('IsAdmin');
     this.TraineeID = this.cookieService.get('TraineeID');
+    this.usertype = this.cookieService.get('usertype');
+    this.jobID = this.route.snapshot.params["jobID"];
+console.log(this.usertype);
+  
     this.fetchjobpostinglist();
     this.getAssigneelist();
    
@@ -183,24 +189,26 @@ selectedJobDescription: string;
   
   sendEmail() {
     const req = {
-      to: 'mariasherin@tresume.us',
-      subject: `Job Details: ${this.selectedJobTitle} (${this.selectedJobID})`,
-      content: `Here are the details of the job:\n\nTitle: ${this.selectedJobTitle}\nID: ${this.selectedJobID}\nDescription: ${this.selectedJobDescription}`
+      to: this.recipientEmail,
+      subject: `Job Details: ${this.selectedJobTitle} -${this.selectedJobID}`,
+      content: `Job Description: ${this.selectedJobDescription}`
     };
-  
+  console.log(req)
     this.loading = true;
-    this.http.post('http://your-server-address/JdEmailSent', req).subscribe(
+
+    this.service.JdEmailSent(req).subscribe(
       (response: any) => {
         this.loading = false;
         if(response.flag === 1) {
-          alert('Email sent successfully');
+          this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
+      this.loading = false;
         } else {
           alert('Failed to send email');
         }
       },
       (error: any) => {
         this.loading = false;
-        alert('Failed to send email');
+        console.error('Error occurred:', error);
       }
     );
   }
