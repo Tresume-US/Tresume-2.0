@@ -65,6 +65,7 @@ export class LoginComponent {
             const timesheet_role = response.data[0].timesheet_role
             const timesheet_admin = response.data[0].timesheet_admin
             const IsAdmin = response.result[0].IsAdmin
+            const AccessOrg = response.result[0].AccessOrg
             this.cookieService.set('userName1', userName);
             this.cookieService.set('OrgID', orgID);
             this.cookieService.set('TraineeID', traineeID);
@@ -75,6 +76,7 @@ export class LoginComponent {
             this.cookieService.set('FullAccess', FullAccess);
             this.cookieService.set('DashboardPermission', DashboardPermission);
             this.cookieService.set('RoleID', RoleID);
+            this.cookieService.set('AccessOrg', AccessOrg);
             this.router.navigate(['/dashboard/' + traineeID]);
           }
 

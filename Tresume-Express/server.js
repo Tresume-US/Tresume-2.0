@@ -52,8 +52,10 @@ const submittedcandidates = require("./submittedcandidates");
 const Invoice = require("./Invoice");
 const CorporateDocument = require("./corporate-document");
 const CBapi = require("./cb");
+const Dashboard = require("./dashboard");
 
 app.use("/", onboardRoutes);
+app.use("/", Dashboard);
 app.use("/", candidateRoutes);
 app.use("/", adobesignRoutes);
 app.use("/", harvestRoutes);

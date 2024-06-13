@@ -9,6 +9,7 @@ import { DashboardService, RequestItem } from './dashboard.service';
 import { ResponseDetails, CardType } from './model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ReportsService } from '../reports/reports.service';
+import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -21,11 +22,11 @@ interface IRange {
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [DashboardService, ReportsService]
+  providers: [DashboardService, ReportsService, MessageService, CookieService]
 })
 export class DashboardComponent implements OnInit {
 
-  loading:boolean = false;
+  loading: boolean = false;
 
   public title = 'Tresume-NG';
   public traineeID: number = 5;
@@ -81,7 +82,31 @@ export class DashboardComponent implements OnInit {
       position: this.position()
     }
   }
-
+  recruiters = [
+    { id: 1, name: 'Mark', count: 12 },
+    { id: 2, name: 'Jacob', count: 15 },
+    { id: 3, name: 'Larry', count: 20 },
+    { id: 4, name: 'Larry', count: 20 },
+    { id: 5, name: 'Larry', count: 20 },
+    { id: 6, name: 'Larry', count: 20 },
+    { id: 7, name: 'Larry', count: 20 },
+    { id: 8, name: 'Larry', count: 20 },
+    { id: 9, name: 'Larry', count: 20 },
+    { id: 10, name: 'Larry', count: 20 },
+    { id: 11, name: 'Larry', count: 20 },
+    { id: 12, name: 'Larry', count: 20 },
+    { id: 13, name: 'Larry', count: 20 },
+    { id: 14, name: 'Larry', count: 20 },
+    { id: 15, name: 'Larry', count: 20 }
+  ];
+  AccessOrg: string;
+  adminFtcData: any;
+  adminDsrData: any;
+  adminInterviewData: any;
+  adminPlacementData: any;
+  public routeLinks(route: string) {
+    this.router.navigate(['reports/' + route])
+  }
   public complianceChartOptions: ChartOptions = {
     responsive: true,
     legend: {
@@ -113,7 +138,29 @@ export class DashboardComponent implements OnInit {
     }
     return true;
   }
+  FTCrecord() {
+    this.loading = true;
+    const req = {
+      AccessOrg: this.AccessOrg,
+      StartDate: this.defaultStartDate,
+      EndDate: this.defaultEndDate
+    };
 
+    this.service.getAdminDashboardData(req).subscribe(
+      (response: any) => {
+        this.adminFtcData = response.FtcData;
+        this.adminDsrData = response.DsrData;
+        this.adminInterviewData = response.Interviewdata;
+        this.adminPlacementData = response.PlacementData;
+
+        this.messageService.add({ severity: 'success', summary: 'Mail Sent Successfully' });
+        console.log(response);
+      },
+      (error: any) => {
+        this.messageService.add({ severity: 'error', summary: 'Failed to send Mail' });
+      }
+    );
+  }
   public chartColors: any[] = [
     { backgroundColor: ["#EA6A47", "#6F295B", "#c874b3", "#ff20c8", "#B9E8E0"] },
     { backgroundColor: ["#B9E8E0", "#ff20c8", "#c874b3", "#940571", "#665191"] }
@@ -262,11 +309,13 @@ export class DashboardComponent implements OnInit {
     label: 'Last 90 Days'
   }];
 
-  constructor(private route: ActivatedRoute, private service: DashboardService, private router: Router, private reportService: ReportsService) {
+  constructor(private route: ActivatedRoute, private service: DashboardService, private router: Router, private reportService: ReportsService, private messageService: MessageService, private cookieService: CookieService) {
     this.traineeID = this.route.snapshot.params["traineeId"];
     this.defaultStartDate = this.dateFormatter(this.ranges[1].value[0]);
     this.defaultEndDate = this.dateFormatter(this.ranges[1].value[1]);
     sessionStorage.setItem("Route", 'Dashboard');
+    this.AccessOrg = this.cookieService.get('AccessOrg');
+
 
     /* this.currentMonthDates = ((new Date().setDate(new Date().getMonth(), new Date().getFullYear())));
     console.log('this.currentMonthDates', this.currentMonthDates) */
@@ -303,6 +352,7 @@ export class DashboardComponent implements OnInit {
     this.getSubmissionDetails(this.defaultStartDate, this.defaultEndDate);
     this.getLegalInfo();
     this.getH1BExpiry(this.todayDate, this.next30days);
+    this.FTCrecord();
     // this.getSiteVistReport();
     // this.getJobBoardDetails();
     this.jobReqChartLabels = ['Rashi', 'Suchita', 'Ram'];
@@ -312,8 +362,8 @@ export class DashboardComponent implements OnInit {
 
   public getTraineeDetails() {
     let req = {
-      traineeId:this.traineeID
-  }
+      traineeId: this.traineeID
+    }
     this.service.getTraineeDetails(req).subscribe(x => {
       let response = x.result;
       if (response) {
@@ -337,9 +387,9 @@ export class DashboardComponent implements OnInit {
         this.hideFTCFields = false;
         let countArray = response.map((y: any) => y.FTCCount);
         // this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current);
-         //Mariya code start
-        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current,0);
-            //Mariya code end
+        //Mariya code start
+        this.totalFTC = countArray.reduce((sum: any, current: any) => sum + current, 0);
+        //Mariya code end
         this.doughnutChartData = response.map((y: any) => y.FTCCount).slice(0, 5);
         this.doughnutChartLabels = response.map((z: any) => z.RecruiterName).slice(0, 5);
       }
@@ -428,9 +478,9 @@ export class DashboardComponent implements OnInit {
         this.hideInterviewsFields = false;
         let countArray = response.map((y: any) => y.PlacemntCount);
         // this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
-         //Mariya code start
+        //Mariya code start
         this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current, 0);
-            //Mariya code end
+        //Mariya code end
         let lineData = response.map((y: any) => y.PlacemntCount).slice(0, 5);
         let lineLabel = response.map((y: any) => y.MarkerterName.split(" ")[0]).slice(0, 5);
         this.lineChartData = [];
@@ -474,9 +524,9 @@ export class DashboardComponent implements OnInit {
               this.hideInterviewsFields = false;
               let countArray = response.map((y: any) => y.PlacemntCount);
               // this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current);
-               //Mariya code start
+              //Mariya code start
               this.totalInterviews = countArray.reduce((sum: any, current: any) => sum + current, 0);
-                  //Mariya code end
+              //Mariya code end
               let lineData = response.map((y: any) => y.PlacemntCount).slice(0, 5);
               let lineLabel = response.map((y: any) => y.MarkerterName.split(" ")[0]).slice(0, 5);
               for (let i = 0; i < 5; i++) {
@@ -496,12 +546,12 @@ export class DashboardComponent implements OnInit {
 
             }
           }),
-          (error: any) => {
-            // Error callback
-            console.error('Error occurred:', error);
-            // Handle error here
-            this.loading = false; // Set loading to false on error
-          };
+            (error: any) => {
+              // Error callback
+              console.error('Error occurred:', error);
+              // Handle error here
+              this.loading = false; // Set loading to false on error
+            };
         });
       }
     });
@@ -518,9 +568,9 @@ export class DashboardComponent implements OnInit {
       if (response) {
         let countArray = response.map((y: any) => y.BenchCount);
         // this.totalSubmissions = countArray.reduce((sum: any, current: any) => sum + current);
-         //Mariya code start
+        //Mariya code start
         this.totalSubmissions = countArray.reduce((sum: any, current: any) => sum + current, 0);
-            //Mariya code end
+        //Mariya code end
         if (this.totalSubmissions > 0) {
           this.hideSubmissionsFields = false;
         }
