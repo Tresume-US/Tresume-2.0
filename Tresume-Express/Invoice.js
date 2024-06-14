@@ -101,6 +101,74 @@ router.post('/getLocationinvoice', async (req, res) => {
   }
 });
 
+router.post('/invoiceCandidatetList', async (req, res) => {
+  let recordset; // Declare recordset outside the try block
+
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+//1 and 3 as per status
+let query = ''
+if(req.body.timesheetrole == '2'){
+  query = `
+  SELECT DISTINCT t.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS name
+FROM trainee t
+INNER JOIN timesheet_master tm ON t.traineeid = tm.traineeid AND tm.isBillable = 1
+WHERE t.istimesheet = 1
+  AND t.active = 1
+  AND t.timesheet_role = 3
+  AND t.userorganizationid = '${req.body.OrgId}'
+  AND t.timesheet_admin = '${req.body.TraineeID}'
+  AND tm.status = 3
+ORDER BY name;
+`;
+}else{
+  query = `
+  SELECT DISTINCT t.traineeid, CONCAT(t.firstname, ' ', t.lastname) AS name
+  FROM trainee t
+  INNER JOIN (
+    SELECT traineeid
+    FROM timesheet_master
+    WHERE status = 3
+      AND isBillable = 1
+  ) tm ON t.traineeid = tm.traineeid
+  WHERE t.istimesheet = 1
+    AND t.active = 1
+    AND t.timesheet_role = 3
+    AND t.userorganizationid = '${req.body.OrgId}'
+  ORDER BY name;
+    `;
+}
+
+
+
+    console.log(query);
+
+    recordset = await request.query(query);
+
+    if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+      res.send(result);
+    } else {
+      const result = {
+        flag: 0,
+        error: "No active results found!",
+      };
+      res.send(result);
+    }
+  }
+  catch (error) {
+    console.error("Error fetching candidate data:", error);
+    const result = {
+      flag: 0,
+      error: "An error occurred while fetching candidate data!",
+    };
+    res.status(500).send(result);
+  }
+});
 
 
 router.post("/getunPaidInvoiceList", async (req, res) => {
