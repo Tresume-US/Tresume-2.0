@@ -42,55 +42,10 @@
                 </div>
             </div>
         </section>
-        <section class="content mt-3">
-            <div class="ATS">
-                <h3>Job Boards</h3>
-                <div class="row">
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card mb-3"
-                            style="width: 18rem; background-color: #d7e8f5; border: 1px solid #ddd; border-radius: .25rem;">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="padding: .75rem 1rem; background-color: #e9ecef;">
-                                <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card mb-3"
-                            style="width: 18rem; background-color: #f3e5f5; border: 1px solid #ddd; border-radius: .25rem;">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="padding: .75rem 1rem; background-color: #fcebeb;">
-                                <h5 class="card-title" style="margin-bottom: 0;">Career Builder <i
-                                        class="fas fa-briefcase"></i></h5>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card mb-3"
-                            style="width: 18rem; background-color: #e5f3f3; border: 1px solid #ddd; border-radius: .25rem;">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="padding: .75rem 1rem; background-color: #e9f7fd;">
-                                <h5 class="card-title" style="margin-bottom: 0;">Monster <i class="fas fa-monster"></i>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- HRMS -->
         <section>
             <div class="row">
-                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
                             <h3 class="card-title title-font">FTC</h3>
@@ -107,10 +62,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
-                                            [legend]="lineChartLegend" [chartType]="barChartType"
-                                            [colors]="InterviewchartColors">
+                                        <div *ngIf="loading">Loading...</div> <!-- Show loading indicator while fetching data -->
+                                        <canvas *ngIf="!loading" baseChart
+                                        [datasets]="chartData"
+                                        [labels]="chartLabels"
+                                        [legend]="true"
+                                        [chartType]="chartType"
+                                        [colors]="chartColors"> 
                                         </canvas>
                                     </div>
                                 </div>
@@ -122,7 +80,7 @@
 
                 </div>
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card tabledatas">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="thead-dark">
@@ -171,12 +129,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
-                                            [legend]="lineChartLegend" [chartType]="barChartType"
-                                            [colors]="InterviewchartColors">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart
+                                            [datasets]="dsrChartData"
+                                            [labels]="dsrChartLabels"
+                                            [legend]="true"
+                                            [chartType]="barChartType"
+                                            [colors]="dsrChartColors">
                                         </canvas>
-
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +147,7 @@
 
                 </div>
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card tabledatas">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -234,14 +194,13 @@
                                             <div class=""></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 text-center">
-                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
-                                            [legend]="lineChartLegend" [chartType]="barChartType"
-                                            [colors]="InterviewchartColors">
+                                    <div class="col-md-12 data-container">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas id="interviewChart" baseChart [datasets]="interviewChartData" 
+                                        [labels]="interviewChartLabels" [chartType]="doughnutChartType" 
+                                        [options]="interviewChartOptions" [colors]="interviewChartColors">
                                         </canvas>
-
-                                    </div>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +210,7 @@
 
                 </div>
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card tabledatas">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -271,12 +230,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                     <div class="card-footer text-center">
                         <button class="btn btn-primary"
                             style="background-color: #000000; width: 100%; border: none;color: white;"
                             (click)="routeLinks('interviews')">View More</button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -298,12 +257,22 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                                            [options]="interviewChartOptions1" [plugins]="barChartPlugins"
-                                            [legend]="lineChartLegend" [chartType]="barChartType"
-                                            [colors]="InterviewchartColors">
-                                        </canvas>
-
+                                        <div class="col-md-12 data-container">
+                                            <div *ngIf="loading">Loading...</div>
+                                            <!-- <canvas baseChart [datasets]="placementChartData" [labels]="placementChartLabels"
+                                            [options]="interviewChartOptions" [chartType]="doughnut" [colors]="interviewChartColors">
+                                            </canvas> -->
+                                            <canvas id="interviewChart" baseChart [datasets]="PChartData" 
+                                          [labels]="PChartLabels" [chartType]="doughnutChartType" 
+                                          [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                          </canvas>
+                                          </div>
+                                          <!-- <div *ngIf="loading">Loading...</div>
+                                          <canvas id="interviewChart" baseChart [datasets]="interviewChartData" 
+                                          [labels]="interviewChartLabels" [chartType]="doughnutChartType" 
+                                          [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                          </canvas>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -314,7 +283,7 @@
 
                 </div>
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card tabledatas">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -349,7 +318,52 @@
             </div>
         </section>
         <!-- JB -->
-        <section>
+        <section class="content mt-3">
+            <div class="ATS">
+                <h3>Job Boards</h3>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #d7e8f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9ecef;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #f3e5f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #fcebeb;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Career Builder <i
+                                        class="fas fa-briefcase"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #e5f3f3; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9f7fd;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Monster <i class="fas fa-monster"></i>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- <section>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
@@ -453,7 +467,7 @@
                 </div>
             </div>
 
-        </section>
+        </section> -->
     </div>
 </div>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
