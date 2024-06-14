@@ -24,7 +24,8 @@ router.post('/getAdminDashboardData', async (req, res) => {
             DsrData,
             Interviewdata,
             PlacementData,
-            FtcData 
+            FtcData,
+            JobboardData 
         ] = await Promise.all([
             pool.query(`SELECT CONCAT(m.FirstName, ' ', m.LastName) AS Marketer, COUNT(*) AS SubmissionCount FROM submission s INNER JOIN Trainee t ON s.TraineeID = t.TraineeID INNER JOIN Trainee m ON s.markerterid = m.TraineeID WHERE s.Active = 1 AND m.Active = 1 AND s.SubmissionDate BETWEEN '${startdate}' AND '${enddate}' AND m.Organizationid IN (${accessorg}) GROUP BY CONCAT(m.FirstName, ' ', m.LastName) ORDER BY SubmissionCount DESC;`),
 
@@ -33,6 +34,19 @@ router.post('/getAdminDashboardData', async (req, res) => {
             pool.query(`SELECT T2.FirstName + ' ' + T2.LastName AS MarketerName, COUNT(*) AS MarketerCount FROM placements P LEFT JOIN Trainee T1 ON P.TraineeID = T1.TraineeID LEFT JOIN Trainee T2 ON P.marketername = T2.TraineeID LEFT JOIN Trainee T3 ON P.RecuiterID = T3.TraineeID WHERE P.Active = 1 AND P.PlacedDate >= '${startdate}' AND P.PlacedDate < '${enddate}' AND T2.OrganizationID IN (${accessorg}) GROUP BY T2.FirstName + ' ' + T2.LastName ORDER BY MarketerCount DESC;`),
 
             pool.query(`SELECT CONCAT(R.FirstName, ' ', R.LastName) AS 'Recruiter', COUNT(*) AS RecruiterCount FROM Trainee T JOIN Currentstatus C ON C.CSID = T.CandidateStatus AND C.Active = 1 LEFT JOIN Trainee R ON R.TraineeID = T.RecruiterName AND R.Active = 1 WHERE T.Active = 1 AND T.UserOrganizationID IN (${accessorg}) AND T.CreateTime BETWEEN '${startdate}' AND '${enddate}' AND T.CandidateStatus = 8 AND R.Active = 1 GROUP BY CONCAT(R.FirstName, ' ', R.LastName) ORDER BY RecruiterCount DESC;`),
+            pool.query(`SELECT  T.FirstName, T.LastName, T.Traineeid, OD.DivisionName, T.UserName, COALESCE(T.monster, 0) AS monster, 
+(SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) 
+AND createtime <= GETDATE()) AS monsterused, COALESCE(T.cb, 0) AS cb, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND 
+jobboardid = 4 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS cbused, 
+COALESCE(T.dice, 0) AS dice, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND 
+createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS diceused FROM Trainee AS T 
+INNER JOIN org_division AS OD ON T.Org_Div = OD.id WHERE T.organizationid = " +req.body.OrgID + " ORDER BY OD.DivisionName;SELECT  T.FirstName, T.LastName, T.Traineeid, OD.DivisionName, T.UserName, COALESCE(T.monster, 0) AS monster, 
+(SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 3 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) 
+AND createtime <= GETDATE()) AS monsterused, COALESCE(T.cb, 0) AS cb, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND 
+jobboardid = 4 AND createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS cbused, 
+COALESCE(T.dice, 0) AS dice, (SELECT COUNT(id) FROM division_audit WHERE username = T.Username AND jobboardid = 2 AND 
+createtime >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND createtime <= GETDATE()) AS diceused FROM Trainee AS T 
+INNER JOIN org_division AS OD ON T.Org_Div = OD.id WHERE T.organizationid IN (${accessorg}) ORDER BY OD.DivisionName;`),
             
         ]);
 
@@ -41,6 +55,7 @@ router.post('/getAdminDashboardData', async (req, res) => {
             Interviewdata: Interviewdata.recordset,
             PlacementData: PlacementData.recordset,
             FtcData: FtcData.recordset,
+            JobboardData:JobboardData.recordset
         };
 
         res.json(responseData);
