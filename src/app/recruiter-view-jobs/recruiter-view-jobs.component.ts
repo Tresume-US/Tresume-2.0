@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { RecruiterViewJobsService } from './recruiter-view-jobs.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
-import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-recruiter-view-jobs',
   templateUrl: './recruiter-view-jobs.component.html',
-  providers: [CookieService, MessageService,RecruiterViewJobsService],
+  providers: [CookieService, MessageService, RecruiterViewJobsService],
   styleUrls: ['./recruiter-view-jobs.component.scss']
 })
 export class RecruiterViewJobsComponent implements OnInit {
-  @ViewChild('myTabs') myTabs: TabsetComponent;
+
+  @ViewChild('myTabs', { static: false }) myTabs: TabsetComponent;
   loading: boolean = false;
   basicactive: string = 'active';
   reqactive: string = '';
-  orginfoactive = '';
-  previewinfo = '';
+  orginfoactive: string = '';
+  previewinfo: string = '';
   address: string = '';
   selectedLegalstatus: any;
   jobcode: string;
@@ -40,35 +40,40 @@ export class RecruiterViewJobsComponent implements OnInit {
   city: string[] = [];
   filteredOwnership: any[] = [];
   selectedStatus: any[] = [];
-  statusOptions: any[];
+  statusOptions: any[] = [];
   selectedCountry: any = 'US';
   countries: string[] = ['United States'];
+
   selectedState: string = '';
-  state: string[];
+  state: string[] = [];
+
   selectedCity: string;
-  cities: string[];
+  cities: string[] = [];
+
   selectedCurrency: string = '1';
   selectedcCurrency: string = '1';
   currencies: string[] = [];
+
   selectedPayType: string = '1';
   selectedcPayType: string = '1';
   payTypes: string[] = ['hour', 'day', 'week', 'bi-week', 'month', 'year'];
+
   selectedTaxTerms: string = '1';
   selectedcTaxTerms: string = '1';
-  taxTerms: any[];
+  taxTerms: any[] = [];
   internaltaxterms: string = '';
   selectedRespondBy: Date;
   selectedJobType: string = '';
-  jobTypeOptions: any[];
+  jobTypeOptions: any[] = [];
   selectedPriority: string = '';
-  priorityOptions: any[];
+  priorityOptions: any[] = [];
   selectedJobStatus: any = '';
-  jobStatusOptions: any[];
+  jobStatusOptions: any[] = [];
   selectedClient: string = '';
   endclient: string = '';
   clientjobid: string = '';
   duration: string = '';
-  clientOptions: any[];
+  clientOptions: any[] = [];
   skills: string = '';
   selectedInterviewMode: string = '';
   interviewModeOptions: any[] = [
@@ -86,15 +91,17 @@ export class RecruiterViewJobsComponent implements OnInit {
   selectedDepartment: any;
   selectedrecmanger: any;
   selectedsalesManager: any;
+
   selectedaccountManager: any;
+
   checkboxes = [
     { label: 'ZipRecruiter', checked: false },
     { label: 'Dice', checked: false }
   ];
   securityClearance: string = '0';
   selectedPrimaryRecruiter: string = '';
-  RecruiterStatusOptionsons: any[];
-  admins: any[];
+  RecruiterStatusOptions: any[] = [];
+  admins: any[] = [];
   JobDescription: string = '';
   comments: string = '';
   recruitmentmanager: string = '';
@@ -121,10 +128,13 @@ export class RecruiterViewJobsComponent implements OnInit {
     this.TraineeID = this.cookieService.get('TraineeID');
     this.username = this.cookieService.get('userName1');
     this.routeType = this.route.snapshot.params['jobId'];
-    console.log(this.routeType)
+    console.log(this.routeType);
     this.getJobPostData();
+
     if (this.routeType) {
       this.GetJobsbyJobID();
+    } else {
+      this.getJobPostData();
     }
   }
 
@@ -133,18 +143,20 @@ export class RecruiterViewJobsComponent implements OnInit {
       JobID: this.routeType
     };
     this.service.GetJobsbyJobID(Req).subscribe((x: any) => {
+      console.log(x);
       let data = x.result[0];
       this.loading = false;
       this.jobcode = this.routeType;
       this.selectedCity = data.City;
       this.companyname = data.Company;
+      this.selectedstate = data.State; // Fix missing semicolon
       this.jobtitle = data.JobTitle;
       this.zipcode = data.ZipCode;
       this.address = data.Address;
       this.citycode = data.AreaCode;
       this.selectedPriority = data.PriorityID;
       this.duration = data.Duration;
-      this.selectedJobStatus = data.JobStatusID;
+      this.selectedJobStatus = data.JobStausID;
       this.selectedJobType = data.JobTypeID;
       this.selectedPayType = data.PayRateTypeID;
       this.payrate = data.PayRate;
@@ -164,44 +176,54 @@ export class RecruiterViewJobsComponent implements OnInit {
       this.accountsmanager = data.AccountManagerID;
       this.comments = data.Comments;
       this.JobDescription = data.JobDescription;
+
+      console.log(this.selectedCity);
     });
-    this.loading = false;
   }
 
   nextTab(tab: number) {
-    if (tab == 1) {
+    if (tab === 1) {
       this.basicactive = 'active';
       this.reqactive = '';
       this.orginfoactive = '';
       this.previewinfo = '';
-    } else if (tab == 2) {
+    } else if (tab === 2) {
       this.basicactive = '';
       this.reqactive = 'active';
       this.orginfoactive = '';
       this.previewinfo = '';
-    } else if (tab == 3) {
+    } else if (tab === 3) {
       this.basicactive = '';
       this.reqactive = '';
       this.orginfoactive = 'active';
       this.previewinfo = '';
-    } else if (tab == 4) {
+    } else if (tab === 4) {
       this.basicactive = '';
       this.reqactive = '';
       this.orginfoactive = '';
       this.previewinfo = 'active';
     }
+    console.log(this.selectedLegalstatus);
   }
 
   onChange(event: { value: any }) {
+    console.log(event.value);
     this.selectedLegalstatus = event.value;
   }
 
   onJobStatusChange(selectedValue: any) {
+    // Find the corresponding object in jobStatusOptions array
     const selectedOption = this.jobStatusOptions.find(option => option.Value === selectedValue);
-    this.selectedJobStatus = selectedOption; 
+  
+    // Set the selectedJobStatus to the whole object or just the Value based on your requirements
+    this.selectedJobStatus = selectedOption; // or selectedOption.Value if you just want the value
+  
+    // Log the selected value
+    console.log(selectedOption.Value);
   }
 
   getCity() {
+    console.log(this.selectedstate);
     let Req = {
       TraineeID: this.TraineeID,
       State: this.selectedstate
@@ -218,154 +240,192 @@ export class RecruiterViewJobsComponent implements OnInit {
     };
     this.service.getJobPostData(Req).subscribe((x: any) => {
       this.loading = false;
-      if (!this.routeType) {
+      if (this.routeType === '') {
         this.jobcode = x.NextJobId;
       }
-      this.state = x.states;
-      this.currencies = x.currencyTypes;
-      this.payTypes = x.payTypes;
-      this.taxTerms = x.taxTerms;
-      this.jobTypeOptions = x.jobTypes;
-      this.priorityOptions = x.priority;
-      this.jobStatusOptions = x.jobStatus;
-      this.clientOptions = x.clients;
-      this.admins = x.admins;
-      this.Legalstatus = x.LegalStatus;
-      this.selectedCountry = x.CountryID;
-    });
-  }
+      this.state = x.states || [];
+      this.currencies = x.currencyTypes || [];
+      this.payTypes = x.payTypes || [];
+      this.taxTerms = x.taxTerms || [];
+      this.jobTypeOptions = x.jobTypes || [];
+      this.priorityOptions = x.priorities || [];
+      this.jobStatusOptions = x.jobStatuses || [];
+      this.clientOptions = x.clients || [];
+      this.statusOptions = x.legalstatus || [];
+      this.RecruiterStatusOptions = x.recruiters || [];
+      this.admins = x.admins || [];
+      this.jobbaordaccount = x.jobboardaccount || [];
 
-  PostJob(type:any) {
-    let Req = {
-      City: this.selectedCity,
-      JobCode: this.jobcode,
-      Company: this.companyname,
-      JobTitle: this.jobtitle,
-      ZipCode: this.zipcode,
-      Address: this.address,
-      AreaCode: this.citycode,
-      PriorityID: this.selectedPriority,
-      Duration: this.duration,
-      JobStatusID: this.selectedJobStatus,
-      JobTypeID: this.selectedJobType,
-      PayRateTypeID: this.selectedPayType,
-      PayRate: this.payrate,
-      PayRateCurrencyTypeID: this.selectedCurrency,
-      ClientID: this.selectedClient,
-      EndClient: this.endclient,
-      ClientJobID: this.clientjobid,
-      InterviewMode: this.selectedInterviewMode,
-      MinYearsOfExpInMonths: this.selectedExperience,
-      LegalStatus: this.selectedLegalstatus,
-      Skills: this.skills,
-      NoOfPosition: this.numberOfPositions,
-      TaxTermID: this.selectedTaxTerm,
-      PrimaryRecruiterID: this.selectedPrimaryRecruiter,
-      RecruitmentManagerID: this.recruitmentmanager,
-      SalesManagerID: this.salesmanager,
-      AccountManagerID: this.accountsmanager,
-      Comments: this.comments,
-      JobDescription: this.JobDescription,
-      CreatedBy: this.username,
-      CreatedOn: new Date(),
-      JobBoardAccount: this.selectedJobboardaccount,
-      SecurityClearance: this.securityClearance
-    };
-    this.service.PostJob(Req).subscribe((x: any) => {
-      if (x.result === 'success') {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Job posted successfully!'
-        });
-        this.router.navigate(['/jobs']);
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to post job.'
-        });
+      for (let i = 0; i < this.jobbaordaccount.length; i++) {
+        this.JobboardSelection(this.jobbaordaccount[i]);
       }
+
+      console.log(x);
+    }, (error: any) => {
+      console.error('Error occurred:', error);
+      this.loading = false;
     });
   }
 
-  UpdateJob(type:any) {
+  PostJob(type: any) {
+    this.loading = true;
+    if (this.selectedLegalstatus && this.selectedLegalstatus.length > 0) {
+      this.Legalstatus = this.selectedLegalstatus.map((item: { value: any }) => item.value).join(',');
+    } else {
+      this.Legalstatus = '';
+    }
+    console.log(this.internaltaxterms);
+    console.log(this.selectedPrimaryRecruiter);
+    console.log(this.jobtitle);
+    console.log(this.selectedstate);
+    console.log(this.selectedRespondBy);
+    if (
+      this.selectedPrimaryRecruiter &&
+      this.jobtitle &&
+      this.selectedstate &&
+      this.selectedCity &&
+      this.selectedRespondBy &&
+      this.numberOfPositions &&
+      this.internaltaxterms
+    ) {
+      let Req = {
+        RecruiterID: this.selectedPrimaryRecruiter,
+        OrgID: this.OrgID,
+        JobTitle: this.jobtitle,
+        Company: this.companyname,
+        City: this.selectedCity,
+        State: this.selectedState,
+        Country: this.selectedCountry,
+        ZipCode: this.zipcode,
+        Address: this.address,
+        AreaCode: this.citycode,
+        JobDescription: this.JobDescription,
+        JobCode: this.jobcode,
+        Skills: this.skills,
+        PayRate: this.payrate,
+        PayRateTypeID: this.selectedPayType,
+        PayRateCurrencyTypeID: this.selectedCurrency,
+        PayRateTaxTermID: this.selectedTaxTerms,
+        BillRate: this.billrate,
+        BillRateTypeID: this.selectedcPayType,
+        BillRateCurrencyTypeID: this.selectedcCurrency,
+        BillRateTaxTermID: this.selectedcTaxTerms,
+        JobTypeID: this.selectedJobType,
+        LegalStatus: this.Legalstatus,
+        JobStausID: this.selectedJobStatus.JobStatusID,
+        NoOfPosition: this.numberOfPositions,
+        RespondDate: this.selectedRespondBy,
+        ClientID: this.selectedClient,
+        EndClient: this.endclient,
+        ClientJobID: this.clientjobid,
+        PriorityID: this.selectedPriority,
+        Duration: this.duration,
+        InterviewMode: this.selectedInterviewMode,
+        SecruityClearance: this.securityClearance,
+        PrimaryRecruiterID: this.selectedPrimaryRecruiter,
+        RecruitmentManagerID: this.recruitmentmanager,
+        SalesManagerID: this.salesmanager,
+        AccountManagerID: this.accountsmanager,
+        TaxTermID: this.internaltaxterms,
+        Comments: this.comments,
+        Active: type,
+        CreateBy: this.username,
+        LastUpdateBy: this.username,
+        MinYearsOfExpInMonths: this.selectedExperience * 12,
+        JobStatus: this.selectedJobStatus.Value,
+        jobboardaccount: this.selectedJobboardaccount
+      };
+
+      console.log(Req);
+      this.service.PostJob(Req).subscribe(
+        (x: any) => {
+          this.loading = false;
+          this.messageService.add({ severity: 'success', summary: 'Job Posted Successfully' });
+          this.router.navigate(['/jobpostings']);
+        },
+        (error: any) => {
+          this.messageService.add({ severity: 'danger', summary: 'Job Not Posted. Please Try Again' });
+          console.error('Error occurred:', error);
+          this.loading = false;
+        }
+      );
+    } else {
+      alert('Please Enter all Mandatory Fields');
+      this.loading = false;
+    }
+  }
+
+  JobboardSelection(data: any) {
+    if (data.Active) {
+      this.selectedJobboardaccount.push(data);
+    } else {
+      const index = this.selectedJobboardaccount.indexOf(data);
+      if (index !== -1) {
+        this.selectedJobboardaccount.splice(index, 1);
+      }
+    }
+    console.log(this.selectedJobboardaccount);
+  }
+
+  UpdateJob(type: any) {
     let Req = {
-      JobID:this.routeType,
-      City: this.selectedCity,
-      JobCode: this.jobcode,
-      Company: this.companyname,
+      RecruiterID: this.selectedPrimaryRecruiter,
+      JobID: this.routeType,
+      OrgID: this.OrgID,
       JobTitle: this.jobtitle,
+      Company: this.companyname,
+      City: this.selectedCity,
+      State: this.selectedstate,
+      Country: this.selectedCountry,
       ZipCode: this.zipcode,
       Address: this.address,
       AreaCode: this.citycode,
-      PriorityID: this.selectedPriority,
-      Duration: this.duration,
-      JobStatusID: this.selectedJobStatus,
-      JobTypeID: this.selectedJobType,
-      PayRateTypeID: this.selectedPayType,
+      JobDescription: this.JobDescription,
+      Skills: this.skills,
+      JobCode: this.jobcode,
       PayRate: this.payrate,
+      PayRateTypeID: this.selectedPayType,
       PayRateCurrencyTypeID: this.selectedCurrency,
+      PayRateTaxTermID: this.selectedTaxTerms,
+      BillRate: this.billrate,
+      BillRateTypeID: this.selectedcPayType,
+      BillRateCurrencyTypeID: this.selectedcCurrency,
+      BillRateTaxTermID: this.selectedcTaxTerms,
+      JobTypeID: this.selectedJobType,
+      LegalStatus: this.Legalstatus,
+      JobStausID: this.selectedJobStatus.JobStatusID,
+      NoOfPosition: this.numberOfPositions,
+      RespondDate: this.selectedRespondBy,
       ClientID: this.selectedClient,
       EndClient: this.endclient,
       ClientJobID: this.clientjobid,
+      PriorityID: this.selectedPriority,
+      Duration: this.duration,
       InterviewMode: this.selectedInterviewMode,
-      MinYearsOfExpInMonths: this.selectedExperience,
-      LegalStatus: this.selectedLegalstatus,
-      Skills: this.skills,
-      NoOfPosition: this.numberOfPositions,
-      TaxTermID: this.selectedTaxTerm,
+      SecruityClearance: this.securityClearance,
       PrimaryRecruiterID: this.selectedPrimaryRecruiter,
       RecruitmentManagerID: this.recruitmentmanager,
       SalesManagerID: this.salesmanager,
       AccountManagerID: this.accountsmanager,
+      TaxTermID: this.internaltaxterms,
       Comments: this.comments,
-      JobDescription: this.JobDescription,
-      ModifiedBy: this.username,
-      ModifiedOn: new Date(),
-      JobBoardAccount: this.selectedJobboardaccount,
-      SecurityClearance: this.securityClearance
+      Active: type,
+      CreateBy: this.username,
+      LastUpdateBy: this.username,
+      MinYearsOfExpInMonths: this.selectedExperience * 12,
+      JobStatus: this.selectedJobStatus.Value,
+      jobboardaccount: this.selectedJobboardaccount
     };
-    // this.service.UpdateJob(Req).subscribe((x: any) => {
-    //   if (x.result === 'success') {
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Success',
-    //       detail: 'Job updated successfully!'
-    //     });
-    //     this.router.navigate(['/jobs']);
-    //   } else {
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Error',
-    //       detail: 'Failed to update job.'
-    //     });
-    //   }
-    // });
+    console.log(Req);
 
-   console.log(Req)
+    this.service.UpdateJob(Req).subscribe((x: any) => {
+      this.loading = false;
+      this.messageService.add({ severity: 'success', summary: 'Job Updated Successfully' });
+      this.router.navigate(['/jobpostings']);
+    }, (error: any) => {
+      this.messageService.add({ severity: 'danger', summary: 'Job Not Updated. Please Try Again' });
+      console.error('Error occurred:', error);
+      this.loading = false;
+    });
   }
-
-
-
-  // selectedTab: string = 'basic-info';
-
-  // selectTab(tab: string) {
-  //   this.selectedTab = tab;
-  // }
-
-  // onContinue(nextTab: string) {
-  //   this.selectedTab = nextTab;
-  // }
-
-  // draftJob() {
-  //   console.log('Job drafted');
-  // }
-
-  // postJob() {
-  //   console.log('Job posted');
-  // }
-
-
-
 }

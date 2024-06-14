@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { request } from 'http';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-all-job-postings',
   templateUrl: './all-job-postings.component.html',
@@ -214,4 +215,18 @@ console.log(this.usertype);
   }
   
   
+  // jobs: any[] = []; // Your job list
+  selectedJob: any;
+  // noResultsFound: boolean = false;
+  isModalOpen: boolean = false;
+
+  openJobDescriptionModal(job: any) {
+    this.selectedJob = job;
+    this.isModalOpen = true;
+  }
+
+  closeJobDescriptionModal(event: Event) {
+    this.isModalOpen = false;
+  }
+
 }

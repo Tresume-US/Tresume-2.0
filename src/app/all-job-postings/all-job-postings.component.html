@@ -18,7 +18,6 @@
       <input type="text" id="searchInput" class="form-control">
     </div>
     <table>
-
       <thead>
         <tr>
           <th>Job Title</th>
@@ -35,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let job of jobs">
+        <tr *ngFor="let job of jobs" (click)="openJobDescriptionModal(job)">
           <td>{{ job.JobTitle }} {{job.JobID}}</td>
           <td>{{ job.Company }}</td>
           <td>{{ job.Location }}</td>
@@ -85,6 +84,14 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div id="jobDescriptionModal" class="modal" [ngClass]="{'show': isModalOpen}" (click)="closeJobDescriptionModal($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeJobDescriptionModal($event)">&times;</span>
+    <h4 class="modal-title">Job Description</h4>
+    <p>{{ selectedJob?.JobDescription }}</p>
   </div>
 </div>
 

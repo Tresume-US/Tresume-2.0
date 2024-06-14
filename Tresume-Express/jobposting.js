@@ -706,5 +706,40 @@ router.post('/GetJobsbyJobID', async (req, res) => {
     return res.send(result);
   }
 });
+
+
+router.post("/UpdateJob", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
+    // request.input('Id', sql.Int, req.body.Id);
+
+    const query = "UPDATE Job SET RecruiterID ='"+ req.body.RecruiterID+"', OrgID = '"+ req.body.OrgID+"', JobTitle = '"+ req.body.JobTitle+"', Company = '"+ req.body.Company+"', City = '"+ req.body.City+"', State = '"+ req.body.State+"', Country = '"+ req.body.Country+"', ZipCode = '"+ req.body.ZipCode+"', Address = '"+ req.body.Address+"', AreaCode = '"+ req.body.AreaCode+"', JobDescription = '"+ req.body.JobDescription+"', Skills = '"+ req.body.Skills+"', JobCode = '"+ req.body.JobCode+"', PayRate = '"+ req.body.PayRate+"', PayRateTypeID = '"+ req.body.PayRateTypeID+"', PayRateCurrencyTypeID = '"+ req.body.PayRateCurrencyTypeID+"',  PayRateTaxTermID = '"+ req.body.PayRateTaxTermID+"', BillRate = '"+ req.body.BillRate+"', BillRateTypeID = '"+ req.body.BillRateTypeID+"', BillRateCurrencyTypeID = '"+ req.body.BillRateCurrencyTypeID+"', BillRateTaxTermID = '"+ req.body.BillRateTaxTermID+"', JobTypeID = '"+ req.body.JobTypeID+"', LegalStatus = '"+ req.body.LegalStatus+"', NoOfPosition = '"+ req.body.NoOfPosition+"', RespondDate = '"+ req.body.RespondDate+"', ClientID = '"+ req.body.ClientID+"', EndClient = '"+ req.body.EndClient+"', ClientJobID = '"+ req.body.ClientJobID+"', PriorityID = '"+ req.body.PriorityID+"', Duration = '"+ req.body.Duration+"', InterviewMode = '"+ req.body.InterviewMode+"', SecruityClearance = '"+ req.body.SecruityClearance+"', PrimaryRecruiterID = '"+ req.body.PrimaryRecruiterID+"', RecruitmentManagerID = '"+ req.body.RecruitmentManagerID+"', SalesManagerID = '"+ req.body.SalesManagerID+"', AccountManagerID = '"+ req.body.AccountManagerID+"', TaxTermID = '"+ req.body.TaxTermID+"', Comments = '"+ req.body.Comments+"', Active = '"+ req.body.Active+"', LastUpdateBy = '"+ req.body.LastUpdateBy+"', MinYearsOfExpInMonths = '"+ req.body.MinYearsOfExpInMonths+"', JobStatus = '"+ req.body.JobStatus+"' WHERE JobID = '"+ req.body.JobID+"';"
+
+
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were Updated.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error Update status:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while Update!",
+    };
+    res.status(500).send(response);
+  }
+});
 module.exports = router;
 

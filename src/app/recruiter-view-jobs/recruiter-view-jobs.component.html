@@ -1,7 +1,7 @@
 <div class="header border">
     <div class="container">
       <div class="row main pt-3 pl-3">
-        <h2>CREATE AND POST JOB</h2>
+        <h2>EDIT JOB</h2>
       </div>
       <div class="row mt-4">
         <div class="col-md-12">
@@ -55,18 +55,18 @@
                   <div class="col-md-4">
                     <div class="form-group text-center">
                       <label for="basicinfo">Job Title *</label>
-                      <input type="text" class="form-control" id="basicinfo" [(ngModel)]="jobtitle"
-                        [ngModelOptions]="{ standalone: true }" placeholder="Ex. QA Lead *">
+                      <input type="text" class="form-control" id="jobtitle" placeholder="Ex. QA Lead *"
+                      [(ngModel)]="jobtitle" [ngModelOptions]="{ standalone: true }">
+    
+                      
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group text-center">
                       <label for="basicinfo">Country</label>
                       <select [(ngModel)]="selectedCountry" name="country" id="country" class="form-control" [ngModelOptions]="{standalone: true}">
-                        <option>USA</option>
+                        <option value="US">USA</option>
                       </select>
-
-                      
                     </div>
                   </div>
                 </div>
@@ -77,10 +77,13 @@
                     <div class="form-group text-center">
                       <label for="basicinfo">State *</label>
                       <select class="form-control" name="State" [(ngModel)]="selectedstate"
-                                  [ngModelOptions]="{standalone: true}" (change)="getCity()">
-                                  <option value="0" selected>Select State</option>
-                                  <option *ngFor="let data of state" [value]="data.state">{{ data.state }}</option>
-                              </select>
+                      [ngModelOptions]="{ standalone: true }" (change)="getCity()">
+                      <option value="0" selected>Select State</option>
+                      <option *ngIf="selectedstate" [ngValue]="selectedstate">{{selectedstate}}</option>
+                      <option *ngFor="let data of state" [value]="data.state">
+                        {{ data.state }}
+                      </option>
+                    </select>
                     </div>
                   </div>
   
@@ -98,7 +101,7 @@
                     <div class="form-group text-center">
                       <label for="basicinfo">Zipcode</label>
                       <input type="text" class="form-control" id="basicinfo" [(ngModel)]="zipcode"
-                        [ngModelOptions]="{ standalone: true }" placeholder="Ex. 98001">
+                        placeholder="Ex. 98001" [ngModelOptions]="{ standalone: true }">
                     </div>
                   </div>
                 </div>
@@ -249,12 +252,11 @@
                   <div class="col-md-4">
                     <div class="form-group text-center">
                       <label class="post_jobs_contant post_jobs_font_clr">Job Status *</label>
-                      <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control" (change)="onJobStatusChange($event.target.value)">
+                      <!-- <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control" (change)="onJobStatusChange($event.target.value)"></select> -->
+                      <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control">
                         <option value="">Select</option>
-                        <option *ngFor="let option of jobStatusOptions" [value]="option.Value">{{ option.Value }}</option>
+                        <option *ngFor="let option of jobStatusOptions" [value]="option.JobStausID">{{ option.Value }}</option>
                       </select>
-                      
-                      
                     </div>
                   </div>
                 </div>
@@ -388,7 +390,7 @@
                         <select name="JobStatus" id="JobStatus"
                           class="form-control" [(ngModel)]="selectedPrimaryRecruiter" [ngModelOptions]="{ standalone: true }">
                           <option value="">Select Primary recruiter</option>
-                          <option *ngFor="let option of RecruiterStatusOptionsons" [value]="option.TraineeID">{{ option.FirstName}} {{option.LastName}}</option>
+                          <option *ngFor="let option of RecruiterStatusOptions" [value]="option.TraineeID">{{ option.FirstName}} {{option.LastName}}</option>
                         </select>
                       </div>
                     </div>
