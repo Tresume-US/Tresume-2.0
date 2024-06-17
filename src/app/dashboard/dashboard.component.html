@@ -3,9 +3,11 @@
         <div class="row main pt-3 pl-3">
             <h2>DASHBOARD</h2>
         </div>
-        <section class="content mt-3">
-            <div class="ATS">
-                <h3>ATS</h3>
+        <section class="content mt-3" *ngIf="UserRole == 1">
+            <div class="ATS" *ngIf="checkFullAccess(2)">
+                <h3
+                    style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
+                    ATS</h3>
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
                         <div class="card mb-3" style="background-color: #bcdefb;">
@@ -43,8 +45,8 @@
             </div>
         </section>
         <!-- HRMS -->
-        <section>
-            <div class="row">
+        <section *ngIf="UserRole == 1">
+            <div class="row" *ngIf="checkFullAccess(2)">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -62,13 +64,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <div *ngIf="loading">Loading...</div> <!-- Show loading indicator while fetching data -->
-                                        <canvas *ngIf="!loading" baseChart
-                                        [datasets]="chartData"
-                                        [labels]="chartLabels"
-                                        [legend]="true"
-                                        [chartType]="chartType"
-                                        [colors]="chartColors"> 
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="chartData" [labels]="chartLabels"
+                                            [legend]="true" [chartType]="chartType" [colors]="chartColors">
                                         </canvas>
                                     </div>
                                 </div>
@@ -111,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="checkFullAccess(2)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -130,11 +128,8 @@
                                     </div>
                                     <div class="col-md-12 text-center">
                                         <div *ngIf="loading">Loading...</div>
-                                        <canvas *ngIf="!loading" baseChart
-                                            [datasets]="dsrChartData"
-                                            [labels]="dsrChartLabels"
-                                            [legend]="true"
-                                            [chartType]="barChartType"
+                                        <canvas *ngIf="!loading" baseChart [datasets]="dsrChartData"
+                                            [labels]="dsrChartLabels" [legend]="true" [chartType]="chartType"
                                             [colors]="dsrChartColors">
                                         </canvas>
                                     </div>
@@ -177,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="checkFullAccess(2)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -196,11 +191,11 @@
                                     </div>
                                     <div class="col-md-12 data-container">
                                         <div *ngIf="loading">Loading...</div>
-                                        <canvas id="interviewChart" baseChart [datasets]="interviewChartData" 
-                                        [labels]="interviewChartLabels" [chartType]="doughnutChartType" 
-                                        [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                        <canvas id="interviewChart" baseChart [datasets]="interviewChartData"
+                                            [labels]="interviewChartLabels" [chartType]="doughnutChartType"
+                                            [options]="interviewChartOptions" [colors]="interviewChartColors">
                                         </canvas>
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -230,20 +225,20 @@
                                     </tr>
                                 </tbody>
                             </table>
-                    </div>
-                    <div class="card-footer text-center">
-                        <button class="btn btn-primary"
-                            style="background-color: #000000; width: 100%; border: none;color: white;"
-                            (click)="routeLinks('interviews')">View More</button>
-                    </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('interviews')">View More</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="checkFullAccess(2)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
-                            <h3 class="card-title title-font">Placements</h3>
+                            <h3 class="card-title title-font">Placements <i class="fa fa-info-circle" style="font-size: 13px;" aria-hidden="true" title="Tap the color bar to view your chosen candidates!"></i></h3>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
@@ -256,23 +251,12 @@
                                             <div class=""></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 text-center">
-                                        <div class="col-md-12 data-container">
-                                            <div *ngIf="loading">Loading...</div>
-                                            <!-- <canvas baseChart [datasets]="placementChartData" [labels]="placementChartLabels"
-                                            [options]="interviewChartOptions" [chartType]="doughnut" [colors]="interviewChartColors">
-                                            </canvas> -->
-                                            <canvas id="interviewChart" baseChart [datasets]="PChartData" 
-                                          [labels]="PChartLabels" [chartType]="doughnutChartType" 
-                                          [options]="interviewChartOptions" [colors]="interviewChartColors">
-                                          </canvas>
-                                          </div>
-                                          <!-- <div *ngIf="loading">Loading...</div>
-                                          <canvas id="interviewChart" baseChart [datasets]="interviewChartData" 
-                                          [labels]="interviewChartLabels" [chartType]="doughnutChartType" 
-                                          [options]="interviewChartOptions" [colors]="interviewChartColors">
-                                          </canvas>
-                                        </div> -->
+                                    <div class="col-md-12 data-container">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas id="interviewChart" baseChart [datasets]="PChartData"
+                                            [labels]="PChartLabels" [chartType]="doughnutChartType"
+                                            [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                        </canvas>
                                     </div>
                                 </div>
                             </div>
@@ -292,8 +276,6 @@
                                     <th scope="col">Placement Count</th>
                                 </tr>
                             </thead>
-
-
                         </table>
                         <div class="table-scroll">
                             <table class="table text-center">
@@ -314,13 +296,14 @@
                     </div>
 
                 </div>
-
             </div>
         </section>
         <!-- JB -->
-        <section class="content mt-3">
-            <div class="ATS">
-                <h3>Job Boards</h3>
+        <section class="content mt-3" *ngIf="UserRole == 1">
+            <div class="ATS" *ngIf="checkFullAccess(1)">
+                <h3
+                    style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
+                    Job Boards</h3>
                 <div class="row">
                     <div class="col-md-4 col-sm-6 d-flex justify-content-center">
                         <div class="card mb-3"
@@ -330,7 +313,7 @@
                                 <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
+                                <h4 class="card-title" style="text-align: center;">157</h4>
                             </div>
                         </div>
                     </div>
@@ -343,7 +326,7 @@
                                         class="fas fa-briefcase"></i></h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
+                                <h4 class="card-title" style="text-align: center;">254</h4>
                             </div>
                         </div>
                     </div>
@@ -356,14 +339,15 @@
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">0</h4>
+                                <h4 class="card-title" style="text-align: center;">199</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- <section>
+
+        <section *ngIf="checkFullAccess(1)">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
@@ -383,19 +367,52 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
-                                            [chartType]="doughnutChartType" [options]="chartOptions"
-                                            [colors]="chartColors">
-                                        </canvas>
+                                        <div class="col-md-12 text-center">
+                                            <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                                [chartType]="doughnutChartType" [options]="chartOptions"
+                                                [colors]="chartColors">
+                                            </canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="card-footer bg-light p-0">
                         </div>
                     </div>
+
                 </div>
                 <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Dice Used Count</th>
+                                    <th scope="col">Divison Name</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of Dicedata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.diceused }}</td>
+                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -417,7 +434,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                        <canvas baseChart [data]="CBChartData" [labels]="CBChartLabels"
                                             [chartType]="doughnutChartType" [options]="chartOptions"
                                             [colors]="chartColors">
                                         </canvas>
@@ -430,6 +447,35 @@
                     </div>
                 </div>
                 <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">CB Used Count</th>
+                                    <th scope="col">Divison Name</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of CBdata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.cbused }}</td>
+                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -451,7 +497,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                        <canvas baseChart [data]="MonsterChartData" [labels]="MonsterChartLabels"
                                             [chartType]="doughnutChartType" [options]="chartOptions"
                                             [colors]="chartColors">
                                         </canvas>
@@ -464,427 +510,488 @@
                     </div>
                 </div>
                 <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Monster Used Count</th>
+                                    <th scope="col">Divison Name</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of Monsterdata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.monsterused }}</td>
+                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </section> -->
-    </div>
-</div>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-
-<!-- <div class="container-fluid">
+        </section>
+        <!-- user data -->
+        <section class="content mt-3" *ngIf="UserRole == 2">
+            <div class="ATS" *ngIf="checkFullAccess(1)">
+                <h3
+                    style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
+                    ATS</h3>
                 <div class="row">
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box box-color">
-                            <div class="inner">
-                                <h3>{{totalFTC}}</h3>
-
-                                <p>Total FTC</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
-                            </div>
-                            <a routerLink="/reports" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box box-color">
-                            <div class="inner">
-                                <h3>{{totalSubmissions}}</h3>
-
-                                <p>Total Submissions</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="https://tresume.us/Report1.aspx" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-6">
-                        <div class="small-box box-color">
-                            <div class="inner">
-                                <h3>{{totalInterviews}}</h3>
-
-                                <p>Total Interviews</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="https://tresume.us/Report1.aspx" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div *ngIf="!hideFTCFields" class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Total FTC</h3>
-                                <div class="card-tools">
-                                    <div class="btn-group" dropdown>
-                                        <button id="button-animated" dropdownToggle type="button"
-                                            class="btn btn-primary dropdown-toggle card-action-button" bsDaterangepicker
-                                            [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
-                                            (bsValueChange)="onValueChange($event,1)">
-                                            <i class="far fa-calendar-alt"></i> <span class="caret"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcdefb;">
+                            <div class="card-header">Total FTC</div>
                             <div class="card-body">
-
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
-                                                [chartType]="doughnutChartType" [options]="chartOptions"
-                                                [colors]="chartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
+                                <h4 class="card-title">0</h4>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="!hidePlacementFields" class="col-lg-4">
-
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Placements</h3>
-                                <div class="card-tools">
-                                    <div class="btn-group" dropdown>
-                                        <button id="button-animated" dropdownToggle type="button"
-                                            class="btn btn-primary dropdown-toggle card-action-button" bsDaterangepicker
-                                            [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
-                                            (bsValueChange)="onValueChange($event,2)">
-                                            <i class="far fa-calendar-alt"></i> <span class="caret"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #f3bcfb;">
+                            <div class="card-header">Total Submission</div>
                             <div class="card-body">
-
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [datasets]="barChartData1" [labels]="barChartLabels"
-                                                [options]="barChartOptions" [plugins]="barChartPlugins"
-                                                [legend]="barChartLegend" [chartType]="barChartType"
-                                                [colors]="barchartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
+                                <h4 class="card-title">0</h4>
                             </div>
                         </div>
-
                     </div>
-                    <div *ngIf="!hideBenchFields" class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Total Bench</h3>
-                                <div class="card-tools">
-                                    <div class="btn-group" dropdown>
-                                        <button id="button-animated" dropdownToggle type="button"
-                                            class="btn btn-primary dropdown-toggle card-action-button" bsDaterangepicker
-                                            placement="left"
-                                            [bsConfig]="{ ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
-                                            (bsValueChange)="onValueChange($event,3)">
-                                            <i class="far fa-calendar-alt"></i> <span class="caret"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcfbc2;">
+                            <div class="card-header">Total Interview</div>
                             <div class="card-body">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="doughnutBenchChartData"
-                                                [labels]="doughnutBenchChartLabels" [chartType]="doughnutChartType"
-                                                [options]="chartOptions" [colors]="chartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h4 class="card-title">0</h4>
                             </div>
-                            <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card mb-3" style="background-color: #bcdefb;">
+                            <div class="card-header">Total Placements</div>
+                            <div class="card-body">
+                                <h4 class="card-title">0</h4>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div *ngIf="!hideLegalFields" class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Legal Status</h3>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
+            </div>
+        </section>
+        <!-- HRMS -->
+        <section *ngIf="UserRole == 2">
+            <div class="row" *ngIf="checkFullAccess(2)">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">FTC </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
                                         </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [datasets]="legalChartData" [labels]="legalChartLabels"
-                                                [options]="legalChartOptions" [plugins]="barChartPlugins"
-                                                [legend]="barChartLegend" [chartType]="barChartType1"
-                                                [colors]="barchartColors">
-                                            </canvas>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="FTCchartData"
+                                            [labels]="FTCchartLabels" [legend]="true" [chartType]="chartType"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
                             </div>
                         </div>
-
-                    </div>
-                    <div *ngIf="!hideInterviewsFields" class="col-lg-4">
-
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Interviews</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels"
-                                                [options]="interviewChartOptions1" [plugins]="barChartPlugins"
-                                                [legend]="lineChartLegend" [chartType]="barChartType"
-                                                [colors]="InterviewchartColors">
-                                            </canvas>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div *ngIf="!hideSubmissionsFields" class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Submissions</h3>
-                                <div class="card-tools">
-                                    <div class="btn-group" dropdown>
-                                        <button id="button-animated" dropdownToggle type="button"
-                                            class="btn btn-primary dropdown-toggle card-action-button" bsDaterangepicker
-                                            placement="left"
-                                            [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
-                                            (bsValueChange)="onValueChange($event,6)">
-                                            <i class="far fa-calendar-alt"></i> <span class="caret"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="doughnutSubChartData"
-                                                [labels]="doughnutSubChartLabels" [chartType]="doughnutChartType"
-                                                [options]="chartOptions" [colors]="chartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
-
-                            </div>
+                        <div class="card-footer bg-light p-0">
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">H1B Compliance</h3>
-                                <div class="card-tools">
-                                    <a class="btn btn-info bg-light" (click)="compReportMore()"><span class="badge">View
-                                            More</span></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DSR</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="!loading">
+                                            <div style="display: block;">
+                                                <canvas baseChart [datasets]="DSRchartDatas" [labels]="DSRchartLabelss"
+                                                    [options]="lineChartOptions" [colors]="lineChartColors"
+                                                    [legend]="lineChartLegend" [chartType]="lineChartType"
+                                                    [plugins]="lineChartPlugins">
+                                                </canvas>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="complianceChartData"
-                                                [labels]="complianceChartLabels" [chartType]="doughnutChartType"
-                                                [options]="complianceChartOptions" [colors]="chartColors">
-                                            </canvas>
+                                        <div *ngIf="loading">
+                                            <p>Loading...</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
                             </div>
                         </div>
-                    </div>
-                    <div *ngIf="!hideFTCFields" class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Job Boards Usage
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="jobBoardChartData" [labels]="jobBoardChartLabels"
-                                                [chartType]="doughnutChartType" [options]="chartOptions"
-                                                [colors]="chartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">Job Req Assignment
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="col-md-12">
-                                    <div class="chart-responsive">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
-                                                [chartType]="doughnutChartType" [options]="chartOptions"
-                                                [colors]="chartColors">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light p-0">
-                            </div>
+                        <div class="card-footer bg-light p-0">
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header center">
-                                <h3 class="card-title title-font">H1B Expiry</h3>
-                                <div class="card-tools">
-
-                                    <a class="btn btn-info bg-light" (click)="expiryReportMore()"><span
-                                            class="badge">View
-                                            More</span></a>
+            </div>
+            <div class="row" *ngIf="checkFullAccess(2)">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Interviews</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 data-container">
+                                        <div *ngIf="!loading">
+                                            <div style="display: block;">
+                                                <canvas baseChart [datasets]="InterviewchartData"
+                                                    [labels]="InterviewchartLabels" [options]="lineChartOptions"
+                                                    [colors]="lineChartColors" [legend]="lineChartLegend"
+                                                    [chartType]="chartType" [plugins]="lineChartPlugins">
+                                                </canvas>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="loading">
+                                            <p>Loading...</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h3>H1B Expiring in 30 days</h3>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Expiry Date</th>
-                                            <th class="center">Days to Expire</th>
-                                        </tr>
-                                    </thead>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Placements</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div class="col-md-12 data-container">
+                                            <div class="col-md-12 data-container">
+                                                <div *ngIf="!loading">
+                                                    <div style="display: block;">
+                                                        <canvas baseChart [datasets]="PlacementschartData"
+                                                            [labels]="PlacementchartLabels" [options]="lineChartOptions"
+                                                            [colors]="lineChartColors" [legend]="lineChartLegend"
+                                                            [chartType]="chartType" [plugins]="lineChartPlugins">
+                                                        </canvas>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="loading">
+                                                    <p>Loading...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Super Admin -->
+        <section *ngIf="UserRole == 3">
+            <div class="row" *ngIf="checkFullAccess(3)">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">FTC</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="chartData" [labels]="chartLabels"
+                                            [legend]="true" [chartType]="chartType" [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Recruiter Name</th>
+                                        <th scope="col">Ftc Count</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="table-scroll">
+                                <table class="table text-center">
                                     <tbody>
-                                        <tr *ngFor="let employee of h1bexpcurrentMonth">
-                                            <td>{{employee.Name}}</td>
-                                            <td>
-                                                {{employee.ExpiryDate}}
-                                            </td>
-                                            <td class="center"><span
-                                                    class="badge bg-danger">{{employee.DaysToExpire}}</span></td>
+                                        <tr *ngFor="let recruiter of adminFtcData;let i=index">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{ recruiter.Recruiter }}</td>
+                                            <td>{{ recruiter.RecruiterCount }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="card-footer bg-light p-0">
-                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('ftc')">View More</button>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            <div class="row" *ngIf="checkFullAccess(3)">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DSR</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="dsrChartData"
+                                            [labels]="dsrChartLabels" [legend]="true" [chartType]="chartType"
+                                            [colors]="dsrChartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">DSR Count</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminDsrData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.Marketer }}</td>
+                                        <td>{{ recruiter.SubmissionCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('dsr')">View More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="checkFullAccess(3)">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Interviews</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 data-container">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas id="interviewChart" baseChart [datasets]="interviewChartData"
+                                            [labels]="interviewChartLabels" [chartType]="doughnutChartType"
+                                            [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">Interview Count</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminInterviewData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.Recruiter }}</td>
+                                        <td>{{ recruiter.InterviewCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('interviews')">View More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="checkFullAccess(3)">
+                <div *ngIf="!hideInterviewsFields" class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Placements <i class="fa fa-info-circle" style="font-size: 13px;" aria-hidden="true" title="Tap the color bar to view your chosen candidates!"></i></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 data-container">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas id="interviewChart" baseChart [datasets]="PChartData"
+                                            [labels]="PChartLabels" [chartType]="doughnutChartType"
+                                            [options]="interviewChartOptions" [colors]="interviewChartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Marketer Name</th>
+                                    <th scope="col">Placement Count</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="table-scroll">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of adminPlacementData;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{ recruiter.MarketerName }}</td>
+                                        <td>{{ recruiter.MarketerCount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary"
+                                style="background-color: #000000; width: 100%; border: none;color: white;"
+                                (click)="routeLinks('placements')">View More</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
