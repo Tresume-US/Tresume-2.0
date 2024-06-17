@@ -1,291 +1,294 @@
-<nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
-  <a routerLink="/homelanding" class="navbar-brand">
-      <img src="../assets/img/logo.png" style="height: 90px;" alt="">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
-      <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Products
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
-                  <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
-                  <a class="dropdown-item" routerLink="/workforce">Workforce</a>
-                  <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+<section id="team">
+  <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
+    <a routerLink="/homelanding" class="navbar-brand">
+        <img src="../assets/img/logo.png" style="height: 90px;" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+            </li>
+            <li class="nav-item ">
+              <a href="login" class="nav-link login-btn-mobile">Login</a>
+            </li>
+  
+            <li class="nav-item ">
+              <a class=" login-btn-web bn5" style="margin: 0;" routerLink="/login">Login</a>
+  
+            </li>
+        </ul>
+    </div>
+  </nav>
+  <div class="background-video video-container">
+    <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
+      <source src="../../../assets/videos/product.mp4" type="video/mp4">
+    </video>
+    <div style="width: 100%;" class="content-over-video overlay">
+      <h1 id="welcomeText" style="background-color: #a24f9a91; height: 111px; padding-top: 33px; font-size: 54px; color: white; font-weight: 500;font-family: 'Times New Roman', Times, serif;">
+        <span class="space">WELCOME</span>
+        <span class="space">TO</span>
+        <span class="space">OUR</span>
+        <span class="space">TALENT</span>
+        <span class="space">SUITE</span>
+      </h1>
+    </div>
+  </div>
+  
+  <!-- workforce.component.html -->
+  <br><br>
+  <div class="times">
+  <div class="container">
+    <!-- fisrt -->
+    <!-- 1 -->
+    <div class="row">
+      <!-- Left Side (40%) -->
+      <div class="col-md-6">
+        <div class="text-content" >
+          <h1 style="font-size: 35px; font-weight: bold; line-height: 41px;font-family: 'Times New Roman', Times, serif;"> Recruiting reimagined, results redefined.</h1>
+          <br><br>
+          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;font-family: 'Times New Roman', Times, serif;">
+            Tresume Talent Suite combines the power of our robust features and solutions into a unified
+            platform that enables organizations to unleash their full potential in talent management.
+          </h5>
+          <br><br>
+          <div class="button-group">
+            <a  routerLink="/login"><button class="bn632-hover bn24">Book a Demo</button></a>
+            <a  routerLink="/login"><button class="bn632-hover bn24">Start Free Trial</button></a>
+          </div>
+        </div>
+      </div>
+      <!-- Right Side (60%) -->
+      <div class="col-md-6">
+        <img src="../../../assets/img/talentbench.jpg" alt="Workforce Image" style="max-width: 130%; height: 80%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;" >
+      </div>
+    </div>
+    <!-- 2 -->
+    <br><br>
+    <h2 class="text-center tittle" style="font-family:'Times New Roman', Times, serif;">Key Features And Benefits</h2>
+    <span class="animate-border mr-auto ml-auto mb-4"></span>
+    <br><br>
+    <!-- second -->
+    <div class="container">
+    <div class="row">
+      <!-- Left Side (40%) --> 
+      <div class="col-md-6">
+        <img src="../../../assets/img/doci.jpg" alt="Workforce Image" class="img-change" style="max-width: 106%; height: 98%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;" >
+      </div>
+      <!-- Right Side (60%) -->
+      <div class="col-md-6">
+        <div class="text-content-c" style="margin-left: 6rem;">
+          <h1 style="font-size: 40px; font-weight: bold;font-family:'Times New Roman', Times, serif;">Centralized Platform</h1>
+          <br><br>
+          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;font-family:'Times New Roman', Times, serif;">
+            With Tresume Talent Suite, access all our solutions and features from a single, user-friendly
+            platform. Streamline your HR processes, save time, and improve productivity with an integrated talent
+            management system.
+          </h5>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+    <hr>
+    <div class="row" style="margin-top: 15px;">
+      <!-- Left Side (40%) -->
+      <div class="col-md-6">
+        <div class="text-content">
+          <h1 style="font-size: 35px; font-weight: bold;margin-top: 3rem;font-family:'Times New Roman', Times, serif;">Scalability and Customization</h1>
+          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;font-family:'Times New Roman', Times, serif;">
+            Whether you're a small business or an enterprise, Tresume Talent Suite offers scalability to meet your
+            organization's growing needs. Customize your talent management workflows, reports, and configurations
+            to align with your unique requirements.
+          </h5>
+        </div>
+      </div>
+      <!-- Right Side (60%) -->
+      <div class="col-md-6">
+        <img src="../../../assets/img/general.png" alt="Workforce Image" style="max-width: 130%; height: 80%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;">
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <!-- Left Side (40%) -->
+      <div class="col-md-6">
+        <img src="../../../assets/img/dashboard.jpg" alt="Workforce Image" style="max-width: 114%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75); height: 90%;border-radius:20px;">
+      </div>
+      <!-- Right Side (60%) -->
+      <div class="col-md-6">
+        <div class="text-content-c" style="margin-left: 6rem;">
+          <h1 style="font-size: 40px; font-weight: bold;font-family:'Times New Roman', Times, serif;">Data-Driven Insights</h1>
+          <br><br>
+          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;font-family:'Times New Roman', Times, serif;">
+            Make informed decisions with our powerful analytics and reporting capabilities. Gain valuable insights
+            into your talent acquisition metrics, workforce performance, and other key HR indicators, empowering
+            you to continuously optimize your strategies.
+          </h5>
+          <br><br>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div class="row" style="margin-top: 15px;">
+      <!-- Left Side (40%) -->
+      <div class="col-md-6">
+        <div class="text-content">
+          <h1 style="font-size: 35px; font-weight: bold;font-family:'Times New Roman', Times, serif;">User-Friendly Interface</h1>
+          <br><br>
+          <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;font-family:'Times New Roman', Times, serif;">
+            Keep track of the onboarding progress for each candidate with our intuitive task tracking
+            system. HR teams can easily monitor the status of document collection, track completion
+            rates, and identify any outstanding items.
+          </h5>
+          <br><br>
+        </div>
+      </div>
+      <!-- Right Side (60%) -->
+      <div class="col-md-6">
+        <img src="../../../assets/img/ui.png" alt="Workforce Image" style="max-width: 130%; height: 80%;border-radius:20px;box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);">
+      </div>
+    </div>
+  </div>
+  </div>
+  </section>
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-cta pt-5 ">
+        <div class="row">
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="cta-text">
+                <h4>Find us</h4>
+                <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+                </span>
               </div>
-          </li>
-          <li class="nav-item active">
-              <a class="nav-link" routerLink="/market">Marketplace</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/features">Features</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/about">About</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/contact">Contact Us</a>
-          </li>
-          <li class="nav-item ">
-            <a href="login" class="nav-link login-btn-mobile">Login</a>
-          </li>
-
-          <li class="nav-item ">
-            <a class=" login-btn-web bn5" style="margin: 0;" routerLink="/login">Login</a>
-
-          </li>
-      </ul>
-  </div>
-</nav>
-<div class="background-video video-container">
-  <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
-    <source src="../../../assets/videos/product.mp4" type="video/mp4">
-  </video>
-  <div style="width: 100%;" class="content-over-video overlay">
-    <h1 id="welcomeText" style="background-color: #a24f9a91; height: 111px; padding-top: 33px; font-size: 54px; color: white; font-weight: 500;">
-      <span>WELCOME</span>
-      <span class="space">TO</span>
-      <span class="space">OUR</span>
-      <span class="space">TALENT</span>
-      <span class="space">SUITE</span>
-    </h1>
-  </div>
-</div>
-
-<!-- workforce.component.html -->
-<br><br>
-<div class="container">
-  <!-- fisrt -->
-  <!-- 1 -->
-  <div class="row">
-    <!-- Left Side (40%) -->
-    <div class="col-md-6">
-      <div class="text-content">
-        <h1 style="font-size: 35px; font-weight: bold; line-height: 41px;"> Recruiting reimagined, results redefined.</h1>
-        <br><br>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;">
-          Tresume Talent Suite combines the power of our robust features and solutions into a unified
-          platform that enables organizations to unleash their full potential in talent management.
-        </h5>
-        <br><br>
-        <div class="button-group">
-          <a  routerLink="/login"><button class="bn632-hover bn24">Book a Demo</button></a>
-          <a  routerLink="/login"><button class="bn632-hover bn24">Start Free Trial</button></a>
-        </div>
-      </div>
-    </div>
-    <!-- Right Side (60%) -->
-    <div class="col-md-6">
-      <img src="../../../assets/img/talentbench.jpg" alt="Workforce Image" style="max-width: 130%; height: 80%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;">
-    </div>
-  </div>
-  <!-- 2 -->
-  <br><br>
-  <h2 class="text-center tittle">Key Features And Benefits</h2>
-  <span class="animate-border mr-auto ml-auto mb-4"></span>
-  <br><br>
-  <!-- second -->
-  <div class="container">
-  <div class="row">
-    <!-- Left Side (40%) -->
-    <div class="col-md-6">
-      <img src="../../../assets/img/doci.jpg" alt="Workforce Image" style="max-width: 106%; height: 98%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;">
-    </div>
-    <!-- Right Side (60%) -->
-    <div class="col-md-6">
-      <div class="text-content" style="margin-left: 6rem;">
-        <h1 style="font-size: 40px; font-weight: bold;">Centralized Platform</h1>
-        <br><br>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;">
-          With Tresume Talent Suite, access all our solutions and features from a single, user-friendly
-          platform. Streamline your HR processes, save time, and improve productivity with an integrated talent
-          management system.
-        </h5>
-        <br>
-      </div>
-    </div>
-  </div>
-</div>
-  <hr>
-  <div class="row" style="margin-top: 15px;">
-    <!-- Left Side (40%) -->
-    <div class="col-md-6">
-      <div class="text-content">
-        <h1 style="font-size: 35px; font-weight: bold;margin-top: 3rem;">Scalability and Customization</h1>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;">
-          Whether you're a small business or an enterprise, Tresume Talent Suite offers scalability to meet your
-          organization's growing needs. Customize your talent management workflows, reports, and configurations
-          to align with your unique requirements.
-        </h5>
-      </div>
-    </div>
-    <!-- Right Side (60%) -->
-    <div class="col-md-6">
-      <img src="../../../assets/img/general.png" alt="Workforce Image" style="max-width: 130%; height: 80%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);border-radius:20px;">
-    </div>
-  </div>
-  <br><br>
-  <div class="row">
-    <!-- Left Side (40%) -->
-    <div class="col-md-6">
-      <img src="../../../assets/img/dashboard.jpg" alt="Workforce Image" style="max-width: 114%; box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75); height: 90%;border-radius:20px;">
-    </div>
-    <!-- Right Side (60%) -->
-    <div class="col-md-6">
-      <div class="text-content" style="margin-left: 6rem;">
-        <h1 style="font-size: 40px; font-weight: bold;">Data-Driven Insights</h1>
-        <br><br>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;">
-          Make informed decisions with our powerful analytics and reporting capabilities. Gain valuable insights
-          into your talent acquisition metrics, workforce performance, and other key HR indicators, empowering
-          you to continuously optimize your strategies.
-        </h5>
-        <br><br>
-      </div>
-    </div>
-  </div>
-  <br><br>
-  <div class="row" style="margin-top: 15px;">
-    <!-- Left Side (40%) -->
-    <div class="col-md-6">
-      <div class="text-content">
-        <h1 style="font-size: 35px; font-weight: bold;">User-Friendly Interface</h1>
-        <br><br>
-        <h5 style="letter-spacing: 2px; font-size: 15px; text-align: justify;">
-          Keep track of the onboarding progress for each candidate with our intuitive task tracking
-          system. HR teams can easily monitor the status of document collection, track completion
-          rates, and identify any outstanding items.
-        </h5>
-        <br><br>
-      </div>
-    </div>
-    <!-- Right Side (60%) -->
-    <div class="col-md-6">
-      <img src="../../../assets/img/ui.png" alt="Workforce Image" style="max-width: 130%; height: 80%;border-radius:20px;box-shadow: 6px 6px 10px -2px rgba(0,0,0,0.75);">
-    </div>
-  </div>
-</div>
-
-
-<footer class="footer-section">
-  <div class="container">
-    <div class="footer-cta pt-5 ">
-      <div class="row">
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fas fa-map-marker-alt"></i>
-            <div class="cta-text">
-              <h4>Find us</h4>
-              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
-              </span>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <div class="cta-text">
+                <h4>Call us</h4>
+                <span>(703)9863350</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <div class="cta-text">
+                <h4>Mail us</h4>
+                <span>nithya@tresume.us</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fa fa-phone" aria-hidden="true"></i>
-            <div class="cta-text">
-              <h4>Call us</h4>
-              <span>(703)9863350</span>
+      </div>
+      <div class="footer-content pt-5 pb-1">
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 mb-50">
+            <div class="footer-widget">
+              <div class="footer-logo">
+                <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+              </div>
+              <div class="footer-text">
+                <p>With the right ATS recruiting system, you can increase the number of placements and grow your
+                  business.
+                  Tresume advanced recruit analytics helps you back up all your presentations with data. Create
+                  forecast
+                  for next quarter and keep track of important metrics.</p>
+              </div>
+              <div class="footer-social-icon">
+                <span>Follow us</span>
+                <ul class="social_icon">
+                  <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
+                  <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
+                  <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-            <div class="cta-text">
-              <h4>Mail us</h4>
-              <span>nithya@tresume.us</span>
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+            <div class="footer-widget">
+              <div class="footer-widget-heading">
+                <h3>Useful Links</h3>
+              </div>
+              <ul>
+                <li><a routerLink="/about"  href="#">About Us</a></li>
+                <li><a routerLink="/market" href="#">Marketplace</a></li>
+                <li><a routerLink="/features" href="#">Features</a></li>
+                <li><a routerLink="/contact" href="#">Contact us</a></li>
+                <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+                <li><a routerLink="/timesheet">TimeSheet</a></li>
+                <li><a  routerLink="/ats">ATS</a></li>
+                <li><a routerLink="/talent-suite">Talent Suite</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+            <div class="footer-widget">
+              <div class="footer-widget-heading">
+                <h3>Subscribe</h3>
+              </div>
+              <div class="footer-text mb-25">
+                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+              </div>
+              <div class="subscribe-form">
+                <form action="#" >
+                  <li style="text-align: center;font-size: 22px;"><a routerLink="/contact" style="color: white; font-weight: bold;">Contact us</a></li>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer-content pt-5 pb-1">
-      <div class="row">
-        <div class="col-xl-4 col-lg-4 mb-50">
-          <div class="footer-widget">
-            <div class="footer-logo">
-              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+    <div class="copyright-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+            <div class="copyright-text">
+              <p>Copy Rights 2023 TResume</p>
             </div>
-            <div class="footer-text">
-              <p>With the right ATS recruiting system, you can increase the number of placements and grow your
-                business.
-                Tresume advanced recruit analytics helps you back up all your presentations with data. Create
-                forecast
-                for next quarter and keep track of important metrics.</p>
-            </div>
-            <div class="footer-social-icon">
-              <span>Follow us</span>
-              <ul class="social_icon">
-                <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
-                <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+          </div>
+          <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+            <div class="footer-menu">
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Policy</a></li>
+                <li><a href="#">Contact</a></li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-          <div class="footer-widget">
-            <div class="footer-widget-heading">
-              <h3>Useful Links</h3>
-            </div>
-            <ul>
-              <li><a routerLink="/about"  href="#">About Us</a></li>
-              <li><a routerLink="/market" href="#">Marketplace</a></li>
-              <li><a routerLink="/features" href="#">Features</a></li>
-              <li><a routerLink="/contact" href="#">Contact us</a></li>
-              <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
-              <li><a routerLink="/timesheet">TimeSheet</a></li>
-              <li><a  routerLink="/ats">ATS</a></li>
-              <li><a routerLink="/talent-suite">Talent Suite</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-          <div class="footer-widget">
-            <div class="footer-widget-heading">
-              <h3>Subscribe</h3>
-            </div>
-            <div class="footer-text mb-25">
-              <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
-            </div>
-            <div class="subscribe-form">
-              <form action="#" >
-                <li style="text-align: center;font-size: 22px;"><a routerLink="/contact" style="color: white; font-weight: bold;">Contact us</a></li>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-  <div class="copyright-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-          <div class="copyright-text">
-            <p>Copy Rights 2023 TResume</p>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-          <div class="footer-menu">
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Policy</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+  </footer>
+  

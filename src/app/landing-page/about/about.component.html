@@ -1,311 +1,366 @@
-<nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
-  <a routerLink="/homelanding" class="navbar-brand">
-      <img src="../assets/img/logo.png" style="height: 90px;" alt="">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
-      <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Products
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
-                  <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
-                  <a class="dropdown-item" routerLink="/workforce">Workforce</a>
-                  <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
-              </div>
-          </li>
-          <li class="nav-item active">
-              <a class="nav-link" routerLink="/market">Marketplace</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/features">Features</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/about">About</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/contact">Contact Us</a>
-          </li>
-          <li class="nav-item ">
-            <a href="login" class="nav-link login-btn-mobile">Login</a>
-          </li>
-
-          <li class="nav-item ">
-            <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
-
-          </li>
-      </ul>
-  </div>
-</nav>
-
-
-<div class="background-video video-container">
-  <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
-    <source src="../../../assets/videos/pixel.mp4" type="video/mp4">
-  </video>
-  <div style="width: 100%;" class="content-over-video overlay">
-    <h1 id="welcomeText" style="background-color: #a24f9a91; height: 111px; padding-top: 33px; font-size: 54px; color: white !important; font-weight: 500 !important;">
-      <!-- HTML -->
-      <h1 id="aboutTresume">
-        <span class="space">ABOUT</span>
-        <span class="space">TRESUME</span>
-      </h1>
-    </h1>
-  </div>
-</div>
-
-
-  <br>
-  <br>
-  <br>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 style="color: purple;">About Tresume Connecting Talent with Opportunity </h1>
-          <p class="description">At Tresume, we believe that finding the right job or hiring the perfect candidate shouldn't be a daunting task. Our mission is to simplify and streamline the recruitment process by providing a cutting-edge platform that connects talent with opportunity. With a focus on innovation, efficiency, and personalized service, we are revolutionizing the way businesses and job seekers connect.</p>
-        </div>
-        <div class="col-md-6 scrolling-image">
-          <img src="../../../assets/img/Talent.jpg" alt="Tresume Image">
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <img src="../../../assets/img/comitment.jpg" alt="Tresume Image" style=" width: 96%;
-          height: 100%;
-          transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
-        </div>
-        <div class="col-md-6">
-          <p>
-          <h1 style=" color: purple;">About
-            Our Commitment to
-            Excellence </h1>
-          <p class="description">At Tresume, we are committed to delivering exceptional solutions that meet the evolving needs
-            of both job
-            seekers
-            and employers. Our dedicated team of professionals brings years of industry experience, technical expertise,
-            and
-            a
-            passion for creating meaningful connections. We constantly strive for excellence in all aspects of our work,
-            ensuring that every interaction with our platform is seamless, efficient, and rewarding.</p>
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <h1 style=" color: purple;">About
-            Technology for a Competitive Edge </h1>
-          <p class="description">We leverage state-of-the-art technology to provide a user-friendly, feature-rich platform that
-            simplifies the
-            recruitment process. Our innovative tools empower job seekers to showcase their skills, experience, and
-            accomplishments in a captivating way, enabling them to stand out in a crowded job market. For employers, our
-            platform offers advanced search and filtering capabilities, ensuring that they can quickly identify the
-            best-suited candidates for their organizations.</p>
-        </div>
-        <div class="col-md-6">
-          <img src="../../../assets/img/tech.jpg" alt="Tresume Image" style=" width: 96%;
-          height: 100%;
-          transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <img src="../../../assets/img/jobseeker.jpg" alt="Tresume Image" style=" width: 96%;
-          height: 100%;
-          transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
-        </div>
-        <div class="col-md-6">
-          <h1 style=" color: purple; text-align: center;">About
-            for Job Seekers </h1>
-          <p class="description">For job seekers, Tresume is more than just a job board. We are a trusted partner committed to
-            their success.
-            Our
-            platform offers a range of resources, including resume-building tools, interview tips, and career advice
-            articles,
-            designed to empower individuals to navigate their career paths with confidence. We strive to provide a
-            personalized experience, understanding that every individual's journey is unique, and we are here to support
-            them
-            every step of the way.</p>
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <h1 style=" color: purple;">About
-            Employers to Make Informed Decisions</h1>
-          <p class="description">For employers, Tresume is a powerful ally in the hiring process. Our platform enables them to
-            access a vast
-            pool
-            of talented professionals, easily filter and shortlist candidates, and streamline their recruitment
-            workflows.
-            We
-            provide comprehensive candidate profiles, including detailed resumes, skills assessments, and work samples,
-            empowering employers to make informed hiring decisions efficiently.</p>
-        </div>
-        <div class="col-md-6">
-          <img src="../../../assets/img/job.png" alt="Tresume Image" style=" width: 96%;
-          height: 100%;
-          transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <img src="../../../assets/img/aboutimg.png" alt="Tresume Image" style=" width: 96%;
-          height: 100%;
-          transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
-        </div>
-        <div class="col-md-6">
-          <h1 style=" color: purple;">About
-            Join the Tresume
-            Community Today</h1>
-          <p class="description">Whether you are a job seeker looking for your next career move or an employer seeking top
-            talent, we invite
-            you
-            to join the Tresume community. Experience the difference of a platform that puts people first, embraces
-            technology, and is dedicated to your success. Together, we can unlock limitless possibilities and shape the
-            future
-            of recruitment.</p>
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
+<section id="team">
+  <nav role="navigation" class="navbar navbar-expand-lg  fixed-top" [ngClass]="{'scrolled': isScrolled}">
+    <a routerLink="/homelanding" class="navbar-brand">
+        <img src="../assets/img/Tresume_logo.png" style="height: 90px;" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
+        <ul class="navbar-nav">
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+            </li>
+            <li class="nav-item ">
+              <a href="login" class="nav-link login-btn-mobile">Login</a>
+            </li>
+  
+            <li class="nav-item ">
+              <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
+  
+            </li> -->
+        </ul>
     </div>
-
-
-    <footer class="footer-section">
+    <div class="float-end" style="display: flex">
+      <li class="nav-item mr-5" style="list-style: none;margin-top: 10px;">
+        <a class="login-btn-web bn5" style="color: black; font-family: 'Times New Roman', Times, serif;
+  font-size: 22px;"  routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item mr-5" style="list-style: none">
+        <div class="menucontainer">
+          <!-- Menu Icon -->
+          <div class="menu-icon mt-0" (click)="toggleMenu()">
+            <div *ngIf="!menuOpen" class="bn5 bn8">
+              <i class="fas fa-bars" ></i>
+            </div>
+            <div *ngIf="menuOpen" class="bn5 bn8">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+  
+          <!-- Menu Overlay -->
+          <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
+            <ul class="menu-list">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
+              <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="login" routerLink="/login">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </div>
+     
+  </nav>
+  
+  
+  <div class="background-video video-container">
+    <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
+      <source src="../../../assets/videos/pixel.mp4" type="video/mp4">
+    </video>
+    <div style="width: 100%;" class="content-over-video overlay">
+      <h1 id="welcomeText" style="background-color: #a24f9a91; height: 111px; padding-top: 33px; font-size: 54px; color: white !important; font-weight: 500 !important;">
+        <!-- HTML -->
+        <h1 id="aboutTresume">
+          <span class="space">ABOUT</span>
+          <span class="space">TRESUME</span>
+        </h1>
+      </h1>
+    </div>
+  </div>
+  
+  
+    <br>
+    <br>
+    <br>
+  
       <div class="container">
-        <div class="footer-cta pt-5 ">
-          <div class="row">
-            <div class="col-xl-4 col-md-4 mb-30">
-              <div class="single-cta">
-                <i class="fas fa-map-marker-alt"></i>
-                <div class="cta-text">
-                  <h4>Find us</h4>
-                  <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
-                  </span>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 style="color: purple;">About Tresume Connecting Talent with Opportunity </h1>
+            <p class="description">At Tresume, we believe that finding the right job or hiring the perfect candidate shouldn't be a daunting task. Our mission is to simplify and streamline the recruitment process by providing a cutting-edge platform that connects talent with opportunity. With a focus on innovation, efficiency, and personalized service, we are revolutionizing the way businesses and job seekers connect.</p>
+          </div>
+          <div class="col-md-6 scrolling-image">
+            <img src="../../../assets/img/Talent.jpg" alt="Tresume Image" class="img-fluid" style="transition: opacity 1s, transform 0.5s ease-in;">
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <img  src="../../../assets/img/comitment.jpg" alt="Tresume Image"  style=" width: 96%;
+            height: 90%;
+            transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <p>
+            <h1 style=" color: purple;">About
+              Our Commitment to
+              Excellence </h1>
+            <p class="description">At Tresume, we are committed to delivering exceptional solutions that meet the evolving needs
+              of both job
+              seekers
+              and employers. Our dedicated team of professionals brings years of industry experience, technical expertise,
+              and
+              a
+              passion for creating meaningful connections. We constantly strive for excellence in all aspects of our work,
+              ensuring that every interaction with our platform is seamless, efficient, and rewarding.</p>
+          </div>
+          
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 style=" color: purple;">About
+              Technology for a Competitive Edge </h1>
+            <p class="description">We leverage state-of-the-art technology to provide a user-friendly, feature-rich platform that
+              simplifies the
+              recruitment process. Our innovative tools empower job seekers to showcase their skills, experience, and
+              accomplishments in a captivating way, enabling them to stand out in a crowded job market. For employers, our
+              platform offers advanced search and filtering capabilities, ensuring that they can quickly identify the
+              best-suited candidates for their organizations.</p>
+          </div>
+          <div class="col-md-6">
+            <img src="../../../assets/img/tech.jpg" alt="Tresume Image" style=" width: 96%;
+            height: 100%;
+            transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <img src="../../../assets/img/jobseeker.jpg" alt="Tresume Image" style=" width: 96%;
+            height: 100%;
+            transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <h1 style=" color: purple; text-align: center;">About
+              for Job Seekers </h1>
+            <p class="description">For job seekers, Tresume is more than just a job board. We are a trusted partner committed to
+              their success.
+              Our
+              platform offers a range of resources, including resume-building tools, interview tips, and career advice
+              articles,
+              designed to empower individuals to navigate their career paths with confidence. We strive to provide a
+              personalized experience, understanding that every individual's journey is unique, and we are here to support
+              them
+              every step of the way.</p>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 style=" color: purple;">About
+              Employers to Make Informed Decisions</h1>
+            <p class="description">For employers, Tresume is a powerful ally in the hiring process. Our platform enables them to
+              access a vast
+              pool
+              of talented professionals, easily filter and shortlist candidates, and streamline their recruitment
+              workflows.
+              We
+              provide comprehensive candidate profiles, including detailed resumes, skills assessments, and work samples,
+              empowering employers to make informed hiring decisions efficiently.</p>
+          </div>
+          <div class="col-md-6">
+            <img src="../../../assets/img/job.png" alt="Tresume Image" style=" width: 96%;
+            height: 100%;
+            transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <img src="../../../assets/img/aboutimg.png" alt="Tresume Image" style=" width: 96%;
+            height: 80%;
+            transition: opacity 1s, transform 0.5s ease-in;" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <h1 style=" color: purple;">About
+              Join the Tresume
+              Community Today</h1>
+            <p class="description">Whether you are a job seeker looking for your next career move or an employer seeking top
+              talent, we invite
+              you
+              to join the Tresume community. Experience the difference of a platform that puts people first, embraces
+              technology, and is dedicated to your success. Together, we can unlock limitless possibilities and shape the
+              future
+              of recruitment.</p>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+    </section>
+  
+      <footer class="footer-section">
+        <div class="container">
+          <div class="footer-cta pt-5 ">
+            <div class="row">
+              <div class="col-xl-4 col-md-4 mb-30">
+                <div class="single-cta">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <div class="cta-text">
+                    <h4>Find us</h4>
+                    <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-md-4 mb-30">
+                <div class="single-cta">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <div class="cta-text">
+                    <h4>Call us</h4>
+                    <span>(703)9863350</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-md-4 mb-30">
+                <div class="single-cta">
+                  <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                  <div class="cta-text">
+                    <h4>Mail us</h4>
+                    <span>nithya@resume.us</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-md-4 mb-30">
-              <div class="single-cta">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <div class="cta-text">
-                  <h4>Call us</h4>
-                  <span>(703)9863350</span>
+          </div>
+          <div class="footer-content pt-5 pb-1">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 mb-50">
+                <div class="footer-widget">
+                  <div class="footer-logo">
+                    <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+                  </div>
+                  <div class="footer-text">
+                    <p>With the right ATS recruiting system, you can increase the number of placements and grow your
+                      business.
+                      Tresume advanced recruit analytics helps you back up all your presentations with data. Create
+                      forecast
+                      for next quarter and keep track of important metrics.</p>
+                  </div>
+                  <div class="footer-social-icon">
+                    <span>Follow us</span>
+                    <ul class="social_icon">
+                      <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
+                      <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
+                      <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4 col-md-4 mb-30">
-              <div class="single-cta">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                <div class="cta-text">
-                  <h4>Mail us</h4>
-                  <span>nithya@resume.us</span>
+              <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                <div class="footer-widget">
+                  <div class="footer-widget-heading">
+                    <h3>Useful Links</h3>
+                  </div>
+                  <ul>
+                    <li><a routerLink="/about"  href="#">About Us</a></li>
+                    <li><a routerLink="/market" href="#">MarketPlace</a></li>
+                    <li><a routerLink="/features" href="#">Features</a></li>
+                    <li><a routerLink="/contact" href="#">Contact us</a></li>
+                    <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+                    <li><a routerLink="/timesheet">TimeSheet</a></li>
+                    <li><a  routerLink="/ats">ATS</a></li>
+                    <li><a routerLink="/talent-suite">Talent Suite</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                <div class="footer-widget">
+                  <div class="footer-widget-heading">
+                    <h3>Subscribe</h3>
+                  </div>
+                  <div class="footer-text mb-25">
+                    <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                  </div>
+                  <div class="subscribe-form">
+                    <form action="#">
+                      <input type="text" placeholder="Email Address">
+                      <button><i class="fa fa-telegram" aria-hidden="true"></i></button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer-content pt-5 pb-1">
-          <div class="row">
-            <div class="col-xl-4 col-lg-4 mb-50">
-              <div class="footer-widget">
-                <div class="footer-logo">
-                  <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+        <div class="copyright-area">
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                <div class="copyright-text">
+                  <p>Copy Rights 2023 TResume</p>
                 </div>
-                <div class="footer-text">
-                  <p>With the right ATS recruiting system, you can increase the number of placements and grow your
-                    business.
-                    Tresume advanced recruit analytics helps you back up all your presentations with data. Create
-                    forecast
-                    for next quarter and keep track of important metrics.</p>
-                </div>
-                <div class="footer-social-icon">
-                  <span>Follow us</span>
-                  <ul class="social_icon">
-                    <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
-                    <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                    <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+              </div>
+              <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                <div class="footer-menu">
+                  <ul>
+                    <li><a >Home</a></li>
+                    <li><a >Terms</a></li>
+                    <li><a >Privacy</a></li>
+                    <li><a>Policy</a></li>
+                    <li><a>Contact</a></li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-              <div class="footer-widget">
-                <div class="footer-widget-heading">
-                  <h3>Useful Links</h3>
-                </div>
-                <ul>
-                  <li><a routerLink="/about"  href="#">About Us</a></li>
-                  <li><a routerLink="/market" href="#">MarketPlace</a></li>
-                  <li><a routerLink="/features" href="#">Features</a></li>
-                  <li><a routerLink="/contact" href="#">Contact us</a></li>
-                  <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
-                  <li><a routerLink="/timesheet">TimeSheet</a></li>
-                  <li><a  routerLink="/ats">ATS</a></li>
-                  <li><a routerLink="/talent-suite">Talent Suite</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-              <div class="footer-widget">
-                <div class="footer-widget-heading">
-                  <h3>Subscribe</h3>
-                </div>
-                <div class="footer-text mb-25">
-                  <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
-                </div>
-                <div class="subscribe-form">
-                  <form action="#">
-                    <input type="text" placeholder="Email Address">
-                    <button><i class="fa fa-telegram" aria-hidden="true"></i></button>
-                  </form>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-      </div>
-      <div class="copyright-area">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-              <div class="copyright-text">
-                <p>Copy Rights 2023 TResume</p>
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-              <div class="footer-menu">
-                <ul>
-                  <li><a >Home</a></li>
-                  <li><a >Terms</a></li>
-                  <li><a >Privacy</a></li>
-                  <li><a>Policy</a></li>
-                  <li><a>Contact</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+  

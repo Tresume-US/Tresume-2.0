@@ -1,11 +1,46 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-
-
+// *{
+//   font-family: 'Times New Roman', Times, serif !important;
+// }
+#team{
+  background: url(../../../assets/img/screen07.jpg) !important;
+}
+.text-content{
+  font-family: 'Times New Roman', Times, serif !important;
+}
+.times{
+  color: white;
+}
 .space{
   margin-left: 20px;
 }
+@media only screen and(max-width:768px){
+  .space{
+    font-size: 18px;
+  }
+  .img-change{
+    max-width: 100% !important;
+  }
+  img{
+    margin-left:0 !important;
+    max-width: 110% !important;
+  }
+.footer-cta{
+  padding: 2px !important;
+}
+.text-content-c{
 
+  margin: 0 !important;
+}
+.text-content-c h1{
+  margin-top: 10px !important;
+}
+// .cta-text{
+//   text-align: center !important;
+// }
+ 
+}
 h2.tittle {
   font-size: 2rem;
   text-align: center;
