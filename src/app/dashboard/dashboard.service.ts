@@ -64,6 +64,14 @@ export class DashboardService {
     getAdminDashboardData(req: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getAdminDashboardData/' , req);
     }
+
+    getUserDashboardData(req: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getUserDashboardData/' , req);
+    }
+
+    getSuperAdminDashboardData(req: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getSuperAdminDashboardData/' , req);
+    }
 }
 
 export interface RequestItem {

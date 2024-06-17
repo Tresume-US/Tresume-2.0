@@ -557,11 +557,11 @@ export class ReviewTresumeComponent implements OnChanges {
    }
 
   ngOnInit(): void {
-    // this.fetchinterviewlist();
+    this.fetchinterviewlist();
     this.getPlacementList();
-    // this.fetchCandidateInfo();
-    // this.getSubmissionList() ;
-    // this.getOrgUserList();
+    this.fetchCandidateInfo();
+    this.getSubmissionList() ;
+    this.getOrgUserList();
     this.fetchCandidateInfo();
     this.getmarketername();
     this.getcandidaterstatus();
