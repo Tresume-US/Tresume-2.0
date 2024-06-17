@@ -487,6 +487,25 @@ div#bootcarousel {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out; 
 }
+.bn632-hoverc {
+  width: 160px;
+  background-image: linear-gradient(to right, #D24F9A, #79265f, #D24F9A, #97618d);
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 20px;
+  height: 45px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out; 
+}
 .button-group{
   margin-top: 5%;
 }
@@ -650,7 +669,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .feature-tabs li a {
-  padding: 15px 30px;
+  padding: 30px 30px;
   border-right: 1px solid #ffffff !important;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -674,7 +693,7 @@ a:not([href]):not([tabindex]) {
 }
 
 li.nav-item {
-  padding: 0px 10px;
+  padding: 0 10px;
   Text-Decoration: none;
 }
 
@@ -1726,7 +1745,7 @@ ul.navbar-nav.mr-auto {
       }
 
       .dropdown-menu {
-        background: black;
+        background: white;
         box-shadow: 0px 3px 5px -1px #ccc;
         min-width: 250px;
         padding-top: 20px;
@@ -1739,6 +1758,8 @@ ul.navbar-nav.mr-auto {
           text-align: left;
           margin-bottom: 20px;
           border-style: none;
+          
+          
 
           a:hover {
             padding-left: 10px;
@@ -1746,7 +1767,8 @@ ul.navbar-nav.mr-auto {
             transition: all 0.3s ease;
           }
         }
-      }
+        }
+      
 
       &:hover > .dropdown-menu,
       .dropdown-menu:hover {
@@ -1760,7 +1782,7 @@ ul.navbar-nav.mr-auto {
 
 .navbar-nav .nav-link:hover {
 
-  color: purple;
+  color: #ff00c8;
 }
 
 /* Custom CSS for nav-link hover underline animation */
@@ -2121,3 +2143,113 @@ width: auto;
 .quote-text {
   line-height: 1.6; /* Increases space between lines */
 }
+
+/* mobile responsive view */
+
+@media (max-width: 768px) {
+// .nav-item .login-btn-web {
+//   display: none;
+//     }
+.feature-tabs li a {
+  padding: 25px 20px;
+//  justify-content: space-between;
+}
+    .menu-list {
+      list-style: none;
+      padding: 0;
+      height: 50%;
+      // text-align: center;
+    display: flex !important;
+   flex-direction: column !important;  
+    }
+    .menu-list li a {
+      margin-bottom: 30px;
+      padding: 10px;
+    }
+    // #keyFeatures{
+    //   font-size: 20px;
+    // }
+    .navbar-toggler{
+      display: none;
+    }
+    .card{
+      margin-right: 65px;
+      margin-top: 20px;
+    }
+    .quote-text{
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    .custom-col {
+      width: 80%;
+      margin-left: 0 !important;
+      margin-right: 40px;
+    }
+    // #talentsuit img{
+    //   margin-right: 100px;
+    // }
+    .tittle{
+      font-size: 30px !important;
+      margin-top: 0 !important;
+    }
+    .sub-title{
+      font-size: 20px;
+      margin-right: 45px
+    }
+    // .wf{
+    //   margin-top: 0;
+    // }
+    #workforce{
+      height: 100%;
+    }
+    #talentsuit{
+      height: 100%;
+    }
+    .bn632-hover.bn24{
+      margin-bottom: 30px;
+    }
+    .wf{
+      width: 90%;
+      height: 30%;
+      // margin-left: 0 !important; 
+    }
+    video{
+      object-fit: cover;
+      height: 100vh;
+      width: 100%;
+    }
+    .dots-container{
+      margin-top: 50% !important;
+    }
+    // .TS{
+    //   margin-right: 20px !important;
+    // }
+    #intro img{
+      // width: 70px !important;
+      height: 80px !important;
+    }
+    .bn632-hoverc{
+      margin-right: 55px;
+    }
+    h2.tittle{
+      margin-right: 45px;
+    }
+    #workforce span{
+      margin-right: 140px !important;
+    }
+  #talentsuit span{
+    margin-right: 160px !important;
+  }
+  #timesheet span{
+    margin-right: 160px !important;
+  }
+  #ats h2{
+margin-left: 50px !important;
+  }
+  }
+  // .dropdown-item{
+  //   color: white !important;
+  // }
+  .dropdown-item:hover{
+    color: #ff00c8 !important;
+  }

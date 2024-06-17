@@ -16,7 +16,11 @@ export class ContactComponent implements OnInit {
   constructor(private fb: FormBuilder,private contact:ContactService) {
 
    }
+   menuOpen = false;
 
+   toggleMenu() {
+     this.menuOpen = !this.menuOpen;
+   }
 
   isScrolled = false;
   ngOnInit(): void {

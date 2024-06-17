@@ -1,7 +1,7 @@
 <section id="intro" class="intro content">
   <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
     [ngClass]="{ scrolled: isScrolled }" style="color: white; padding-bottom: 0">
-    <div class="pt-5">
+    <div class="pt-1">
       <a routerLink="/homelanding" class="navbar-brand">
         <img src="../assets/img/Tresume_logo.png" style="height: 90px" alt="" />
       </a>
@@ -45,12 +45,12 @@
         </li> -->
       </ul>
     </div>
-    <div class="float-end" style="display: flex">
+    <div class="float-end" style="display: flex;list-style: none;">
       <li class="nav-item mr-5">
-        <a class="login-btn-web bn5" style="color: black" routerLink="/login">Login</a>
+        <a class="login-btn-web bn5" style="color: black;margin-right:30px ;"  routerLink="/login">Login</a>
       </li>
       <li>
-        <div class="menucontainer">
+        <div class="menucontainer" style="list-style: none;">
           <!-- Menu Icon -->
           <div class="menu-icon mt-0" (click)="toggleMenu()">
             <div *ngIf="!menuOpen" class="bn5 bn8">
@@ -64,6 +64,17 @@
           <!-- Menu Overlay -->
           <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
             <ul class="menu-list">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" style="color: black;" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" style="color: black;" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" style="color: black;" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" style="color: black;" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
               <li class="nav-item active">
                 <a class="nav-link" routerLink="/market">Marketplace</a>
               </li>
@@ -183,7 +194,7 @@
   
   <section id="talentsuit" class="talentsuit content">
     <div class="row ml-5 mt-5">
-      <div class="col-md-6 ml-5">
+      <div class="custom-col col-md-6 ml-5">
         <img src="../../../assets/img/talentbench.jpg" alt="Workforce Image" style="
             max-width: 130%;
             height: 80%;
@@ -193,7 +204,7 @@
       </div>
       <div class="col-md-1"></div>
       <div class="col-md-4 text-content">
-        <div>
+        <div class="TS">
           <h2 class="text-center tittle pt-3 mt-4">Talent Suite</h2>
           <span class="animate-border mr-auto ml-auto mb-4"></span>
           <h3 class="text-center sub-title">
@@ -205,14 +216,14 @@
           <!-- <a routerLink="/login"
             ><button class="bn632-hover bn24">Book a Demo</button></a
           > -->
-          <a routerLink="/talent-suite"><button class="bn632-hover bn24">Learn more</button></a>
+          <a routerLink="/talent-suite"><button class="bn632-hoverc bn24">Learn more</button></a>
         </div>
       </div>
     </div>
   </section>
   
   <section id="workforce" class="workforce content">
-    <div class="row ml-5 mt-5">
+    <div class="row ml-5 wf mt-5">
       <div class="col-md-4 ml-5">
         <div class="text-content">
           <h2 class="text-center tittle pt-3">Workforce</h2>
@@ -226,12 +237,12 @@
             <!-- <a routerLink="/login"
               ><button class="bn632-hover bn24">Book a Demo</button></a
             > -->
-            <a routerLink="/workforce"><button class="bn632-hover bn24">Learn more</button></a>
+            <a routerLink="/workforce"><button class="bn632-hoverc bn24">Learn more</button></a>
           </div>
       </div>
       <div class="col-md-1"></div>
       <div class="col-md-6">
-        <img src="../../../assets/img/wrk.png" alt="Workforce Image" style="
+        <img src="../../../assets/img/wrk.png" alt="Workforce Image" class="wf" style="
             max-width: 130%;
             height: 80%;
             box-shadow: 6px 6px 10px -2px rgba(0, 0, 0, 0.75);
@@ -258,20 +269,20 @@
           <!-- <a routerLink="/login"
               ><button class="bn632-hover bn24">Book a Demo</button></a
             > -->
-          <a routerLink="/login"><button class="bn632-hover bn24">Learn more</button></a>
+          <a routerLink="/login"><button class="bn632-hoverc   bn24">Learn more</button></a>
         </div>
       </div>
     </div>
   </section>
   <!-- <br /><br /><br /> -->
-  <section id="reason-to-ats" class="pb-5 pt-5">
+  <section id="reason-to-ats" class="pb-3 pt-5">
     <div class="section-heading text-center mb-1 pt-5">
       <h2 class="tittle">Why choose our ATS</h2>
       <span class="animate-border mx-auto mb-4"></span>
     </div>
     <div class="feature-tabs-wrap">
       <ul class="border-bottom-0 feature-tabs feature-tabs-center nav d-flex justify-content-center" data-tabs="tabs">
-        <li class="nav-item mt-3">
+        <li class="nav-item mt-3 " >
           <a class="nav-link text-center">
             <i class="fa fa-bullhorn" aria-hidden="true"></i>
             <span class="ti-announcement icon-sm"></span>
@@ -296,7 +307,7 @@
           <a class="nav-link text-center">
             <i class="fa fa-shield" aria-hidden="true"></i>
             <span class="ti-shield icon-sm"></span>
-            <p class="mb-0 down">Organized Tracking and Reports</p>
+            <p class="mb-0 down">Organized Tracking and Reports </p>
           </a>
         </li>
         <li class="nav-item mt-3">

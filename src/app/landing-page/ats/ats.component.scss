@@ -1,5 +1,29 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+#team{
+  background:url(../../../assets/img/screen07.jpg) !important;
+ 
+}
+// *{
+//   font-family:'Times New Roman', Times, serif !important;
+// }
 
+@media only screen and (max-width:768px){
+  .img-fluid{
+    margin-left:0 !important;
+  }
+ 
+    .space{
+      font-size: 18px;
+    }
+  }
+
+
+.para-content{
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5;
+}
 .sec-icon {
   position: relative;
   display: inline-block;
@@ -1324,5 +1348,7 @@ ul {
   color: #ff0000;
 }
 
-
+.list-p{
+  line-height: 1.5;
+}
 

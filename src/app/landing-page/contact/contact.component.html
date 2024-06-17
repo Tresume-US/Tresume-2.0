@@ -1,361 +1,417 @@
-<nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" [ngClass]="{'scrolled': isScrolled}">
-  <a routerLink="/homelanding" class="navbar-brand">
-      <img src="../assets/img/logo.png" style="height: 90px;" alt="">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
-      <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Products
-              </a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
-                  <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
-                  <a class="dropdown-item" routerLink="/workforce">Workforce</a>
-                  <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+<section id="team">
+  <nav role="navigation" class="navbar navbar-expand-lg  fixed-top" [ngClass]="{'scrolled': isScrolled}">
+    <a routerLink="/homelanding" class="navbar-brand">
+        <img src="../assets/img/Tresume_logo.png" style="height: 90px;margin-top: 18px;" class="logo" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'show': isNavbarCollapsed}">
+        <ul class="navbar-nav">
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+            </li>
+            <li class="nav-item ">
+              <a href="login" class="nav-link login-btn-mobile">Login</a>
+            </li>
+  
+            <li class="nav-item ">
+              <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
+  
+            </li> -->
+        </ul>
+    </div>
+    <div class="float-end" style="display: flex">
+      <li class="nav-item mr-5" style="list-style: none;margin-top: 10px;">
+        <a class="login-btn-web bn5" style="color: black; font-family: 'Times New Roman', Times, serif;
+  font-size: 22px;"  routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item mr-5" style="list-style: none">
+        <div class="menucontainer">
+          <!-- Menu Icon -->
+          <div class="menu-icon mt-0" (click)="toggleMenu()">
+            <div *ngIf="!menuOpen" class="bn5 bn8">
+              <i class="fas fa-bars" ></i>
+            </div>
+            <div *ngIf="menuOpen" class="bn5 bn8">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+  
+          <!-- Menu Overlay -->
+          <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
+            <ul class="menu-list">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
+              <li class="nav-item active">
+                <a class="nav-link" routerLink="/market">Marketplace</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/features">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="login" routerLink="/login">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </div>
+  </nav>
+  
+  <div class="background-video video-container">
+      <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
+          <source src="../../../assets/videos/consult.mp4" type="video/mp4">
+      </video>
+      <div style="width: 100%;" class="content-over-video overlay">
+        <h1  id="welcomeText" style="background-color: #a24f9a91;
+        height: 111px;
+        padding-top: 33px;font-size: 54px;color: white;font-weight: 500; ">
+      <span class="space">CONTACT</span>
+      <span class="space">OUR</span>
+      <span class="space">TEAM</span>
+      <span class="space">SUPPORT</span>
+  
+    </h1>
+    </div>
+  </div>
+  <br>
+  <br>
+    <div class="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5">
+           
+            
+            <div class="contact-info">
+              <h1 class="text-primary">Tresume..</h1>
+              <h3 class="text-info mb-1">USA</h3>
+              <br>
+              <div class="contact-detail d-flex align-items-center mb-3" style=" font-size: 20px;">
+                <i class="fas fa-map-marker-alt fa-lg mr-2"></i>
+                <p class="mb-0">44121 Leesburg Pike., STE 230 Ashburn<br> VA 20147, United States Of America</p>
               </div>
-          </li>
-          <li class="nav-item active">
-              <a class="nav-link" routerLink="/market">Marketplace</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/features">Features</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/about">About</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/contact">Contact Us</a>
-          </li>
-          <li class="nav-item ">
-            <a href="login" class="nav-link login-btn-mobile">Login</a>
-          </li>
-
-          <li class="nav-item ">
-            <a class=" login-btn-web bn5" style=" margin: 0;" routerLink="/login">Login</a>
-
-          </li>
-      </ul>
+              <br>
+              <div class="contact-detail d-flex align-items-center mb-2" style=" font-size: 20px;">
+                <i class="fas fa-phone fa-lg mr-2"></i>
+                <p class="mb-0">(703) 9863350</p>
+              </div>
+              <br>
+              <div class="contact-detail d-flex align-items-center" style=" font-size: 17px;">
+                <i class="fas fa-envelope fa-lg mr-2"></i>
+                <p class="mb-0">nithya@tresume.us</p>
+              </div>
+            </div>
+            <br>
+            <div class="contact-info">
+              <h1 class="text-primary">Tresume..</h1>
+              <h3 class="text-info mb-1">INDIA</h3>
+              <br>
+              <div class="contact-detail d-flex align-items-center mb-3" style=" font-size: 20px;">
+                <i class="fas fa-map-marker-alt fa-lg mr-2"></i>
+              <p>50, 1st Cross St, Parameshwari Nagar, Adyar, Chennai, Tamil Nadu 600020 </p>
+              <!-- <p class="mb-0">50, 1st Cross St<br> </p> -->
+              </div>
+              <br>
+              <div class="contact-detail d-flex align-items-center mb-2" style=" font-size: 20px;">
+                <i class="fas fa-phone fa-lg mr-2"></i>
+                <p class="mb-0">(703) 9863350</p>
+              </div>
+              <br>
+              <div class="contact-detail d-flex align-items-center" style=" font-size: 17px;">
+                <i class="fas fa-envelope fa-lg mr-2"></i>
+                <p class="mb-0">nithya@tresume.us</p>
+              </div>
+            </div>
+          </div>
+          
+  
+  
+          <!-- Right side with Google Maps iframe -->
+          <div class="map col-lg-7" style="padding: 30px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d485.94179671008476!2d80.25793413062551!3d13.001606176446025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267f270ffb89d%3A0xdaa9a751467dceaa!2s50%2C%201st%20Cross%20St%2C%20Parameshwari%20Nagar%2C%20Adyar%2C%20Chennai%2C%20Tamil%20Nadu%20600020!5e0!3m2!1sen!2sin!4v1706902123714!5m2!1sen!2sin" width="600" height="450" style="border:0;border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <!-- <iframe src="https://www.google.co.in/maps/dir/12.9794502,80.2655838/2742%2BRVJ+No,+3rd+Cross+St,+Gandhi+Nagar,+Adyar,+Chennai,+Tamil+Nadu+600020/@12.9945902,80.2333265,14z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x3a52679381e87e9d:0x5d32121c7245abb1!2m2!1d80.2521265!2d13.0070964?entry=ttu" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+          </div>
+        </div>
+      </div>
+      <br>
+      <hr>
+  
+      <br>
+  <!-- contact-form.component.html -->
+    <div class="row align-items-center p-5">
+      <div class="col-lg-6">
+        <img src="../../../assets/img/contactus.jpg" alt="Tresume Image" class="img-fluid" style="border-radius: 10px;">
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="card mx-auto p-4 bg-light">
+          <div class="container">
+            <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+              <div class="controls">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_name">First name *</label>
+                      <input id="form_name" formControlName="name" type="text" class="form-control" placeholder="Please enter your firstname *">
+                      <div *ngIf="contactForm.get('name').hasError('required') && contactForm.get('name').touched" class="text-danger">
+                        First name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_lastname">Last name *</label>
+                      <input id="form_lastname" formControlName="surname" type="text" class="form-control" placeholder="Please enter your lastname *">
+                      <div *ngIf="contactForm.get('surname').hasError('required') && contactForm.get('surname').touched" class="text-danger">
+                        Last name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_company">Company name *</label>
+                      <input id="form_company" formControlName="companyName" type="text" class="form-control" placeholder="Please enter your company name *">
+                      <div *ngIf="contactForm.get('companyName').hasError('required') && contactForm.get('companyName').touched" class="text-danger">
+                        Company name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_phone">Phone Number *</label>
+                      <input
+                        id="form_phone"
+                        formControlName="phone"
+                        type="text"
+                        class="form-control"
+                        placeholder="Please enter your phone number *"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        (input)="onPhoneNumberInput($event)"
+                      >
+                      <div *ngIf="contactForm.get('phone').hasError('required') && contactForm.get('phone').touched" class="text-danger">
+                        Phone number is required.
+                      </div>
+                      <div *ngIf="contactForm.get('phone').hasError('pattern') && contactForm.get('phone').touched" class="text-danger">
+                        Invalid phone number. Please enter 10 digits.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_email">Business Email *</label>
+                      <input
+                        id="form_email"
+                        formControlName="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="Please enter your email *"
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                      >
+                      <div *ngIf="contactForm.get('email').hasError('required') && contactForm.get('email').touched" class="text-danger">
+                        Email is required.
+                      </div>
+                      <div *ngIf="contactForm.get('email').hasError('pattern') && contactForm.get('email').touched" class="text-danger">
+                        Please enter a valid email in the format
+                      </div>
+                    </div>
+  
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_need">Please specify your need *</label>
+                      <select id="form_need" formControlName="need" class="form-control">
+                        <option value="" disabled selected>--Select Your Issue--</option>
+                        <option>I'd like a product demo/free trial</option>
+                        <option>I want to talk to sales</option>
+                        <option>I need platform support</option>
+                        <option>I have a product integration suggestion</option>
+                        <option>I have a general comment/question</option>
+                      </select>
+                      <div *ngIf="contactForm.get('need').hasError('required') && contactForm.get('need').touched" class="text-danger">
+                        Please specify your need.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="form_message">Message </label>
+                      <textarea id="form_message" formControlName="message" class="form-control" placeholder="Write your message here." rows="4"></textarea>
+                      <div *ngIf="contactForm.get('message').hasError('required') && contactForm.get('message').touched" class="text-danger">
+                        Message is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-success btn-send pt-2 btn-block">Send Message</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</nav>
-
-<div class="background-video video-container">
-    <video autoplay muted loop class="blur-video video-background" style="width: 100%; height: fit-content;">
-        <source src="../../../assets/videos/consult.mp4" type="video/mp4">
-    </video>
-    <div style="width: 100%;" class="content-over-video overlay">
-      <h1  id="welcomeText" style="background-color: #a24f9a91;
-      height: 111px;
-      padding-top: 33px;font-size: 54px;color: white;font-weight: 500; ">
-    <span class="space">CONTACT</span>
-    <span class="space">OUR</span>
-    <span class="space">TEAM</span>
-    <span class="space">SUPPORT</span>
-
-  </h1>
-  </div>
-</div>
-<br>
-<br>
-  <div class="contact">
+  </section>
+  <footer class="footer-section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <div class="contact-info">
-            <h1 class="text-primary">Tresume..</h1>
-            <h3 class="text-info">INDIA</h3>
-            <br>
-            <div class="contact-detail d-flex align-items-center mb-3" style=" font-size: 20px;">
-              <i class="fas fa-map-marker-alt fa-lg mr-2"></i>
-            50, 1st Cross St, Parameshwari Nagar, Adyar, Chennai, Tamil Nadu 600020
-            <p class="mb-0">50, 1st Cross St<br> </p>
-            </div>
-            <br>
-            <div class="contact-detail d-flex align-items-center mb-2" style=" font-size: 20px;">
-              <i class="fas fa-phone fa-lg mr-2"></i>
-              <p class="mb-0">(703) 9863350</p>
-            </div>
-            <br>
-            <div class="contact-detail d-flex align-items-center" style=" font-size: 17px;">
-              <i class="fas fa-envelope fa-lg mr-2"></i>
-              <p class="mb-0">nithya@tresume.us</p>
+      <div class="footer-cta pt-5 ">
+        <div class="row">
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fas fa-map-marker-alt"></i>
+              <div class="cta-text">
+                <h4>Find us</h4>
+                <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
+                </span>
+              </div>
             </div>
           </div>
-          <br>
-          <div class="contact-info">
-            <h1 class="text-primary">Tresume..</h1>
-            <h3 class="text-info ">USA</h3>
-            <br>
-            <div class="contact-detail d-flex align-items-center mb-3" style=" font-size: 20px;">
-              <i class="fas fa-map-marker-alt fa-lg mr-2"></i>
-              <p class="mb-0">44121 Leesburg Pike., STE 230 Ashburn<br> VA 20147, United States Of America</p>
-            </div>
-            <br>
-            <div class="contact-detail d-flex align-items-center mb-2" style=" font-size: 20px;">
-              <i class="fas fa-phone fa-lg mr-2"></i>
-              <p class="mb-0">(703) 9863350</p>
-            </div>
-            <br>
-            <div class="contact-detail d-flex align-items-center" style=" font-size: 17px;">
-              <i class="fas fa-envelope fa-lg mr-2"></i>
-              <p class="mb-0">nithya@tresume.us</p>
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <div class="cta-text">
+                <h4>Call us</h4>
+                <span>(703)9863350</span>
+              </div>
             </div>
           </div>
-        </div>
-
-
-        <!-- Right side with Google Maps iframe -->
-        <div class="col-lg-7" style="padding: 64px;">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d485.94179671008476!2d80.25793413062551!3d13.001606176446025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267f270ffb89d%3A0xdaa9a751467dceaa!2s50%2C%201st%20Cross%20St%2C%20Parameshwari%20Nagar%2C%20Adyar%2C%20Chennai%2C%20Tamil%20Nadu%20600020!5e0!3m2!1sen!2sin!4v1706902123714!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          <!-- <iframe src="https://www.google.co.in/maps/dir/12.9794502,80.2655838/2742%2BRVJ+No,+3rd+Cross+St,+Gandhi+Nagar,+Adyar,+Chennai,+Tamil+Nadu+600020/@12.9945902,80.2333265,14z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x3a52679381e87e9d:0x5d32121c7245abb1!2m2!1d80.2521265!2d13.0070964?entry=ttu" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+          <div class="col-xl-4 col-md-4 mb-30">
+            <div class="single-cta">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <div class="cta-text">
+                <h4>Mail us</h4>
+                <span>nithya@tresume.us</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <br><br><br>
-    <hr>
-
-    <br><br><br>
-<!-- contact-form.component.html -->
-  <div class="row align-items-center p-5">
-    <div class="col-lg-6">
-      <img src="../../../assets/img/contactus.jpg" alt="Tresume Image" class="img-fluid">
-    </div>
-    <div class="col-lg-6 mt-4 mt-lg-0">
-      <div class="card mx-auto p-4 bg-light">
-        <div class="container">
-          <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
-            <div class="controls">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_name">First name *</label>
-                    <input id="form_name" formControlName="name" type="text" class="form-control" placeholder="Please enter your firstname *">
-                    <div *ngIf="contactForm.get('name').hasError('required') && contactForm.get('name').touched" class="text-danger">
-                      First name is required.
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_lastname">Last name *</label>
-                    <input id="form_lastname" formControlName="surname" type="text" class="form-control" placeholder="Please enter your lastname *">
-                    <div *ngIf="contactForm.get('surname').hasError('required') && contactForm.get('surname').touched" class="text-danger">
-                      Last name is required.
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_company">Company name *</label>
-                    <input id="form_company" formControlName="companyName" type="text" class="form-control" placeholder="Please enter your company name *">
-                    <div *ngIf="contactForm.get('companyName').hasError('required') && contactForm.get('companyName').touched" class="text-danger">
-                      Company name is required.
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_phone">Phone Number *</label>
-                    <input
-                      id="form_phone"
-                      formControlName="phone"
-                      type="text"
-                      class="form-control"
-                      placeholder="Please enter your phone number *"
-                      pattern="[0-9]{10}"
-                      maxlength="10"
-                      (input)="onPhoneNumberInput($event)"
-                    >
-                    <div *ngIf="contactForm.get('phone').hasError('required') && contactForm.get('phone').touched" class="text-danger">
-                      Phone number is required.
-                    </div>
-                    <div *ngIf="contactForm.get('phone').hasError('pattern') && contactForm.get('phone').touched" class="text-danger">
-                      Invalid phone number. Please enter 10 digits.
-                    </div>
-                  </div>
-                </div>
+      <div class="footer-content pt-5 pb-1">
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 mb-50">
+            <div class="footer-widget">
+              <div class="footer-logo">
+                <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_email">Business Email *</label>
-                    <input
-                      id="form_email"
-                      formControlName="email"
-                      type="email"
-                      class="form-control"
-                      placeholder="Please enter your email *"
-                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                    >
-                    <div *ngIf="contactForm.get('email').hasError('required') && contactForm.get('email').touched" class="text-danger">
-                      Email is required.
-                    </div>
-                    <div *ngIf="contactForm.get('email').hasError('pattern') && contactForm.get('email').touched" class="text-danger">
-                      Please enter a valid email in the format
-                    </div>
-                  </div>
-
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="form_need">Please specify your need *</label>
-                    <select id="form_need" formControlName="need" class="form-control">
-                      <option value="" disabled selected>--Select Your Issue--</option>
-                      <option>I'd like a product demo/free trial</option>
-                      <option>I want to talk to sales</option>
-                      <option>I need platform support</option>
-                      <option>I have a product integration suggestion</option>
-                      <option>I have a general comment/question</option>
-                    </select>
-                    <div *ngIf="contactForm.get('need').hasError('required') && contactForm.get('need').touched" class="text-danger">
-                      Please specify your need.
-                    </div>
-                  </div>
-                </div>
+              <div class="footer-text">
+                <p>With the right ATS recruiting system, you can increase the number of placements and grow your
+                  business.
+                  Tresume advanced recruit analytics helps you back up all your presentations with data. Create
+                  forecast
+                  for next quarter and keep track of important metrics.</p>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="form_message">Message </label>
-                    <textarea id="form_message" formControlName="message" class="form-control" placeholder="Write your message here." rows="4"></textarea>
-                    <div *ngIf="contactForm.get('message').hasError('required') && contactForm.get('message').touched" class="text-danger">
-                      Message is required.
-                    </div>
-                  </div>
-                </div>
+              <div class="footer-social-icon">
+                <span>Follow us</span>
+                <ul class="social_icon">
+                  <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
+                  <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
+                  <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+                </ul>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <button type="submit" class="btn btn-success btn-send pt-2 btn-block">Send Message</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="footer-section">
-  <div class="container">
-    <div class="footer-cta pt-5 ">
-      <div class="row">
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fas fa-map-marker-alt"></i>
-            <div class="cta-text">
-              <h4>Find us</h4>
-              <span>44121 Leesburg Pike., STE 230 Ashburn , VA 20147,United States Of America
-              </span>
             </div>
           </div>
-        </div>
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fa fa-phone" aria-hidden="true"></i>
-            <div class="cta-text">
-              <h4>Call us</h4>
-              <span>(703)9863350</span>
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+            <div class="footer-widget">
+              <div class="footer-widget-heading">
+                <h3>Useful Links</h3>
+              </div>
+              <ul>
+                <li><a routerLink="/about"  href="#">About Us</a></li>
+                <li><a routerLink="/market" href="#">MarketPlace</a></li>
+                <li><a routerLink="/features" href="#">Features</a></li>
+                <li><a routerLink="/contact" href="#">Contact us</a></li>
+                <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
+                <li><a routerLink="/timesheet">TimeSheet</a></li>
+                <li><a  routerLink="/ats">ATS</a></li>
+                <li><a routerLink="/talent-suite">Talent Suite</a></li>
+              </ul>
             </div>
           </div>
-        </div>
-        <div class="col-xl-4 col-md-4 mb-30">
-          <div class="single-cta">
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
-            <div class="cta-text">
-              <h4>Mail us</h4>
-              <span>nithya@tresume.us</span>
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+            <div class="footer-widget">
+              <div class="footer-widget-heading">
+                <h3>Subscribe</h3>
+              </div>
+              <div class="footer-text mb-25">
+                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+              </div>
+              <div class="subscribe-form">
+                <form action="#">
+                  <input type="text" placeholder="Email Address">
+                  <button><i class="fa fa-telegram" aria-hidden="true"></i></button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer-content pt-5 pb-1">
-      <div class="row">
-        <div class="col-xl-4 col-lg-4 mb-50">
-          <div class="footer-widget">
-            <div class="footer-logo">
-              <a href="index.html"><img src="../../../assets/img/tresumelog.png" style=" margin-left: 7rem;" class="img-fluid" alt="logo"></a>
+    <div class="copyright-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+            <div class="copyright-text">
+              <p>Copy Rights 2023 TResume</p>
             </div>
-            <div class="footer-text">
-              <p>With the right ATS recruiting system, you can increase the number of placements and grow your
-                business.
-                Tresume advanced recruit analytics helps you back up all your presentations with data. Create
-                forecast
-                for next quarter and keep track of important metrics.</p>
-            </div>
-            <div class="footer-social-icon">
-              <span>Follow us</span>
-              <ul class="social_icon">
-                <li><a href="https://www.facebook.com/p/Tresume-100057032697312/" target="_blank"> <i class="fa fa-facebook"></i></a></li>
-                <li><a href="https://twitter.com/Tresume2"  target="_blank"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="https://www.linkedin.com/company/tresume/"  target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
-                <li><a href="https://www.youtube.com/@tresumeus3304/featured"  target="_blank"><i class="fa fa-youtube"></i></a></li>
+          </div>
+          <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+            <div class="footer-menu">
+              <ul>
+                <li><a >Home</a></li>
+                <li><a >Terms</a></li>
+                <li><a >Privacy</a></li>
+                <li><a >Policy</a></li>
+                <li><a>Contact</a></li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-          <div class="footer-widget">
-            <div class="footer-widget-heading">
-              <h3>Useful Links</h3>
-            </div>
-            <ul>
-              <li><a routerLink="/about"  href="#">About Us</a></li>
-              <li><a routerLink="/market" href="#">MarketPlace</a></li>
-              <li><a routerLink="/features" href="#">Features</a></li>
-              <li><a routerLink="/contact" href="#">Contact us</a></li>
-              <li><a  routerLink="/workforce" href="#">WorkForce</a></li>
-              <li><a routerLink="/timesheet">TimeSheet</a></li>
-              <li><a  routerLink="/ats">ATS</a></li>
-              <li><a routerLink="/talent-suite">Talent Suite</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-          <div class="footer-widget">
-            <div class="footer-widget-heading">
-              <h3>Subscribe</h3>
-            </div>
-            <div class="footer-text mb-25">
-              <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
-            </div>
-            <div class="subscribe-form">
-              <form action="#">
-                <input type="text" placeholder="Email Address">
-                <button><i class="fa fa-telegram" aria-hidden="true"></i></button>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-  <div class="copyright-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-          <div class="copyright-text">
-            <p>Copy Rights 2023 TResume</p>
-          </div>
-        </div>
-        <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-          <div class="footer-menu">
-            <ul>
-              <li><a >Home</a></li>
-              <li><a >Terms</a></li>
-              <li><a >Privacy</a></li>
-              <li><a >Policy</a></li>
-              <li><a>Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+  </footer>
+  
