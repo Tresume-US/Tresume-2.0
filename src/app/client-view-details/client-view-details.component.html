@@ -38,11 +38,6 @@
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-right: 15px;">
             Add Payment
           </button>
-          <div class="website">
-            <a href="{{ ClientDetails[0].Website }}" target="_blank">
-              <i class="fas fa-globe" style="color: blue"></i>
-              {{ ClientDetails[0].Website }}</a>
-          </div>
         </div>
       </div>
     </div>
@@ -54,7 +49,7 @@
           <div class="d-flex align-items-start flex-column">
             <!-- Display the total received amount -->
             <div class="amt pl-2 received">
-              <b>${{ getReceivedAmount() }}</b>
+              <b>${{ totalReceivedAmount }}</b>
             </div>
             <div class="m-0 pl-4">Received Amount</div>
           </div>
@@ -64,7 +59,7 @@
             <div class="d-flex align-items-start flex-column">
               <!-- Display the total pending amount -->
               <div class="amt pl-2 pending">
-                <b>${{ getPendingAmount() }}</b>
+                <b>${{ totalPendingAmount }}</b>
               </div>
               <div class="m-0 pl-4">Pending Amount</div>
             </div>
