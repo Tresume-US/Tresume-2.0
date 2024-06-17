@@ -25,6 +25,8 @@ export class ClientViewDetailsComponent implements OnInit {
   loading: boolean = false;
   ClientDetails: any[];
   additionalAmount: any = 0
+  totalReceivedAmount: any = 0;
+  totalPendingAmount: any = 0;
   constructor(private router: Router, private route: ActivatedRoute, private cookieService: CookieService, private messageService: MessageService, private service: ClientViewDetailService, private datePipe: DatePipe) {
 
     this.TraineeID = this.cookieService.get('TraineeID');
@@ -47,7 +49,9 @@ export class ClientViewDetailsComponent implements OnInit {
     this.loading = true;
     this.service.getclientsInvoice(Req).subscribe((x: any) => {
       this.allInvoices = x.result;
-
+      this.totalReceivedAmount =  this.allInvoices.reduce((sum, invoice) => sum + parseFloat(invoice.receivedamt), 0);
+    this.totalPendingAmount =  this.allInvoices.reduce((sum, invoice) => sum + parseFloat(invoice.total) - parseFloat(invoice.receivedamt), 0);
+      
       this.loading = false;
       this.noResultsFound = this.allInvoices.length === 0;
     }),
