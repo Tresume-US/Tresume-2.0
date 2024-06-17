@@ -58,6 +58,16 @@ export class SearchResumesDiceComponent implements OnInit {
   form1 = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
+  selectedEmploymenttype: any; 
+selectedexcludeThirdparty: any;
+selectedFacets: any; 
+selectedEmail: any; 
+selectedPhonenumber: any;
+selectedSwitch: any;
+jobTitlekeyword: string;
+skillExperience: string;
+likelytoMove: string;
+
   fields: FormlyFieldConfig[] = [
     {
       key: 'keyword',
@@ -189,6 +199,58 @@ export class SearchResumesDiceComponent implements OnInit {
     { value: 'canadian citizen', name: 'Canadian Citizen' },
     { value: 'tn permit holder', name: 'tn permit holder' },
   ];
+  employmentType: any[] = [
+    { value: 'full-time', name: 'full-time' },
+    { value: 'contract to hire - w2', name: 'contract to hire - w2' },
+    { value: 'contract to hire - independent', name: 'contract to hire - independent' },
+    { value: 'contract - independent', name: "contract - independent" },
+    { value: 'part - time', name: "part - time" },
+    { value: 'contract to hire - crop-to-crop', name: 'contract to hire - crop-to-crop' },
+    { value: 'contract-crop-to-crop', name: 'contract-crop-to-crop' },
+    { value: '1099 employee', name: '1099 employee' },
+    { value: 'annouced', name: 'annouced' },
+    { value: 'crop-to-crop', name: "crop-to-crop" },
+    { value: 'eb-1', name: "eb-1" },
+    { value: 'eb-2', name: 'eb-2' },
+    { value: 'eb-3', name: 'eb-3' },
+    { value: 'h-1b', name: 'h-1b' },
+    { value: 'h-4', name: 'h-4' },
+    { value: 'independent', name: 'independent' },
+    { value: 'j-1', name: 'j-1' },
+    { value: 'j-2', name: 'j-2' },
+    { value: 'tax term', name: 'tax term' },
+    { value: 'w-2', name: 'w-2' },
+    { value: 'w-2/1099', name: 'w-2/1099' },
+
+  ];
+
+  excludeThirdparty: any[] = [
+    { value: 'true', name: 'true' },
+    { value: 'false', name: 'false' },
+  ];
+
+  hasEmail: any[] = [
+    { value: 'true', name: 'true' },
+    { value: 'false', name: 'false' },
+  ];
+  hasPhoneNumber: any[] = [
+    { value: 'true', name: 'true' },
+    { value: 'false', name: 'false' },
+  ];
+  likelytoSwitch: any[] = [
+    { value: 'true', name: 'true' },
+    { value: 'false', name: 'false' },
+  ];
+  facets: any[] = [
+    { value: 'company', name: 'company' },
+    { value: 'skills', name: 'skills' },
+    { value: 'jobTitle', name: 'jobTitle' },
+    { value: 'employmentType', name: 'employmentType' },
+    { value: 'educationDegree', name: 'educationDegree' },
+    { value: 'workPermit', name: 'workPermit' },  { value: 'false', name: 'false' },
+
+  ];
+
 
   rowData: any;
   columnDefs: any;
@@ -694,129 +756,147 @@ export class SearchResumesDiceComponent implements OnInit {
   }
 
   public onSearch() {
-    if(this.searchType == 1){
+    if (this.searchType == 1) {
       let req =
-      'q=' +
-      encodeURIComponent(this.model.boolean) +
-      '&page=' +
-      (this.searchRequestItem?.page || 1);
-    if (this.selectedState) {
-      /* const selectedState = "value"+"'"'":" + this.selectedState"" */
-      let locations = '[{"value":"' + this.selectedState + '"}]';
-      if (this.searchRequestItem.locationRadius) {
-        locations =
-          '[{"value":"' +
-          this.selectedState +
-          '","distance":' +
-          this.searchRequestItem.locationRadius +
-          ',"distanceUnit":"miles"}]';
-        console.log('locations', `${locations}`);
+        'q=' +
+        encodeURIComponent(this.model.boolean) +
+        '&page=' +
+        (this.searchRequestItem?.page || 1);
+      if (this.selectedState) {
+        /* const selectedState = "value"+"'"'":" + this.selectedState"" */
+        let locations = '[{"value":"' + this.selectedState + '"}]';
+        if (this.searchRequestItem.locationRadius) {
+          locations =
+            '[{"value":"' +
+            this.selectedState +
+            '","distance":' +
+            this.searchRequestItem.locationRadius +
+            ',"distanceUnit":"miles"}]';
+          console.log('locations', `${locations}`);
+        }
+        req += '&locations=' + encodeURIComponent(locations);
       }
-      req += '&locations=' + encodeURIComponent(locations);
-    }
-    if (this.isscocialprofiles) {
-      req += this.daysWithin ? '&dateResumeLastUpdated=' + this.daysWithin : '';
-    } else {
-      req += this.daysWithin
-        ? '&dateResumeLastUpdated=' + this.daysWithin
-        : '&dateResumeLastUpdated=999';
-    }
+      if (this.isscocialprofiles) {
+        req += this.daysWithin ? '&dateResumeLastUpdated=' + this.daysWithin : '';
+      } else {
+        req += this.daysWithin
+          ? '&dateResumeLastUpdated=' + this.daysWithin
+          : '&dateResumeLastUpdated=999';
+      }
+      console.log(this.selectedEmploymenttype)
+      req += this.selectedEmploymenttype ? '&employmentType=' + this.selectedEmploymenttype.value: '';
+      req += this.selectedexcludeThirdparty ? '&excludeThirdparty=' + (this.selectedexcludeThirdparty.value) : '';
+      req += this.selectedFacets ? '&facets=' + (this.selectedFacets.value) : '';
+      req += this.selectedEmail ? '&hasEmail=' + (this.selectedEmail.value) : '';
+      req += this.selectedPhonenumber ? '&hasPhoneNumber=' + (this.selectedPhonenumber.value) : '';
+      req += this.selectedSwitch ? '&likelyToSwitch=' + (this.selectedSwitch.value) : '';
+      req += this.jobTitlekeyword ? '&jobTitleKeyword=' + (this.jobTitlekeyword) : '';
+      // req += this.skillExperience ? '&skillExperience=' + encodeURIComponent(this.skillExperience) : '';
+      req += this.likelytoMove ? '&likelyToMove=' + (this.likelytoMove) : '';
 
-    req += this.selectedEducationDegree
-      ? '&educationDegree=' + this.selectedEducationDegree.value
-      : '';
-    req += this.willingToRelocate
-      ? '&willingToRelocate=' + this.willingToRelocate
-      : '';
-    req += this.onlyWithSecurityClearance
-      ? '&onlyWithSecurityClearance=' + this.onlyWithSecurityClearance
-      : '';
-    req += this.jobTitle ? '&jobTitle=' + this.jobTitle : '';
-    const workarray = this.selectedWorkstatus.map((item) => item.value);
-    const workPermit = workarray.join(', ');
-    req += workPermit ? '&workPermit=' + workPermit : '';
-    if (this.yearsOfExp && this.yearsOfExpmin) {
-      let exp =
-        '{"min":' + this.yearsOfExpmin + ',"max":' + this.yearsOfExp + '}';
-      req += '&yearsExperience=' + encodeURIComponent(exp);
-    } else if (this.yearsOfExpmin) {
-      let exp = '{"min":' + this.yearsOfExpmin + '}';
-      req += '&yearsExperience=' + encodeURIComponent(exp);
-    } else if (this.yearsOfExp) {
-      let exp = '{"max":' + this.yearsOfExp + '}';
-      req += '&yearsExperience=' + encodeURIComponent(exp);
-    }
-    req += '&excludeThirdParty= true';
-    console.log(req);
-    this.loading = true;
-    if (this.searchRequestItem.page == undefined) {
-      let auditReq = {
-        jobBoard: 'Dice',
-        query: this.model.boolean,
-        dateTime: new Date(),
-        userName: this.cookieValue,
-      };
-      this.service.jobBoardAudit(auditReq).subscribe((x) => {});
-    }
+      req += this.selectedEducationDegree
+        ? '&educationDegree=' + this.selectedEducationDegree.value
+        : '';
+      req += this.willingToRelocate
+        ? '&willingToRelocate=' + this.willingToRelocate
+        : '';
+      req += this.onlyWithSecurityClearance
+        ? '&onlyWithSecurityClearance=' + this.onlyWithSecurityClearance
+        : '';
+      req += this.jobTitle ? '&jobTitle=' + this.jobTitle : '';
+      const workarray = this.selectedWorkstatus.map((item) => item.value);
+      const workPermit = workarray.join(', ');
+      req += workPermit ? '&workPermit=' + workPermit : '';
+      if (this.yearsOfExp && this.yearsOfExpmin) {
+        let exp =
+          '{"min":' + this.yearsOfExpmin + ',"max":' + this.yearsOfExp + '}';
+        req += '&yearsExperience=' + encodeURIComponent(exp);
+      } else if (this.yearsOfExpmin) {
+        let exp = '{"min":' + this.yearsOfExpmin + '}';
+        req += '&yearsExperience=' + encodeURIComponent(exp);
+      } else if (this.yearsOfExp) {
+        let exp = '{"max":' + this.yearsOfExp + '}';
+        req += '&yearsExperience=' + encodeURIComponent(exp);
+      }
+      console.log(req);
+      this.loading = true;
+      if (this.searchRequestItem.page == undefined) {
+        let auditReq = {
+          jobBoard: 'Dice',
+          query: this.model.boolean,
+          dateTime: new Date(),
+          userName: this.cookieValue,
+        };
+        this.service.jobBoardAudit(auditReq).subscribe((x) => { });
+      }
 
-    this.service.getDiceSearch(req, this.accessToken).subscribe((x: any) => {
-      console.log('x', x);
-      this.loading = false;
-      this.resultsFound = false;
-      let response = x;
-      this.rowData = response.data;
+      this.service.getDiceSearch(req, this.accessToken).subscribe((x: any) => {
+        console.log('x', x);
+        this.loading = false;
+        this.resultsFound = false;
+        let response = x;
+        this.rowData = response.data;
 
-      this.resultsFound = true;
-      this.totalResults = response.meta.totalCount;
-      this.rowData.map((items: any) => {
-        items.migrated = this.migratedProfiles.find(
-          (x) => x.ATSID == items.legacyIds[0]
-        )
-          ? true
-          : false;
-        if (this.showcrediterror == true) {
-          items.showmigrated = this.migratedProfiles.find(
-            (x) => x.ATSID == items.EdgeID
+        this.resultsFound = true;
+        this.totalResults = response.meta.totalCount;
+        this.rowData.map((items: any) => {
+          items.migrated = this.migratedProfiles.find(
+            (x) => x.ATSID == items.legacyIds[0]
           )
             ? true
             : false;
-        }
-        let item: any = items;
-        items.diceSkills = [];
-        for (let i = 0; i < 5; i++) {
-          items.diceSkills.push(item.skills[i] ? item.skills[i].skill : '');
-        }
-        /* item.skills.forEach((itm: any, i) => {
-                    items.diceSkills.push(itm.skill);
-                }); */
+          if (this.showcrediterror == true) {
+            items.showmigrated = this.migratedProfiles.find(
+              (x) => x.ATSID == items.EdgeID
+            )
+              ? true
+              : false;
+          }
+          let item: any = items;
+          items.diceSkills = [];
+          for (let i = 0; i < 5; i++) {
+            items.diceSkills.push(item.skills[i] ? item.skills[i].skill : '');
+          }
+          /* item.skills.forEach((itm: any, i) => {
+                      items.diceSkills.push(itm.skill);
+                  }); */
+        });
+
+        console.log('this.rowData', this.rowData);
+
       });
-
-      console.log('this.rowData', this.rowData);
-
-    });
-    }else{
+    } else {
       const request = {
         searchParameters: {
           input: this.model.jobDesc, // Use the keyword from the form
-          jobTitleKeyword : this.model.keyword, // Use the job description from the form
+          jobTitleKeyword: this.model.keyword, // Use the job description from the form
           locations: [{ value: this.selectedState }], // Use the selected state for location
           page: this.searchRequestItem.page || 1, // Use the page from the search request item or default to 1
           dateResumeLastUpdated: this.isscocialprofiles ? this.daysWithin : 999, // Use the days within for dateResumeLastUpdated or default to 999
           educationDegree: this.selectedEducationDegree?.value, // Use the selected education degree value
           willingToRelocate: this.willingToRelocate,
           onlyWithSecurityClearance: this.onlyWithSecurityClearance,
-          jobTitle:this.jobTitle,
+          jobTitle: this.jobTitle,
           workPermit: this.selectedWorkstatus.map(item => item.value).join(', '), // Use the selected work status values joined by comma
           // yearsExperience: this.constructYearsExperience(), // Construct years of experience object
-          excludeThirdParty: true // Exclude third party profiles
+          employmentType: this.selectedEmploymenttype?.value,
+          excludeThirdparty: this.selectedexcludeThirdparty?.value || true,
+          facets: this.selectedFacets?.value,
+          hasEmail: this.selectedEmail?.value,
+          hasPhoneNumber: this.selectedPhonenumber?.value,
+          likelyToSwitch: this.selectedSwitch?.value,
+          jobTitlekeyboard: this.jobTitlekeyword,
+          // skillExperience: this.skillExperience,
+          likelyToMove: this.likelytoMove
+
         }
       };
-  
+
       console.log('Request:', request);
-  
+
       if (this.model.jobDesc.length < 150) {
         alert("Job description should be 150 characters or above.");
-      }else{
+      } else {
         this.loading = true;
         this.service.getDiceIntelliSearch(request, this.accessToken).subscribe(
           (response: any) => {
@@ -830,7 +910,7 @@ export class SearchResumesDiceComponent implements OnInit {
               item.migrated = this.migratedProfiles.find(x => x.ATSID == item.legacyIds[0]) ? true : false;
               if (this.showcrediterror == true) {
                 item.showmigrated = this.migratedProfiles.find(x => x.ATSID == item.EdgeID) ? true : false;
-            }
+              }
               item.diceSkills = item.skills ? item.skills.map((skill: { skill: any; }) => skill.skill) : [];
             });
           },
@@ -841,10 +921,10 @@ export class SearchResumesDiceComponent implements OnInit {
         );
 
       }
-  
-     
+
+
     }
-    
+
   }
 
   private constructYearsExperience(): string {

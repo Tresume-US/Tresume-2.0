@@ -1,1 +1,611 @@
-<div>Edit Page</div>
+<div class="header border">
+    <div class="container">
+      <div class="row main pt-3 pl-3">
+        <h2>EDIT JOB</h2>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs" #myTabs>
+            <li class="nav-item">
+              <a class="nav-link {{basicactive}}" id="basicinfo-tab" data-toggle="tab" href="#basicinfo" role="tab"
+                aria-controls="basicinfo" aria-selected="true">Basic info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{reqactive}}" id="requirementinfo-tab" data-toggle="tab" href="#requirementinfo"
+                role="tab" aria-controls="requirementinfo" aria-selected="false">Requirement information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{orginfoactive}}" id="organizationalinfo-tab" data-toggle="tab"
+                href="#organizationalinfo" role="tab" aria-controls="organizationalinfo"
+                aria-selected="false">Organizational information</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{previewinfo}}" id="previewinfo-tab" data-toggle="tab" href="#preview" role="tab"
+                aria-controls="previewinfo" aria-selected="false">Preview Information</a>
+            </li>
+          </ul>
+  
+          <!-- Content for the Basic Info Tab -->
+          <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="basicinfo" role="tabpanel" aria-labelledby="basicinfo-tab">
+              <br>
+              <div class="container">
+                <form >
+                  <div class="row">
+                    <div class="col-md-4 form-group text-center">
+                      <label for="basicinfo1">Company Name *</label>
+                      <!-- <input type="text" class="form-control" id="basicinfo1" [(ngModel)]="companyname"
+                        [ngModelOptions]="{ standalone: true }" placeholder="Ex.Tresume" > -->
+                      <input type="text" class="form-control" id="basicinfo1" placeholder="Ex.Tresume"
+                       [(ngModel)]="companyname" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <br>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">Job Code</label>
+                      <input type="text" class="form-control" id="basicinfo" [(ngModel)]="jobcode"
+                      [ngModelOptions]="{ standalone: true }" disabled>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">Job Title *</label>
+                      <input type="text" class="form-control" id="jobtitle" placeholder="Ex. QA Lead *"
+                      [(ngModel)]="jobtitle" [ngModelOptions]="{ standalone: true }">
+    
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">Country</label>
+                      <select [(ngModel)]="selectedCountry" name="country" id="country" class="form-control" [ngModelOptions]="{standalone: true}">
+                        <option value="US">USA</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">State *</label>
+                      <select class="form-control" name="State" [(ngModel)]="selectedstate"
+                      [ngModelOptions]="{ standalone: true }" (change)="getCity()">
+                      <option value="0" selected>Select State</option>
+                      <option *ngIf="selectedstate" [ngValue]="selectedstate">{{selectedstate}}</option>
+                      <option *ngFor="let data of state" [value]="data.state">
+                        {{ data.state }}
+                      </option>
+                    </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">City *</label>
+                      <select [(ngModel)]="selectedCity" name="city" id="city" class="form-control">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngIf="selectedCity" [ngValue]="selectedCity">{{selectedCity}}</option>
+                        <option *ngFor="let city of cities" [value]="city.city">{{ city.city }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">Zipcode</label>
+                      <input type="text" class="form-control" id="basicinfo" [(ngModel)]="zipcode"
+                        placeholder="Ex. 98001" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="basicinfo">Area code</label>
+                      <input type="text" class="form-control" id="basicinfo" [(ngModel)]="citycode"
+                        [ngModelOptions]="{ standalone: true }" placeholder="Ex. 980">
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="address">Address</label>
+                      <textarea class="form-control" id="address" rows="4" [(ngModel)]="address"
+                        [ngModelOptions]="{ standalone: true }" placeholder="Enter your address here"></textarea>
+                    </div>
+                    <div class="row">
+                      <div class="col text-end">
+                        <button class="btn" role="tab" aria-controls="requirementinfo" aria-selected="false"
+                          data-toggle="tab" href="#requirementinfo" (click)="nextTab(2)">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Content for the Requirement Information Tab -->
+            <div class="tab-pane fade" id="requirementinfo" role="tabpanel" aria-labelledby="requirementinfo-tab">
+              <form >
+                <div class="row ">
+                  <div class="col-md-4 text-center">
+                    <label class="post_jobs_contant post_jobs_font_clr" >Client Bill Rate/Salary</label>
+                    <div class="row ">
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedcCurrency" [ngModelOptions]="{ standalone: true }" name="currency" id="currency" class="form-control">
+                            <option *ngFor="let currency of currencies" [value]="currency.CurrencyID">{{ currency.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <input name="BillRate" type="text"  [(ngModel)]="billrate"
+                          [ngModelOptions]="{ standalone: true }" maxlength="500" id="cBillRate" 
+                            class="form-control post_jobs_contant" placeholder="Bill Rate">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedcPayType" [ngModelOptions]="{ standalone: true }" name="payType" id="payType" class="form-control">
+                            <option value="0">Select</option>
+                            <option *ngFor="let payType of payTypes" [value]="payType.PayTypeID">{{ payType.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedcTaxTerms" name="taxTerm" id="taxTerm" class="form-control">
+                            <option value="0">Select</option>
+                            <option *ngFor="let term of taxTerms" [value]="term.TaxTermID">{{ term.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4 text-center">
+                    <label class="post_jobs_contant post_jobs_font_clr">Pay Rate / Salary</label>
+                    <div class="row ">
+                      <div class="col-md-6">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedCurrency" name="currency" id="currency" class="form-control">
+                            <option *ngFor="let currency of currencies" [value]="currency.CurrencyID">{{ currency.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+  
+  
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <input name="PayRate" type="text" maxlength="500" id="PayRate" [(ngModel)]="payrate"
+                          [ngModelOptions]="{ standalone: true }"
+                            class="form-control post_jobs_contant" placeholder="Pay Rate">
+  
+  
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedPayType" name="payType" id="payType" class="form-control">
+                            <option value="0">Select</option>
+                            <option *ngFor="let payType of payTypes" [value]="payType.PayTypeID">{{ payType.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+  
+                      <div class="col-md-6 ">
+                        <div class="form-group text-center">
+                          <select [(ngModel)]="selectedTaxTerms" name="taxTerm" id="taxTerm" class="form-control">
+                            <option value="0">Select</option>
+                            <option *ngFor="let term of taxTerms" [value]="term.TaxTermID">{{ term.Value }}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-4 text-center">
+                    <div class="col-md-6 ">
+                      <label for="RespondBy">Open Till *</label>
+                      <input type="date" class="form-control" [(ngModel)]="selectedRespondBy" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="JobType">Job Type</label>
+                      <select [(ngModel)]="selectedJobType" [ngModelOptions]="{ standalone: true }" name="JobType" id="JobType" class="form-control">
+                        <option value="0">Select</option>
+                        <option *ngFor="let option of jobTypeOptions" [value]="option.JobTypeID">{{ option.Value }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">  
+                      <label class="post_jobs_contant post_jobs_font_clr">Priority</label>
+                      <br>
+                      <select [(ngModel)]="selectedPriority" [ngModelOptions]="{ standalone: true }" name="Priority" id="Priority" class="form-control">
+                        <option value="">Select</option>
+                        <option *ngFor="let option of priorityOptions" [value]="option.PriorityID">{{ option.Value }}</option>
+                      </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Job Status *</label>
+                      <!-- <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control" (change)="onJobStatusChange($event.target.value)"></select> -->
+                      <select [(ngModel)]="selectedJobStatus" [ngModelOptions]="{ standalone: true }" name="JobStatus" id="JobStatus" class="form-control">
+                        <option value="">Select</option>
+                        <option *ngFor="let option of jobStatusOptions" [value]="option.JobStausID">{{ option.Value }}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Client</label>
+                      <br>
+                      <select [(ngModel)]="selectedClient" [ngModelOptions]="{ standalone: true }" name="client" id="client" class="form-control">
+                        <option value="">Select</option>
+                        <option *ngFor="let option of clientOptions" [value]="option.ClientID">{{ option.ClientName }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="reqinfo">End Client</label>
+                      <input type="text" class="form-control" id="basicinfo" placeholder="End Client" [(ngModel)]="endclient" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="reqinfo">Client Job ID</label>
+                      <input type="text" class="form-control" id="clientjobid" placeholder="Client Job ID" [(ngModel)]="clientjobid" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label for="reqinfo">Duration</label>
+                      <input type="text" class="form-control" id="duration" placeholder="Duration" [(ngModel)]="duration" [ngModelOptions]="{ standalone: true }">
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Interview Mode</label>
+                      <br>
+                      <select [(ngModel)]="selectedInterviewMode" [ngModelOptions]="{ standalone: true }" name="interviewmode" id="interviewmode"
+                        class="form-control">
+                        <option *ngFor="let option of interviewModeOptions" [value]="option.value">{{ option.label }}
+                        </option>
+                      </select>
+  
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Minimum Experience(in yrs)</label>
+                      <div>
+                        <input type="text" placeholder="0" [(ngModel)]="selectedExperience" [ngModelOptions]="{ standalone: true }" name="minimumexperience" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Legal Status *</label>
+                      <br>
+                      <div class="col-md-4 multiSelect">
+                        <p-multiSelect [options]="statusOptions" [(ngModel)]="selectedLegalstatus" [ngModelOptions]="{ standalone: true }" optionLabel="name" (onChange)="onChange($event)">
+                    </p-multiSelect>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Ex. Java Programming, singing, cooking</label>
+                      <br>
+                      <textarea name="Skills" id="RecruiterContent_txtSkills" rows="4" class="form-control"
+                        placeholder="Skills: (comma seperated skills)" [(ngModel)]="skills" [ngModelOptions]="{ standalone: true }"></textarea>
+  
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group text-center">
+                      <label class="post_jobs_contant post_jobs_font_clr">Security Clearance</label>
+                        <div class="radio">
+                          <label>
+                            <input [(ngModel)]="securityClearance" value="1" name="securityClearance" type="radio" id="ClearanceYes"
+                                  class="post_jobs_contant radio-btn01">
+                            Yes
+                          </label>
+                          &nbsp;&nbsp;
+                          <label>
+                            <input [(ngModel)]="securityClearance" value="0" name="securityClearance" type="radio" id="ClearanceNo"
+                                  class="post_jobs_contant radio-btn01">
+                            No
+                          </label>
+                        </div>
+  
+                      <div class="col text-end">
+                        <button class="btn" data-toggle="tab" href="#organizationalinfo" role="tab"
+                          aria-controls="organizationalinfo" aria-selected="false" (click)="nextTab(3)">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+  
+            <!-- Content for the Organizational Information Tab -->
+            <div class="tab-pane fade" id="organizationalinfo" role="tabpanel" aria-labelledby="organizationalinfo-tab">
+              <div class="container-1">
+                <form >
+                  <div class="row">
+                    <div class="col-xl-4">
+                      <div class="form-group">
+                        <label for="numberOfPositions">Number of Positions <span class="text-dark">*</span></label>
+                        <input type="number" id="numberOfPositions" class="form-control" placeholder="no of Positions"
+                        [(ngModel)]="numberOfPositions" [ngModelOptions]="{ standalone: true }">
+                  
+                      </div>
+                    </div>
+                    <div class="col-xl-4">
+                      <div class="form-group">
+                        <label for="taxTerms">Tax Terms <span class="text-dark">*</span></label>
+                        <select id="taxTerms" class="form-control" [(ngModel)]="internaltaxterms" [ngModelOptions]="{ standalone: true }">
+                          <option value="">Select</option>
+                          <option *ngFor="let term of taxTerms" [value]="term.TaxTermID"> {{ term.Value }} </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group text-start">
+                        <label class="post_jobs_contant post_jobs_font_clr">Primary recruiter *</label>
+                        <select name="JobStatus" id="JobStatus"
+                          class="form-control" [(ngModel)]="selectedPrimaryRecruiter" [ngModelOptions]="{ standalone: true }">
+                          <option value="">Select Primary recruiter</option>
+                          <option *ngFor="let option of RecruiterStatusOptions" [value]="option.TraineeID">{{ option.FirstName}} {{option.LastName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="recruitmentManager">Recruitment Manager</label>
+                        <select id="recruitmentManager" class="form-control" [(ngModel)]="recruitmentmanager" [ngModelOptions]="{ standalone: true }">
+                          <option value="">Select Recruitment Manager</option>
+                          <option *ngFor="let option of admins" [value]="option.TraineeID">{{ option.FirstName
+                          }} {{option.LastName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="salesManager">Sales Manager</label>
+                        <select id="salesManager" class="form-control" [(ngModel)]="salesmanager" [ngModelOptions]="{ standalone: true }">
+                          <option value="">Select Sales Manager</option>
+                          <option *ngFor="let option of admins" [value]="option.TraineeID">{{ option.FirstName
+                          }} {{option.LastName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="accountManager">Account Manager</label>
+                        <select id="accountManager" class="form-control" [(ngModel)]="accountsmanager" [ngModelOptions]="{ standalone: true }">
+                          <option value="">Selected Accounts Manager</option>
+                          <option *ngFor="let option of admins" [value]="option.TraineeID">{{ option.FirstName
+                          }} {{option.LastName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group text-start">
+                        <label class="post_jobs_contant post_jobs_font_clr">Comments</label>
+                        <textarea name="RecruiterContent" id="RecruiterContent" rows="4" class="form-control"
+                          placeholder="Comments" [(ngModel)]="comments" [ngModelOptions]="{ standalone: true }"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <label class="post_jobs_contant post_jobs_font_clr">Job Description *</label>
+                      <p-editor [style]="{'height':'320px', 'width':'100%'}"
+                        placeholder="Enter the email content to be sent" [(ngModel)]="JobDescription" [ngModelOptions]="{ standalone: true }"></p-editor>
+                    </div>
+                    <div class="col" *ngIf="jobbaordaccount.length >= 1">
+                      <div class="col post-job-boards">
+  
+                        <h4>Post on job Boards</h4>
+                        <div *ngFor="let data of jobbaordaccount; let i = index">
+                          <!-- <label>
+                            <input type="checkbox" (change)="JobboardSelection(data)" [(ngModel)]="data.Active"> {{
+                            data.AccountName
+                            }}
+                          </label> -->
+                          <mat-checkbox [(ngModel)]="data.Active" (ngModelChange)="JobboardSelection(data)" [ngModelOptions]="{standalone: true}">
+                            {{data.AccountName}}
+                          </mat-checkbox>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+  
+                    
+                  </div>
+                  <div class="row">
+                    <div class="row col-md-3">
+                      <button class="btn m-2" data-toggle="tab" href="#preview" role="tab" aria-controls="previewinfo"
+                        aria-selected="false" (click)="nextTab(4)">Preview Job</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+  
+            <!-- Preview Information -->
+            <div class="tab-pane" id="preview">
+              <div class="container row">
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    <span id="RecruiterContent_lblJobTitle" class="theme-color">Job Code - 1324</span>
+                  </h2>
+                </div>
+              </div>
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                  <strong style="color: #b62b70;">BASIC INFORMATION</strong>
+                  <address>
+  
+                    <strong>COMPANY NAME:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{companyname}}</span><br>
+  
+                    <strong>JOB TITLE:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{jobtitle}}</span><br>
+  
+                    <strong>COUNTRY:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{selectedCountry}}</span><br>
+  
+                    <strong>STATE:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{ selectedstate}}</span><br>
+  
+                    <strong>CITY:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{selectedCity}}</span><br>
+  
+                    <strong>ZIP CODE:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{zipcode}}</span><br>
+  
+                    <strong>CITY CODE:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{citycode}}</span><br>
+  
+                    <strong>ADDRESS:</strong><span id="RecruiterContent_lblLocation" style="font-size: 15px;">
+                      {{address}}</span><br>
+                  </address>
+                </div>
+                <div class="col-sm-4 invoice-col">
+                  <strong style="color: #b62b70;">REQUIREMENT INFORMATION:</strong>
+                  <address>
+                    <strong>MIN. EXPERIENCE :</strong><span
+                      id="RecruiterContent_lblMinExp">{{selectedExperience}}</span><br>
+                    <strong>Job Status :</strong><span id="RecruiterContent_lblJobStatus">{{selectedJobStatus.Value}}</span><br>
+                    <strong>Legal Status:</strong>
+                    <span id="RecruiterContent_lblLegalStatus">
+                      <div *ngFor="let data of selectedLegalstatus">
+                        {{data.value}}
+                      </div>
+                    </span><br>
+                    <strong>Pay Rate :</strong>
+                    <span id="RecruiterContent_lblPay"></span>{{payrate}}<br>
+                    <strong>Bill Rate :</strong>
+                    <span id="RecruiterContent_lblBill">{{billrate}}</span><br>
+                  </address>
+                </div>
+                <!-- <div class="col-sm-4 invoice-col">
+                  <h4>ORGANIZATIONAL INFORMATION</h4>
+                  <address>
+                    <span id="RecruiterContent_lblAssignedTo">Assigned To - {{selectedPrimaryRecruiter}} </span><br>
+                  </address>
+                </div> -->
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <strong style="color: #b62b70;">JOB DESCRIPTION :</strong>
+                 
+                  <div id="RecruiterContent_divJobDetails">
+                    <p [innerHTML]="JobDescription"></p>
+                  </div>
+                  
+                  <div class="container mt-3">
+                    <div class="row">
+                      <div class="col text-right mt-3">
+                        <button class="btn m-2" role="tab" aria-controls="basicinfo" aria-selected="true"
+                          data-toggle="tab" href="#basicinfo" (click)="nextTab(1)">Continue Editing</button>
+                        <button class="btn m-2" (click)="PostJob(2)">Draft Job</button>
+                        <!-- <button class="btn m-2" (click)="PostJob(1)">Post Job</button> -->
+                        <button class="btn m-2" (click)="UpdateJob(3)">Update</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <p-toast position="bottom-right"></p-toast>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+
+
+
+<!-- <div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="selectedTab === 'basic-info'" (click)="selectTab('basic-info')">Basic Information</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="selectedTab === 'requirement-info'" (click)="selectTab('requirement-info')">Requirement Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="selectedTab === 'organization-info'" (click)="selectTab('organization-info')">Organization Info</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="selectedTab === 'preview'" (click)="selectTab('preview')">Preview</a>
+      </li>
+    </ul>
+  
+    <div [ngSwitch]="selectedTab">
+      <div *ngSwitchCase="'basic-info'">
+        <h3>Basic Information</h3>
+        <button (click)="onContinue('requirement-info')">Continue</button>
+      </div>
+      <div *ngSwitchCase="'requirement-info'">
+        <h3>Requirement Info</h3>
+        <button (click)="onContinue('organization-info')">Continue</button>
+      </div>
+      <div *ngSwitchCase="'organization-info'">
+        <h3>Organization Info</h3>
+        <button (click)="onContinue('preview')">Preview</button>
+      </div>
+      <div *ngSwitchCase="'preview'">
+        <h3>Preview</h3>
+        <button (click)="selectTab('basic-info')">Continue Editing</button>
+        <button (click)="draftJob()">Draft Job</button>
+        <button (click)="postJob()">Post Job</button>
+      </div>
+    </div>
+  </div>
+   -->

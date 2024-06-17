@@ -12,7 +12,9 @@ const envconfig = require(`./config.${environment}.js`);
 const apiUrl = envconfig.apiUrl;
 router.use(bodyparser.json());
 const fs = require('fs');
-
+const app = express();
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 const config = {
   user: "sa",
   password: "Tresume@123",
@@ -50,6 +52,7 @@ router.post('/getJobPostingList', async (req, res) => {
           J.company AS Company, 
           CONCAT(J.city, ', ', J.state, ', ', J.country) AS Location, 
           J.payrate AS PayRate, 
+          J.JobDescription AS JobDescription, 
           SUM(CASE WHEN JA.Status = 'NEW' THEN 1 ELSE 0 END) AS NewApplicants, 
           COUNT(CASE WHEN JA.Status <> 'DELETED' THEN 1 ELSE NULL END) AS TotalApplicants, 
           J.createtime AS PostedOn, 
@@ -68,7 +71,7 @@ router.post('/getJobPostingList', async (req, res) => {
           ${recruiterCondition}
           AND J.Active = 1 
         GROUP BY 
-          J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate, 
+          J.JobID, J.jobtitle, J.company, J.city, J.state, J.country, J.payrate,   J.JobDescription,
           J.createtime, T.FirstName, T.LastName, T2.TraineeID, JT.Value, T2.FirstName, J.JobStatus 
         ORDER BY 
           J.createtime DESC;
@@ -560,7 +563,183 @@ function generateBatchFile(reqBody) {
   return batchContent;
 }
 
+router.post('/JdEmailSent', async (req, res) => {
+  const { to, subject, content } = req.body;
+  try {
+    // Connecting to SQL Server
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = `SELECT username FROM trainee WHERE traineeid = 1`; // Static ID for example purposes
+
+    console.log(query);
+    const result = await request.query(query);
+    const recipientEmail = result.recordset[0].username;
+    console.log(recipientEmail);
+
+    // Nodemailer configuration
+    const transporter = nodemailer.createTransport({
+      port: 465,
+      host: "smtp.mail.yahoo.com",
+      auth: {
+        user: "support@tresume.us",
+        pass: "xzkmvglehwxeqrpd",
+      },
+      secure: true,
+    });
+
+    // Sample email content
+    const mailOptions = {
+      from: 'support@tresume.us',
+      to: to,
+      subject: subject,
+      html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Tresume</title>
+      <style>
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: Roboto, Arial, sans-serif;
+          }
+          .container {
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+          }
+          .header {
+              text-align: center;
+              background-color: #49274a;
+              padding: 20px 0;
+       
+          }
+          .logo {
+              display: block;
+              margin: 0 auto;
+          }
+          .content {
+              padding: 40px 20px;
+              background-color: #f7f9fa;
+              border-top-left-radius: 50px;
+              border-top-right-radius: 50px;
+          }
+          .footer {
+              text-align: center;
+              background-color: #e7e7e7;
+              padding: 20px 0;
+              border-bottom-left-radius: 50px;
+              border-bottom-right-radius: 50px;
+          }
+          .footer p {
+              font-size: 12px;
+              color: #8d8d8d;
+          }
+          .footer img {
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 5px;
+          }
+      </style>
+      </head>
+      <body style="background-color: #49274a;">
+      <div class="container">
+          <div class="header">
+              <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
+          </div>
+          <div class="content" style="font-size:16px;">
+          ${content}
+          </div>
+          <div class="footer">
+              <p>POWERED BY <img src="https://tresume.us/assets/img/logo.png" alt="Tresume Logo" height="30"></p>
+              <p> 44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
+              <p>(703) 9863350 | support@tresume.us </p>
+              <p style="font-weight: bold; font-size: 12px; color: #a4a4a4;">© 2024 Tresume. Ltd. All rights reserved</p>
+          </div>
+      </div>
+      </body>
+      </html>
+      `,
 
 
+    };
+
+    // Sending the email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    res.send({ flag: 1, Message: 'Email sent successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to send email');
+  }
+});
+
+router.post('/GetJobsbyJobID', async (req, res) => {
+  try {
+    sql.connect(config, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Database connection error' });
+      }
+
+      const query = `select * from job where jobid = ${req.body.JobID}`;
+
+      console.log(query);
+      
+      const request = new sql.Request();
+      const recordset = await request.query(query);
+      const result = {
+        flag: 1,
+        result: recordset.recordsets[0],
+      };
+
+      res.send(result);
+    });
+  } catch (error) {
+    console.error(error);
+    const result = {
+      flag: 0,
+      message: 'Internal server error',
+    };
+    return res.send(result);
+  }
+});
+
+
+router.post("/UpdateJob", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
+    // request.input('Id', sql.Int, req.body.Id);
+
+    const query = "UPDATE Job SET RecruiterID ='"+ req.body.RecruiterID+"', OrgID = '"+ req.body.OrgID+"', JobTitle = '"+ req.body.JobTitle+"', Company = '"+ req.body.Company+"', City = '"+ req.body.City+"', State = '"+ req.body.State+"', Country = '"+ req.body.Country+"', ZipCode = '"+ req.body.ZipCode+"', Address = '"+ req.body.Address+"', AreaCode = '"+ req.body.AreaCode+"', JobDescription = '"+ req.body.JobDescription+"', Skills = '"+ req.body.Skills+"', JobCode = '"+ req.body.JobCode+"', PayRate = '"+ req.body.PayRate+"', PayRateTypeID = '"+ req.body.PayRateTypeID+"', PayRateCurrencyTypeID = '"+ req.body.PayRateCurrencyTypeID+"',  PayRateTaxTermID = '"+ req.body.PayRateTaxTermID+"', BillRate = '"+ req.body.BillRate+"', BillRateTypeID = '"+ req.body.BillRateTypeID+"', BillRateCurrencyTypeID = '"+ req.body.BillRateCurrencyTypeID+"', BillRateTaxTermID = '"+ req.body.BillRateTaxTermID+"', JobTypeID = '"+ req.body.JobTypeID+"', LegalStatus = '"+ req.body.LegalStatus+"', NoOfPosition = '"+ req.body.NoOfPosition+"', RespondDate = '"+ req.body.RespondDate+"', ClientID = '"+ req.body.ClientID+"', EndClient = '"+ req.body.EndClient+"', ClientJobID = '"+ req.body.ClientJobID+"', PriorityID = '"+ req.body.PriorityID+"', Duration = '"+ req.body.Duration+"', InterviewMode = '"+ req.body.InterviewMode+"', SecruityClearance = '"+ req.body.SecruityClearance+"', PrimaryRecruiterID = '"+ req.body.PrimaryRecruiterID+"', RecruitmentManagerID = '"+ req.body.RecruitmentManagerID+"', SalesManagerID = '"+ req.body.SalesManagerID+"', AccountManagerID = '"+ req.body.AccountManagerID+"', TaxTermID = '"+ req.body.TaxTermID+"', Comments = '"+ req.body.Comments+"', Active = '"+ req.body.Active+"', LastUpdateBy = '"+ req.body.LastUpdateBy+"', MinYearsOfExpInMonths = '"+ req.body.MinYearsOfExpInMonths+"', JobStatus = '"+ req.body.JobStatus+"' WHERE JobID = '"+ req.body.JobID+"';"
+
+
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] > 0) {
+      const response = {
+        flag: 1,
+      };
+      res.send(response);
+    } else {
+      const response = {
+        flag: 0,
+        error: "No records were Updated.",
+      };
+      res.send(response);
+    }
+  } catch (error) {
+    console.error("Error Update status:", error);
+    const response = {
+      flag: 0,
+      error: "An error occurred while Update!",
+    };
+    res.status(500).send(response);
+  }
+});
 module.exports = router;
 

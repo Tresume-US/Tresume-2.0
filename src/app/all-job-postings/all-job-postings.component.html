@@ -18,7 +18,6 @@
       <input type="text" id="searchInput" class="form-control">
     </div>
     <table>
-
       <thead>
         <tr>
           <th>Job Title</th>
@@ -35,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let job of jobs">
+        <tr *ngFor="let job of jobs" (click)="openJobDescriptionModal(job)">
           <td>{{ job.JobTitle }} {{job.JobID}}</td>
           <td>{{ job.Company }}</td>
           <td>{{ job.Location }}</td>
@@ -59,17 +58,23 @@
           </select>
           </td>
           <td>
-            <span data-toggle="tooltip" data-placement="bottom" title="Edit">
+            <span data-toggle="tooltip" data-placement="bottom" title="Edit"  *ngIf="usertype === 'RECRUITER'">
               <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
               <a [routerLink]="['/recruitersview', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
+            </span>
+            <span data-toggle="tooltip" data-placement="bottom" title="Edit" *ngIf="usertype === 'TRESUMEUSER'" >
+              <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
+              <a [routerLink]="['/', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
             </span>
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
               <i class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
-            <span data-toggle="tooltip" data-placement="bottom" title="mail">
+            <span data-toggle="tooltip" data-placement="bottom" title="mail"  (click)="openEmailModal(job.JobTitle, job.JobID,job.JobDescription)">
               <i class="fa fa-envelope" data-toggle="modal" data-target="#exampleModal"></i>
             </span>
+
+        
           </td>
         </tr>
         <tr *ngIf="noResultsFound">
@@ -79,6 +84,14 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div id="jobDescriptionModal" class="modal" [ngClass]="{'show': isModalOpen}" (click)="closeJobDescriptionModal($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeJobDescriptionModal($event)">&times;</span>
+    <h4 class="modal-title">Job Description</h4>
+    <p>{{ selectedJob?.JobDescription }}</p>
   </div>
 </div>
 
@@ -119,12 +132,12 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="recipient-email" class="col-form-label">Recipient Email:</label>
-          <input type="email" class="form-control" id="recipient-email" formControlName="email">
+          <input type="email" class="form-control" id="recipient-email" [(ngModel)]="recipientEmail">
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">Save changes</button>
-        <button type="button" class="btn " data-dismiss="modal">Close</button>
+        <button type="button" class="btn" data-dismiss="modal"  (click)="sendEmail()" [disabled]="!recipientEmail">Send mail</button>
+        <button type="button" class="btn " data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

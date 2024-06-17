@@ -24,4 +24,11 @@ export class AboutComponent implements OnInit {
   toggleNavbar() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
+
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+  
 }

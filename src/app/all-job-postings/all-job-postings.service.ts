@@ -26,6 +26,10 @@ export class AllJobPostingsService {
     deleteJobPost(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'deleteJobPost', request);
     }
+   
+    JdEmailSent(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'JdEmailSent', request);
+    }
 }
 export interface ResponseDetails {
     flag?: any;
