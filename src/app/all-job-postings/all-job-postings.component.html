@@ -34,20 +34,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let job of jobs" (click)="openJobDescriptionModal(job)">
-          <td>{{ job.JobTitle }} {{job.JobID}}</td>
-          <td>{{ job.Company }}</td>
-          <td>{{ job.Location }}</td>
-          <td>{{ job.PayRate }}</td>
-          <td>{{ job.NewApplicants }}</td>
-          <td>
+        <tr *ngFor="let job of jobs">
+          <td (click)="openJobDescriptionModal(job)">{{ job.JobTitle }} {{job.JobID}}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.Company }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.Location }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.PayRate }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.NewApplicants }}</td>
+          <td (click)="openJobDescriptionModal(job)">
             {{ job.TotalApplicants }}
             <a [routerLink]="['/applicantdetails/'+job.JobID]">
               <i class="fas fa-external-link-alt"></i></a>
           </td>
-          <td>{{ job.PostedOn | date:'MM/dd/yy' }}</td>
-          <td>{{ job.PostedBy }}</td>
-          <td>{{ job.JobType }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.PostedOn | date:'MM/dd/yy' }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.PostedBy }}</td>
+          <td (click)="openJobDescriptionModal(job)">{{ job.JobType }}</td>
           <td>
             <!-- <select [(ngModel)]="selectedRole">
             <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
@@ -64,7 +64,7 @@
             </span>
             <span data-toggle="tooltip" data-placement="bottom" title="Edit" *ngIf="usertype === 'TRESUMEUSER'" >
               <!-- <a [routerLink]="['/Myjobs/createnewjob']"><i class="fas fa-pencil-alt"></i></a> -->
-              <a [routerLink]="['/', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
+              <a [routerLink]="['/', job.JobID]"><i class="fas fa-eye"></i></a>
             </span>
             <!-- <a [routerLink]="['/submitted-candidates', job.JobID]"><i class="fas fa-id-badge"></i></a> -->
             <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
@@ -90,8 +90,8 @@
 <div id="jobDescriptionModal" class="modal" [ngClass]="{'show': isModalOpen}" (click)="closeJobDescriptionModal($event)">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <span class="close" (click)="closeJobDescriptionModal($event)">&times;</span>
-    <h4 class="modal-title">Job Description</h4>
-    <p>{{ selectedJob?.JobDescription }}</p>
+    <h3 class="modal-title">Job Description</h3>
+    <p [innerHTML]="getSanitizedJobDescription(selectedJob?.JobDescription)"></p>
   </div>
 </div>
 

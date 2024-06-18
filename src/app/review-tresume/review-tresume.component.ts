@@ -1331,39 +1331,36 @@ this.loading = true;
     this.showmovetotalentbench = false;
   }
 
-  movetotalentbench(){
-
+  movetotalentbench() {
     let Req = {
-      TraineeID: this.candidateID,
-      Name:this.firstName +' '+this.lastName,
-      ReferredBy:this.ReferredBy2,
-      Currency:this.Currency,
-      BillRate:this.BillRate,
-      PayType:this.PayType,
-      TaxTerm:this.TaxTerm,
-      ConsultantType:this.ConsultantType,
-      JobTitle:this.title,
-      LocationPreference:this.selectedstate,
-      BenchStatus:'ACTIVEBENCH',
-      Availability:this.Availability,
-      txtComments:this.txtComments,
-      CreateBy:this.userName
-      
+      TraineeID: this.candidateID || '',
+      Name: (this.firstName || '') + ' ' + (this.lastName || ''),
+      ReferredBy: this.ReferredBy2 || '',
+      Currency: this.Currency || '',
+      BillRate: this.BillRate || 0,
+      PayType: this.PayType || '',
+      TaxTerm: this.TaxTerm || '',
+      ConsultantType: this.ConsultantType || '',
+      JobTitle: this.title || '',
+      LocationPreference: this.selectedstate || '',
+      BenchStatus: 'ACTIVEBENCH',
+      Availability: this.Availability || '',
+      txtComments: this.txtComments || '',
+      CreateBy: this.userName || ''
     };
-
- this.service.MoveToTalentBench(Req).subscribe(
+  
+    this.service.MoveToTalentBench(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
-        this.cancelMoveTB()
+        this.cancelMoveTB();
       },
       (error: any) => {
         this.handleError(error);
-        this.cancelMoveTB()
+        this.cancelMoveTB();
       }
     );
-
-
   }
+  
 
   movetoBack(){
     if(this.routeType == 1){

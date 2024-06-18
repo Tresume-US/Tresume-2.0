@@ -1,4 +1,4 @@
-<div class="header border">
+<div class="header border"  *ngIf="usertype === 'RECRUITER'"  >
     <div class="container">
       <div class="row main pt-3 pl-3">
         <h2>EDIT JOB</h2>
@@ -609,3 +609,36 @@
     </div>
   </div>
    -->
+
+
+   <div class="col-md-12 p-4"   *ngIf="usertype !== 'RECRUITER'" >
+    <div class="container">
+      <h2 class="text-center"><u>Job Details</u></h2>
+    
+      <div class="row">
+        <div class="col-md-6">
+          <h3>BASIC INFORMATION</h3>
+          <p *ngIf="jobtitle"><strong>Job Title:</strong> {{ jobtitle }}</p>
+          <p *ngIf="companyname"><strong>Company Name:</strong> {{ companyname }}</p>
+          <p *ngIf="selectedCity"><strong>City:</strong> {{ selectedCity }}</p>
+          <p *ngIf="selectedstate"><strong>State:</strong> {{ selectedstate }}</p>
+          <p *ngIf="zipcode"><strong>Zip Code:</strong> {{ zipcode }}</p>
+          <p *ngIf="address"><strong>Address:</strong> {{ address }}</p>
+          <p *ngIf="JobDescription"><strong>Job Description:</strong></p>
+          <p *ngIf="JobDescription" [innerHTML]="getSanitizedJobDescription(JobDescription)"></p>
+        </div>
+        <div class="col-md-6">
+          <h3>REQUIREMENT INFORMATION</h3>
+          <p *ngIf="selectedExperience"><strong>Minimum Experience:</strong> {{ selectedExperience }}</p>
+          <p *ngIf="selectedJobStatus"><strong>Job Status:</strong> {{ selectedJobStatus }}</p>
+          <p *ngIf="selectedLegalstatus"><strong>Legal Status:</strong> {{ selectedLegalstatus }}</p>
+          <p *ngIf="billrate"><strong>Bill Rate:</strong> {{ billrate }}</p>
+          <p *ngIf="payrate"><strong>Pay Rate:</strong> {{ payrate }}</p>
+          </div>
+      </div>
+    
+    
+   </div>
+
+
+  
