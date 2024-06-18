@@ -1,7 +1,11 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 #team {
-    background: #eee !important;
+    // background: #eee !important;
+    background-color: #202020 !important;
+   
+ 
+    
 }
 
 
@@ -235,11 +239,11 @@ section .section-title {
   #keyFeatures span:nth-child(26) { animation-delay: 2.6s; }
   #keyFeatures span:nth-child(27) { animation-delay: 2.7s; }
   .down {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     font-style: inherit;
     text-align: center;
-    font-size: 22px;
+    // font-size: 22px;
     color: #676a6a;
     line-height: 1.5rem;
   }
@@ -252,123 +256,214 @@ section .section-title {
   .space {
     margin-right: 20px;
   }
+
+  .menucontainer {
+    position: relative;
+  }
+  
+  /* Menu Icon */
+  .menu-icon {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+   
+  }
+  .bn8 {
+    background-color: white;
+    border-radius: 50%;
+    padding: 15px;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Menu Overlay */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  /* Open Menu Overlay */
+  .menu-overlay.open {
+    transform: translateX(0);
+  }
+  
+  /* Menu List */
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    height: 100vh;
+    // text-align: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+   
+  
+    
+  }
+  
+  // .menu-list li {
+  //   margin: 10px 0;
+  // }
+  
+  .menu-list li a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 5px !important;
+    margin-right: 30px !important;
+  
+  
+  }
+  
+  .menu-list li a:hover {
+    text-decoration: none;
+    color: #ff00c8;
+  }
+  // .transition-section {
+  //   position: relative;
+  //   transition: top 5 ease-in-out; /* Transition for the top property */
+  // }
+  .transition-section:hover {
+    background-color: #e0e0e0; /* Change background color */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
+  }
+  
 //   // navbar
 
-ul.navbar-nav.mr-auto {
-  margin: auto;
-}
-// .navbar {
-//   padding: 10px;
-//   height: 40px;
-//   font-size: 20px;
+// ul.navbar-nav.mr-auto {
+//   margin: auto;
 // }
-.navbar.scrolled .navbar-nav .nav-link {
-  color: white !important;
-}
+// // .navbar {
+// //   padding: 10px;
+// //   height: 40px;
+// //   font-size: 20px;
+// // }
+// .navbar.scrolled .navbar-nav .nav-link {
+//   color: white !important;
+// }
 
-//   .navbar.scrolled .navbar-nav .nav-link:hover {
-//     color: #f0f0f0 !important;
+// //   .navbar.scrolled .navbar-nav .nav-link:hover {
+// //     color: #f0f0f0 !important;
+// //   }
+
+// .navbar {
+//   &.navbar-light {
+//     .nav-item {
+//       list-style: none;
+//       // border-left: 2px solid purple;
+//       display: inline-block;
+//       padding: 0 15px;
+//       position: relative;
+//       text-decoration: none;
+//       text-align: center;
+//       // font-family: 'Arvo', serif;
+
+
+//       a {
+//         color: black;
+//         text-decoration: none;
+//         font-family: -webkit-body;
+//         font-size: 23px;
+//         font-weight: lighter;
+
+//         &:hover {
+//           color:purple;
+//         }
+//       }
+
+
+//       &:hover {
+//         cursor: pointer;
+//       }
+
+//       .dropdown-menu {
+//         background: white;
+//         box-shadow: 0px 3px 5px -1px #ccc;
+//         min-width: 250px;
+//         padding-top: 20px;
+//         text-align: left;
+//         display: none;
+
+//         li {
+//           clear: both;
+//           width: 100%;
+//           text-align: left;
+//           margin-bottom: 20px;
+//           border-style: none;
+
+//           a:hover {
+//             padding-left: 10px;
+//             border-left: 2px solid purple;
+//             transition: all 0.3s ease;
+//           }
+//         }
+//       }
+
+//       &:hover > .dropdown-menu,
+//       .dropdown-menu:hover {
+//         display: block;
+//         visibility: visible;
+//         opacity: 1;
+//       }
+//     }
 //   }
+// }
 
-.navbar {
-  &.navbar-light {
-    .nav-item {
-      list-style: none;
-      // border-left: 2px solid purple;
-      display: inline-block;
-      padding: 0 15px;
-      position: relative;
-      text-decoration: none;
-      text-align: center;
-      // font-family: 'Arvo', serif;
+// .navbar-nav .nav-link:hover {
 
+//   color: purple;
+// }
 
-      a {
-        color: black;
-        text-decoration: none;
-        font-family: -webkit-body;
-        font-size: 23px;
-        font-weight: lighter;
+// /* Custom CSS for nav-link hover underline animation */
+// .navbar-nav .nav-link {
+//   position: relative;
+//   color: black;
+//   /* Set the default text color */
+//   transition: color 0.3s;
+//   /* Add a smooth color transition */
+// }
 
-        &:hover {
-          color:purple;
-        }
-      }
+// .navbar-nav .nav-link::before {
+//   content: "";
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 0;
+//   height: 0.2rem;
+//   /* Adjust the thickness of the underline as needed */
+//   background-color: purple;
+//   transition: width 0.3s ease-out;
+//   /* Animation duration and easing */
+// }
 
+// .navbar-nav .nav-link:hover {
+//   color: purple;
+//   /* Change the text color on hover */
+//   border-bottom: 2px solid purple;
+// }
 
-      &:hover {
-        cursor: pointer;
-      }
-
-      .dropdown-menu {
-        background: white;
-        box-shadow: 0px 3px 5px -1px #ccc;
-        min-width: 250px;
-        padding-top: 20px;
-        text-align: left;
-        display: none;
-
-        li {
-          clear: both;
-          width: 100%;
-          text-align: left;
-          margin-bottom: 20px;
-          border-style: none;
-
-          a:hover {
-            padding-left: 10px;
-            border-left: 2px solid purple;
-            transition: all 0.3s ease;
-          }
-        }
-      }
-
-      &:hover > .dropdown-menu,
-      .dropdown-menu:hover {
-        display: block;
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.navbar-nav .nav-link:hover {
-
-  color: purple;
-}
-
-/* Custom CSS for nav-link hover underline animation */
-.navbar-nav .nav-link {
-  position: relative;
-  color: black;
-  /* Set the default text color */
-  transition: color 0.3s;
-  /* Add a smooth color transition */
-}
-
-.navbar-nav .nav-link::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0.2rem;
-  /* Adjust the thickness of the underline as needed */
-  background-color: purple;
-  transition: width 0.3s ease-out;
-  /* Animation duration and easing */
-}
-
-.navbar-nav .nav-link:hover {
-  color: purple;
-  /* Change the text color on hover */
-  border-bottom: 2px solid purple;
-}
-
-.navbar-nav .nav-link:hover::before {
-  width: 100%;
-}
+// .navbar-nav .nav-link:hover::before {
+//   width: 100%;
+// }
 
 @media (min-width: 992px) {
   .navbar {
@@ -986,6 +1081,103 @@ ul.navbar-nav.mr-auto {
     color: #ff0000;
   }
 
-
-
-
+/* Responsive for Mobiles */
+@media (max-width: 768px) {
+.nav-item .login-btn-web {
+  display: none;
+    }
+    .menu-list {
+      list-style: none;
+      padding: 0;
+      height: 50%;
+      // text-align: center;
+    display: flex !important;
+   flex-direction: column !important;  
+    }
+    .menu-list li a {
+      margin-bottom: 30px;
+      padding: 10px;
+    }
+    #keyFeatures{
+      font-size: 20px;
+    }
+    .overlay h1{
+      height: 80px !important;
+      padding-top: 13px !important;
+    }
+    // .card{
+    //   width: 80%;
+    //   // align-items: center;
+     
+    // }
+    // .key-card{
+    //   margin-left: 50px !important;
+    // }
+  }
+  .dropdown-item{
+    color: black !important;
+  }
+  .dropdown-item:hover{
+    color: #ff00c8 !important;
+  }
+  // .navbar {
+  //   &.navbar-light {
+  //     .nav-item {
+  //       list-style: none;
+  //       // border-left: 2px solid purple;
+  //       display: inline-block;
+  //       padding: 0 15px;
+  //       position: relative;
+  //       text-decoration: none;
+  //       text-align: center;
+  //       // font-family: 'Arvo', serif;
+  
+  //       a {
+  //         // color: black;
+  //         color: white !important;
+  //         text-decoration: none;
+  //         font-family: -webkit-body;
+  //         font-size: 23px;
+  //         font-weight: lighter;
+  
+  //         &:hover {
+  //           color:purple;
+  //         }
+  //       }
+  
+  //       &:hover {
+  //         cursor: pointer;
+  //       }
+  
+  //       .dropdown-menu {
+  //         background: black !important;
+  //         box-shadow: 0px 3px 5px -1px #ccc;
+  //         min-width: 250px;
+  //         padding-top: 20px;
+  //         text-align: left;
+  //         display: none;
+  
+  //         li {
+  //           clear: both;
+  //           width: 100%;
+  //           text-align: left;
+  //           margin-bottom: 20px;
+  //           border-style: none;
+  
+  //           a:hover {
+  //             padding-left: 10px;
+  //             border-left: 2px solid purple;
+  //             transition: all 0.3s ease;
+  //           }
+  //         }
+  //       }
+  
+  //       &:hover > .dropdown-menu,
+  //       .dropdown-menu:hover {
+  //         display: block;
+  //         visibility: visible;
+  //         opacity: 1;
+  //       }
+  //     }
+  //   }
+  // }

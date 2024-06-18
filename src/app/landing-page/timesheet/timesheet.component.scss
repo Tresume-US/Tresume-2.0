@@ -1,11 +1,47 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
+// #team{
+//   background-color: #202020 !important;
+// }
+#team{
+  background:url(../../../assets/img/screen07.jpg) !important;
+ 
+}
 .footer {
   background-color: #333;
   color: #fff;
   padding: 20px 0;
 }
 
+// #team {
+//   // background: #eee !important;
+//   background-color: #202020 !important;
+// }
+// .container{
+//   color: white;
+// }
+.times{
+  font-family:'Times New Roman', Times, serif;
+}
+@media only screen and(max-width:768px){
+  .space{
+    font-size: 18px;
+  }
+  .times{
+    line-height: 1;
+  }
+  .f-txt{
+    font-size: 1.1rem !important;
+  }
+  .footer-section i{
+    font-size: 22px !important;
+  }
+  // .img-fluid{
+  //   width: 300px !important;
+  //   height: 100px !important;
+  //   margin-left: 100px;
+  //   margin-top: 0;
+  // }
+}
 .footer h3 {
   font-size: 20px;
   text-align: left;
@@ -744,7 +780,7 @@ ul {
 }
 
 .main-timeline .timeline-content {
-  background-color: #fff;
+  background-color: #202020;
   text-align: center;
   width: 60%;
   padding: 10px 15px 60px;
@@ -781,10 +817,11 @@ ul {
 }
 
 .main-timeline .description {
-  color: #333;
+  color: #fff;
   font-size: 14px;
   letter-spacing: 1px;
   font-style: oblique;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .main-timeline .timeline:nth-child(even):before {

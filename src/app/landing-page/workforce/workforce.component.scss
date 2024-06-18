@@ -2,7 +2,28 @@
 .space{
   margin-left: 20px;
 }
+#team{
+  background:url(../../../assets/img/screen07.jpg) !important;
+ 
+}
+.container{
+  color: white;
+}
 
+@media only screen and(max-width:768px){
+  .space{
+    font-size: 18px;
+  }
+  .text-content-c{
+    margin-left: 0 !important;
+  }
+  .img-change img{
+    width: 100% !important;
+  }
+  h2.tittle{
+    font-size: 1.8rem !important;
+  }
+}
 h2.tittle {
   font-size: 2rem;
   text-align: center;
