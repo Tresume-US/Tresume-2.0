@@ -6,6 +6,8 @@ import { RecruiterViewJobsService } from './recruiter-view-jobs.service';
 import { FormBuilder } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-recruiter-view-jobs',
   templateUrl: './recruiter-view-jobs.component.html',
@@ -62,7 +64,7 @@ export class RecruiterViewJobsComponent implements OnInit {
   selectedcTaxTerms: string = '1';
   taxTerms: any[] = [];
   internaltaxterms: string = '';
-  selectedRespondBy: Date;
+  selectedRespondBy: string ='';
   selectedJobType: string = '';
   jobTypeOptions: any[] = [];
   selectedPriority: string = '';
@@ -112,14 +114,15 @@ export class RecruiterViewJobsComponent implements OnInit {
   jobbaordaccount: any = [];
   selectedJobboardaccount: any[] = [];
   JobCode: string = '';
-
+  usertype: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private cookieService: CookieService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private service: RecruiterViewJobsService
+    private service: RecruiterViewJobsService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -128,6 +131,8 @@ export class RecruiterViewJobsComponent implements OnInit {
     this.TraineeID = this.cookieService.get('TraineeID');
     this.username = this.cookieService.get('userName1');
     this.routeType = this.route.snapshot.params['jobId'];
+    
+    this.usertype = this.cookieService.get('usertype');
     console.log(this.routeType);
     this.getJobPostData();
 
@@ -176,7 +181,7 @@ export class RecruiterViewJobsComponent implements OnInit {
       this.accountsmanager = data.AccountManagerID;
       this.comments = data.Comments;
       this.JobDescription = data.JobDescription;
-
+      this.billrate =data.BillRate;
       console.log(this.selectedCity);
     });
   }
@@ -368,7 +373,10 @@ export class RecruiterViewJobsComponent implements OnInit {
   }
 
   UpdateJob(type: any) {
+
+    let formattedDate = this.selectedRespondBy ? new Date(this.selectedRespondBy).toISOString().split('T')[0] : '';
     let Req = {
+      
       RecruiterID: this.selectedPrimaryRecruiter,
       JobID: this.routeType,
       OrgID: this.OrgID,
@@ -395,7 +403,7 @@ export class RecruiterViewJobsComponent implements OnInit {
       LegalStatus: this.Legalstatus,
       JobStausID: this.selectedJobStatus.JobStatusID,
       NoOfPosition: this.numberOfPositions,
-      RespondDate: this.selectedRespondBy,
+      RespondDate: formattedDate,
       ClientID: this.selectedClient,
       EndClient: this.endclient,
       ClientJobID: this.clientjobid,
@@ -427,5 +435,12 @@ export class RecruiterViewJobsComponent implements OnInit {
       console.error('Error occurred:', error);
       this.loading = false;
     });
+  }
+
+  
+  getSanitizedJobDescription(description: string): SafeHtml {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = description;
+    return this.sanitizer.bypassSecurityTrustHtml(tempDiv.textContent || tempDiv.innerText || '');
   }
 }

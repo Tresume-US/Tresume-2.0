@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { request } from 'http';
 import { HttpClient } from '@angular/common/http';
 
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-all-job-postings',
@@ -52,7 +53,7 @@ console.log(this.usertype);
     this.getAssigneelist();
    
   }
-  constructor(private fb: FormBuilder,private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute,private http: HttpClient) {
+  constructor(private fb: FormBuilder,private dialog: MatDialog, private cookieService: CookieService, private service: AllJobPostingsService, private messageService: MessageService, private router: Router, private route: ActivatedRoute,private http: HttpClient, private sanitizer: DomSanitizer) {
     this.jobID = this.route.snapshot.params["jobID"];
 
     this.emailForm = this.fb.group({
@@ -219,7 +220,6 @@ console.log(this.usertype);
   selectedJob: any;
   // noResultsFound: boolean = false;
   isModalOpen: boolean = false;
-
   openJobDescriptionModal(job: any) {
     this.selectedJob = job;
     this.isModalOpen = true;
@@ -227,6 +227,12 @@ console.log(this.usertype);
 
   closeJobDescriptionModal(event: Event) {
     this.isModalOpen = false;
+  }
+
+  getSanitizedJobDescription(description: string): SafeHtml {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = description;
+    return this.sanitizer.bypassSecurityTrustHtml(tempDiv.textContent || tempDiv.innerText || '');
   }
 
 }

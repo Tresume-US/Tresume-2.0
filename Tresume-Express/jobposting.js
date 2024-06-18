@@ -712,11 +712,100 @@ router.post("/UpdateJob", async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const request = pool.request();
-    // const query = "UPDATE timesheet_Master SET comments = '"+req.body.comments+"', status = 2 WHERE traineeId = '"+req.body.traineeID+"' AND id = '"+req.body.id+"';"
-    // request.input('Id', sql.Int, req.body.Id);
 
-    const query = "UPDATE Job SET RecruiterID ='"+ req.body.RecruiterID+"', OrgID = '"+ req.body.OrgID+"', JobTitle = '"+ req.body.JobTitle+"', Company = '"+ req.body.Company+"', City = '"+ req.body.City+"', State = '"+ req.body.State+"', Country = '"+ req.body.Country+"', ZipCode = '"+ req.body.ZipCode+"', Address = '"+ req.body.Address+"', AreaCode = '"+ req.body.AreaCode+"', JobDescription = '"+ req.body.JobDescription+"', Skills = '"+ req.body.Skills+"', JobCode = '"+ req.body.JobCode+"', PayRate = '"+ req.body.PayRate+"', PayRateTypeID = '"+ req.body.PayRateTypeID+"', PayRateCurrencyTypeID = '"+ req.body.PayRateCurrencyTypeID+"',  PayRateTaxTermID = '"+ req.body.PayRateTaxTermID+"', BillRate = '"+ req.body.BillRate+"', BillRateTypeID = '"+ req.body.BillRateTypeID+"', BillRateCurrencyTypeID = '"+ req.body.BillRateCurrencyTypeID+"', BillRateTaxTermID = '"+ req.body.BillRateTaxTermID+"', JobTypeID = '"+ req.body.JobTypeID+"', LegalStatus = '"+ req.body.LegalStatus+"', NoOfPosition = '"+ req.body.NoOfPosition+"', RespondDate = '"+ req.body.RespondDate+"', ClientID = '"+ req.body.ClientID+"', EndClient = '"+ req.body.EndClient+"', ClientJobID = '"+ req.body.ClientJobID+"', PriorityID = '"+ req.body.PriorityID+"', Duration = '"+ req.body.Duration+"', InterviewMode = '"+ req.body.InterviewMode+"', SecruityClearance = '"+ req.body.SecruityClearance+"', PrimaryRecruiterID = '"+ req.body.PrimaryRecruiterID+"', RecruitmentManagerID = '"+ req.body.RecruitmentManagerID+"', SalesManagerID = '"+ req.body.SalesManagerID+"', AccountManagerID = '"+ req.body.AccountManagerID+"', TaxTermID = '"+ req.body.TaxTermID+"', Comments = '"+ req.body.Comments+"', Active = '"+ req.body.Active+"', LastUpdateBy = '"+ req.body.LastUpdateBy+"', MinYearsOfExpInMonths = '"+ req.body.MinYearsOfExpInMonths+"', JobStatus = '"+ req.body.JobStatus+"' WHERE JobID = '"+ req.body.JobID+"';"
+    const query = `
+      UPDATE Job 
+      SET 
+          RecruiterID = @RecruiterID,
+          OrgID = @OrgID,
+          JobTitle = @JobTitle,
+          Company = @Company,
+          City = @City,
+          State = @State,
+          Country = @Country,
+          ZipCode = @ZipCode,
+          Address = @Address,
+          AreaCode = @AreaCode,
+          JobDescription = @JobDescription,
+          Skills = @Skills,
+          JobCode = @JobCode,
+          PayRate = @PayRate,
+          PayRateTypeID = @PayRateTypeID,
+          PayRateCurrencyTypeID = @PayRateCurrencyTypeID,
+          PayRateTaxTermID = @PayRateTaxTermID,
+          BillRate = @BillRate,
+          BillRateTypeID = @BillRateTypeID,
+          BillRateCurrencyTypeID = @BillRateCurrencyTypeID,
+          BillRateTaxTermID = @BillRateTaxTermID,
+          JobTypeID = @JobTypeID,
+          LegalStatus = @LegalStatus,
+          NoOfPosition = @NoOfPosition,
+          RespondDate = @RespondDate,
+          ClientID = @ClientID,
+          EndClient = @EndClient,
+          ClientJobID = @ClientJobID,
+          PriorityID = @PriorityID,
+          Duration = @Duration,
+          InterviewMode = @InterviewMode,
+          SecruityClearance = @SecruityClearance,
+          PrimaryRecruiterID = @PrimaryRecruiterID,
+          RecruitmentManagerID = @RecruitmentManagerID,
+          SalesManagerID = @SalesManagerID,
+          AccountManagerID = @AccountManagerID,
+          TaxTermID = @TaxTermID,
+          Comments = @Comments,
+          Active = @Active,
+          LastUpdateBy = @LastUpdateBy,
+          MinYearsOfExpInMonths = @MinYearsOfExpInMonths,
+          JobStatus = @JobStatus
+      WHERE 
+          JobID = @JobID;
+    `;
 
+    // Assign values to parameters
+    request.input('RecruiterID', sql.Int, req.body.RecruiterID);
+    request.input('OrgID', sql.Int, req.body.OrgID);
+    request.input('JobTitle', sql.VarChar(255), req.body.JobTitle);
+    request.input('Company', sql.VarChar(255), req.body.Company);
+    request.input('City', sql.VarChar(100), req.body.City);
+    request.input('State', sql.VarChar(100), req.body.State);
+    request.input('Country', sql.VarChar(100), req.body.Country);
+    request.input('ZipCode', sql.VarChar(20), req.body.ZipCode);
+    request.input('Address', sql.VarChar(255), req.body.Address);
+    request.input('AreaCode', sql.VarChar(20), req.body.AreaCode);
+    request.input('JobDescription', sql.Text, req.body.JobDescription);
+    request.input('Skills', sql.VarChar(255), req.body.Skills);
+    request.input('JobCode', sql.VarChar(50), req.body.JobCode);
+    request.input('PayRate', sql.Decimal(18, 2), req.body.PayRate);
+    request.input('PayRateTypeID', sql.Int, req.body.PayRateTypeID);
+    request.input('PayRateCurrencyTypeID', sql.Int, req.body.PayRateCurrencyTypeID);
+    request.input('PayRateTaxTermID', sql.Int, req.body.PayRateTaxTermID);
+    request.input('BillRate', sql.Decimal(18, 2), req.body.BillRate);
+    request.input('BillRateTypeID', sql.Int, req.body.BillRateTypeID);
+    request.input('BillRateCurrencyTypeID', sql.Int, req.body.BillRateCurrencyTypeID);
+    request.input('BillRateTaxTermID', sql.Int, req.body.BillRateTaxTermID);
+    request.input('JobTypeID', sql.Int, req.body.JobTypeID);
+    request.input('LegalStatus', sql.VarChar(50), req.body.LegalStatus);
+    request.input('NoOfPosition', sql.Int, req.body.NoOfPosition);
+    request.input('RespondDate', sql.Date, req.body.RespondDate);
+    request.input('ClientID', sql.Int, req.body.ClientID);
+    request.input('EndClient', sql.VarChar(255), req.body.EndClient);
+    request.input('ClientJobID', sql.VarChar(50), req.body.ClientJobID);
+    request.input('PriorityID', sql.Int, req.body.PriorityID);
+    request.input('Duration', sql.VarChar(50), req.body.Duration);
+    request.input('InterviewMode', sql.VarChar(50), req.body.InterviewMode);
+    request.input('SecruityClearance', sql.VarChar(50), req.body.SecruityClearance);
+    request.input('PrimaryRecruiterID', sql.Int, req.body.PrimaryRecruiterID);
+    request.input('RecruitmentManagerID', sql.Int, req.body.RecruitmentManagerID);
+    request.input('SalesManagerID', sql.Int, req.body.SalesManagerID);
+    request.input('AccountManagerID', sql.Int, req.body.AccountManagerID);
+    request.input('TaxTermID', sql.Int, req.body.TaxTermID);
+    request.input('Comments', sql.Text, req.body.Comments);
+    request.input('Active', sql.Bit, req.body.Active);
+    request.input('LastUpdateBy', sql.VarChar(50), req.body.LastUpdateBy);
+    request.input('MinYearsOfExpInMonths', sql.Int, req.body.MinYearsOfExpInMonths);
+    request.input('JobStatus', sql.VarChar(50), req.body.JobStatus);
+    request.input('JobID', sql.Int, req.body.JobID);
 
     const result = await request.query(query);
 
@@ -728,15 +817,15 @@ router.post("/UpdateJob", async (req, res) => {
     } else {
       const response = {
         flag: 0,
-        error: "No records were Updated.",
+        error: "No records were updated.",
       };
       res.send(response);
     }
   } catch (error) {
-    console.error("Error Update status:", error);
+    console.error("Error updating job:", error);
     const response = {
       flag: 0,
-      error: "An error occurred while Update!",
+      error: "An error occurred while updating job.",
     };
     res.status(500).send(response);
   }
