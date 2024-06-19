@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   public hideInterviewsFields: boolean = true;
   public jobBReqChartData: SingleDataSet = [];
   public jobReqChartLabels: Label[] = [];
+  public MonsterusedLabels: Label[] = [];
+  public CBusedLabels: Label[] = [];
 
   public CBChartData: SingleDataSet = [];
   public CBChartLabels: Label[] = [];
@@ -60,6 +62,14 @@ export class DashboardComponent implements OnInit {
   UserPlacementsData: any;
   FullAccess: string;
   ViewOnly: string;
+  totalFTCCount: number = 0;
+  totalSubmissionCount: number = 0;
+  totalInterviewCount: number = 0;
+  totalPlacementCount: number = 0;
+  totalMonsterCount: number = 0;
+  totalCBCount: number = 0;
+  totalDiceCount: number = 0;
+  totalDiceUsed: number = 0;
   public routeLinks(route: string) {
     this.router.navigate(['reports/' + route])
   }
@@ -108,8 +118,11 @@ export class DashboardComponent implements OnInit {
 
   adminInterviewData: any[] = [];
   Dicedata: any[] = [];
+  userDicedata: any[] = [];
   Monsterdata: any[] = [];
+  userMonsterdata: any[] = [];
   CBdata: any[] = [];
+  userCBdata: any[] = [];
   InterviewchartData: ChartDataSets[] = [{ data: [], label: 'Interviews' }];
 
   interviewChartLabels: string[] = [];
@@ -136,7 +149,7 @@ export class DashboardComponent implements OnInit {
 
   Adminrecord() {
     this.loading = true;
-    const req = {
+    const req = { 
       AccessOrg: this.AccessOrg,
       StartDate: this.defaultStartDate,
       EndDate: this.defaultEndDate
@@ -144,88 +157,100 @@ export class DashboardComponent implements OnInit {
 
     this.service.getAdminDashboardData(req).subscribe(
       (response: any) => {
-        this.loading = false;
-        this.hideInterviewsFields = false;
-        this.adminFtcData = response.FtcData;
-        this.chartLabels = this.adminFtcData.map((item: { Recruiter: any; }) => item.Recruiter);
-        this.chartData[0].data = this.adminFtcData.map((item: { RecruiterCount: any; }) => item.RecruiterCount);
-        console.log(this.chartData)
-        this.chartColors = [{
-          backgroundColor: [
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-          ]
-        }]
-        // DSR Data
-        this.adminDsrData = response.DsrData;
-        this.dsrChartLabels = this.adminDsrData.map((item: { Marketer: any; }) => item.Marketer);
-        this.dsrChartData[0].data = this.adminDsrData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
-        this.dsrChartColors = [{
-          backgroundColor: [
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-          ]
-        }];
+        console.log('API Response:', response); // Log the response to check its structure
+        if (this.checkFullAccess(1)) {
+          this.loading = false;
+          this.hideInterviewsFields = false;
 
-        // Interview Data
-        this.adminInterviewData = response.Interviewdata;
-        this.interviewChartLabels = this.adminInterviewData.map((item: { Recruiter: any; }) => item.Recruiter);
-        this.interviewChartData = [{
-          data: this.adminInterviewData.map((item: { InterviewCount: any; }) => item.InterviewCount),
-          backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
-        }];
-        console.log(this.interviewChartData);
+          // Initialize Dicedata to an empty array if JobboardData is undefined
+          this.Dicedata = response.jobboarddata || [];
+          this.jobBReqChartData = this.Dicedata.map((item: { diceused: any; }) => item.diceused);
+          this.jobReqChartLabels = this.Dicedata.map((item: { Recruiter: any; }) => `${item.Recruiter}`);
+          this.totalDiceCount = this.Dicedata.reduce((sum: any, current: { diceused: any; }) => sum + (current.diceused || 0), 0);
+          console.log(this.checkFullAccess(1));
+          console.log('Dice :', this.Dicedata);
 
-        // Placement Data
-        this.adminPlacementData = response.PlacementData;
-        this.hideInterviewsFields = false;
+          this.CBdata = response.jobboarddata || [];
+          this.totalCBCount = this.CBdata.reduce((sum: any, current: { cbused: any; }) => sum + (current.cbused || 0), 0);
+          this.CBChartData = this.CBdata.map((item: { cbused: any; }) => item.cbused);
+          this.CBChartLabels = this.CBdata.map((item: { Recruiter: any; }) => `${item.Recruiter}`);
 
-        this.PChartLabels = this.adminPlacementData.map((item: { MarketerName: any; }) => item.MarketerName);
-        this.PChartData = [{
-          data: this.adminPlacementData.map((item: { MarketerCount: any; }) => item.MarketerCount),
-          backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
-        }];
-        console.log('Placement Data:',this.PChartData );
+          this.Monsterdata = response.jobboarddata || [];
+          this.totalMonsterCount = this.Monsterdata.reduce((sum: any, current: { monsterused: any; }) => sum + (current.monsterused || 0), 0);
+          this.MonsterChartData = this.Monsterdata.map((item: { monsterused: any; }) => item.monsterused);
+          this.MonsterChartLabels = this.Monsterdata.map((item: { Recruiter: any; }) => `${item.Recruiter}`);
+        }
 
-        this.Dicedata = response.JobboardData;
-        this.jobBReqChartData = this.Dicedata.map((item: { diceused: any; }) => item.diceused);
-        this.jobReqChartLabels = this.Dicedata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
+        if (this.checkFullAccess(2)) {
+          this.adminFtcData = response.FtcData || [];
+          this.totalFTCCount = this.adminFtcData.reduce((sum: any, current: { RecruiterCount: any; }) => sum + (current.RecruiterCount || 0), 0);
+          this.chartLabels = this.adminFtcData.map((item: { Recruiter: any; }) => item.Recruiter);
+          this.chartData[0].data = this.adminFtcData.map((item: { RecruiterCount: any; }) => item.RecruiterCount);
+          console.log(this.chartData);
+          this.chartColors = [{
+            backgroundColor: [
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+            ]
+          }];
 
-        this.CBdata = response.JobboardData;
-        this.CBChartData = this.CBdata.map((item: { cbused: any; }) => item.cbused);
-        this.CBChartLabels = this.CBdata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
+          // DSR Data
+          this.adminDsrData = response.DsrData || [];
+          this.totalSubmissionCount = this.adminDsrData.reduce((sum: any, current: { SubmissionCount: any; }) => sum + (current.SubmissionCount || 0), 0);
+          this.dsrChartLabels = this.adminDsrData.map((item: { Marketer: any; }) => item.Marketer);
+          this.dsrChartData[0].data = this.adminDsrData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
+          this.dsrChartColors = [{
+            backgroundColor: [
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+            ]
+          }];
+          console.log('DSR data:',this.adminDsrData)
 
-        this.Monsterdata = response.JobboardData;
-        this.MonsterChartData = this.Monsterdata.map((item: { monsterused: any; }) => item.monsterused);
-        this.MonsterChartLabels = this.Monsterdata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
+          // Interview Data
+          this.adminInterviewData = response.Interviewdata || [];
+          this.totalInterviewCount = this.adminInterviewData.reduce((sum: any, current: { InterviewCount: any; }) => sum + (current.InterviewCount || 0), 0);
+          this.interviewChartLabels = this.adminInterviewData.map((item: { Recruiter: any; }) => item.Recruiter);
+          this.interviewChartData = [{
+            data: this.adminInterviewData.map((item: { InterviewCount: any; }) => item.InterviewCount),
+            backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
+          }];
 
-        console.log(this.PlacementChartData);
+          // Placement Data
+          this.adminPlacementData = response.PlacementData || [];
+          this.hideInterviewsFields = false;
+          this.totalPlacementCount = this.adminPlacementData.reduce((sum: any, current: { MarketerCount: any; }) => sum + (current.MarketerCount || 0), 0);
+
+          this.PChartLabels = this.adminPlacementData.map((item: { MarketerName: any; }) => item.MarketerName);
+          this.PChartData = [{
+            data: this.adminPlacementData.map((item: { MarketerCount: any; }) => item.MarketerCount),
+            backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
+          }];
+        }
       },
       (error: any) => {
         this.loading = false;
@@ -297,7 +322,7 @@ export class DashboardComponent implements OnInit {
     this.defaultEndDate = this.dateFormatter(this.ranges[1].value[1]);
     sessionStorage.setItem("Route", 'Dashboard');
     this.AccessOrg = this.cookieService.get('AccessOrg');
-    this.userName = this.route.snapshot.params["userName1"];
+    this.userName = this.cookieService.get('userName1');
     this.IsAdmin = this.cookieService.get('IsAdmin');
     this.UserRole = this.cookieService.get('UserRole');
     this.FullAccess = this.cookieService.get('FullAccess');
@@ -352,16 +377,20 @@ export class DashboardComponent implements OnInit {
   public lineChartType: ChartType = 'line';
   public FTCchartData: any[] = [{ data: [], label: 'FTC Records' }];
   public FTCchartLabels: string[] = [];
-
-
+  
+  
   public DSRchartDatas: ChartDataSets[] = [{ data: [], label: 'DSR Data' }];
   public DSRchartLabelss: Label[] = [];
-
+  
   public InterviewschartData: ChartDataSets[] = [{ data: [], label: 'Interview Data' }];
   public InterviewchartLabels: Label[] = [];
-
+  
   public PlacementschartData: ChartDataSets[] = [{ data: [], label: 'Placement Data' }];
   public PlacementchartLabels: Label[] = [];
+  
+  public jobBReqChartDatas: any[] = [{ data: [], label: 'Dice Used' }];
+  public MonsterchartData: any[] = [{ data: [], label: 'Monster Used' }];
+  public CBchartData: any[] = [{ data: [], label: 'CB Used' }];
 
   Userrecord() {
     this.loading = true;
@@ -369,31 +398,61 @@ export class DashboardComponent implements OnInit {
       traineeId: this.traineeID,
       StartDate: this.defaultStartDate,
       EndDate: this.defaultEndDate,
-      username:this.userName
+      username: this.userName
     };
-
+  
     this.service.getUserDashboardData(req).subscribe(
       (response: any) => {
         this.loading = false;
         this.hideInterviewsFields = false;
-        //FTC
-        this.UserFtcData = response.FtcData;
-        this.FTCchartLabels = this.UserFtcData.map((item: { Date: any; }) =>
-          this.datePipe.transform(item.Date, 'MM-dd-yy') as string
-        );
-        this.FTCchartData[0].data = this.UserFtcData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
-        console.log('FTC Chart : '+ this.UserFtcData)
-        //DSR
-        this.UserDSRData = response.DsrData; // Ensure this is the correct response property
-        this.DSRchartLabelss = this.UserDSRData.map((item: { Date: any; }) =>
-          this.datePipe.transform(item.Date, 'MM-dd-yy') as string
-        );
-        this.DSRchartDatas[0].data = this.UserDSRData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
-        console.log('DSR Chart Data:', this.DSRchartDatas);
-        //Interview
-
-        if (response.Interviewdata) {
-          this.UserInterviewData = response.Interviewdata;
+  
+        if (this.checkFullAccess(1)) {
+          // Monster Data
+          this.userMonsterdata = response.monsterData || [];
+          this.MonsterusedLabels = this.userMonsterdata.map((item: { Date: any }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.MonsterchartData[0].data = this.userMonsterdata.map((item: { RecordCount: any }) => item.RecordCount);
+          this.totalMonsterCount = this.userMonsterdata.reduce((sum: any, current: { RecordCount: any; }) => sum + (current.RecordCount || 0), 0);
+  
+          // Dice Data
+          this.userDicedata = response.diceData || [];
+          this.jobReqChartLabels = this.userDicedata.map((item: { Date: any }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.jobBReqChartDatas[0].data = this.userDicedata.map((item: { RecordCount: any }) => item.RecordCount);
+          this.totalDiceUsed = this.userDicedata.reduce((sum: any, current: { RecordCount: any; }) => sum + (current.RecordCount || 0), 0);
+  
+          // CB Data
+          this.userCBdata = response.cbData || [];
+          this.CBusedLabels = this.userCBdata.map((item: { Date: any }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.CBchartData[0].data = this.userCBdata.map((item: { RecordCount: any }) => item.RecordCount);
+          this.totalCBCount = this.userCBdata.reduce((sum: any, current: { RecordCount: any; }) => sum + (current.RecordCount || 0), 0);
+        }
+  
+        if (this.checkFullAccess(2)) {
+          // FTC Data
+          this.UserFtcData = response.FtcData || [];
+          this.totalFTCCount = this.UserFtcData.reduce((sum: any, current: { SubmissionCount: any; }) => sum + (current.SubmissionCount || 0), 0);
+          this.FTCchartLabels = this.UserFtcData.map((item: { Date: any; }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.FTCchartData[0].data = this.UserFtcData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
+  
+          // DSR Data
+          this.UserDSRData = response.DsrData || [];
+          this.totalSubmissionCount = this.UserDSRData.reduce((sum: any, current: { RecordCount: any; }) => sum + (current.RecordCount || 0), 0);
+          this.DSRchartLabelss = this.UserDSRData.map((item: { Date: any; }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.DSRchartDatas[0].data = this.UserDSRData.map((item: { RecordCount: any; }) => item.RecordCount);
+          console.log('DSR Chart Data:', this.DSRchartDatas);
+  
+          // Interview Data
+          this.UserInterviewData = response.Interviewdata || [];
+          this.totalInterviewCount = this.UserInterviewData.reduce((sum: any, current: { InterviewCount: any; }) => sum + (current.InterviewCount || 0), 0);
           if (this.UserInterviewData.length) {
             this.InterviewchartLabels = this.UserInterviewData.map((item: { Date: any; }) =>
               this.datePipe.transform(item.Date, 'MM-dd-yy') as string
@@ -403,44 +462,40 @@ export class DashboardComponent implements OnInit {
             this.InterviewchartLabels = [];
             this.InterviewchartData[0].data = [];
           }
-        } else {
-          this.UserInterviewData = [];
-          this.InterviewchartLabels = [];
-          this.InterviewchartData[0].data = [];
+  
+          // Log Interview chart data
+          console.log('Interview Chart Data:', this.InterviewchartData);
+          console.log('Interview Chart Labels:', this.InterviewchartLabels);
+  
+          // Placements Data
+          this.UserPlacementsData = response.PlacementData || [];
+          this.totalPlacementCount = this.UserPlacementsData.reduce((sum: any, current: { MarketerCount: any; }) => sum + (current.MarketerCount || 0), 0);
+          this.PlacementchartLabels = this.UserPlacementsData.map((item: { Date: any; }) =>
+            this.datePipe.transform(item.Date, 'MM-dd-yy') as string
+          );
+          this.PlacementschartData[0].data = this.UserPlacementsData.map((item: { PlacementCount: any; }) => item.PlacementCount);
+  
+          console.log(this.chartData);
+          this.chartColors = [{
+            backgroundColor: [
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+            ]
+          }];
+          console.log(this.PlacementChartData);
         }
-  
-        // Log Interview chart data
-        console.log('Interview Chart Data:', this.InterviewchartData);
-        console.log('Interview Chart Labels:', this.InterviewchartLabels);
-  
-        // Similar processing for other data sets...
-  
-        //Placements
-        this.UserPlacementsData = response.PlacementData;
-        this.PlacementchartLabels = this.UserPlacementsData.map((item: { Date: any; }) => 
-          this.datePipe.transform(item.Date, 'MM-dd-yy') as string
-        );
-        this.PlacementschartData[0].data = this.UserPlacementsData.map((item: { PlacementCount: any; }) => item.PlacementCount);
-
-        console.log(this.chartData)
-        this.chartColors = [{
-          backgroundColor: [
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-          ]
-        }]
-       
-        console.log(this.PlacementChartData);
       },
       (error: any) => {
         this.loading = false;
@@ -448,6 +503,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  
 
   SuperAdminrecord() {
     this.loading = true;

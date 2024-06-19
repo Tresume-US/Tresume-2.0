@@ -4,7 +4,7 @@
             <h2>DASHBOARD</h2>
         </div>
         <section class="content mt-3" *ngIf="UserRole == 1">
-            <div class="ATS" *ngIf="checkFullAccess(2)">
+            <div class="ATS" *ngIf="checkFullAccess(1)">
                 <h3
                     style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
                     ATS</h3>
@@ -13,7 +13,7 @@
                         <div class="card mb-3" style="background-color: #bcdefb;">
                             <div class="card-header">Total FTC</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalFTCCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                         <div class="card mb-3" style="background-color: #f3bcfb;">
                             <div class="card-header">Total Submission</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalSubmissionCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="card mb-3" style="background-color: #bcfbc2;">
                             <div class="card-header">Total Interview</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalInterviewCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="card mb-3" style="background-color: #bcdefb;">
                             <div class="card-header">Total Placements</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalPlacementCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -313,7 +313,7 @@
                                 <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">157</h4>
+                                <h4 class="card-title" style="text-align: center;">{{totalDiceCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -326,7 +326,7 @@
                                         class="fas fa-briefcase"></i></h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">254</h4>
+                                <h4 class="card-title" style="text-align: center;">{{totalCBCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,7 @@
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title" style="text-align: center;">199</h4>
+                                <h4 class="card-title" style="text-align: center;">{{totalMonsterCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -347,8 +347,201 @@
             </div>
         </section>
 
-        <section *ngIf="checkFullAccess(1)">
+        <section *ngIf="checkFullAccess(1)" >
+            <div *ngIf="UserRole == 1">
+            <div class="row" >
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DICE
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div class="col-md-12 text-center">
+                                            <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
+                                                [chartType]="chartType" [options]="chartOptions"
+                                                [colors]="chartColors">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Dice Used Count</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of Dicedata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.Recruiter }}
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.diceused }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Career Builder
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [data]="CBChartData" [labels]="CBChartLabels"
+                                            [chartType]="doughnutChartType" [options]="chartOptions"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">CB Used Count</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of CBdata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.Recruiter }} 
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.cbused }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Monster
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <canvas baseChart [data]="MonsterChartData" [labels]="MonsterChartLabels"
+                                            [chartType]="doughnutChartType" [options]="chartOptions"
+                                            [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card tabledatas">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">S.No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Monster Used Count</th>
+                                </tr>
+                            </thead>
+
+
+                        </table>
+                        <div class="table-scrolls">
+                            <table class="table text-center">
+                                <tbody>
+                                    <tr *ngFor="let recruiter of Monsterdata;let i=index">
+                                        <th scope="row" style="text-align: center;">{{i+1}}</th>
+                                        <td style="text-align: left;">{{ recruiter.Recruiter }} 
+                                        </td>
+                                        <td style="text-align: center;">{{ recruiter.monsterused }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section *ngIf="checkFullAccess(1)" >
+            <div *ngIf="UserRole == 3">
+            <div class="row" >
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -541,11 +734,163 @@
                     </div>
                 </div>
             </div>
-
+        </div>
         </section>
         <!-- user data -->
         <section class="content mt-3" *ngIf="UserRole == 2">
             <div class="ATS" *ngIf="checkFullAccess(1)">
+                <h3
+                    style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
+                    Job Boards</h3>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #d7e8f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9ecef;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Dice <i class="fas fa-dice"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">{{totalDiceUsed}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #f3e5f5; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #fcebeb;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Career Builder <i
+                                        class="fas fa-briefcase"></i></h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">{{totalCBCount}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                        <div class="card mb-3"
+                            style="width: 18rem; background-color: #e5f3f3; border: 1px solid #ddd; border-radius: .25rem;">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="padding: .75rem 1rem; background-color: #e9f7fd;">
+                                <h5 class="card-title" style="margin-bottom: 0;">Monster <i class="fas fa-monster"></i>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">{{totalMonsterCount}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section *ngIf="checkFullAccess(1)" >
+            <div *ngIf="UserRole == 2">
+            <div class="row" >
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">DICE
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="jobBReqChartDatas" [labels]="jobReqChartLabels"
+                                            [legend]="true" [chartType]="chartType" [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Monster
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="MonsterchartData" [labels]="MonsterusedLabels"
+                                            [legend]="true" [chartType]="chartType" [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header center">
+                            <h3 class="card-title title-font">Career Builder
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="chart-responsive">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="CBchartData" [labels]="CBusedLabels"
+                                            [legend]="true" [chartType]="chartType" [colors]="chartColors">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section class="content mt-3" *ngIf="UserRole == 2">
+            <div class="ATS" *ngIf="checkFullAccess(2)">
                 <h3
                     style="font-family: Arial, Helvetica, sans-serif; color: #333; font-size: 24px; font-weight: bold; text-transform: uppercase; text-align: center; margin-bottom: 20px;">
                     ATS</h3>
@@ -554,7 +899,7 @@
                         <div class="card mb-3" style="background-color: #bcdefb;">
                             <div class="card-header">Total FTC</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalFTCCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -562,7 +907,7 @@
                         <div class="card mb-3" style="background-color: #f3bcfb;">
                             <div class="card-header">Total Submission</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalSubmissionCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -570,7 +915,7 @@
                         <div class="card mb-3" style="background-color: #bcfbc2;">
                             <div class="card-header">Total Interview</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalInterviewCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -578,7 +923,7 @@
                         <div class="card mb-3" style="background-color: #bcdefb;">
                             <div class="card-header">Total Placements</div>
                             <div class="card-body">
-                                <h4 class="card-title">0</h4>
+                                <h4 class="card-title">{{totalPlacementCount}}</h4>
                             </div>
                         </div>
                     </div>
@@ -635,18 +980,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <div *ngIf="!loading">
-                                            <div style="display: block;">
-                                                <canvas baseChart [datasets]="DSRchartDatas" [labels]="DSRchartLabelss"
-                                                    [options]="lineChartOptions" [colors]="lineChartColors"
-                                                    [legend]="lineChartLegend" [chartType]="lineChartType"
-                                                    [plugins]="lineChartPlugins">
-                                                </canvas>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="loading">
-                                            <p>Loading...</p>
-                                        </div>
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart [datasets]="DSRchartDatas"
+                                            [labels]="DSRchartLabelss" [legend]="true" [chartType]="chartType"
+                                            [colors]="dsrChartColors">
+                                        </canvas>
                                     </div>
                                 </div>
                             </div>
@@ -740,7 +1078,7 @@
 
         <!-- Super Admin -->
         <section *ngIf="UserRole == 3">
-            <div class="row" *ngIf="checkFullAccess(3)">
+            <div class="row" *ngIf="checkFullAccess(1)">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -803,7 +1141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="checkFullAccess(3)">
+            <div class="row" *ngIf="checkFullAccess(1)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -866,7 +1204,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="checkFullAccess(3)">
+            <div class="row" *ngIf="checkFullAccess(1)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
@@ -928,7 +1266,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="checkFullAccess(3)">
+            <div class="row" *ngIf="checkFullAccess(1)">
                 <div *ngIf="!hideInterviewsFields" class="col-lg-6">
                     <div class="card">
                         <div class="card-header center">
