@@ -28,7 +28,9 @@ export class DashboardComponent implements OnInit {
   public traineeID: number = 5;
   public hideInterviewsFields: boolean = true;
   public jobBReqChartData: SingleDataSet = [];
+  public  DiceChartData: any[] = [{ data: [] }];
   public jobReqChartLabels: Label[] = [];
+  public DiceChartLabels: Label[] = [];
   public MonsterusedLabels: Label[] = [];
   public CBusedLabels: Label[] = [];
 
@@ -517,86 +519,83 @@ export class DashboardComponent implements OnInit {
       (response: any) => {
         this.loading = false;
         this.hideInterviewsFields = false;
-        this.adminFtcData = response.FtcData;
-        this.chartLabels = this.adminFtcData.map((item: { Recruiter: any; }) => item.Recruiter);
-        this.chartData[0].data = this.adminFtcData.map((item: { RecruiterCount: any; }) => item.RecruiterCount);
-        console.log(this.chartData)
-        this.chartColors = [{
-          backgroundColor: [
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-          ]
-        }]
-        // DSR Data
-        this.adminDsrData = response.DsrData;
-        this.dsrChartLabels = this.adminDsrData.map((item: { Marketer: any; }) => item.Marketer);
-        this.dsrChartData[0].data = this.adminDsrData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
-        this.dsrChartColors = [{
-          backgroundColor: [
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-          ]
-        }];
+        if (this.checkFullAccess(1)) {
+          this.Dicedata = response.Divisionwisecredit;
+          this.DiceChartData = this.Dicedata.map((item: { diceused: any;}) => `${item.diceused}`);
+          this.DiceChartLabels = this.Dicedata.map((item: { DivisionName: any; }) => item.DivisionName);
 
-        // Interview Data
-        this.adminInterviewData = response.Interviewdata;
-        this.interviewChartLabels = this.adminInterviewData.map((item: { Recruiter: any; }) => item.Recruiter);
-        this.interviewChartData = [{
-          data: this.adminInterviewData.map((item: { InterviewCount: any; }) => item.InterviewCount),
-          backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
-        }];
-        console.log(this.interviewChartData);
+          this.CBdata = response.Divisionwisecredit;
+          this.CBChartData = this.CBdata.map((item: { cbused: any; }) => item.cbused);
+          this.CBChartLabels = this.CBdata.map((item: { DivisionName: any; }) => item.DivisionName);
 
-        // Placement Data
-        this.adminPlacementData = response.PlacementData;
-        this.hideInterviewsFields = false;
-
-        this.PChartLabels = this.adminPlacementData.map((item: { MarketerName: any; }) => item.MarketerName);
-        this.PChartData = [{
-          data: this.adminPlacementData.map((item: { MarketerCount: any; }) => item.MarketerCount),
-          backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
-            '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
-            '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
-        }];
-        console.log('Placement Data:',this.PChartData );
-
-        this.Dicedata = response.JobboardData;
-        this.jobBReqChartData = this.Dicedata.map((item: { diceused: any; }) => item.diceused);
-        this.jobReqChartLabels = this.Dicedata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
-
-        this.CBdata = response.JobboardData;
-        this.CBChartData = this.CBdata.map((item: { cbused: any; }) => item.cbused);
-        this.CBChartLabels = this.CBdata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
-
-        this.Monsterdata = response.JobboardData;
-        this.MonsterChartData = this.Monsterdata.map((item: { monsterused: any; }) => item.monsterused);
-        this.MonsterChartLabels = this.Monsterdata.map((item: { FirstName: any; LastName: any; }) => `${item.FirstName} ${item.LastName}`);
-
-        console.log(this.PlacementChartData);
+          this.Monsterdata = response.Divisionwisecredit;
+          this.MonsterChartData = this.Monsterdata.map((item: { monsterused: any; }) => item.monsterused);
+          this.MonsterChartLabels = this.Monsterdata.map((item: { DivisionName: any; }) => item.DivisionName);
+        }
+        if(this.checkFullAccess(2)){
+          this.adminFtcData = response.FtcData;
+          this.chartLabels = this.adminFtcData.map((item: { Recruiter: any; }) => item.Recruiter);
+          this.chartData[0].data = this.adminFtcData.map((item: { RecruiterCount: any; }) => item.RecruiterCount);
+          this.chartColors = [{
+            backgroundColor: [
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+            ]
+          }]
+          // DSR Data
+          this.adminDsrData = response.DsrData;
+          this.dsrChartLabels = this.adminDsrData.map((item: { Marketer: any; }) => item.Marketer);
+          this.dsrChartData[0].data = this.adminDsrData.map((item: { SubmissionCount: any; }) => item.SubmissionCount);
+          this.dsrChartColors = [{
+            backgroundColor: [
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+            ]
+          }];
+  
+          // Interview Data
+          this.adminInterviewData = response.Interviewdata;
+          this.interviewChartLabels = this.adminInterviewData.map((item: { Recruiter: any; }) => item.Recruiter);
+          this.interviewChartData = [{
+            data: this.adminInterviewData.map((item: { InterviewCount: any; }) => item.InterviewCount),
+            backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
+          }];
+  
+          // Placement Data
+          this.adminPlacementData = response.PlacementData;
+          this.hideInterviewsFields = false;
+          this.PChartLabels = this.adminPlacementData.map((item: { MarketerName: any; }) => item.MarketerName);
+          this.PChartData = [{
+            data: this.adminPlacementData.map((item: { MarketerCount: any; }) => item.MarketerCount),
+            backgroundColor: ['#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F',
+              '#F9F871', '#2C73D2', '#008E9B', '#008F7A', '#B39CD0',
+              '#845EC2', '#D65DB1', '#FF6F91', '#FF9671', '#FFC75F']
+          }];
+        }
       },
       (error: any) => {
         this.loading = false;

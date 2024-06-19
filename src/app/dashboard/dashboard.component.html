@@ -547,7 +547,7 @@
                         <div class="card-header center">
                             <h3 class="card-title title-font">DICE
                             </h3>
-                        </div>
+                        </div>  
                         <div class="card-body">
                             <div class="col-md-12">
                                 <div class="chart-responsive">
@@ -560,12 +560,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <div class="col-md-12 text-center">
-                                            <canvas baseChart [data]="jobBReqChartData" [labels]="jobReqChartLabels"
-                                                [chartType]="doughnutChartType" [options]="chartOptions"
-                                                [colors]="chartColors">
-                                            </canvas>
-                                        </div>
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart
+                                          [data]="DiceChartData"
+                                          [labels]="DiceChartLabels"
+                                          [chartType]="pieChartType"
+                                          [legend]="true"
+                                          [colors]="chartColors">
+                                        </canvas>
                                     </div>
                                 </div>
                             </div>
@@ -582,9 +584,8 @@
                             <thead class="thead-dark text-center">
                                 <tr>
                                     <th scope="col">S.No.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Dice Used Count</th>
                                     <th scope="col">Divison Name</th>
+                                    <th scope="col">Dice Used Count</th>
                                 </tr>
                             </thead>
 
@@ -595,10 +596,9 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of Dicedata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        <td style="text-align: left;">{{ recruiter.DivisionName }}
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.diceused }}</td>
-                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -627,9 +627,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [data]="CBChartData" [labels]="CBChartLabels"
-                                            [chartType]="doughnutChartType" [options]="chartOptions"
-                                            [colors]="chartColors">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart
+                                          [data]="CBChartData"
+                                          [labels]="CBChartLabels"
+                                          [chartType]="pieChartType"
+                                          [legend]="true"
+                                          [colors]="chartColors">
                                         </canvas>
                                     </div>
                                 </div>
@@ -645,9 +649,8 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">S.No.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">CB Used Count</th>
                                     <th scope="col">Divison Name</th>
+                                    <th scope="col">CB Used Count</th>
                                 </tr>
                             </thead>
 
@@ -658,10 +661,9 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of CBdata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        <td style="text-align: left;">{{ recruiter.DivisionName }}
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.cbused }}</td>
-                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -690,9 +692,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <canvas baseChart [data]="MonsterChartData" [labels]="MonsterChartLabels"
-                                            [chartType]="doughnutChartType" [options]="chartOptions"
-                                            [colors]="chartColors">
+                                        <div *ngIf="loading">Loading...</div>
+                                        <canvas *ngIf="!loading" baseChart
+                                          [data]="MonsterChartData"
+                                          [labels]="MonsterChartLabels"
+                                          [chartType]="pieChartType"
+                                          [legend]="true"
+                                          [colors]="chartColors">
                                         </canvas>
                                     </div>
                                 </div>
@@ -708,9 +714,8 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">S.No.</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Monster Used Count</th>
                                     <th scope="col">Divison Name</th>
+                                    <th scope="col">Monster Used Count</th>
                                 </tr>
                             </thead>
 
@@ -721,10 +726,9 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of Monsterdata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.FirstName }} {{ recruiter.LastName }}
+                                        <td style="text-align: left;">{{ recruiter.DivisionName }}
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.monsterused }}</td>
-                                        <td style="text-align: center;">{{ recruiter.DivisionName }}</td>
                                     </tr>
                                 </tbody>
                             </table>
