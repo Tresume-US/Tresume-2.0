@@ -290,12 +290,17 @@ router.post('/login', async (req, res) => {
       if (storedPassword && storedPassword.length === 64) {
         const decryptedPassword = decrypter(storedPassword);
         if (password === decryptedPassword) {
-          const query2 = `SELECT RD.RoleName, RD.ViewOnly, RD.FullAccess, RD.DashboardPermission, RD.RoleID, MD.IsAdmin,MD.AccessOrg ,MD.UserRole
+          const query2 = `SELECT RD.RoleName, RD.ViewOnly, RD.FullAccess, RD.DashboardPermission, RD.RoleID, MD.IsAdmin, MD.AccessOrg, MD.UserRole
                           FROM MemberDetails MD 
                           INNER JOIN RolesNew RD ON MD.RoleID = RD.RoleID 
                           WHERE MD.UserEmail = '${username}' AND RD.Active = 1`;
 
           const { recordset } = await request.query(query2);
+
+          // Update the last login date
+          const updateLastLoginDateQuery = `UPDATE trainee SET lastlogindate = GETDATE() WHERE username = '${username}'`;
+          await request.query(updateLastLoginDateQuery);
+
           const result = {
             flag: 1,
             result: recordset,
@@ -318,6 +323,7 @@ router.post('/login', async (req, res) => {
     sql.close();
   }
 });
+
 
 router.post('/validatekey', async (req, res) => {
   console.log(req);
