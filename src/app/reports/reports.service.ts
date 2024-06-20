@@ -117,7 +117,9 @@ export class ReportsService {
         let requestDetails: any = {
             startDate: request.startDate,
             endDate: request.endDate,
-            traineeId: request.traineeId
+            traineeId: request.traineeId,
+            OrganizationId: request.OrganizationId,
+            UserRole: request.UserRole,
         };
         return this.http.post<ResponseDetails>(this.endpoint + 'getDSRReport', requestDetails);
     }
