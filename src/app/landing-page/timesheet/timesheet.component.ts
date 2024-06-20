@@ -15,13 +15,17 @@ export class TimesheetComponent implements OnInit {
   isScrolled = false;
   isNavbarCollapsed = false;
 
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   const offset = window.scrollY;
-  //   this.isScrolled = offset > 50; // You can adjust the offset value based on your design
+//   @HostListener('window:scroll', [])
+//   onWindowScroll() {
+//     const offset = window.scrollY;
+//     this.isScrolled = offset > 50;
+// }
+toggleNavbar() {
+  this.isNavbarCollapsed = !this.isNavbarCollapsed;
+}
+menuOpen = false;
 
-  // }
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
+toggleMenu() {
+  this.menuOpen = !this.menuOpen;
+}
 }
