@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 import { DashboardService, RequestItem } from '../dashboard/dashboard.service';
 import { ReportsService } from './reports.service';
 import { GridOptions, ColDef, RowNode, Column, GridApi } from 'ag-grid-community';
@@ -19,7 +20,7 @@ interface IRange {
     selector: 'app-reports',
     templateUrl: './dsr-report.component.html',
     styleUrls: ['./reports.component.scss'],
-    providers: [DashboardService, ReportsService]
+    providers: [DashboardService, ReportsService, CookieService]
 })
 export class DSRReportComponent implements OnInit {
 
@@ -45,10 +46,10 @@ export class DSRReportComponent implements OnInit {
     }];
 
     columnDefs = [
-        { field: 'SubmissionID', headerName: 'Submission ID', sortable: true, filter: true, resizable: true },
-        { field: 'CandidateName', headerName: 'Candidate Name', sortable: true, filter: true, resizable: true },
-        { field: 'MarketerName', headerName: 'Marketer Name', sortable: true, filter: true, resizable: true },
-        { field: 'Title', sortable: true, filter: true, resizable: true },
+        { field: 'submissionid', headerName: 'Submission ID', sortable: true, filter: true, resizable: true },
+        { field: 'Candidate', headerName: 'Candidate Name', sortable: true, filter: true, resizable: true },
+        { field: 'Marketer', headerName: 'Marketer Name', sortable: true, filter: true, resizable: true },
+        { field: 'title', headerName: 'Title', sortable: true, filter: true, resizable: true },
         { field: 'SubmissionDate', headerName: 'Submission Date', sortable: true, filter: true, resizable: true },
         { field: 'VendorName', headerName: 'Vendor Name', sortable: true, filter: true, resizable: true },
         { field: 'ClientName', headerName: 'Client Name', sortable: true, filter: true, resizable: true },
@@ -59,10 +60,14 @@ export class DSRReportComponent implements OnInit {
     public startDate: any;
     public endDate: any;
     public traineeId: any;
+    public OrgID: any;
+    public UserRole: any;
     public recruiter: any = [];
 
-    constructor(private http: HttpClient, private service: DashboardService, private reportService: ReportsService) {
+    constructor(private http: HttpClient, private service: DashboardService, private reportService: ReportsService,private cookieService: CookieService,) {
         this.traineeId = sessionStorage.getItem("TraineeID");
+        this.OrgID = this.cookieService.get('OrgID');
+        this.UserRole = this.cookieService.get('UserRole');
         this.startDate = this.dateFormatter(this.ranges[1].value[1]);
         this.endDate = this.dateFormatter(this.ranges[1].value[0]);
         console.log(this.ranges);
@@ -88,13 +93,16 @@ export class DSRReportComponent implements OnInit {
     public getInterviews(startDate?: string, endDate?: string) {
         let recruiterId = this.filterForm.get('recruiter')?.value
         let requestItem: any = {
-            /*  organizationID: 9, */
+            OrganizationId: this.OrgID, 
             startDate: startDate,
             endDate: endDate,
             traineeId: this.traineeId,
+            UserRole: this.UserRole,
             //recruiterId: recruiterId != 'All' ? recruiterId : undefined
         }
         this.reportService.getDSRReport(requestItem).subscribe(x => {
+
+            console.log(this.UserRole);
             let response = x.result;
             if (response) {
                 this.rowData = response;

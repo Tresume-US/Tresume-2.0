@@ -2781,48 +2781,107 @@ app.post("/getNonH1BReport", function (req, res) {
   }
 });
 
-app.post("/getDSRReport", function (req, res) {
+// app.post("/getDSRReport", function (req, res) {
+//   try {
+//     sql.connect(config, function (err) {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).send("Error connecting to database");
+//         return;
+//       }
+//       var request = new sql.Request();
+//       request.query(
+//         "select OrganizationID from Trainee where TraineeID=" +
+//           req.body.traineeId,
+//         function (err, recordset) {
+//           if (err) {
+//             console.log(err);
+//             res.status(500).send("Error querying Trainee table");
+//             return;
+//           }
+//           var OrgID = recordset.recordsets[0][0].OrganizationID;
+//           request.input("OrgID", sql.Int, OrgID);
+//           request.input("startDate", sql.VarChar, req.body.startDate);
+//           request.input("endDate", sql.VarChar, req.body.endDate);
+//           request.execute("getDSRReport", function (err, recordset) {
+//             if (err) {
+//               console.log(err);
+//               res.status(500).send("Error executing stored procedure");
+//               return;
+//             }
+//             var result = {
+//               flag: 1,
+//               result: recordset.recordsets[0],
+//             };
+//             res.send(result);
+//           });
+//         }
+//       );
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+
+app.post("/getDSRReport", async (req, res) => {
+  const { startDate, endDate, OrganizationId, traineeId } = req.body;
+
   try {
-    sql.connect(config, function (err) {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error connecting to database");
-        return;
-      }
-      var request = new sql.Request();
-      request.query(
-        "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
-        function (err, recordset) {
-          if (err) {
-            console.log(err);
-            res.status(500).send("Error querying Trainee table");
-            return;
-          }
-          var OrgID = recordset.recordsets[0][0].OrganizationID;
-          request.input("OrgID", sql.Int, OrgID);
-          request.input("startDate", sql.VarChar, req.body.startDate);
-          request.input("endDate", sql.VarChar, req.body.endDate);
-          request.execute("getDSRReport", function (err, recordset) {
-            if (err) {
-              console.log(err);
-              res.status(500).send("Error executing stored procedure");
-              return;
-            }
-            var result = {
-              flag: 1,
-              result: recordset.recordsets[0],
-            };
-            res.send(result);
-          });
-        }
-      );
+    await sql.connect(config);
+
+    var query = '';
+
+    // Add conditional filter based on UserRole
+    if (req.body.UserRole == 1  || req.body.userRole == 3) {
+      query = `SELECT s.submissionid, CONCAT(t.FirstName, ' ', t.LastName) AS Candidate, CONCAT(m.FirstName, ' ', m.LastName) AS Marketer,  
+                        s.title, FORMAT(s.submissiondate, 'MM/dd/yyyy') AS SubmissionDate, 
+                        s.VendorName, s.ClientName, s.Note, s.Rate
+                 FROM submission s 
+                 INNER JOIN Trainee t ON s.TraineeID = t.TraineeID 
+                 INNER JOIN Trainee m ON s.markerterid = m.TraineeID 
+                 WHERE s.Active = 1 AND m.Active = 1 
+                 AND s.SubmissionDate BETWEEN @startDate AND @endDate 
+                 AND m.OrganizationID = @OrganizationId 
+                 ORDER BY SubmissionDate`;
+    } else {
+      query = `SELECT s.submissionid, CONCAT(t.FirstName, ' ', t.LastName) AS Candidate, CONCAT(m.FirstName, ' ', m.LastName) AS Marketer,  
+                        s.title, FORMAT(s.submissiondate, 'MM/dd/yyyy') AS SubmissionDate, 
+                        s.VendorName, s.ClientName, s.Note, s.Rate
+                 FROM submission s 
+                 INNER JOIN Trainee t ON s.TraineeID = t.TraineeID 
+                 INNER JOIN Trainee m ON s.markerterid = m.TraineeID 
+                 WHERE s.Active = 1 AND m.Active = 1 
+                 AND s.SubmissionDate BETWEEN @startDate AND @endDate 
+                 AND s.markerterid = @traineeId 
+                 ORDER BY SubmissionDate`;
+    }
+
+    console.log(query);
+    console.log(req.body.UserRole);
+
+    const request = new sql.Request();
+    request.input('startDate', sql.Date, startDate);
+    request.input('endDate', sql.Date, endDate);
+    request.input('OrganizationId', sql.Int, OrganizationId);
+    request.input('traineeId', sql.Int, traineeId);
+
+    const result = await request.query(query);
+
+    res.send({
+      flag: 1,
+      result: result.recordset
     });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error occurred: ", error);
+    res.status(500).send("An error occurred while processing your request.");
+  } finally {
+    await sql.close();
   }
 });
+
 
 app.post("/getSiteVisitReport", function (req, res) {
   try {
