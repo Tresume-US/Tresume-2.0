@@ -15,12 +15,17 @@ export class AtsComponent implements OnInit {
   isScrolled = false;
   isNavbarCollapsed = false;
 
-  // @HostListener('window:scroll', [])
-  // onWindowScroll() {
-  //   const offset = window.scrollY;
-  //   this.isScrolled = offset > 50; // You can adjust the offset value based on your design
-  // }
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
+//   @HostListener('window:scroll', [])
+//   onWindowScroll() {
+//     const offset = window.scrollY;
+//     this.isScrolled = offset > 50;
+// }
+toggleNavbar() {
+  this.isNavbarCollapsed = !this.isNavbarCollapsed;
+}
+menuOpen = false;
+
+toggleMenu() {
+  this.menuOpen = !this.menuOpen;
+}
 }
