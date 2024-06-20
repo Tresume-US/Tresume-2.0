@@ -1969,4 +1969,66 @@ ul.navbar-nav.mr-auto {
     .bg-white {
       background-color: #fff0 !important;
     }
+    #welcomeText{
+      background-color: #a24f9a91;
+      height: 111px;
+      padding-top: 33px;
+      font-size: 40px;
+      color: white;
+      font-weight: 400;
+      font-family: 'Lato', sans-serif;
+    }
+  video{
+    width: 100%; 
+    height: 100vh;
+  }
+  .ts-content{
+    font-size: 18px;
+           font-weight: 200;
+           padding: 7px;
+           letter-spacing: 2px;
+  text-align: justify;
+  line-height: 29px;
+  font-family: 'Lato', sans-serif;
+  color: white;
+  }
+  .ul-content{
+    font-size: 16px; 
+    letter-spacing: 2px;
+     font-weight: 400;
+      font-style: normal; 
+      padding-left: 0;
+       list-style: none;
+       font-family: 'Lato', sans-serif;
+       margin: 50px 0 80px 0;
+       padding: 10px;
+  }
   
+  .times{
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 10px;
+    // color: white;
+  }
+  .times i{
+    font-size: 17px;
+     margin-right: 5px;
+  }
+  .times-li{
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 10px;
+    color: white;
+  }
+  h2.tittle {
+    font-size: 2rem;
+    text-align: center;
+    color: #93628d;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+  }
+  .main-timeline .description {
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 1px;
+  
+    font-family: 'Lato', sans-serif;
+  }
