@@ -3,9 +3,9 @@
     role="navigation"
     class="navbar navbar-expand-lg navbar-light fixed-top"
     [ngClass]="{ scrolled: isScrolled }"
-    style="color: white; padding-bottom: 0"
+    style="color: white; padding-bottom: 0;"
   >
-    <div class="pt-5">
+    <div class="pt-0">
       <a routerLink="/homelanding" class="navbar-brand">
         <img src="../assets/img/Tresume_logo.png" style="height: 90px" alt="" />
       </a>
@@ -30,7 +30,7 @@
       <!-- Navbar links here -->
     </div>
     <div class="float-end" style="display: flex; align-items: center">
-      <li class="nav-item" style="list-style: none; margin-right: 15px">
+      <li class="nav-item" style="list-style: none; margin-right: 40px; margin-left: 10px;">
         <a class="login-btn-web bn5" style="color: black" routerLink="/login"
           >Login</a
         >
@@ -40,7 +40,7 @@
           <!-- Menu Icon -->
           <div class="menu-icon" (click)="toggleMenu()">
             <div *ngIf="!menuOpen" class="bn5 bn8">
-              <i class="fas fa-bars"></i>
+              <i class="fas fa-bars" ></i>
             </div>
             <div *ngIf="menuOpen" class="bn5 bn8">
               <i class="fas fa-times"></i>
@@ -50,6 +50,17 @@
           <!-- Menu Overlay -->
           <div class="menu-overlay" [ngClass]="{ open: menuOpen }">
             <ul class="menu-list">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/ats">Applicant Tracking System</a>
+                    <a class="dropdown-item" routerLink="/talent-suite">Talent Suite</a>
+                    <a class="dropdown-item" routerLink="/workforce">Workforce</a>
+                    <a class="dropdown-item" routerLink="/timesheet">TimeSheet</a>
+                </div>
+            </li>
               <li class="nav-item active">
                 <a class="nav-link" routerLink="/market">Marketplace</a>
               </li>
@@ -100,12 +111,12 @@
           style="
             height: 92px;
             padding-top: 33px;
-            font-size: 50px;
+            font-size: 35px;
             color: white;
             font-weight: 500;
           "
         >
-          <span>WELCOME</span>
+          <span  class="space">WELCOME</span>
           <span class="space">TO</span>
           <span class="space">OUR</span>
           <span class="space">JOB</span>
@@ -116,59 +127,63 @@
   </div>
 </div>
 
-<section class="marketplace">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="job-board-anime">
-        <!-- <h2 class="tittle">Job boards</h2> -->
-        <div class="row card-stack-container">
-          <div
-            *ngFor="let card of cards; let i = index"
-            class="card-wrapper col-md-3"
-          >
-            <div
-              class="card custom-card"
-              [ngClass]="{
-                highlight: selectedCardIndex === i,
-                'special-card': i === 5
-              }"
-              (click)="selectCard(i)"
-            >
-              <div class="card-title-vertical">{{ card.title }}</div>
-              <!-- Vertical title -->
-              <img
-                class="card-img-top p-3"
-                [style.display]="i === 5 ? 'none' : 'block'"
-                style="width: 200px; height: 100px"
-                [src]="card.imageSrc"
-                alt="{{ card.title }} image"
-              />
-              <div class="card-body p-1">
-                <p class="card-text text-dark">{{ card.text }}</p>
-                <a
-                  [href]="card.link"
-                  class="card-btn"
-                  [style.display]="i === 5 ? 'none' : 'block'"
-                  >Read more</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <img
-        src="../../../assets/img/jobmarket.png"
-        alt="Tresume Image"
-        class="img-fluid"
-      />
+<section class="marketplace" style="justify-content:center ;">
+<div class="opt">
+  <div class="opt-card">
+    <img src="../../../assets/img/opt.png" alt="" style="width: 200px;height: 100px;">
+    <!-- <span>Hover Me</span> -->
+    <div class="opt-content">
+      <h3>OPT Nation</h3>
+      <p>Premium Job Board</p>
+      <button class="btn btn-dark" a routerLink="/opt-nation">Read More</button>
     </div>
   </div>
+</div>
+<div class="opt">
+  <div class="opt-card">
+    <img src="../../../assets/img/cb.png" alt="" style="width: 200px;height: 100px;">
+    <!-- <span>Hover Me</span> -->
+    <div class="opt-content">
+      <h3>Career Builder</h3>
+      <p>Premium Job Board</p>
+      <button class="btn btn-dark" a routerLink="/career">Read More</button>
+    </div>
+  </div>
+</div>
+<div class="opt">
+  <div class="opt-card">
+    <img src="../../../assets/img/dice.png" alt="" style="width: 200px;height: 100px;">
+    <!-- <span>Hover Me</span> -->
+    <div class="opt-content">
+      <h3>Dice</h3>
+      <p>Premium Job Board</p>
+      <button class="btn btn-dark" a routerLink="/dice">Read More</button>
+    </div>
+  </div>
+</div>
+<div class="opt">
+  <div class="opt-card">
+    <img src="https://in.jooble.org/job-description/wp-content/uploads/2020/03/logo2.svg" alt="" style="width: 200px;height: 100px;" class="jooble">
+    <!-- <span>Hover Me</span> -->
+    <div class="opt-content">
+      <h3>Jooble</h3>
+      <p>Free Job Board</p>
+      <button class="btn btn-dark" a routerLink="/joble">Read More</button>
+    </div>
+  </div>
+</div>
+<div class="opt">
+  <div class="opt-card">
+    <img src="../../../assets/img/monster_logo.svg" alt="" style="width: 200px;height: 100px;">
+    <!-- <span>Hover Me</span> -->
+    <div class="opt-content">
+      <h3>Monster</h3>
+      <p>Premium Job Board</p>
+      <button class="btn btn-dark" a routerLink="/monster">Read More</button>
+    </div>
+  </div>
+</div>
 </section>
-
-
-
 <!-- <div class="container">
   <div class="card mb-4">
     <div class="arrow">→</div>

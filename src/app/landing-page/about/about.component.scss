@@ -1,6 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 #team{
-  background-color: #202020 !important;
+  background:url(../../../assets/img/screen07.jpg) !important;
 }
 .row {
   overflow: hidden;
@@ -963,5 +963,9 @@ align-items: center !important;
       }
       .hide-s{
         display: none;
+      }
+      .navbar-brand img{
+        margin-top: 0 !important;
+        height: 60px !important;
       }
     }

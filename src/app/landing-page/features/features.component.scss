@@ -2,7 +2,7 @@
 
 #team {
     // background: #eee !important;
-    background-color: #202020 !important;
+    background:url(../../../assets/img/screen07.jpg) !important;  
    
  
     
@@ -1100,6 +1100,10 @@ section .section-title {
     }
     #keyFeatures{
       font-size: 20px;
+    }
+    .navbar-brand img{
+      margin-top: 0 !important;
+      height: 60px !important;
     }
     .overlay h1{
       height: 80px !important;
