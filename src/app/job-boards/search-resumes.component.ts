@@ -239,6 +239,56 @@ formData: any = {};
     this.gethrmsLocation();
   }
 
+  openModals(jobDetail: any,) {
+    this.selectedJobDetail = jobDetail;
+  }
+
+
+  public migrate(id: string, notes: string) {
+    if(!notes){
+      notes = 'NA'
+    }
+    let req = {
+      traineeId: id,
+      notes: notes
+    };
+    this.service.atsmigrateprofile(req).subscribe((x) => {
+      if (this.traineeId) {
+        let req = {
+          traineeId: this.traineeId,
+          keyword: '',
+        };
+
+        this.service.getResumes(req).subscribe((x) => {
+          let response = x.result;
+          this.resultsFound = true;
+          this.responseData = response;
+          this.rowData = this.responseData.slice(0, 10);
+          this.totalResults = this.responseData.length;
+          this.sizeToFit();
+        });
+      } else {
+        let req = {
+          userName: this.cookieValue,
+        };
+        this.service.getLoggedUser(req).subscribe((x: any) => {
+          if (x) {
+            this.traineeId = x[0].TraineeID;
+          }
+          let req = {
+            traineeId: this.traineeId,
+            keyword: '',
+          };
+          this.service.getResumes(req).subscribe((x) => {
+            let response = x.result;
+            this.rowData = response;
+            this.sizeToFit();
+          });
+        });
+      }
+    });
+  }
+
   public initGrid() {
     let cellRendererFn = function (params: any): any {
       return null;
@@ -526,46 +576,46 @@ formData: any = {};
     window.history.back();
   }
 
-  public migrate(id: string) {
-    let req = {
-      traineeId: id,
-    };
-    this.service.atsmigrateprofile(req).subscribe((x) => {
-      if (this.traineeId) {
-        let req = {
-          traineeId: this.traineeId,
-          keyword: '',
-        };
+  // public migrate(id: string) {
+  //   let req = {
+  //     traineeId: id,
+  //   };
+  //   this.service.atsmigrateprofile(req).subscribe((x) => {
+  //     if (this.traineeId) {
+  //       let req = {
+  //         traineeId: this.traineeId,
+  //         keyword: '',
+  //       };
 
-        this.service.getResumes(req).subscribe((x) => {
-          let response = x.result;
-          this.resultsFound = true;
-          this.responseData = response;
-          this.rowData = this.responseData.slice(0, 10);
-          this.totalResults = this.responseData.length;
-          this.sizeToFit();
-        });
-      } else {
-        let req = {
-          userName: this.cookieValue,
-        };
-        this.service.getLoggedUser(req).subscribe((x: any) => {
-          if (x) {
-            this.traineeId = x[0].TraineeID;
-          }
-          let req = {
-            traineeId: this.traineeId,
-            keyword: '',
-          };
-          this.service.getResumes(req).subscribe((x) => {
-            let response = x.result;
-            this.rowData = response;
-            this.sizeToFit();
-          });
-        });
-      }
-    });
-  }
+  //       this.service.getResumes(req).subscribe((x) => {
+  //         let response = x.result;
+  //         this.resultsFound = true;
+  //         this.responseData = response;
+  //         this.rowData = this.responseData.slice(0, 10);
+  //         this.totalResults = this.responseData.length;
+  //         this.sizeToFit();
+  //       });
+  //     } else {
+  //       let req = {
+  //         userName: this.cookieValue,
+  //       };
+  //       this.service.getLoggedUser(req).subscribe((x: any) => {
+  //         if (x) {
+  //           this.traineeId = x[0].TraineeID;
+  //         }
+  //         let req = {
+  //           traineeId: this.traineeId,
+  //           keyword: '',
+  //         };
+  //         this.service.getResumes(req).subscribe((x) => {
+  //           let response = x.result;
+  //           this.rowData = response;
+  //           this.sizeToFit();
+  //         });
+  //       });
+  //     }
+  //   });
+  // }
 
   enableEditMode(index: number): void {
     console.log(index);
