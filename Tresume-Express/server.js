@@ -4526,7 +4526,7 @@ app.post("/atsmigrateprofile", function (req, res) {
       }
       var request = new sql.Request();
       request.query(
-        "UPDATE Trainee SET Collab = 1, CandidateStatus = 8 WHERE TraineeID = " +
+        "UPDATE Trainee SET Collab = 1, CandidateStatus = 8,notes = '"+req.body.notes+"' WHERE TraineeID = " +
           req.body.traineeId,
         function (err, recordset) {
           try {

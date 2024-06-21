@@ -292,6 +292,12 @@
                   </button> -->
             &nbsp;
             <!-- <i class="fa fa-arrow-circle-down clickable" (click)="migrate(jobDetail.TraineeID)"></i> -->
+            <i class="nav-icon fas fa-users" 
+            data-toggle="modal" 
+            data-target="#exampleModal" 
+            title="To Transfer Candidate to HRMS" 
+            (click)="openModals(jobDetail)">
+        </i>&nbsp;
             <i class="fa fa-arrow-circle-down clickable" data-toggle="modal" data-target=".bd-example-modal" (click)="openModal(jobDetail)"></i>
           </div>
         </div>
@@ -423,6 +429,29 @@
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Close</button>
         <button type="button" class="btn" data-dismiss="modal" (click)="Assigntojob()">Assign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Migrate Candidate</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p style="display: inline-block; margin-right: 15px;"><strong>Candidate Name : &nbsp;&nbsp;</strong> {{ selectedJobDetail?.FullName }}</p>
+          <p>Please ensure that the <b>'Notes for the candidate'</b> field is filled. If there are no notes to add, please enter ( NULL ) in this field.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="migrate(selectedJobDetail?.TraineeID, selectedJobDetail?.Notes)">Transfer the candidate</button>
       </div>
     </div>
   </div>
