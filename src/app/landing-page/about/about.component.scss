@@ -31,11 +31,11 @@
 //   animation: scrollAnimation 5s linear forwards; /* Adjust the duration as needed */
 //   animation-iteration-count: 2;
 // }
-
 .img-fluid{
-  width: 96%;
-  height: 100%;
+  width: 90% !important;
+  height: 80% !important;
   transition: opacity 1s, transform 0.5s ease-in;
+  margin-top: 50px !important;
 }
 
 .space {
