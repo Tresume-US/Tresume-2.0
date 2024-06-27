@@ -2082,7 +2082,7 @@ router.post('/sendEmail', async (req, res) => {
         }
         .header {
             text-align: center;
-            background-color: #49274a;
+            background-color: #482668;
             padding: 20px 0;
      
         }
@@ -2114,7 +2114,7 @@ router.post('/sendEmail', async (req, res) => {
         }
     </style>
     </head>
-    <body style="background-color: #49274a;">
+    <body style="background-color: #482668;">
     <div class="container">
         <div class="header">
             <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">

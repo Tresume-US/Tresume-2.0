@@ -1211,6 +1211,30 @@
           </div>
         </div>
       </mat-tab>
+
+      <mat-tab label="Upload Resume" class="mt-5">
+        <div class="container">
+          <!-- Display message if resume path is empty -->
+          <ngx-extended-pdf-viewer *ngIf="Resumepath && Resumepath !== ''" [src]="Resumepath"  [height]="'80vh'"  backgroundColor="#fff"
+          theme="dark"  [useBrowserLocale]="true"
+          [textLayer]="true">></ngx-extended-pdf-viewer>
+          <div class="container mt-5">
+            <h1>Upload Resume</h1>
+          </div>
+          <div class="row">
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+              <div class="upload-section mt-5 mb-5">
+                <!-- Input for uploading files -->
+                <input type="file" id="uploadFile" (change)="handleFileInput($event)" accept=".pdf,.doc,.docx">
+              </div>
+            </div>
+          </div>
+          <!-- Message if resume path is empty -->
+          <div *ngIf="!Resumepath || Resumepath === ''" class="mt-3 text-danger">
+            <p>Resume not uploaded for this candidate.</p>
+          </div>
+        </div>
+      </mat-tab>
       
       
     </mat-tab-group>

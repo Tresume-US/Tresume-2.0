@@ -107,11 +107,11 @@
               <div class="row">
                 <div class="left-column" style="padding: 8px;font-weight: 500;">
                     <div>
-                      <a style="font-size: 26px; color: #49274A;">{{ candidate.Name }}</a>
+                      <a style="font-size: 26px; color: #482668;">{{ candidate.Name }}</a>
                     </div>
                 </div>
                 <div class="column" style="text-align: end;margin-right: 40px;">
-                  <a class="badge badge-warning"  style="font-size: 16px; color: #49274A;margin-right: 15px;"><i class="fas fa-globe"> </i> {{ candidate.organizationname }}</a>
+                  <a class="badge badge-warning"  style="font-size: 16px; color: #482668;margin-right: 15px;"><i class="fas fa-globe"> </i> {{ candidate.organizationname }}</a>
                     <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']" style="font-size: 20px;"></i>
                     <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID" style="font-size: 20px;margin-left: 14px;"></i>
                   </div>
