@@ -2125,7 +2125,32 @@ router.post("/FetchProfileVideo", function (req, res) {
   }
 });
 
+router.post("/FetchResume", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) throw err;
 
+      var request = new sql.Request();
+      const query = `
+      SELECT TOP 1 r.* 
+      FROM Resumes r
+      JOIN trainee t ON r.emailid = t.username 
+      WHERE t.traineeid = ${req.body.traineeid}
+      ORDER BY r.resumeid DESC;
+    `;
+      request.query(query, function (err, recordset) {
+        if (err) throw err;
+
+        var result = { flag: 1, result: recordset.recordsets[0] };
+
+        res.send(result);
+      });
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send({ error: "An error occurred while fetching resume" });
+  }
+});
 
 router.post("/ProfileVideoUpload", upload.single('Profilevideo'), async (req, res) => {
   try {
@@ -2155,6 +2180,33 @@ router.post("/ProfileVideoUpload", upload.single('Profilevideo'), async (req, re
   }
 });
 
+router.post("/ProfileResumeUpload", upload.single('ProfileResume'), async (req, res) => {
+  try {
+    let filename = '';
+    let TraineeID = req.body.traineeid;
+
+    if (req.file) {
+      filename = '/Content/ProfileVideo/' + req.file.filename;
+    }
+
+    const pool = await sql.connect(config);
+    const request = pool.request();
+    var query = `update Trainee set profilevideoPath ='${filename}',videouploadDate = GETDATE() where TraineeID = '${TraineeID}'`;
+    console.log(query);
+    const queryResult = await request.query(query);
+
+    let result = {
+      flag: 1,
+      message: 'Profile Video Uploaded Successfully',
+      filename: filename,
+      TraineeID: TraineeID
+    }
+    res.send(result);
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send({ error: "An error occurred while uploading profile video" });
+  }
+});
 
 
 async function generateExcel(data) {

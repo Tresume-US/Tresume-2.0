@@ -187,6 +187,7 @@ export class ReviewTresumeComponent implements OnChanges {
   profilevideoPath:any;
   videouploadDate: any;
   videoPlayershow: boolean = false;
+  resumeFile: string | Blob;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -340,7 +341,6 @@ export class ReviewTresumeComponent implements OnChanges {
 
     this.service.FetchProfileVideo(req).subscribe(
       (x: any) => {
-        console.log(x);
         let result = x.result;
         if(result[0].profilevideoPath == '' || result[0].profilevideoPath == null){
           this.videoPlayershow = false
@@ -357,9 +357,126 @@ export class ReviewTresumeComponent implements OnChanges {
         this.loading = false;
       }
     );
-
   }
 
+Resumepath: string = '';
+
+FetchResume() {
+  let req = {
+    traineeid: this.candidateID
+  };
+
+  this.service.FetchResume(req).subscribe(
+    (x: any) => {
+      let result = x.result;
+      if (result && result.length > 0 && result[0].ResumePath) {
+        this.Resumepath = "https://tresume.us/" + result[0].ResumePath;
+      }
+      this.loading = false;
+    },
+    (error: any) => {
+      console.error('Error fetching resume:', error);
+      this.loading = false;
+    }
+  );
+}
+  // submitResume() {
+  //   console.log('resume',this.resumeFile)
+  //     console.log(this.candidateID)
+  //   if (this.resumeFile) {
+  //     const formData = new FormData();
+  //     formData.append('resume', this.resumeFile);
+  //     formData.append('traineeid', this.candidateID);
+  
+  //     // this.service.ProfileResumeUpload(formData).subscribe(
+  //     //   response => {
+  //     //     this.resumeUrl = response.path;
+  //     //     this.resumeFileName = this.resumeFile?.name || '';
+  //     //     this.resumeUploadDate = new Date(response.uploadDate);
+  //     //     this.resumeUploaded = true;
+  //     //   },
+  //     //   error => {
+  //     //     console.error('Upload failed', error);
+  //     //   }
+  //     // );
+  //   }
+  // }
+  // submitResume(): void {
+  //   if (this.resumeFile) {
+  //     const formData = new FormData();
+  //     formData.append('resume', this.resumeFile);
+  //     formData.append('traineeid', this.candidateID);
+      
+  //     console.log('resume', this.resumeFile);
+  //     console.log('candidateID', this.candidateID);
+      
+  //     if (this.resumeFile instanceof File) {
+  //       console.log('Document path:', this.resumeFile.name);
+  //     } else {
+  //       console.log('Selected file is not of type File.');
+  //     }
+      
+  //   } else {
+  //     console.log('No resume file selected.');
+  //   }
+  // }
+  
+  // onFileSelectedResume(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.resumeFile = input.files[0];
+  //     console.log('Selected file:', this.resumeFile);
+  //   }
+  // }
+  fileBlob: string | ArrayBuffer;
+  fileHTML: string;
+
+  handleFileInput(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.convertToBase64(file);
+      this.convertToHTML(file);
+    }
+  }
+
+  private convertToBase64(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result) {
+        this.fileBlob = reader.result;
+        const b64Data = (this.fileBlob as string).split(',')[1];
+        this.saveResume(b64Data, file.name); 
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  private convertToHTML(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result) {
+        this.fileHTML = reader.result as string;
+        console.log(this.fileHTML);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  private saveResume(b64Data: string, filename: string): void {
+    const saveResumeReq = {
+      Filename: this.generalEmail+'_'+filename,
+      Content: b64Data,
+      userName: this.candidateID,
+      emailID: this.generalEmail,
+    };
+    // console.log('Resume',saveResumeReq)
+    this.service.saveResume(saveResumeReq).subscribe((response) => {
+      this.messageService.add({ severity: 'success', summary: 'Resume Uploaded Successfully' });
+    }, (error) => {
+      this.messageService.add({ severity: 'error', summary: 'Resume upload failed' });
+    });
+  }
+  
 
   onFileSelected(event: any) {
     this.ProfileVideoFile = event.target.files[0];
@@ -508,7 +625,7 @@ export class ReviewTresumeComponent implements OnChanges {
     if (tabIndex >= 0) {
       this.currentTabIndex = tabIndex;
       this.tabIndex = tabIndex;
-      if(tabIndex === 3 || tabIndex ===6 || tabIndex===7){
+      if(tabIndex === 3 || tabIndex ===6 || tabIndex===7|| tabIndex===8){
         this.showSaveButton = false
       }else{
         this.showSaveButton = true;
@@ -569,6 +686,7 @@ export class ReviewTresumeComponent implements OnChanges {
     this.getState();
     this.getdivision();
     this.FetchProfileVideo();
+    this.FetchResume();
 
     this.currentTabIndex = this.tabIndex;
     
