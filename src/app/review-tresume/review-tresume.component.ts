@@ -187,6 +187,7 @@ export class ReviewTresumeComponent implements OnChanges {
   profilevideoPath:any;
   videouploadDate: any;
   videoPlayershow: boolean = false;
+skillSet: any;
   resumeFile: string | Blob;
 
   startShowingSSN() {
@@ -270,7 +271,8 @@ export class ReviewTresumeComponent implements OnChanges {
       City: this.personalCity,
       Zipcode: this.personalZipcode,
       AddressType: this.addressType,
-      ReferredBy_external:this.referredByExternal
+      ReferredBy_external:this.referredByExternal,
+      skill: this.skillSet
   };
   
     console.log(Req);
@@ -976,6 +978,7 @@ FetchResume() {
       this.test = x.result[0].Candidatestatus;  
       this.selectedcurrentstatus = x.result[0].Candidatestatus;
       this.middleName = x.result[0].MiddleName || '';
+      this.skillSet = x.result[0].Skill || '';
       this.phoneNumberG = x.result[0].PhoneNumber || ''; 
       this.generalEmail = x.result[0].UserName || '';
       this.selectedrecruiterName = x.result[0].RecruiterName || '';

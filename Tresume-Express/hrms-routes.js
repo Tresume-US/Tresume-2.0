@@ -213,7 +213,9 @@ router.post("/gethrmscandidateList", async (req, res) => {
           } else if (searchterm.includes("@")) {
             return `T.UserName LIKE '%${searchterm}%'`;
           } else {
-            return `(T.FirstName LIKE '%${searchterm}%' OR T.LastName LIKE '%${searchterm}%' OR T.UserName LIKE '%${searchterm}%')`;
+            return `(T.FirstName LIKE '%${searchterm}%' OR T.LastName LIKE '%${searchterm}%' OR T.UserName LIKE '%${searchterm}%'
+            OR T.Skill LIKE '%${searchterm}%'
+            )`;
           }
         }
 //INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
@@ -222,7 +224,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
           query = `
             SELECT Distinct T.TraineeID, CONCAT(T.firstname, ' ', T.lastname) AS Name, CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
             T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
-            T.followupon, T.notes, T.CreateTime AS DateCreated
+            T.followupon, T.notes, T.CreateTime AS DateCreated,T.Skill
             FROM Trainee T
             INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
@@ -233,7 +235,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
         } else {
           query = `
-            SELECT Distinct T.TraineeID, CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.CSName AS CandidateStatus, T.CreateTime AS DateCreated, T.followupon, T.notes, O.organizationname
+            SELECT Distinct T.TraineeID, CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.CSName AS CandidateStatus, T.CreateTime AS DateCreated, T.followupon, T.notes, O.organizationname,T.Skill
             FROM Trainee T
             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
             LEFT JOIN Memberdetails CreatedBy ON T.CreateBy = CreatedBy.Useremail
@@ -1303,6 +1305,8 @@ router.post("/updateGeneral", async function (req, res) {
       formatValue(req.body.ssn) +
       ", AddressType = " +
       formatValue(req.body.AddressType) +
+      ", skill = " +
+      formatValue(req.body.skill) +
       ", Candidatestatus = " +
       formatValue(req.body.selectedcurrentstatus) +
       " WHERE " +
