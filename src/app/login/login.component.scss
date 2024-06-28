@@ -1,4 +1,4 @@
-$brand-primary:#49274a;
+$brand-primary:#482668;
 
 .login-container {
     display: flex;
@@ -51,3 +51,8 @@ $brand-primary:#49274a;
 #toggleBtn:active {
     cursor: pointer; 
 }
+@media only screen and (max-width:756px){
+    .card{
+      width: 90% !important;
+    }
+  }

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
                         <div class="card mb-3" style="background-color: #bcdefb;">
-                            <div class="card-header">Total FTC</div>
+                            <div class="card-header">Total FTCs</div>
                             <div class="card-body">
                                 <h4 class="card-title">{{totalFTCCount}}</h4>
                             </div>
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <div class="card mb-3" style="background-color: #f3bcfb;">
-                            <div class="card-header">Total Submission</div>
+                            <div class="card-header">Total Submissions</div>
                             <div class="card-body">
                                 <h4 class="card-title">{{totalSubmissionCount}}</h4>
                             </div>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <div class="card mb-3" style="background-color: #bcfbc2;">
-                            <div class="card-header">Total Interview</div>
+                            <div class="card-header">Total Interviews</div>
                             <div class="card-body">
                                 <h4 class="card-title">{{totalInterviewCount}}</h4>
                             </div>
@@ -81,7 +81,7 @@
                     <div class="card tabledatas">
                         <div class="table-responsive">
                             <table class="table">
-                                <thead class="thead-dark">
+                                <thead class="head">
                                     <tr class="text-center">
                                         <th scope="col">#</th>
                                         <th scope="col">Recruiter Name</th>
@@ -103,7 +103,6 @@
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-primary"
-                                style="background-color: #000000; width: 100%; border: none;color: white;"
                                 (click)="routeLinks('ftc')">View More</button>
                         </div>
                     </div>
@@ -144,8 +143,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
+                            <thead class="head">
+                                <tr class="text-center">
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>
                                     <th scope="col">DSR Count</th>
@@ -166,7 +165,6 @@
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-primary"
-                                style="background-color: #000000; width: 100%; border: none;color: white;"
                                 (click)="routeLinks('dsr')">View More</button>
                         </div>
                     </div>
@@ -207,8 +205,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
+                            <thead class="head">
+                                <tr class="text-center">
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>
                                     <th scope="col">Interview Count</th>
@@ -228,7 +226,6 @@
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-primary"
-                                style="background-color: #000000; width: 100%; border: none;color: white;"
                                 (click)="routeLinks('interviews')">View More</button>
                         </div>
                     </div>
@@ -269,8 +266,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
+                            <thead class="head">
+                                <tr class="text-center">
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>
                                     <th scope="col">Placement Count</th>
@@ -290,7 +287,6 @@
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-primary"
-                                style="background-color: #000000; width: 100%; border: none;color: white;"
                                 (click)="routeLinks('placements')">View More</button>
                         </div>
                     </div>
@@ -387,8 +383,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark text-center">
-                                <tr>
+                            <thead class="head text-center">
+                                <tr class="text-center">
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Dice Used Count</th>
@@ -402,7 +398,7 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of Dicedata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.Recruiter }}
+                                        <td style="text-align: center;">{{ recruiter.Recruiter }}
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.diceused }}</td>
                                     </tr>
@@ -448,8 +444,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
+                            <thead class="head">
+                                <tr class="text-center">
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">CB Used Count</th>
@@ -463,7 +459,7 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of CBdata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.Recruiter }} 
+                                        <td style="text-align: center;">{{ recruiter.Recruiter }} 
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.cbused }}</td>
                                     </tr>
@@ -509,8 +505,8 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
+                            <thead class="head">
+                                <tr class="text-center">
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Monster Used Count</th>
@@ -524,7 +520,7 @@
                                 <tbody>
                                     <tr *ngFor="let recruiter of Monsterdata;let i=index">
                                         <th scope="row" style="text-align: center;">{{i+1}}</th>
-                                        <td style="text-align: left;">{{ recruiter.Recruiter }} 
+                                        <td style="text-align: center;">{{ recruiter.Recruiter }} 
                                         </td>
                                         <td style="text-align: center;">{{ recruiter.monsterused }}</td>
                                     </tr>
@@ -581,7 +577,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark text-center">
+                            <thead class="head text-center">
                                 <tr>
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Divison Name</th>
@@ -646,7 +642,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="head">
                                 <tr>
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Divison Name</th>
@@ -711,7 +707,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="head">
                                 <tr>
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Divison Name</th>
@@ -1117,7 +1113,7 @@
                     <div class="card tabledatas">
                         <div class="table-responsive">
                             <table class="table">
-                                <thead class="thead-dark">
+                                <thead class="head">
                                     <tr class="text-center">
                                         <th scope="col">#</th>
                                         <th scope="col">Recruiter Name</th>
@@ -1180,7 +1176,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="head">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>
@@ -1243,7 +1239,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="head">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>
@@ -1305,7 +1301,7 @@
                 <div class="col-6">
                     <div class="card tabledatas">
                         <table class="table">
-                            <thead class="thead-dark">
+                            <thead class="head">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Marketer Name</th>

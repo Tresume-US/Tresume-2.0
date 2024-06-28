@@ -86,7 +86,32 @@ export class CandidateComponent implements OnInit {
                 { id: 20, name: 'Passport', group: 'Others' },
                 { id: 18, name: 'I-9', group: 'Others' },
                 { id: 21, name: 'ID', group: 'Others' },
-                { id: 27, name: 'Other', group: 'Others' }
+                { id: 27, name: 'Other', group: 'Others' },
+
+                //newly added request from yuvarani
+                { id: 37, name: 'SSN', group: 'Others' },
+                { id: 11, name: 'Green Card', group: 'Others' },
+                { id: 53, name: 'Adobe onboarding', group: 'Others' },
+                { id: 54, name: 'HireRight background check', group: 'Others' },
+                { id: 20, name: 'Passport', group: 'Others' },
+                { id: 55, name: 'Work authorization', group: 'Others' },
+                { id: 36, name: 'Driver license', group: 'Others' },
+                { id: 56, name: 'PPD/TB Result', group: 'Others' },
+                { id: 38, name: 'Car Insurance', group: 'Others' },
+                { id: 58, name: 'Car registration', group: 'Others' },
+                { id: 59, name: 'Resume', group: 'Others' },
+                { id: 60, name: 'Void Check', group: 'Others' },
+                { id: 61, name: 'BLS', group: 'Others' },
+                { id: 62, name: 'CPR', group: 'Others' },
+                { id: 63, name: 'Hep B Declination', group: 'Others' },
+                { id: 50, name: 'Hep B vaccination', group: 'Others' },
+                { id: 64, name: 'Covid vaccination', group: 'Others' },
+                { id: 47, name: 'Flu vaccination', group: 'Others' },
+                { id: 64, name: 'Flu Declination', group: 'Others' },
+                { id: 48, name: 'MMR vaccination', group: 'Others' },
+                { id: 65, name: 'Physical exam', group: 'Others' },
+                { id: 66, name: 'E-Verification', group: 'Others' },
+                { id: 67, name: 'Orientation document', group: 'Others' },
               ],
               valueProp: 'id',
               labelProp: 'name',
@@ -107,10 +132,10 @@ export class CandidateComponent implements OnInit {
               required: true,
             },
             expressionProperties: {
-              'templateOptions.required': model => model.docType == 9 || model.docType == 11 || model.docType == 1
+              'templateOptions.required': model => model.docType == 9 || model.docType == 11 || model.docType == 1 || model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67
             },
             hideExpression: model => model.docType == 20 || model.docType == 21 || model.docType == 22
-              || model.docType == 10 || model.docType == 23 || model.docType == 6
+              || model.docType == 10 || model.docType == 23 || model.docType == 6 
           },
           {
             key: 'endDate',
@@ -120,11 +145,11 @@ export class CandidateComponent implements OnInit {
               label: 'Expiry Date',
               required: false,
             },
-            hideExpression: model => model.docType == 3 || model.docType == 29 || model.docType == 30 || model.docType == 31 || model.docType == 32
-              || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24,
+            hideExpression: model => model.docType == 3 || model.docType == 29 || model.docType == 30 || model.docType == 31 || model.docType == 32 
+              || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 37 || model.docType == 53|| model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67,
             expressionProperties: {
               'templateOptions.required': model => !(model.docType == 3 || model.docType == 29 || model.docType == 30 || model.docType == 31
-                || model.docType == 32 || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 1)
+                || model.docType == 32 || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 1|| model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67)
             },
           },
           {

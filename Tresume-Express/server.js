@@ -170,7 +170,7 @@ app.post("/text-mail", (req, res) => {
         }
         .header {
             text-align: center;
-            background-color: #49274a;
+            background-color: #482668;
             padding: 20px 0;
      
         }
@@ -202,7 +202,7 @@ app.post("/text-mail", (req, res) => {
         }
     </style>
     </head>
-    <body style="background-color: #49274a;">
+    <body style="background-color: #482668;">
     <div class="container">
         <div class="header">
             <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
@@ -3471,7 +3471,10 @@ app.post("/saveResume", function (req, res) {
         );
         writeStream.write(buffer);
         writeStream.end();
-        res.send("Resume saved successfully");
+        let response = {
+          msg:"Resume saved successfully"
+        }
+        res.send(response);
       });
     });
   } catch (error) {

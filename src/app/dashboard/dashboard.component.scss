@@ -1,4 +1,4 @@
-$brand-primary:#49274a;
+$brand-primary:#482668;
 
 .dropdown_display {
     display: block;
@@ -11,8 +11,8 @@ $brand-primary:#49274a;
     background-color: #fff;
 }
 .main {
-    border-top: 3px solid #46103d;
-    border-bottom: 3px solid #46103d;
+    border-top: 3px solid #482668;
+    border-bottom: 3px solid #482668;
 }
 
 .center {
@@ -51,4 +51,8 @@ $brand-primary:#49274a;
   }
 .tabledatas{
     height: 96%;
+}
+.head{
+    background-color: #482668;
+color: white;
 }

@@ -105,12 +105,12 @@ tbody{
 }
 
 .btn-outline-bgcolor {
-  background-color: #46103d;
+  background-color: #482668;
 }
 
 .btn-bgcolor
 {
-background-color: #46103d ; 
+background-color: #482668 ; 
 color:white;
 }   
 
@@ -178,7 +178,8 @@ color:white;
 }
 
 ::ng-deep .mat-tab-label{
-  min-width: 150px !important;
+  min-width: 100px !important;
+  // min-width: 150px !important;
 }
 
 ::ng-deep .mat-ink-bar {

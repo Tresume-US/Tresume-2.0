@@ -1,40 +1,63 @@
 <div *ngIf="isLoaded">
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="
-      background-image: linear-gradient(to right, #49274a, #940571) !important;">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" >
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
-                        style="color: #c2c7d0"></i></a>
+                       ></i></a>
             </li>
         </ul>
         <ul *ngIf="!onboardView" class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-items dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <div class="image" style="display: inline; padding: 10px">
                         <!-- <img src="https://tresume.us/Images/Profile_icon.PNG" class="img-circle elevation-2"
                             style="height: auto; width: 2rem" alt="User Image" /> -->
                     </div>
                     <span style="color: #c2c7d0">{{ traineeDetails.FirstName }} &nbsp;
-                        <i class="fa fa-caret-down"></i>
+                        <!-- <i class="fa fa-caret-down"></i> -->
                     </span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                
+
+                <li class="nav-items dropdown">
+                    <a routerLink="/profile" class="nav-link">
+                        <i class="fa fa-user-circle" aria-hidden="true" title="profile" ></i>
+                    <!-- <i class="fa fa-user-circle-o fa-lg" aria-hidden="true" title="profile" ></i> -->
+                    </a>
+                </li>
+
+                    <li class="nav-items dropdown">
+                      <!-- <a class="logout-btn-web bn5"  (click)="logout()">Sign out</a> -->
+                    
+
+                      <i class="fa fa-chevron-circle-right" aria-hidden="true" style="font-size: 24px;cursor: pointer;line-height: 40px;" (click)="logout()" title="logout" ></i>
+                </li>
+
+                    <!-- <li class="nav-item dropdown">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> -->
+                   
+
+                <!-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <div class="dropdown-divider"></div>
                     <a routerLink="/profile" class="dropdown-item dropdown-footer"
                     >Profile</a>
                     <div class="dropdown-divider"></div>
-                    <!-- <a href="https://tresume.us/SelectWF.aspx" class="dropdown-item dropdown-footer">Switch WF</a> -->
-                    <!-- <div class="dropdown-divider"></div> -->
+                    <a href="https://tresume.us/SelectWF.aspx" class="dropdown-item dropdown-footer">Switch WF</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item dropdown-footer" (click)="logout()">Sign out</a>
-                </div>
-            </li>
+                </div> -->
+            <!-- </li> -->
         </ul>
     </nav>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #49274a">
-        <a href="index3.html" class="brand-link">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" >
+        <!-- <a href="index3.html" class="brand-link">
             <img src="assets/img/Logo_Small.png" alt="Tresume Logo" class="brand-image" style="opacity: 0.8" />
             <span class="brand-text font-weight-light">Tresume</span>
-        </a>
+        </a> -->
+
+
+        <a routerLink="/homelanding">
+        <img src="assets/email/logo.png" alt="Tresume Logo" class="brand-image" style="opacity: 0.8" /></a>
         <div class="sidebar">
             <div *ngIf="!onboardView" class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
@@ -75,13 +98,13 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" *ngIf="userType =='TRESUMEUSER'">
                     <li class="nav-item">
                         <a class="nav-link" routerLink="alltimelist">
-                          <i class="nav-icon fas fa-list"></i>
+                          <i class="nav-icon fas fa-list "></i>
                           <p>All Time List</p>
                         </a>
                       </li>
                       <li class="nav-item">
                         <a routerLink="/profile" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
+                            <i class="nav-icon fas fa-user "></i>
                             <p> My Profile</p>
                         </a>
                     </li>
@@ -89,35 +112,35 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" *ngIf="userType =='RECRUITER'">
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="'/dashboard/' + traineeID">
-                            <i class="nav-icon fas fa-chart-pie"></i>
-                            <p>
-                                Dashboard
-                            </p>
+                            <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
+                            <p>Dashboard</p>
                         </a>
-                    </li>   
+                        
+                    </li>
                     <li class="nav-item" *ngIf="checkFullAccess(2)">
                         <a class="nav-link" routerLink="/compliancedashboard">
-                            <i class="nav-icon fas fa-chart-bar"></i>
-                            <p>
+                            <!-- <i class="fa fa-bar-chart" aria-hidden="true"></i> -->
+                            <i class="fa fa-align-justify" aria-hidden="true"></i>
+                            <p >
                                 Compliance Dashboard
                             </p>
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(1)">
                         <a routerLink="/searchMain" class=" nav-link">
-                            <i class="nav-icon fas fa-search"></i>
-                            <p>JobBoard Search</p>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <p style="margin-left: 4px;">JobBoard Search</p>
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(2)">
                         <a routerLink="/candidates/1" class="nav-link">
-                            <i class="nav-icon fas fa-address-book "></i>
+                            <i class="fa fa-address-book" aria-hidden="true"></i>
                             <p> HRMS</p>
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(3)">
                         <a routerLink="/jobapplication" class="nav-link">
-                            <i class="nav-icon fas fa-clone"></i>
+                            <i class="fa fa-clone" aria-hidden="true"></i>
                             <p>
                                 Job Applications
                             </p>
@@ -125,7 +148,7 @@
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(3)">
                         <a class="nav-link" routerLink="/jobpostings" routerLinkActive="active">
-                            <i class="nav-icon fas fa-link"></i>
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
                             <p>
                                 My Jobs
                             </p>
@@ -135,17 +158,17 @@
 
                     <li class="nav-item" *ngIf="checkFullAccess(6)">
                         <a routerLink="/talentBench" class="nav-link">
-                            <i class="nav-icon fas fa-user-circle"></i>
-                            <p>
-                                Talent Bench
+                            <i class="fa fa-user-plus" aria-hidden="true" ></i>
+                            <p style="margin-left: -6px;">
+                            Talent Bench
                             </p>
                         </a>
                     </li>
 
                     <li class="nav-item" *ngIf="checkFullAccess(12)">
                         <a routerLink="/corpdocument" class="nav-link">
-                            <i class="nav-icon fa fa-file"></i>
-                            <p>
+                            <i class="fa fa-file-text" aria-hidden="true" style="margin-left: 2px;" ></i>
+                            <p >
                                Corporate Document
                             </p>
                         </a>
@@ -177,8 +200,9 @@
 
                     <li class="nav-item" *ngIf="checkFullAccess(10)">
                         <a class="nav-link" style="cursor: pointer;" (click)="toggleSubMenu('workforceSubMenu')">
-                          <i class="nav-icon fas fa-cog"></i>
-                          <p>
+                            
+                           <i class="nav-icon fas fa-users "></i>
+                          <p style="    margin-left: -7px;">
                             Workforce
                             <i class="right fas fa-angle-left" [ngClass]="{'down': isSubMenuOpen['workforceSubMenu']}"></i>
                           </p>
@@ -200,66 +224,67 @@
                       </li>
                       <li class="nav-item" *ngIf="checkFullAccess(5)">
                         <a class="nav-link" (click)="toggleDropdown('timesheetSubMenu')">
-                          <i class="nav-icon fas fa-clock"></i>
-                          <p>Timesheet</p>
+                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-left: 3px;"></i>
+                          <p style="margin-left: 3px;">Timesheet</p>
                           <i class="right fas fa-angle-left" [ngClass]="{'down': isDropdownOpen['timesheetSubMenu']}"></i>
                         </a>
                         <ul id="timesheetSubMenu" class="nav nav-treeview" [ngStyle]="{'display': isDropdownOpen['timesheetSubMenu'] ? 'block' : 'none'}">
                             <li class="nav-item" *ngIf="timesheetrole == 1">
                                 <a class="nav-link" routerLink="alltimelist">
-                                    <i class="nav-icon fas fa-list"></i>
+                                    <i class="fa fa-list-ul" aria-hidden="true"></i>
                                     <p>All Time List</p>
                                 </a>
                             </li>
                             <li class="nav-item" *ngIf="timesheetrole == 2">
                                 <a class="nav-link" routerLink="alltimelist">
-                                    <i class="nav-icon fas fa-list"></i>
+                                    <i class="fa fa-list-ul" aria-hidden="true"></i>
                                     <p>All Time List</p>
                                 </a>
                             </li>
 
                               <li class="nav-item" *ngIf="timesheetrole == 1">
                                 <a class="nav-link" routerLink="tsreport">
-                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <i class="fa fa-line-chart" aria-hidden="true"></i>
                                     <p>Timesheet Report</p>
                                   </a>
                               </li>
                               <li class="nav-item" *ngIf="timesheetrole == 2">
                                 <a class="nav-link" routerLink="tsreport">
-                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <i class="nav-icon fas fa-chart-bar "></i>
                                     <p>Timesheet Report</p>
                                   </a>
                               </li>
 
                               <li class="nav-item" *ngIf="timesheetrole == 1">
                                 <a class="nav-link" routerLink="all-invoice">
-                                    <i class="nav-icon fas fa-receipt"></i>
+                                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                                    
                                     <p>Invoice</p>
                                   </a>
                               </li>
 
                               <li class="nav-item" *ngIf="timesheetrole == 1">
                                 <a class="nav-link" routerLink="invoice-report">
-                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
                                     <p>Invoice Report</p>
                                   </a>
                               </li>
 
                           <li class="nav-item" *ngIf="timesheetrole == 1">
                             <a class="nav-link" routerLink="/assignrole">
-                              <i class="nav-icon fas fa-highlighter"></i>
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                               <p>Assign Role</p>
                             </a>
                           </li>
                           <li class="nav-item" *ngIf="timesheetrole == 1">
                             <a class="nav-link" routerLink="/create-project">
-                              <i class="nav-icon fas fa-plus"></i>
+                                <i class="fa fa-plus" aria-hidden="true"></i>
                               <p>Create Project</p>
                             </a>
                           </li>
                           <li class="nav-item" *ngIf="timesheetrole == 1">
                             <a routerLink="/allclient/1" class=" nav-link">
-                                <i class="nav-icon fas fa-users"></i>
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 <p>Timesheet Clients</p>
                             </a>
                         </li>
@@ -267,14 +292,15 @@
                       </li>
                     <li class="nav-item" *ngIf="checkFullAccess(7)">
                         <a routerLink="/allclient/0" class=" nav-link">
-                            <i class="nav-icon fas fa-users"></i>
+                            <!-- <i class="nav-icon fas fa-users "></i> -->
+                            <i class="fa fa-street-view" aria-hidden="true" style="margin-left: 3px;" ></i>
                             <p> Clients</p>
                         </a>
                     </li>
                     <li class="nav-item" *ngIf="checkFullAccess(8)">
                         <a routerLink="/vendor/0" class=" nav-link">
-                            <i class="nav-icon fas fa-store"></i>
-                            <p> Vendors</p>
+                            <i class="fa fa-handshake-o" aria-hidden="true" ></i>
+                            <p style="margin-left: -4px;"> Vendors</p>
                         </a>
                     </li>
 
@@ -317,22 +343,22 @@
                     </li> -->
                     <li class="nav-item" *ngIf="checkFullAccess(4)">
                         <a routerLink="/harvest" class=" nav-link">
-                            <i class="nav-icon fas fa-leaf"></i>
-                            <p>Harvest</p>
+                            <i class="fa fa-leaf" aria-hidden="true" style="margin-left: 3px;"  ></i>
+                            <p >Harvest</p>
                         </a>
                     </li>
-                    <li class="nav-item" *ngIf="checkFullAccess(11)">
+                    <li class="nav-item" style="margin-bottom: 10px;" *ngIf="checkFullAccess(11)">
                         <a class="nav-link" routerLink="/reports">
-                            <i class="nav-icon fas fa-list-alt"></i>
-                            <p>
+                            <i class="fa fa-envelope" aria-hidden="true" style="margin-left: 3px;" ></i>
+                            <p >
                                 Reports
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/profile" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p> My Profile</p>
+                            <!-- <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            <p> My Profile</p> -->
                         </a>
                     </li>
 

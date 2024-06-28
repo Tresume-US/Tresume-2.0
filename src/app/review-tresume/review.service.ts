@@ -141,6 +141,17 @@ export class ReviewService {
   ProfileVideoUpload(formData: FormData): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'ProfileVideoUpload', formData);
   }
+
+  // ProfileResumeUpload(formData: FormData): Observable<ResponseDetails> {
+  //   return this.http.post<ResponseDetails>(this.endpoint + 'ProfileResumeUpload', formData);
+  // }
+
+  saveResume(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'saveResume', request);
+  }
+  FetchResume(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'FetchResume', request);
+  }
   // This is for email tracker in the placement tab // HRMS
   // getTableData(): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.endpoint}/table-data`);
