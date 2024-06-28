@@ -144,10 +144,12 @@
                   <table class="table table-borderless no-border">
                     <tr>
                       <th>Email:</th>
-                      <td>{{ candidate.Email }}</td>
+                      <td style="   word-break: break-all;
+                      line-height: 1.2;
+                      padding: 5px;" >{{ candidate.Email }}</td>
                     </tr>
                     <tr>
-                      <th>Candidate Status:</th>
+                      <th style="line-height: 1.2;" >Candidate Status:</th>
                       <td>{{ candidate.CandidateStatus }}</td>
                     </tr>
                   </table>
@@ -191,6 +193,9 @@
                   </a> -->
                 </div>
                 <div class="row">
+                  <div class="col-md-12 mb-5" style="line-height: 1.5;padding: 5px;">
+                    <b>Skills:</b> {{candidate.Skill}}
+                  </div>
                   <div class="col-md-12">
                     <b>Notes :</b> {{candidate.notes | truncate:100}}
                   </div>
