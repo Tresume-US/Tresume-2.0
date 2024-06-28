@@ -26,11 +26,11 @@
                     </a>
                 </li>
 
-                    <li class="nav-items dropdown">
+                    <li class="nav-items dropdown" style="margin-top: 6px">
                       <!-- <a class="logout-btn-web bn5"  (click)="logout()">Sign out</a> -->
-                    
+                      <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 28px;cursor: pointer;  margin-bottom: 55px;" (click)="logout()" title="logout" ></i>
 
-                      <i class="fa fa-chevron-circle-right" aria-hidden="true" style="font-size: 24px;cursor: pointer;line-height: 40px;" (click)="logout()" title="logout" ></i>
+                      <!-- <i class="fa fa-chevron-circle-right" aria-hidden="true" style="font-size: 24px;cursor: pointer;line-height: 40px;" (click)="logout()" title="logout" ></i> -->
                 </li>
 
                     <!-- <li class="nav-item dropdown">
@@ -112,7 +112,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" *ngIf="userType =='RECRUITER'">
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="'/dashboard/' + traineeID">
-                            <i class="fa fa-tachometer-alt" aria-hidden="true"></i>
+                            <i class="fa fa-tachometer" aria-hidden="true"></i>
                             <p>Dashboard</p>
                         </a>
                         
