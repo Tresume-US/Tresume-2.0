@@ -220,17 +220,14 @@ textarea {
   touch-action: manipulation;
   cursor: pointer;
 }
-
 .button-10:focus {
   box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
   outline: 0;
 }
-
 .pagination-container {
   margin-top: 20px;
   text-align: center;
 }
-
 .pagination-button {
   padding: 10px 15px;
   margin: 0 5px;

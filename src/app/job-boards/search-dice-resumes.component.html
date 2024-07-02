@@ -159,10 +159,21 @@
           </div>
           
           <div class="col-md-3" style="padding: 20px">
-            <label for="keyword">Job Title Keyword</label>
-            <input [(ngModel)]="jobTitlekeyboard" class="form-control" />
+            <label>Likely To Switch</label>
+            <div class="row">
+              <div class="col-md-6">
+                <p-dropdown name="tester" placeholder="Select" [options]="likelytoSwitch"
+                [(ngModel)]="selectedSwitch" [showClear]="true" optionLabel="name"></p-dropdown>
+              </div>
+            </div>
+          </div>  
+          <div class="col-md-3" style="padding: 20px;margin-top: -14px;">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+              Highest Education Degree
+            </h4>
+            <p-dropdown name="tester" placeholder="Select a Degree" [options]="educationDegree"
+              [(ngModel)]="selectedEducationDegree" [showClear]="true" optionLabel="name"></p-dropdown>
           </div>
-
           <!-- <div class="col-md-3" style="padding: 20px">
             <label for="experience">Skill Years Of Experience</label>
             <input [(ngModel)]="skillExperience" class="form-control" />
@@ -175,16 +186,11 @@
             <label for="move">Likely To Move</label>
             <input [(ngModel)]="likelytoMove" class="form-control" />
           </div>
-
-         <div class="col-md-3" style="padding: 20px">
-          <label>Likely To Switch</label>
-          <div class="row">
-            <div class="col-md-6">
-              <p-dropdown name="tester" placeholder="Select" [options]="likelytoSwitch"
-              [(ngModel)]="selectedSwitch" [showClear]="true" optionLabel="name"></p-dropdown>
-            </div>
+          <div class="col-md-3" style="padding: 20px">
+            <label for="keyword">Job Title Keyword</label>
+            <input [(ngModel)]="jobTitlekeyboard" class="form-control" />
           </div>
-        </div>    
+          
         
         </div>
 
@@ -197,13 +203,7 @@
               display="chip" optionLabel="name">
             </p-multiSelect>
           </div> -->
-          <div class="col-md-3" style="padding: 20px">
-            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
-              Highest Education Degree
-            </h4>
-            <p-dropdown name="tester" placeholder="Select a Degree" [options]="educationDegree"
-              [(ngModel)]="selectedEducationDegree" [showClear]="true" optionLabel="name"></p-dropdown>
-          </div>
+          
           <!-- <div class="col-md-2" style="padding: 5px 20px">
             <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
               Work Permit

@@ -134,6 +134,152 @@
             Max experience should not be smaller than min experience.
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Last Active Max Age (Years)
+                  </h4>
+            <input type="number" name="lastActiveMaximumAge" [(ngModel)]="lastActiveMaximumAge"
+                   placeholder="Enter maximum age in years" class="form-control" style="margin-top: 8px;">
+            </div>
+         <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Last Time Active on Monster (mins)
+            </h4>
+            <input type="number" name="maxTimeLastActive" [(ngModel)]="maxTimeLastActive"
+                   placeholder="Enter maximum time in minutes" class="form-control" style="margin-top: 8px;">
+          </div>
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Resume Updated Max Age (in days)
+            </h4>
+            <input type="number" name="resumeUpdatedMaximumAge" [(ngModel)]="resumeUpdatedMaximumAge"
+                   placeholder="Enter maximum age in days" class="form-control" style="margin-top: 8px;">
+          </div>
+          
+         
+        </div>
+        <div class="row">
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Resume Updated Minimum Age (in days)
+            </h4>
+            <input type="number" name="resumeUpdatedMinimumAge" [(ngModel)]="resumeUpdatedMinimumAge"
+                   placeholder="Enter minimum age in days" class="form-control" style="margin-top: 8px;">
+          </div>
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Max Time Since Resume Updated (in minutes)
+            </h4>
+            <input type="number" name="maxTimeResumeUpdated" [(ngModel)]="maxTimeResumeUpdated"
+                   placeholder="Enter maximum time in minutes" class="form-control" style="margin-top: 8px;">
+          </div>
+          
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px; margin-top: 20px">
+              Minimum Time Since Resume Updated (in minutes)
+            </h4>
+            <input type="number" name="minTimeResumeUpdated" [(ngModel)]="minTimeResumeUpdated"
+                   placeholder="Enter minimum time in minutes" class="form-control" style="margin-top: 8px;">
+          </div>
+          
+         
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+              Willingness to Relocate
+            </h4>
+            <p-dropdown name="relocate" placeholder="Select"
+              [options]="relocateOptions" [(ngModel)]="selectedRelocate" optionLabel="label">
+            </p-dropdown>
+          </div>
+          
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+              Willingness to Travel
+            </h4>
+            <p-dropdown name="travel" placeholder="Select Willingness to Travel"
+              [options]="travelOptions" [(ngModel)]="selectedTravelOption" optionLabel="label">
+            </p-dropdown>
+          </div>
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+              Career Level
+            </h4>
+            <p-dropdown name="careerLevel" placeholder="Select Career Level"
+              [options]="careerLevels" [(ngModel)]="selectedCareerLevel" optionLabel="label">
+            </p-dropdown>
+          </div>
+          
+         
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-3" style="padding: 20px">
+            <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+                Job Types
+            </h4>
+            <p-dropdown name="jobTypes" placeholder="Select Job Type"
+                [options]="jobTypes" [(ngModel)]="selectedJobType" optionLabel="label">
+            </p-dropdown>
+        </div>
+        
+        <div class="col-md-3" style="padding: 20px">
+          <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+            Veteran Candidates
+          </h4>
+          <p-dropdown name="veteranCandidates" placeholder="Select"
+            [options]="veteranOptions" [(ngModel)]="veteranCandidates" optionLabel="label">
+          </p-dropdown>
+        </div>
+
+        <div class="col-md-3" style="padding: 20px">
+          <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+              Language Proficiency
+          </h4>
+          <p-dropdown name="languageProficiency" placeholder="Select Language Proficiency"
+              [options]="languageProficiencies" [(ngModel)]="selectedLanguageProficiency" optionLabel="label">
+          </p-dropdown>
+      </div>
+          
+         
+        </div>
+
+
+        <div class="row">
+          <!-- <div class="col-md-3" style="padding: 20px">
+             <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+        Minimum Salary
+    </h4>
+    <input type="number" name="minSalary" placeholder="Minimum Salary"
+        [(ngModel)]="minSalary" class="form-control">
+</div>
+        
+        <div class="col-md-3" style="padding: 20px">
+          <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+            Maximum Salary
+        </h4>
+        <input type="number" name="maxSalary" placeholder="Maximum Salary"
+            [(ngModel)]="maxSalary" class="form-control">
+    </div> -->
+
+        <div class="col-md-3" style="padding: 20px">
+          <h4 style="font-weight: bold; font-size: 14px; margin: 8px">
+            Current Work Status
+        </h4>
+        <p-dropdown name="currentWorkStatus" placeholder="Select Work Status"
+            [options]="workStatuses" [(ngModel)]="selectedWorkStatus" optionLabel="label">
+        </p-dropdown>
+    
+      </div>
+          
+         
+        </div>
+
       </accordion-group>
     </accordion>
   </div>

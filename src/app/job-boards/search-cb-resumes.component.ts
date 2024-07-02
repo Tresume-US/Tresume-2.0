@@ -155,6 +155,35 @@ export class SearchResumesCBComponent implements OnInit {
 
     ];
 
+    employedTypes = [
+        { value: 'True', name: 'True' },
+        { value: 'False', name: 'False' },
+    ]
+       jobTypes = [
+        { label: 'Contract to Hire', value: 'ETCH' },
+        { label: 'Contract - Corp-to-Corp', value: 'ETCC' },
+        { label: 'Contract - Independent 1099', value: 'ETCI' },
+        { label: 'Contract - W2', value: 'ETC2' },
+        { label: 'Consultant', value: 'ETCN' },
+        { label: 'Full-Time', value: 'ETFE' },
+        { label: 'Part-Time', value: 'ETPE' },
+        { label: 'Contractor', value: 'ETCT' },
+        { label: 'Intern', value: 'ETIN' },
+        { label: 'Seasonal/Temp', value: 'ETTS' },
+        { label: 'Not Specified', value: 'ETNS' },
+        { label: 'Permanent', value: 'ETPT' },
+        { label: 'Freelance', value: 'ETFL' },
+        { label: 'Apprenticeship', value: 'ETAP' },
+        { label: 'Student - Professional', value: 'ETSP' },
+        { label: 'Student - Apprentice', value: 'ETSA' },
+        { label: 'Temporary/Part Time', value: 'ETTP' },
+        { label: 'Temporary/Full Time', value: 'ETTF' },
+        { label: 'Per Diem', value: 'ETPD' },
+        { label: 'Full Time/Part Time', value: 'ETFP' },
+        { label: 'Franchises', value: 'ETFR' },
+        { label: 'Bank', value: 'ETBK' }
+    ];
+
     rowData: any;
     columnDefs: any;
     public gridOptions: GridOptions = {};
@@ -173,7 +202,11 @@ export class SearchResumesCBComponent implements OnInit {
     daysWithin: string;
     searchSkill: string;
     yearsOfExp: string;
+    excludeTerms: string;
     schoolName: string;
+    maxSkillsPerProfile: number;
+    selectedJobType: { label: string, value: string };
+    currentlyEmployed: { value: string, name: string };
     willingToRelocate: boolean;
     hasSecurityClearance: boolean;
     selectedWorkstatus: any[] = [];
@@ -212,7 +245,7 @@ export class SearchResumesCBComponent implements OnInit {
     jobID: any = 4;
     isallowed: any = true;
     divcandidateemail: any = '';
-
+    description: string = '';
     showcrediterror: boolean = false;
     cbcrediterror:boolean = false
     cfullname: any;
@@ -540,6 +573,21 @@ export class SearchResumesCBComponent implements OnInit {
         }
         if (this.selectedEducationDegree) {
             facetFilter += ' HighestEducationDegreeCode:' + this.selectedEducationDegree.value;
+        }
+        if (this.excludeTerms) {
+            facetFilter += ' ExcludeTerms:[' + this.excludeTerms + ']';
+        }
+        if (this.maxSkillsPerProfile) {
+            facetFilter += ' MaxSkillsPerProfile:' + this.maxSkillsPerProfile;
+        }
+        if (this.selectedJobType) {
+            facetFilter += ' DesiredJobType:' + this.selectedJobType.value;
+        }
+        if (this.currentlyEmployed !== undefined) {
+            facetFilter += ' CurrentlyEmployed:' + this.currentlyEmployed;
+        }
+        if (this.description) {
+            facetFilter += ' Description:[' + this.description + ']';
         }
         return facetFilter;
     }
