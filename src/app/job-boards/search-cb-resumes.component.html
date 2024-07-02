@@ -67,7 +67,7 @@
                         <label for="maxSkillsPerProfile">Max Skills Per Profile</label>
                         <input type="number" placeholder="Enter max skills per profile" [(ngModel)]="maxSkillsPerProfile" class="form-control">
                     </div>
-                    <div class="col-md-2" style="padding: 20px;">
+                    <div class="col-md-2" style="padding: 20px;padding-top: 8px;">
                         <h4 style="font-weight: bold; font-size:14px;margin: 8px;">Work Status</h4>
                         <p-multiSelect [options]="workStatus" [(ngModel)]="selectedWorkstatus" display="chip"
                             optionLabel="name">
@@ -97,28 +97,20 @@
                         <p-dropdown name="currentlyEmployed" placeholder="Select Status" [options]="employedTypes"
                                     [(ngModel)]="currentlyEmployed" [showClear]="true" optionLabel="name"></p-dropdown>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group" style="padding: 20px;">
-                            <label for="description">Description</label>
-                            <textarea placeholder="Enter description" [(ngModel)]="description" class="form-control" rows="4" style="resize: horizontal; overflow-x: auto ; width: 16rem;;"></textarea>
+                    <div class="col-md-2" style="padding: 20px;padding-top: 8px;">
+                        <label for="description">Description</label>
+                                    <textarea placeholder="Enter description" [(ngModel)]="description" class="form-control" rows="4" style="resize: horizontal; overflow-x: auto ; width: 16rem;;"></textarea>
 
-                        </div>
+
                     </div>
-                   
                 </div>
                 
                 <div class="row">
-                    <div class="row">
-                        <div class="row">
-                            
-                        </div> 
-                         
-                    </div>
                     <div class="col-md-2" style="padding: 40px;">
                         <mat-checkbox class="example-margin" [(ngModel)]="willingToRelocate">Willing To Relocate
                         </mat-checkbox>
                     </div>
-                    <div class="col-md-2" style="padding: 40px;">
+                    <div class="col-md-2" style="padding: 40px;margin-left: 5rem;">
                         <mat-checkbox class="example-margin" [(ngModel)]="hasSecurityClearance">Require Security
                             Clearance
                         </mat-checkbox>
