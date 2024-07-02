@@ -707,7 +707,6 @@ router.post('/GetJobsbyJobID', async (req, res) => {
   }
 });
 
-
 router.post("/UpdateJob", async (req, res) => {
   try {
     const pool = await sql.connect(config);
@@ -830,5 +829,110 @@ router.post("/UpdateJob", async (req, res) => {
     res.status(500).send(response);
   }
 });
+
+// Replace these with your actual client ID and secret
+const clientId = 'b8a20d0b9d20b5a88e64482b37cca791ab924a3dcf48f9183f100c82e80c4348';
+const clientSecret = 'o1Wm8LbqxvqZC4mMr95DS57SeGchDgYidrVoFm5HVWZljM0qqHxvLuuude89MkNu';
+const tokenEndpoint = 'https://apis.indeed.com/graphql';
+const graphqlEndpoint = 'https://apis.indeed.com/graphql';
+
+let accessToken = '';
+let tokenExpiration = Date.now();
+
+// Middleware to check and refresh token if needed
+const checkAndRefreshToken = async (req, res, next) => {
+  if (!accessToken || Date.now() >= tokenExpiration) {
+    try {
+      const response = await axios.post(tokenEndpoint, {
+        grant_type: 'client_credentials',
+        client_id: clientId,
+        client_secret: clientSecret,
+      });
+
+      accessToken = response.data.access_token;
+      tokenExpiration = Date.now() + response.data.expires_in * 1000; 
+      console.log('Access token refreshed:', accessToken);
+    } catch (error) {
+      console.error('Error refreshing token:', error.response.data);
+      return res.status(500).send('Failed to refresh access token');
+    }
+  }
+  next();
+};
+
+// Endpoint to submit a job posting
+app.post('/submit-job', checkAndRefreshToken, async (req, res) => {
+  const {
+    title,
+    description,  
+    location,
+    benefits,
+    companyName,
+    sourceName,
+    jobPostingId,
+    datePublished,
+    url,
+    contacts
+  } = req.body;
+
+  const query = `
+    mutation {
+      jobsIngest {
+        createSourcedJobPostings(input: {
+          jobPostings: [{
+            body: {
+              title: "${title}",
+              description: "${description}",
+              location: {
+                country: "${location.country}",
+                cityRegionPostal: "${location.cityRegionPostal}"
+              },
+              benefits: ${JSON.stringify(benefits)}
+            },
+            metadata: {
+              jobSource: {
+                companyName: "${companyName}",
+                sourceName: "${sourceName}",
+                sourceType: "Employer"
+              },
+              jobPostingId: "${jobPostingId}",
+              datePublished: "${datePublished}",
+              url: "${url}",
+              contacts: ${JSON.stringify(contacts)}
+            }
+          }]
+        }) {
+          results {
+            jobPosting {
+              sourcedPostingId
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await axios.post(
+      graphqlEndpoint,
+      { query },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error submitting job posting:', error.response?.data || error.message);
+    res.status(500).send('Failed to submit job posting to Indeed API');
+  }
+});
+
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
 module.exports = router;
 

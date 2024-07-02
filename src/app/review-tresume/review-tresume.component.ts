@@ -474,6 +474,8 @@ FetchResume() {
     // console.log('Resume',saveResumeReq)
     this.service.saveResume(saveResumeReq).subscribe((response) => {
       this.messageService.add({ severity: 'success', summary: 'Resume Uploaded Successfully' });
+      this.FetchResume();
+
     }, (error) => {
       this.messageService.add({ severity: 'error', summary: 'Resume upload failed' });
     });
