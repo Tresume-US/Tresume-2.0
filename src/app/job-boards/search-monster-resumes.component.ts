@@ -168,6 +168,53 @@ export class SearchResumesMonsterComponent implements OnInit {
 
     ];
 
+    selectedRelocate: any; 
+    selectedTravelOption: any;
+      selectedJobTypes: string[] = []; 
+    
+    relocateOptions = [
+      { value: true, label: 'Yes' },
+      { value: false, label: 'No' }
+    ];
+    veteranOptions = [
+        { value: true, label: 'Yes' },
+        { value: false, label: 'No' }
+      ];
+    
+    travelOptions = [
+        { value: 'NoTravelRequired', label: 'No Travel Required' },
+        { value: 'UpTo25PercentTravel', label: 'Up to 25% Travel' },
+        { value: 'UpTo50PercentTravel', label: 'Up to 50% Travel' },
+        { value: 'UpTo75PercentTravel', label: 'Up to 75% Travel' },
+        { value: 'OneHundredPercentTravel', label: '100% Travel' }
+      ];
+    
+  careerLevels = [
+    { value: 'President', label: 'President' },
+    { value: 'ExecutiveLevel', label: 'Executive Level' },
+    { value: 'GeneralManager', label: 'General Manager' },
+    { value: 'VicePresident', label: 'Vice President' },
+    { value: 'Director', label: 'Director' },
+    { value: 'Head', label: 'Head' },
+    { value: 'Manager', label: 'Manager' },
+    { value: 'Lead', label: 'Lead' },
+    { value: 'Other', label: 'Other' },
+    { value: 'Analyst', label: 'Analyst' },
+    { value: 'Representative', label: 'Representative' },
+    { value: 'Specialist', label: 'Specialist' },
+    { value: 'Clerk', label: 'Clerk' },
+    { value: 'Coordinator', label: 'Coordinator' },
+    { value: 'Assistant', label: 'Assistant' }
+  ];
+
+  jobTypeOptions = [
+    { label: 'Wants Permanent', value: 'WantsPermanent' },
+    { label: 'Wants Contract', value: 'WantsContract' },
+    { label: 'Wants Intern', value: 'WantsIntern' },
+    { label: 'Wants Temp', value: 'WantsTemp' },
+    { label: 'Wants Seasonal', value: 'WantsSeasonal' }
+  ];
+
     securityClearances: any[] = [
         { value: 2, name: 'Unspecified' },
         { value: 3, name: 'Active Confidential' },
@@ -178,9 +225,32 @@ export class SearchResumesMonsterComponent implements OnInit {
         { value: 20, name: 'Active TS/SCI-FS Polygraph' },
         { value: 21, name: 'Other Active Clearance' }
     ];
-
+    languageProficiencies = [
+        { value: 'Unknown', label: 'Unknown' },
+        { value: 'Beginner', label: 'Beginner' },
+        { value: 'Intermediate', label: 'Intermediate' },
+        { value: 'Advanced', label: 'Advanced' },
+        { value: 'Fluent', label: 'Fluent' }
+    ];
+    workStatuses = [
+        { value: 'AuthorizedToWorkForAnyEmployer', label: 'Authorized to Work for Any Employer' },
+        { value: 'AuthorizedToWorkForPresentEmployer', label: 'Authorized to Work for Present Employer' },
+        { value: 'RequireSponsorship', label: 'Require Sponsorship' }
+    ];
+    jobTypes = [
+        { value: 'WantsPermanent', label: 'Permanent' },
+        { value: 'WantsContract', label: 'Contract' },
+        { value: 'WantsIntern', label: 'Intern' },
+        { value: 'WantsTemp', label: 'Temporary' },
+        { value: 'WantsSeasonal', label: 'Seasonal' }
+    ];
+    selectedJobType: string;
+    selectedWorkStatus: string;
+    selectedLanguageProficiency: string;
     rowData: any;
     columnDefs: any;
+    minSalary: number;
+    maxSalary: number;
     public gridOptions: GridOptions = {};
     public gridApi: GridApi;
     public selectedState: string;
@@ -202,6 +272,7 @@ export class SearchResumesMonsterComponent implements OnInit {
     hasSecurityClearance: boolean;
     selectedWorkstatus: any[] = [];
     selectedEducationDegree: any;
+    selectedCareerLevel: any;
     selectedSecurityClearance: any;
     searchType: SearchType = SearchType.jobDetail;
     fileBlob: any;
@@ -250,6 +321,12 @@ export class SearchResumesMonsterComponent implements OnInit {
     csocialsource: string;
     ceducation: string;
     JobTitle:string;
+    lastActiveMaximumAge: number | undefined;
+    maxTimeLastActive: number | undefined;
+    resumeUpdatedMaximumAge: number | undefined;
+    maxTimeResumeUpdated: any;
+    resumeUpdatedMinimumAge: any;
+    minTimeResumeUpdated: any;
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer, private pdfViewerService: NgxExtendedPdfViewerService) {
@@ -433,7 +510,7 @@ export class SearchResumesMonsterComponent implements OnInit {
     
                     let b64Data: any = x.resumeDocument.file;
                     this.fileBlob = b64Data;
-                    let contentType = x.resumeDocument.fileContentType;
+                    let contentType = x.resumeDocument.fileContentType;6
                     // this.isPDFSrc = contentType === 'application/pdf';
                     this.currentResumeResp = x.resumeDocument;
                     const blob = b64toBlob(b64Data, contentType);
@@ -651,7 +728,13 @@ export class SearchResumesMonsterComponent implements OnInit {
                     ],
 
                     resumeUpdatedMaximumAge: this.daysWithin * 1440,
-                    willingnessToRelocate: this.willingToRelocate
+                    Activemaxage:this.lastActiveMaximumAge,
+                    Lasttimeactive:this.maxTimeLastActive,
+                    Resumeupdatedmaxage:this.resumeUpdatedMaximumAge,
+                    Maxtimeresumeupdated:this.maxTimeResumeUpdated,
+                    Resumeupdatedminage:this.resumeUpdatedMinimumAge,
+                    Mintimeresumeupdated:this.minTimeResumeUpdated,
+                    willingnessToRelocate: this.willingToRelocate,
 
                 }
             };
@@ -688,10 +771,29 @@ export class SearchResumesMonsterComponent implements OnInit {
                     importance: 'Required'
                 }]
             }
+            
             if (this.selectedSecurityClearance?.value) {
                 objectReq.semantic.securityClearances = [{
                     clearanceId: this.selectedSecurityClearance.value,
                     countryAbbrev: 'US'
+                }]
+            }
+            if (this.selectedCareerLevel?.value) {
+                objectReq.semantic.careerLevel = [{
+                    careerLevel: this.selectedCareerLevel.value,
+                    importance: 'Required'
+                }]
+            }   
+            if (this.selectedRelocate?.value) {
+                objectReq.semantic.relocate = [{
+                    relocate: this.selectedRelocate.value,
+                    importance: 'Required'
+                }]
+            }
+            if (this.selectedTravelOption?.value) {
+                objectReq.semantic.travel = [{
+                    travel: this.selectedTravelOption.value,
+                    importance: 'Required'
                 }]
             }
             req = {
@@ -966,6 +1068,9 @@ export interface SearchReqItem {
                 importance: string
             }
         ],
+        careerLevel?:any[],
+        relocate?:any[],
+        travel?:any[],
         legalStatuses?: any[],
         securityClearances?: any[],
         locations?: [
@@ -979,6 +1084,12 @@ export interface SearchReqItem {
             }
         ],
         resumeUpdatedMaximumAge?: number,
+        Activemaxage?: number,
+        Lasttimeactive?: number,
+        Resumeupdatedmaxage?: number,
+        Maxtimeresumeupdated?: number,
+        Resumeupdatedminage?: number,
+        Mintimeresumeupdated?: number,
         willingnessToRelocate?: boolean,
         yearsOfExperience?: {
             expression: string,

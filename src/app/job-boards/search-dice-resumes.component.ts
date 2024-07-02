@@ -65,7 +65,7 @@ selectedEmail: any;
 selectedPhonenumber: any;
 selectedSwitch: any;
 jobTitlekeyword: string;
-skillExperience: string;
+// skillExperience: string;
 likelytoMove: string;
 
   fields: FormlyFieldConfig[] = [
