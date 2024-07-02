@@ -20,10 +20,20 @@
 .btn-bgcolor
 {
 background-color: #482668 ; 
+} 
+.btn-bgcolor:hover
+{
+background-color: #5d0aab ; 
 }         
 
 h2{
   color: #482668;
 }
+.nav-tabs a{
+  color: #482668;
+}
 
+.nav-tabs a:hover {
+  color: #5d0aab !important;
+}
 

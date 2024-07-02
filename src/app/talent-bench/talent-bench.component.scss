@@ -11,8 +11,12 @@ button{
   border: none;
 }
 .btn:hover{
-    background-color: #94618E;
+    background-color: #5d0aab;
     color: #ffffff;
+}
+.btn.mt-2:hover{
+  background-color: #5d0aab;
+  color: #ffffff;
 }
 i{
   color: #94618E;
@@ -21,6 +25,17 @@ i{
     border-top: 3px solid #550355;
     border-bottom: 3px solid #550355;
     padding-top: 10px;
+}
+//pawan
+
+.icons i{
+  color: #482668;
+  font-size: 20px;
+  margin-left: 20px;
+}
+//
+.icons i:hover{
+  color: #5d0aab;
 }
 .header{
     padding-top: 25px;
@@ -396,4 +411,10 @@ h2{
 .modal-footer {
   background-color: #f8f9fa;
   border-top: 1px solid #e9ecef;
+}
+
+.btn.mt-2{
+  background-color: $brand-primary;
+  color: #ffffff;
+  margin-bottom:  8px;
 }

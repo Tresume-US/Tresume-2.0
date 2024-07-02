@@ -200,4 +200,32 @@
     width: 80%;
   }
   
+  .btn-wdth{
+    font-size: 15px;
+    margin-left: 14rem;
+    padding: 11px 11px;
+  }
+  .btn-wdth:hover{
+    background-color: #5d0aab !important;
+  }
+  .fa-eye{
+    color: #482668; 
+  }
+  .fa-users{
+    color: #482668; 
+    cursor: pointer;
+  }
+  .fa-arrow-circle-down{
+    color: #482668;
+  }
+
+  .fa-eye:hover{
+    color: #5d0aab
+  }
+  .fa-users:hover{
+    color: #5d0aab
+  }
+  .fa-arrow-circle-down:hover{
+    color: #5d0aab
+  }
   

@@ -7,7 +7,7 @@
     </div><br>
     <div class="row">
       <div class="col-6">
-        <div class="align" style="margin-top: 20px;">
+        <div class="align" style="margin-top: 3px;">
           <button type="button" class="btn ml-3" data-toggle="modal" data-target=".bd-example-modal-xl"><span class="bi bi-plus">+</span> Add
             Candidate</button>
           <button type="button" class="btn ml-3" data-toggle="modal" data-target="#exampleModalLong">Group</button>
@@ -64,9 +64,9 @@
                   <div class="icons" style="margin-top: 10px;margin-top:-21px;margin-right: 50px; text-align: right;">
                     <a class="badge badge-warning"  style="font-size: 16px; color: #482668;margin-right: 15px;"><i class="fas fa-globe"> </i> {{ item.organizationname }}</a>
                     <i [routerLink]="['/reviewtresume/3/'+item.TraineeID+'/0']" class="fa fa-eye fa-fw pt-2" style="font-size: 24px;"></i>
-                    <i class="far fa-clipboard icon" title="Submission Data" (click)="downloadSubmission(item.TraineeID)" style="font-size: 20px;margin-left: 20px;"></i>
-                    <i class="fas fa-pencil-alt icon" title="Interview Data" (click)="downloadInterview(item.TraineeID)" style="font-size: 20px;margin-left: 20px;"></i>
-                    <i class="far fa-file-alt icon" title="Placement Data" (click)="placementrecdownload(item.TraineeID)" style="font-size: 20px;margin-left: 20px;"></i>
+                    <i class="far fa-clipboard icon" title="Submission Data" (click)="downloadSubmission(item.TraineeID)"></i>
+                    <i class="fas fa-pencil-alt icon" title="Interview Data" (click)="downloadInterview(item.TraineeID)"></i>
+                    <i class="far fa-file-alt icon" title="Placement Data" (click)="placementrecdownload(item.TraineeID)"></i>
                     <!-- <i class="fa fa-trash fa-fw pt-2" style="font-size: 20px;margin-left: 10px;" (click)="openConfirmationModal(item.TBID)"></i>  -->
                     <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal" [attr.data-target]="'#exampleModal-' + item.TBID" style="font-size: 20px;margin-left: 14px;"></i>
                   </div>

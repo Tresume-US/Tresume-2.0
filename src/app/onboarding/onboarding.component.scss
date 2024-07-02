@@ -152,7 +152,7 @@ $brand-primary:#482668;
 }
 
 .border-title {
-    border-bottom: 2px #8f076e solid;
+    border-bottom: 2px #482668 solid;
     padding-bottom: 5px;
 }
 
@@ -199,4 +199,58 @@ $brand-primary:#482668;
     line-height: 1;
     margin-bottom: 0px;
     font-weight: 500;
+}
+
+
+//Pawan
+
+.mat-button:hover{
+    background-color: #5d0aab;
+}
+.mat-button{
+    background-color: #482668;
+    color: white;
+}
+.mat-stroked-button{
+    background-color: #482668;
+    color: white;
+    
+}
+.mat-stroked-button:hover{
+    background-color: #5d0aab;
+}
+.btn{
+    color:white;   
+}
+.small-box-footer{
+    background-color: #482668;
+}
+.small-box-footer:hover{
+    background-color: #5d0aab;
+}
+.Onboarding{
+    display: flex;
+    justify-content: right;
+    color:#482668;
+    
+}
+.btn.action-button:hover{
+    background-color: #5d0aab;
+}
+
+.sec{
+    font-family: Arial, sans-serif;
+}
+.table{
+    width: 97%;
+    border-collapse: collapse;
+    margin: 10px;   
+}
+.tr{
+    background-color: #482668;
+    color: #fff;   
+}
+.tr th{
+    padding: 8px;
+    border: 1px solid #ddd;
 }

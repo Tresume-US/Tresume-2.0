@@ -17,7 +17,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer" style="background-color: #361d4e;">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a routerLink="/reports" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-6">
@@ -31,7 +31,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer" style="background-color: #361d4e;">More info <i
+                        <a routerLink="/reports" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -46,12 +46,12 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer" style="background-color: #361d4e;">More info <i
+                        <a routerLink="/reports" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
-            <div style="display: flex; justify-content: right;">
+            <div class="onboarding">
                 <button type="button" class="btn action-button" (click)="startOnboard()">
                     Start New Onboarding
                 </button>
@@ -86,16 +86,16 @@
                 (gridReady)="onGridReady($event)">
             </ag-grid-angular>
         </section> -->
-        <section style="font-family: Arial, sans-serif;">
+        <section class="sec">
 
-            <table style="width: 97%; border-collapse: collapse;margin: 10px;">
+            <table class="table">
                 <thead>
-                    <tr style="background-color: #f2f2f2;">
-                        <th style="padding: 8px; border: 1px solid #ddd;">Date</th>
-                        <th style="padding: 8px; border: 1px solid #ddd;">Employee Name</th>
-                        <th style="padding: 8px; border: 1px solid #ddd;">Employment Start Date</th>
-                        <th style="padding: 8px; border: 1px solid #ddd;">Status</th>
-                        <th style="padding: 8px; border: 1px solid #ddd;">% Completed</th>
+                    <tr class="tr">
+                        <th>Date</th>
+                        <th>Employee Name</th>
+                        <th>Employment Start Date</th>
+                        <th>Status</th>
+                        <th>% Completed</th>
                     </tr>
                 </thead>
                 <tbody>
