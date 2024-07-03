@@ -36,12 +36,12 @@ $brand-primary:#482668;
   
   i{
     margin-left: 2px;
-    color: #94618e;
+    color: #482668;
     cursor: pointer;
   }
  
   td{
-    color: #94618e;
+    color: #482668;
   }
   
   i:hover {
@@ -94,7 +94,7 @@ button{
 border: none;
 }
 .btn:hover{
-  background-color: #94618E;
+  background-color: #5d0aab;
   color: #ffffff;
 }
 .row2{
@@ -241,7 +241,7 @@ textarea {
 }
 
 .pagination-button:hover {
-  background-color:#482668;
+  background-color:#5d0aab;
 }
 
 .pagination-button:disabled {
@@ -265,3 +265,12 @@ textarea {
 .skills-label, .skills-text {
   letter-spacing: 2px; /* Adjust the letter spacing as needed */
 }
+.fa-eye:hover{
+  color: #5d0aab;
+ }
+ .fa-trash{
+  color: #482668;
+ }
+ .fa-trash:hover{
+  color: #5d0aab;
+ }

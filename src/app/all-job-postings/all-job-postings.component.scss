@@ -8,7 +8,7 @@
     color: #fff;
   }
   .createNew:hover{
-    background-color: #94618E;
+    background-color: #5d0aab;
   }
   .createNew:active{
     background-color: #482668 ; 
@@ -54,15 +54,15 @@ tbody{
 }
   i{
     margin: 2px;
-    color: #94618e;
+    color: #482668;
     cursor: pointer;
   }
  
   td{
-    color: #94618e;
+    color: #482668;
   }
   i:hover {
-    color: darkviolet;
+    color: #5d0aab;
   }
   
  .main-container{
@@ -73,18 +73,18 @@ tbody{
 
 
 #assignee {
-  border: 2px solid #94618e; 
-  color: #94618e; 
+  border: 2px solid #5d0aab; 
+  color: #482668; 
   width: 150px;
   padding: 5px; 
 }
 
 #assignee option {
-  color: #94618e;
+  color: #482668;
 }
 
 #assignee option:checked {
-  background-color: #94618e; 
+  background-color: #5d0aab; 
   color: white; 
 }
 /* Modal */
