@@ -6,20 +6,25 @@
             </div>
             <div class="col">
                 <label> Organization </label>
-                  <select class="form-control" name="DocumentType" [(ngModel)]="selectedOrgID" (change)="fetchTabslist(1)">
-                    <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{type.organizationname}}</option>
-                  </select>
+                <select class="form-control" name="DocumentType" [(ngModel)]="selectedOrgID"
+                    (change)="fetchTabslist(1)">
+                    <option *ngFor="let type of multiorgID" [value]="type.organizationid">
+                        {{ type.organizationname }}
+                    </option>
+                </select>
             </div>
-        </div>       
-  
+        </div>
+
         <div class="row">
             <div class="col-md-4 mt-2">
-              <div class="text-left">
-                <label> Document Type </label>
-                <select class="form-control" name="DocumentType" [(ngModel)]="CorporateDocumentTypeID">
-                  <option *ngFor="let type of DocumentType" [value]="type.CDTID">{{ type.DocTypeName }}</option>
-                </select>
-              </div>
+                <div class="text-left">
+                    <label> Document Type </label>
+                    <select class="form-control" name="DocumentType" [(ngModel)]="CorporateDocumentTypeID">
+                        <option *ngFor="let type of DocumentType" [value]="type.CDTID">
+                            {{ type.DocTypeName }}
+                        </option>
+                    </select>
+                </div>
             </div>
             <!-- <div class="col-md-4 mt-2">
                 <div class="text-left">
@@ -29,46 +34,61 @@
                   </select>
                 </div>
               </div> -->
-            <div class="col-md-2" style="margin-top: 40px;">
-              <div class="text-right">
-                <input type="file" id="fileUpload" (change)="onFileChange($event)">
-              </div>
+            <div class="col-md-2" style="margin-top: 40px">
+                <div class="text-right">
+                    <input type="file" id="fileUpload" (change)="onFileChange($event)" />
+                </div>
             </div>
             <div class="col-md-2 mt-2">
-              <div class="text-right">
-                <button class="btn text-white btn-bgcolor mt-3 mr-4" (click)="upload()">Upload</button>
-              </div>
+                <div class="text-right">
+                    <button class="btn text-white btn-bgcolor mt-3 mr-4" (click)="upload()">
+                        Upload
+                    </button>
+                </div>
             </div>
-          </div>
-          
-        
+        </div>
+
         <div class="container mt-4">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="corporate-tab" data-toggle="tab" href="#corporate" role="tab" aria-controls="corporate" aria-selected="true">Corporate</a>
+                    <a class="nav-link" id="corporate-tab" data-toggle="tab" href="#corporate" role="tab"
+                        aria-controls="corporate" aria-selected="true">Corporate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="others-tab" data-toggle="tab" href="#others" role="tab"
+                        aria-controls="others" aria-selected="true">Others</a>
                 </li>
                 <li class="nav-item1">
-                    <a class="nav-link" id="miscellaneous-tab" data-toggle="tab" href="#miscellaneous" role="tab" aria-controls="miscellaneous" aria-selected="false">Miscellaneous</a>
+                    <a class="nav-link" id="miscellaneous-tab" data-toggle="tab" href="#miscellaneous" role="tab"
+                        aria-controls="miscellaneous" aria-selected="false">Miscellaneous</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="corporate" role="tabpanel" aria-labelledby="corporate-tab">
                     <ul class="nav nav-tabs" id="corporateTab" role="tablist">
                         <li class="nav-item1">
-                            <a class="nav-link " id="corporate-tab1" data-toggle="tab" href="#corporate1" role="tab" aria-controls="corporate1" aria-selected="true" (click)="fetchTabslist(1)">Tax Document</a>
+                            <a class="nav-link" id="corporate-tab1" data-toggle="tab" href="#corporate1" role="tab"
+                                aria-controls="corporate1" aria-selected="true" (click)="fetchTabslist(1)">Tax
+                                Document</a>
                         </li>
                         <li class="nav-item1">
-                            <a class="nav-link" id="corporate-tab2" data-toggle="tab" href="#corporate2" role="tab" aria-controls="corporate2" aria-selected="false" (click)="fetchTabslist(2)">Rental/Lease Document</a>
+                            <a class="nav-link" id="corporate-tab2" data-toggle="tab" href="#corporate2" role="tab"
+                                aria-controls="corporate2" aria-selected="false" (click)="fetchTabslist(2)">Rental/Lease
+                                Document</a>
                         </li>
                         <li class="nav-item1">
-                            <a class="nav-link" id="corporate-tab3" data-toggle="tab" href="#corporate3" role="tab" aria-controls="corporate3" aria-selected="false" (click)="fetchTabslist(4)">License(s)</a>
+                            <a class="nav-link" id="corporate-tab3" data-toggle="tab" href="#corporate3" role="tab"
+                                aria-controls="corporate3" aria-selected="false"
+                                (click)="fetchTabslist(4)">License(s)</a>
                         </li>
                         <li class="nav-item1">
-                            <a class="nav-link" id="corporate-tab4" data-toggle="tab" href="#corporate4" role="tab" aria-controls="corporate4" aria-selected="false" (click)="fetchTabslist(12)">Other</a>
+                            <a class="nav-link" id="corporate-tab4" data-toggle="tab" href="#corporate4" role="tab"
+                                aria-controls="corporate4" aria-selected="false" (click)="fetchTabslist(12)">Other</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="corporateTabContent">
-                        <div class="tab-pane fade show active" id="corporate1" role="tabpanel" aria-labelledby="corporate-tab1">
+                        <div class="tab-pane fade show active" id="corporate1" role="tabpanel"
+                            aria-labelledby="corporate-tab1">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -79,9 +99,13 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,1)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 1)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -97,9 +121,13 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)=" delete(data.CorporateDocumentID,2)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 2)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -115,9 +143,13 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,3)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 3)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -133,9 +165,202 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,12)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 12)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="others" role="tabpanel" aria-labelledby="others-tab">
+                    <ul class="nav nav-tabs" id="othersTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="others-tab1" data-toggle="tab" href="#others1" role="tab"
+                                aria-controls="others1" aria-selected="true" (click)="fetchTabslist(5)">Guest House</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab2" data-toggle="tab" href="#others2" role="tab"
+                                aria-controls="others2" aria-selected="false" (click)="fetchTabslist(6)">Recruitment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab3" data-toggle="tab" href="#others3" role="tab"
+                                aria-controls="others3" aria-selected="false" (click)="fetchTabslist(7)">Sales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab4" data-toggle="tab" href="#others4" role="tab"
+                                aria-controls="others4" aria-selected="false" (click)="fetchTabslist(8)">Legal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab5" data-toggle="tab" href="#others5" role="tab"
+                                aria-controls="others5" aria-selected="false" (click)="fetchTabslist(9)">MSA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab6" data-toggle="tab" href="#others6" role="tab"
+                                aria-controls="others6" aria-selected="false" (click)="fetchTabslist(10)">Finance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="others-tab7" data-toggle="tab" href="#others7" role="tab"
+                                aria-controls="others7" aria-selected="false" (click)="fetchTabslist(11)">Templates</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="othersTabContent">
+                        <div class="tab-pane fade show active" id="others1" role="tabpanel"
+                            aria-labelledby="others-tab1">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 5)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others2" role="tabpanel" aria-labelledby="others-tab2">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 6)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others3" role="tabpanel" aria-labelledby="others-tab3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 7)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others4" role="tabpanel" aria-labelledby="others-tab4">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 8)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others5" role="tabpanel" aria-labelledby="others-tab5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 9)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others6" role="tabpanel" aria-labelledby="others-tab6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 10)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="others7" role="tabpanel" aria-labelledby="others-tab7">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Upload Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of DocumentData">
+                                        <td>{{ data.DocumentName }}</td>
+                                        <td>{{ data.CreateTime }}</td>
+                                        <td>
+                                            <i class="fa fa-trash"
+                                                (click)="delete(data.CorporateDocumentID, 11)"></i>&nbsp; &nbsp;&nbsp;<i
+                                                class="fa fa-download" (click)="download(data.DocumentPath)"></i>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -143,164 +368,12 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="miscellaneous" role="tabpanel" aria-labelledby="miscellaneous-tab">
-                    <ul class="nav nav-tabs" id="miscellaneousTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="miscellaneous-tab1" data-toggle="tab" href="#miscellaneous1" role="tab" aria-controls="miscellaneous1" aria-selected="true" (click)="fetchTabslist(5)">Guest House</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab2" data-toggle="tab" href="#miscellaneous2" role="tab" aria-controls="miscellaneous2" aria-selected="false" (click)="fetchTabslist(6)">Recruitment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab3" data-toggle="tab" href="#miscellaneous3" role="tab" aria-controls="miscellaneous3" aria-selected="false" (click)="fetchTabslist(7)">Sales</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab4" data-toggle="tab" href="#miscellaneous4" role="tab" aria-controls="miscellaneous4" aria-selected="false" (click)="fetchTabslist(8)">Legal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab5" data-toggle="tab" href="#miscellaneous5" role="tab" aria-controls="miscellaneous5" aria-selected="false" (click)="fetchTabslist(9)">MSA</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab6" data-toggle="tab" href="#miscellaneous6" role="tab" aria-controls="miscellaneous6" aria-selected="false" (click)="fetchTabslist(10)">Finance</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="miscellaneous-tab7" data-toggle="tab" href="#miscellaneous7" role="tab" aria-controls="miscellaneous7" aria-selected="false" (click)="fetchTabslist(11)">Templates</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="miscellaneousTabContent">
-                        <div class="tab-pane fade show active" id="miscellaneous1" role="tabpanel" aria-labelledby="miscellaneous-tab1">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,5)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous2" role="tabpanel" aria-labelledby="miscellaneous-tab2">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,6)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous3" role="tabpanel" aria-labelledby="miscellaneous-tab3">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,7)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous4" role="tabpanel" aria-labelledby="miscellaneous-tab4">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,8)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous5" role="tabpanel" aria-labelledby="miscellaneous-tab5">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,9)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous6" role="tabpanel" aria-labelledby="miscellaneous-tab6">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,10)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="miscellaneous7" role="tabpanel" aria-labelledby="miscellaneous-tab7">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Document Name</th>
-                                        <th>Upload Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of DocumentData">
-                                        <td>{{data.DocumentName}}</td>
-                                        <td>{{data.CreateTime}}</td>
-                                        <td><i class="fa fa-trash" (click)="delete(data.CorporateDocumentID,11)"></i>&nbsp; &nbsp;&nbsp;<i class="fa fa-download" (click)="download(data.DocumentPath)"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 
-
 <p-toast position="bottom-right"></p-toast>
 
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>  
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
