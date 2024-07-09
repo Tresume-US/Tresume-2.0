@@ -18,7 +18,9 @@
   .pagination {
     justify-content: flex-end;
   }
-  
+  .btn:hover{
+    background-color: #5d0aab;
+  }
 .custom-select-style {
     width: 70px; 
   }
@@ -92,14 +94,16 @@ tbody{
   height: 2px;
   transition: all 0.3s;
   border-bottom: 4px solid;
-  border-bottom: 4px solid rgb(88, 21, 88);;
+  border-bottom: 4px solid #482668;
 }
 
 .nav-link.active::after {
   width: 100%;
   left: 0;
 }
-
+.col{
+  color: #482668;
+}
 .nav-item .nav-link {
   transition: background-color 0.3s ease;
 }

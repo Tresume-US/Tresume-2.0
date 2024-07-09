@@ -354,30 +354,30 @@ export class WizardWorkflowComponent implements OnInit {
         }
         else {
             alert("Please Upload a File");
-            // let requestItem: any = {
-            //     onboardID: this.onboardId,
-            //     docTypeName: item.DocTypeName,
-            //     docTypeID: item.DocTypeID,
-            //     requested: this.requested[i] ? 1 : 0,
-            //     docNote: item?.note || '',
-            //     additionalChecklistID: ''
-            // }
+            let requestItem: any = {
+                onboardID: this.onboardId,
+                docTypeName: item.DocTypeName,
+                docTypeID: item.DocTypeID,
+                requested: this.requested[i] ? 1 : 0,
+                docNote: item?.note || '',
+                additionalChecklistID: ''
+            }
 
-            // this.service.savefilepath(requestItem).subscribe(x => {
+            this.service.savefilepath(requestItem).subscribe(x => {
 
-            // });
+            });
         }
-        /* let requestItem: any = {
-            onboardID: this.onboardId,
-            docTypeName: item.DocTypeName,
-            docTypeID: item.DocTypeID,
-            fileName: (this.uploadFile[i] && this.uploadFile[i][0].name) || null,
-            requested: this.requested[i]
+        //  let requestItem: any = {
+        //     onboardID: this.onboardId,
+        //     docTypeName: item.DocTypeName,
+        //     docTypeID: item.DocTypeID,
+        //     fileName: (this.uploadFile[i] && this.uploadFile[i][0].name) || null,
+        //     requested: this.requested[i]
 
-        }
-        this.service.saveOnboardingRequest(requestItem).subscribe(x => {
+        // }
+        // this.service.saveOnboardingRequest(requestItem).subscribe(x => {
 
-        }); */
+        // }); 
 
     }
 

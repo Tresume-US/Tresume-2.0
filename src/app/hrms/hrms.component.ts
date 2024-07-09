@@ -267,6 +267,12 @@ export class HrmsComponent implements OnInit {
       (response: any) => {
         // Success callback
         this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill) {
+            candidate.Skill = 'NA';
+          }
+          return candidate;
+        });
         // this.totalRecords = response.result[0].TotalCount[0];
         this.totalRecords = 25;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
@@ -724,7 +730,7 @@ export class HrmsComponent implements OnInit {
       if (flag === 1) {
         this.messageService.add({
           severity: 'success',
-          summary: 'interviewdata Deleted Sucessfully',
+          summary: 'Hrms data removed sucessfully',
         });
       this.fetchhrmscandidatelist();
       } else {

@@ -16,9 +16,10 @@ table{
   background-color: #f0f0f0;
 }
 .input-group-text{
-  background-color: #380838;
+  background-color: #482668;
  cursor: pointer;
 }
+
 .fa-caret-down{
 color: white;
 }
@@ -244,4 +245,15 @@ th span.date {
 .btn-block.fbtn:hover:disabled {
   background-color: #cccccc; 
   cursor: not-allowed; 
+}
+.btn-block:hover{
+  background-color: #5d0aab;
+  color: white;
+}
+.btn-block{
+  background-color: #482668;
+  border-radius: 8px;
+}
+.fa-trash{
+  color: #482668;
 }
