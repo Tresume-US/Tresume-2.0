@@ -17,7 +17,21 @@ th, td {
   padding: 10px;
   text-align: left;
 }
-
+.table td{
+  color: #482668;
+}
+.fa-trash:before{
+  color: #482668;
+}
+.fa .fa-trash:hover{
+  color: #5d0aab !important;
+}
+.btn:hover{
+  background-color: #5d0aab;
+}
+.table i:hover{
+  color: #5d0aab;
+}
 th {
   background-color: #f0f0f0;
   font-weight: bold;

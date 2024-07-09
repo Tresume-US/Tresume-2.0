@@ -167,20 +167,8 @@
                       <td>{{ candidate.LegalStatus }}</td>
                     </tr>
                   </table>
-                  <!-- <a class="bn59"  [routerLink]="['/candidateView/'+candidate.TraineeID+'/create']">
-                    <span class="bi bi-plus">+</span> Add Placement
-                  </a> -->
                 </div>
                 <div class="col-md-3 align-items-center">
-                  <!-- <table class="table table-borderless no-border">
-                    <tr>
-                      <th style="text-align: center;">Follow-Up-On:</th>
-                      <td><input type="date" class="form-control" value="{{ candidate.followupon }}"></td>
-                  </tr>
-                  
-                  </table> -->
-                  <!-- <b>Followed Upon :</b>
-                  <input type="date" class="form-control" value="{{ candidate.followupon }}"> -->
                   <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">FollowUpOn</span>
@@ -188,40 +176,20 @@
                     <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{ candidate.followupon }}" 
                     (change)="updateSelected($event.target.value, candidate.TraineeID, 1)">
                   </div>
-                  <!-- <a class="bn59" data-toggle="modal" data-target="#exampleModalCenter2" (click)="openSubmissionModal(item.TraineeID)">
-                  <span class="bi bi-plus">+</span> Add Submission
-                  </a> -->
                 </div>
                 <div class="row">
-                  <div class="col-md-12 mb-5" style="line-height: 1.5;padding: 5px;">
-                    <b>Skills:</b> {{candidate.Skill}}
+                  <div class="col-md-12" style="line-height: 2">
+                    <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668;margin-right: 7px;"></i><b>Skills :</b> {{candidate.Skill | truncate:100}}
                   </div>
                   <div class="col-md-12">
-                    <b>Notes :</b> {{candidate.notes | truncate:100}}
-                  </div>`</div>
+                    <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668;margin-right: 7px;"></i><b>Notes :</b> {{candidate.notes | truncate:100}}
+                  </div></div>
                 <div class="span">
                   <span>Created By : </span>
                   <span>{{ candidate.CreatedBy }}</span>&nbsp;&nbsp;
                   <span>Date Created : </span>
                   <span>{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
                 </div>
-
-                <!-- <div class="col-md-3">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th (click)="sortTable('DateCreated')">
-                        <span>Date Created</span>
-                        <i class="fa"
-                          [ngClass]="{'fa-sort-asc': sortBy === 'DateCreated' && sortOrder === 'asc', 'fa-sort-desc': sortBy === 'DateCreated' && sortOrder === 'desc', 'fa-sort': sortBy !== 'DateCreated'}"></i>
-                      </th>
-                      <td>{{ candidate.DateCreated | date:'MM/dd/yy' }}</td>
-                    </tr>
-                    <tr>
-                      <th>Action:</th>
-                      <td><i class="fa fa-eye fa-fw" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']" style="font-size: 20px;"></i></td>
-                    </tr>
-                  </table>
-                </div> -->
               </div>
             </div>
           </div>

@@ -15,6 +15,9 @@ h1 {
   align-items: flex-end;
   padding: 20px;
 }
+.icon-p span:hover{
+  color: #5d0aab !important;
+  }
 .notes-container {
   margin-top: 10px;
   padding: 10px;
@@ -51,8 +54,11 @@ textarea {
 .btncolor {
   background-color: #482668;
   color: #fff;
+  border-radius: 8px !important;
 }
-
+.btncolor:hover{
+  background-color: #5d0aab;
+}
 .container-fluid{
   background-color: white;
 }

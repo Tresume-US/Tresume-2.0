@@ -55,7 +55,7 @@ width: 0;
 height: 2px;
 transition: all 0.3s;
 border-bottom: 4px solid;
-border-bottom: 4px solid rgb(88, 21, 88);
+border-bottom: 4px solid #482668;
 }
 
 
@@ -114,6 +114,14 @@ width : 136px; height: 34px; margin-left: 25px;
   color: white;
   font-size: 12px;
   padding: 5px 10px;
+  font-size: 16px;
+  padding:  10px;
+  font-weight: 400;
+  text-align: center;
+  border-radius: .25rem;
+  }
+  .btn:hover{
+    background-color: #5d0aab;
   }
 .pay{
   margin-top: -67px;
@@ -124,12 +132,15 @@ width : 136px; height: 34px; margin-left: 25px;
 display: flex;
 align-items: center;
 border: none;
+padding: 10px;
 }
-
+.action-icons i:hover{
+  color: #5d0aab;
+}
 .action-icons i {
 margin-right: 10px;
 font-size: 20px;
-color: #333;
+color: #482668;
 cursor: pointer;
 }
 .cards{

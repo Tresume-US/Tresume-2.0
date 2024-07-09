@@ -17,7 +17,9 @@ $brand-primary: #482668;
   border-top: 3px solid $brand-primary;
   border-bottom: 3px solid $brand-primary;
 }
-
+.button:hover{
+  background-color: #5d0aab !important;
+}
 .container-fluid {
   background-color: #fff;
   margin-bottom: 5px;

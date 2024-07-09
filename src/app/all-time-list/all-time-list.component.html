@@ -100,14 +100,14 @@
 
             <div class="container">
               <div class="list-group">
-                <div class="list-group-item list-group-item-warning mb-3">
+                <div class="list-group-item list-group-item-warning mb-3" style="background-color: #b8daff;">
                   <div class="row">
                     <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
                         class="fa fa-sort"></i></div>
                     <!-- <div class="col">Project Name</div> -->
                     <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
                     <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
-                    <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
+                    <div class="col" (click)="sortDataByTotalHours()" style="padding-right: 0;">Total Hours <i class="fa fa-sort"></i></div>
                     <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
                     <div class="col">Comments</div>
                     <div class="col">Details</div>
@@ -162,7 +162,7 @@
           <div id="rejected" class="tab-pane fade">
 
             <div class="list-group">
-              <div class="list-group-item list-group-item-danger mb-3">
+              <div class="list-group-item list-group-item-danger mb-3" style="background-color: #b8daff;">
                 <div class="row">
                   <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
                       class="fa fa-sort"></i></div>
@@ -216,7 +216,7 @@
 
           <div id="completed" class="tab-pane fade">
             <div class="list-group">
-              <div class="list-group-item list-group-item-success mb-3">
+              <div class="list-group-item list-group-item-success mb-3" style="background-color: #b8daff;">
                 <div class="row">
                   <div class="col" (click)="sortDataByCandidate()" style="min-width: 200px;">Candidate <i
                       class="fa fa-sort"></i></div>
@@ -272,10 +272,10 @@
             <div class="list-group">
               <div class="list-group-item list-group-item-primary mb-3">
                 <div class="row">
-                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 300px;">Candidate <i
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 206px;">Candidate <i
                       class="fa fa-sort"></i></div>
                   <!-- <div class="col">Project Name</div> -->
-                  <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>
+                  <div class="col" (click)="sortDataByFromDate()" style="padding-right: 0;">From Date <i class="fa fa-sort"></i></div>
                   <div class="col" (click)="sortDataByToDate()">To Date <i class="fa fa-sort"></i></div>
                   <div class="col" (click)="sortDataByTotalHours()">Total Hours <i class="fa fa-sort"></i></div>
                   <div class="col" (click)="sortDataByCreatedOn()">CreatedOn <i class="fa fa-sort"></i></div>
@@ -342,7 +342,7 @@
             <div class="list-group">
               <div class="list-group-item list-group-item-primary mb-3">
                 <div class="row">
-                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 300px;">Candidate <i
+                  <div class="col" (click)="sortDataByCandidate()" style="min-width: 206px;">Candidate <i
                       class="fa fa-sort"></i></div>
                   <!-- <div class="col">Project Name</div> -->
                   <div class="col" (click)="sortDataByFromDate()">From Date <i class="fa fa-sort"></i></div>

@@ -15,6 +15,19 @@ $brand-primary:#482668;
     border-top:3px solid #482668;
     border-bottom:3px solid #482668;
 }
+.btn:hover{
+    background-color: #5d0aab;
+  }
+  .table td{
+    color: #482668 ;
+  }
+  .table-h{
+    background-color: #482668;
+ 
+  }
+  .table-h td{
+    color: white;
+  }
 .card-job-info {
     display: flex;
     flex-direction: column;
