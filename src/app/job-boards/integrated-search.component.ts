@@ -276,11 +276,16 @@ export class IntegratedSearchComponent implements OnInit {
             }
         });
         let request2 = '';
-        this.service.getDiceAuthToken(request2).subscribe((x: any) => {
+        // this.service.getDiceAuthToken(request2).subscribe((x: any) => {
+        //     if (x) {
+        //         this.diceaccessToken = x.access_token;
+        //     }
+        // });
+        this.service.getDiceToken().subscribe((x: any) => {
             if (x) {
-                this.diceaccessToken = x.access_token;
+              this.diceaccessToken = x.access_token;
             }
-        });
+          });
         /* if (this.traineeId) {
             let req = {
                 "traineeId": this.traineeId,
@@ -434,6 +439,7 @@ export class IntegratedSearchComponent implements OnInit {
     } */
 
     async onSearch() {
+         this.totalResults = 0;
         // debugger;
         const [result1, result2,result3,result4] = await Promise.all([this.monsterSearch(),this.DiceSearch(),this.tresumeSearch(),this.cbSearch()]);
 
@@ -674,13 +680,15 @@ export class IntegratedSearchComponent implements OnInit {
   
     public tresumeSearch() {
         let req = {
-            "traineeId": this.traineeId,
-            'keyword': this.model.boolean,
-            'location': this.selectedState,
-            'yearsOfExp': this.yearsOfExp * 12,
-            'daysWithin': this.daysWithin,
-            'yearsOfExpmin':'',
-            'Jobboard':{ value: 'all', name: 'All' }
+            traineeId: this.TraineeID,
+            keyword: this.model.boolean,
+            location: this.selectedState,
+            OrgID:this.OrgID,
+            yearsOfExp: this.yearsOfExp * 12,
+            daysWithin: this.daysWithin,
+            yearsOfExpmin:'',
+            Jobboard:{ value: 'all', name: 'All' },
+            recruiter:0
         }
         this.service.getResumes2(req).subscribe(x => {
             let response = x.result;
