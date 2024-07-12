@@ -309,6 +309,7 @@ likelytoMove: string;
   isallowed: any = true;
   divcandidateemail: any = '';
   availablecredits: any = 0;
+  dailycredits: any;
   showcrediterror: boolean = false;
   jobTitle: string = '';
 
@@ -331,7 +332,7 @@ likelytoMove: string;
     private messageService: MessageService,
     private sanitizer: DomSanitizer
   ) {
-    this.traineeId = sessionStorage.getItem('TraineeID');
+    this.traineeId = this.cookieService.get('TraineeID');
   }
 
   ngOnInit(): void {
@@ -339,7 +340,8 @@ likelytoMove: string;
     this.OrgID1 = this.cookieService.get('OrgID');
     this.userName1 = this.cookieService.get('userName1');
     this.TraineeID1 = this.cookieService.get('TraineeID');
-
+    var days = this.getPendingDays()
+    console.log(days-8);
     // this.OrgID1 = 9;
     // this.userName1 = 'karthik@tresume.us';
     // this.TraineeID1 = 36960;
@@ -1138,6 +1140,9 @@ likelytoMove: string;
               this.usedcount1 = x.result[0].row_count;
               var count = this.creditcount1 - this.usedcount1;
               this.availablecredits = count;
+              console.log("availablecredits",this.availablecredits)
+              this.dailycredits =Math.round(this.availablecredits/30)
+              console.log("dailycredits",this.dailycredits)
               var percentage = (this.usedcount1 / this.creditcount1) * 100;
               let Req3 = {
                 type: type,
@@ -1286,6 +1291,14 @@ likelytoMove: string;
       downloadLink.click();
       document.body.removeChild(downloadLink);
     }
+  }
+
+  getPendingDays(): number {
+    const today = new Date();
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const diffTime = endOfMonth.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
   }
 }
 

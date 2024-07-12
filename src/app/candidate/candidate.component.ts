@@ -105,12 +105,13 @@ export class CandidateComponent implements OnInit {
                 { id: 62, name: 'CPR', group: 'Others' },
                 { id: 63, name: 'Hep B Declination', group: 'Others' },
                 { id: 50, name: 'Hep B vaccination', group: 'Others' },
-                { id: 64, name: 'Covid vaccination', group: 'Others' },
-                { id: 47, name: 'Flu vaccination', group: 'Others' },
+                { id: 47, name: 'Covid vaccination', group: 'Others' },
+                { id: 49, name: 'Flu vaccination', group: 'Others' },
                 { id: 64, name: 'Flu Declination', group: 'Others' },
                 { id: 48, name: 'MMR vaccination', group: 'Others' },
                 { id: 65, name: 'Physical exam', group: 'Others' },
                 { id: 66, name: 'E-Verification', group: 'Others' },
+                { id: 68, name: 'Chest X-Ray', group: 'Others' },
                 { id: 67, name: 'Orientation document', group: 'Others' },
               ],
               valueProp: 'id',
@@ -132,7 +133,7 @@ export class CandidateComponent implements OnInit {
               required: true,
             },
             expressionProperties: {
-              'templateOptions.required': model => model.docType == 9 || model.docType == 11 || model.docType == 1 || model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67
+              'templateOptions.required': model => model.docType == 9 || model.docType == 11 || model.docType == 1 || model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67 || model.docType == 68|| model.docType == 47
             },
             hideExpression: model => model.docType == 20 || model.docType == 21 || model.docType == 22
               || model.docType == 10 || model.docType == 23 || model.docType == 6 
@@ -146,10 +147,10 @@ export class CandidateComponent implements OnInit {
               required: false,
             },
             hideExpression: model => model.docType == 3 || model.docType == 29 || model.docType == 30 || model.docType == 31 || model.docType == 32 
-              || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 37 || model.docType == 53|| model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67,
+              || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 37 || model.docType == 53|| model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67|| model.docType == 68|| model.docType == 47,
             expressionProperties: {
               'templateOptions.required': model => !(model.docType == 3 || model.docType == 29 || model.docType == 30 || model.docType == 31
-                || model.docType == 32 || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 1|| model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67)
+                || model.docType == 32 || model.docType == 2 || model.docType == 33 || model.docType == 34 || model.docType == 24 || model.docType == 1|| model.docType == 37 || model.docType == 53 || model.docType == 54 || model.docType == 59 || model.docType == 60 || model.docType == 50 || model.docType == 63 || model.docType == 64 || model.docType == 48 || model.docType == 18 || model.docType == 66 || model.docType == 67|| model.docType == 68|| model.docType == 47)
             },
           },
           {

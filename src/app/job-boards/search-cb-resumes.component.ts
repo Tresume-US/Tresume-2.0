@@ -261,7 +261,7 @@ export class SearchResumesCBComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer) {
-        this.traineeId = sessionStorage.getItem("TraineeID");
+        this.traineeId = this.cookieService.get('TraineeID');
         if (this.traineeId == '') {
             this.traineeId = localStorage.getItem("TraineeID");
         }

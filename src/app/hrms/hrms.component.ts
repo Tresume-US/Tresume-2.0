@@ -268,8 +268,9 @@ export class HrmsComponent implements OnInit {
         // Success callback
         this.candidates = response.result;
         this.candidates = response.result.map((candidate: any) => {
-          if (!candidate.Skill) {
+          if (!candidate.Skill || !candidate.notes ) {
             candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
           }
           return candidate;
         });
@@ -304,6 +305,13 @@ export class HrmsComponent implements OnInit {
       (response: any) => {
         // Success callback
         this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill || !candidate.notes ) {
+            candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
+          }
+          return candidate;
+        });
         console.log(this.candidates);
         if (this.candidates.length === 0) {
           // No records found
@@ -541,6 +549,12 @@ export class HrmsComponent implements OnInit {
 
     this.service.gethrmscandidateList(Req).subscribe((response: any) => {
       this.candidates = response.result;
+      this.candidates = response.result.map((candidate: any) => {
+        if (!candidate.Skill || !candidate.notes ) {
+          candidate.Skill = 'NA';
+        }
+        return candidate;
+      });
       this.candidates = this.candidates.filter(candidate => {
         const candidateDate = new Date(candidate.DateCreated);
         return candidateDate >= new Date(this.dateCreatedStartDate) && candidateDate <= new Date(this.dateCreatedEndDate);
@@ -572,6 +586,12 @@ export class HrmsComponent implements OnInit {
 
     this.service.gethrmscandidateList(Req).subscribe((response: any) => {
       this.candidates = response.result;
+      this.candidates = response.result.map((candidate: any) => {
+        if (!candidate.Skill || !candidate.notes ) {
+          candidate.Skill = 'NA';
+        }
+        return candidate;
+      });
       this.candidates = this.candidates.filter(candidate => {
         const followUpDate = new Date(candidate.followupon);
         return followUpDate >= new Date(this.followUpStartDate) && followUpDate <= new Date(this.followUpEndDate);

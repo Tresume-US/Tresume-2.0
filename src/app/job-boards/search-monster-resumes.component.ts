@@ -308,6 +308,7 @@ export class SearchResumesMonsterComponent implements OnInit {
     isallowed: any = true;
     divcandidateemail: any = '';
     availablecredits:any = 0;
+    dailycredits:any;
     Htmlresumetopdf: any;
     cfullname: string;
     clocation: any;
@@ -330,7 +331,7 @@ export class SearchResumesMonsterComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private service: JobBoardsService, private cookieService: CookieService,
         private messageService: MessageService, private sanitizer: DomSanitizer, private pdfViewerService: NgxExtendedPdfViewerService) {
-        this.traineeId = sessionStorage.getItem("TraineeID");
+        this.traineeId = this.cookieService.get('TraineeID');
         // this.traineeId = this.cookieService.get('TraineeID')
     }
 
