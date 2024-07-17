@@ -72,6 +72,19 @@ export class DashboardService {
     getSuperAdminDashboardData(req: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getSuperAdminDashboardData/' , req);
     }
+
+    // getUserJobPostingData(req: any): Observable<ResponseDetails> {
+    //     return this.http.post<ResponseDetails>(this.endpoint + 'getUserJobPostingData' , req);
+    // }
+    // getAdminJobPostingData(req: any): Observable<ResponseDetails> {
+    //     return this.http.post<ResponseDetails>(this.endpoint + 'getAdminJobPostingData' , req);
+    // }
+    // getSuperAdminJobPostingData(req: any): Observable<ResponseDetails> {
+    //     return this.http.post<ResponseDetails>(this.endpoint + 'getSuperAdminJobPostingData' , req);
+    // }
+    getJobPostingData(req: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'getJobPostingData' , req);
+    }
 }
 
 export interface RequestItem {
