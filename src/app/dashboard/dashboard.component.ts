@@ -353,12 +353,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.fetchJobPostingData();
     if(this.UserRole == 1){
       this.Adminrecord();
+      // this.fetchadminJobPostingData();
+
     }else if(this.UserRole ==2){
       this.Userrecord();
+      // this.fetchuserJobPostingData();
     }else{
       this.SuperAdminrecord();
+      // this.fetchsuperadminJobPostingData();
     }
   }
 
@@ -603,4 +608,303 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  
+  // public lineChartData: any[] = [
+  //   { data: [1, 2, 3, 4, 5, 6, 7], label: 'Job Posting Record' }
+  // ];
+
+  // public joblineChartLabels: string[] = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'];
+
+  // public joblineChartOptions: any = {
+  //   responsive: true,
+  //   scales: {
+  //     yAxes: [{
+  //       ticks: {
+  //         beginAtZero: true
+  //       }
+  //     }]
+  //   }
+  // };
+
+  // public lineChartColors: any[] = [
+  //   {
+  //     backgroundColor: 'rgba(0, 0, 255, 0.2)',
+  //     borderColor: 'blue',
+  //     pointBackgroundColor: 'blue',
+  //     pointBorderColor: '#fff',
+  //     pointHoverBackgroundColor: '#fff',
+  //     pointHoverBorderColor: 'blue'
+  //   }
+  // ];
+
+  // public lineChartLegend = true;
+  // public joblineChartType = 'line';
+
+  public lineChartData: Array<any> = [{ data: [], label: 'Job Postings' }];
+  public joblineChartLabels: Array<any> = [];
+  joblineChartOptions: any = {
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: false,
+          suggestedMin: 1,
+          suggestedMax: 10,
+          stepSize: 1
+        }
+      }]
+    }
+  };
+  public lineChartColors: any[] = [
+    {
+      backgroundColor: 'rgba(0, 0, 255, 0.2)',
+      borderColor: 'blue',
+      pointBackgroundColor: 'blue',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'blue'
+    }
+  ];
+  public lineChartLegend: boolean = true;
+  public joblineChartType: string = 'line';
+
+
+  // fetchuserJobPostingData() {
+  //   this.loading = true;
+  //   const req = {
+  //     traineeid: 39950,
+  //     StartDate: '2024-05-19',
+  //     EndDate: '2024-06-18',
+  //     // traineeid: this.traineeID,
+  //     // StartDate: this.defaultStartDate,
+  //     // EndDate: this.defaultEndDate,
+  //     userName: this.userName,
+  //   };
+
+  //   this.service.getUserJobPostingData(req).subscribe(data => {
+  //     const labels: any[] = [];
+  //     const counts: any[] = [];
+  //     const weekdays = this.calculateWeekdays(new Date(req.StartDate), new Date(req.EndDate));
+  //     weekdays.forEach((date: Date) => {
+  //       const formattedDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+  //       labels.push(formattedDate);
+  //       counts.push(0);
+  //     });
+  //     data.forEach(item => {
+  //       const formattedDate = this.datePipe.transform(item.CreateDate, 'MM/dd/yyyy');
+  //       const index = labels.indexOf(formattedDate);
+  //       if (index !== -1) {
+  //         counts[index] += item.RecruitmentManagerCount;
+  //       }
+  //     });
+  //     this.lineChartData = [{ data: counts, label: 'Job Postings' }];
+  //     this.joblineChartLabels = labels;
+  //     this.loading = false;
+  //   }, error => {
+  //     console.error('Error fetching job posting data:', error);
+  //     this.loading = false;
+  //   });
+  // }
+
+  calculateWeekdays(startDate: Date, endDate: Date): Date[] {
+    const weekdays: Date[] = [];
+    let currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { 
+        weekdays.push(new Date(currentDate));
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return weekdays;
+  }
+
+
+  // fetchadminJobPostingData() {
+  //   this.loading = true;
+  //   const req = {
+  //     traineeid: 39950,
+  //     StartDate: '2024-05-20',
+  //     EndDate: '2024-06-04',
+  //     userName: this.userName,
+  //     AccessOrg: "82,152,158",
+  //      // AccessOrg: this.AccessOrg,
+  //       // traineeid: this.traineeID,
+  //     // StartDate: this.defaultStartDate,
+  //     // EndDate: this.defaultEndDate,
+  //   };
+  
+  //   console.log(req);
+  
+  //   this.service.getAdminJobPostingData(req).subscribe(
+  //     data => {
+  //       const labels: any[] = [];
+  //       const counts: any[] = [];
+  //       const nameCounts: { [key: string]: number } = {};
+  
+  //       data.forEach(item => {
+  //         const name = `${item.firstname} ${item.lastname}`;
+  //         if (!nameCounts[name]) {
+  //           nameCounts[name] = 0;
+  //         }
+  //         nameCounts[name] += item.RecruitmentManagerCount;
+  //       });
+  
+  //       for (const name in nameCounts) {
+  //         if (nameCounts.hasOwnProperty(name)) {
+  //           labels.push(name);
+  //           counts.push(nameCounts[name]);
+  //         }
+  //       }
+  
+  //       this.lineChartData = [{ data: counts, label: 'Job Postings' }];
+  //       this.joblineChartLabels = labels;
+  //       this.loading = false;
+  //     },
+  //     error => {
+  //       console.error('Error fetching job posting data:', error);
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
+  
+  // fetchsuperadminJobPostingData() {
+  //   this.loading = true;
+  //   const req = {
+  //     traineeid: 39950,
+  //     StartDate: '2023-02-01',
+  //     EndDate: '2024-06-20',
+  //     userName: this.userName,
+  //     AccessOrg: "82,152,158",
+  //      // AccessOrg: this.AccessOrg,
+  //       // traineeid: this.traineeID,
+  //     // StartDate: this.defaultStartDate,
+  //     // EndDate: this.defaultEndDate,
+  //   };
+  
+  //   console.log(req);
+  
+  //   this.service.getSuperAdminJobPostingData(req).subscribe(
+  //     data => {
+  //       const labels: any[] = [];
+  //       const counts: any[] = [];
+  //       const nameCounts: { [key: string]: number } = {};
+  
+  //       data.forEach(item => {
+  //         const name = `${item.OrganizationName}`;
+  //         if (!nameCounts[name]) {
+  //           nameCounts[name] = 0;
+  //         }
+  //         nameCounts[name] += item.RecruitmentManagerCount;
+  //       });
+  
+  //       for (const name in nameCounts) {
+  //         if (nameCounts.hasOwnProperty(name)) {
+  //           labels.push(name);
+  //           counts.push(nameCounts[name]);
+  //         }
+  //       }
+  
+  //       this.lineChartData = [{ data: counts, label: 'Job Postings' }];
+  //       this.joblineChartLabels = labels;
+  //       this.loading = false;
+  //     },
+  //     error => {
+  //       console.error('Error fetching job posting data:', error);
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
+
+
+  fetchJobPostingData() {
+    this.loading = true;
+  
+    const req = {
+      traineeid: this.traineeID,
+      StartDate: this.defaultStartDate,
+      EndDate: this.defaultEndDate,
+      userName: this.userName,
+      AccessOrg: this.AccessOrg,
+      userRole:this.UserRole
+    };
+  
+    // if (this.UserRole == 1) {
+    //   req.StartDate = '2024-05-20';
+    //   req.EndDate = '2024-06-04';
+    // } else if (this.UserRole == 2) {
+    //   req.StartDate = '2023-02-01';
+    //   req.EndDate = '2024-06-20';
+    // }
+    console.log(req);
+  
+    this.service.getJobPostingData(req).subscribe(
+      data => {
+        const labels: any[] = [];
+        const counts: any[] = [];
+  
+       if (this.UserRole == 1) {
+          // Admin functionality
+          const nameCounts: { [key: string]: number } = {};
+          data.forEach(item => {
+            const name = `${item.firstname} ${item.lastname}`;
+            if (!nameCounts[name]) {
+              nameCounts[name] = 0;
+            }
+            nameCounts[name] += item.RecruitmentManagerCount;
+            
+          });
+          for (const name in nameCounts) {
+            if (nameCounts.hasOwnProperty(name)) {
+              labels.push(name);
+              counts.push(nameCounts[name]);
+            }
+          }
+        }
+        if (this.UserRole == 2) {
+          // Regular user functionality
+          const weekdays = this.calculateWeekdays(new Date(req.StartDate), new Date(req.EndDate));
+          weekdays.forEach((date: Date) => {
+            const formattedDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+            labels.push(formattedDate);
+            counts.push(0);
+          });
+          data.forEach(item => {
+            const formattedDate = this.datePipe.transform(item.CreateDate, 'MM/dd/yyyy');
+            const index = labels.indexOf(formattedDate);
+            if (index !== -1) {
+              counts[index] += item.RecruitmentManagerCount;
+            }
+          });
+        } 
+        else if (this.UserRole == 3) {
+          // Superadmin functionality
+          const nameCounts: { [key: string]: number } = {};
+          data.forEach(item => {
+            const name = `${item.OrganizationName}`;
+            if (!nameCounts[name]) {
+              nameCounts[name] = 0;
+            }
+            nameCounts[name] += item.RecruitmentManagerCount;
+          });
+          for (const name in nameCounts) {
+            if (nameCounts.hasOwnProperty(name)) {
+              labels.push(name);
+              counts.push(nameCounts[name]);
+            }
+          }
+        }
+  
+        this.lineChartData = [{ data: counts, label: 'Job Postings' }];
+        this.joblineChartLabels = labels;
+        this.loading = false;
+      },
+      error => {
+        console.error('Error fetching job posting data:', error);
+        this.loading = false;
+      }
+    );
+  }
+  
 }
