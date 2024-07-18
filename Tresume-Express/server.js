@@ -53,6 +53,7 @@ const Invoice = require("./Invoice");
 const CorporateDocument = require("./corporate-document");
 const CBapi = require("./cb");
 const Dashboard = require("./dashboard");
+const WhatsApp = require("./whatsapp")
 
 app.use("/", onboardRoutes);
 app.use("/", Dashboard);
@@ -77,6 +78,7 @@ app.use("/", Invoice);
 app.use("/", submittedcandidates);
 app.use("/", CorporateDocument);
 app.use("/", CBapi);
+app.use("/", WhatsApp)
 app.use(
   session({
     secret: "Tresume@123",
