@@ -752,7 +752,7 @@ formData: any = {};
         lastUpdatedBy: this.lastUpdatedBy,
         experience: this.experience,
       };
-      // console.log(Req);
+      console.log(Req);
       // this.Service.insertJobboardCandidate(Req).subscribe(
       //   (x: any) => {
       //     this.messageService.add({ severity: 'success', summary: 'Inserted Successfully' });

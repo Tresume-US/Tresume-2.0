@@ -85,6 +85,9 @@ export class HrmsService {
   deleteHrmsdata(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deleteHrmsdata', request);
   }
+  createnotification(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'createnotification', request);
+  }
 }
 export interface ResponseDetails {
   message(message: any): unknown;
