@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { HrmsService, } from './hrms.service';
 import { Router } from 'express';
 import { ActivatedRoute } from '@angular/router';
-
+import { HighlightPipe } from './hrms.pipe';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-hrms',
   templateUrl: './hrms.component.html',
-  providers: [CookieService, HrmsService, MessageService],
+  providers: [CookieService, HrmsService, MessageService,HighlightPipe],
   styleUrls: ['./hrms.component.scss']
 })
 
 export class HrmsComponent implements OnInit {
+toggleDatePicker() {
+throw new Error('Method not implemented.');
+}
   candidateID: any;
   interviewData: any[];
   candidates1: string[] = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
@@ -49,6 +53,7 @@ export class HrmsComponent implements OnInit {
   deleteIndex: number;
   showConfirmationDialog3: boolean;
   isConfirmationModalVisible: boolean = false;
+  searchTerm: string;
 
   onFollowUpOptionChange() {
   }
@@ -66,7 +71,157 @@ export class HrmsComponent implements OnInit {
   rate: number;
   clientName: string;
   selectedOrgID: any;
-  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  isDropdownOpen = false;
+  option1 = false;
+  option2 = false;
+  option3 = false;
+  isCandidateStatusDropdownOpen = false;
+  isSortByDateVisible = false;
+  startdate: string | null = null;
+  enddate: string | null = null;
+  candidateStatus = {
+    onBench: false,
+    offerLetter: false,
+    terminate: false
+  };
+  selectedValues: string[] = [];
+  showDatePicker = false;
+  public startDate: any;
+  public endDate: any;
+  form: FormGroup;
+  
+ 
+  ranges: any = {
+    'Today': [new Date(), new Date()],
+    'Yesterday': [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
+    // A
+  };
+  toggleDropdown(event: Event) {
+    this.isCandidateStatusDropdownOpen = false;
+    this.isDropdownOpen = !this.isDropdownOpen;
+    event.stopPropagation(); 
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: Event) {
+    this.isDropdownOpen = false;
+  }
+  toggleCandidateStatusDropdown(event: Event): void {
+    this.isCandidateStatusDropdownOpen = !this.isCandidateStatusDropdownOpen;
+    event.stopPropagation();
+  }
+  onCheckboxChange(option: string, event: any) {
+    this.loading=true;
+    if (event.target.checked) {
+      this.selectedValues.push(option);
+    } else {
+      const index = this.selectedValues.indexOf(option);
+      if (index > -1) {
+        this.selectedValues.splice(index, 1);
+      }
+    }
+    console.log(this.selectedValues);
+    let Req = {
+      TraineeID: this.TraineeID,
+      Page: this.currentPage,
+      PageSize: this.pageSize,
+      useremail:this.useremail,
+      admin:this.isAdmin,
+      searchterm:this.selectedValues,
+      searchstartdate:this.startDate,
+      searchenddate:this.endDate
+    };
+
+    this.service.gethrmscandidateList(Req).subscribe(
+      (response: any) => {
+        // Success callback
+        this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill || !candidate.notes ) {
+            candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
+          }
+          return candidate;
+        });
+        // this.totalRecords = response.result[0].TotalCount[0];
+        this.totalRecords = 25;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        this.noResultsFound = this.candidates.length === 0;
+        this.loading = false; // Set loading to false on success
+        this.messageService.add({ severity: 'success', summary: `Filtered by selected candidate status` });
+      },
+      (error: any) => {
+        // Error callback
+        console.error('Error occurred:', error);
+        // Handle error here
+        this.loading = false; // Set loading to false on error
+      }
+    );
+  }
+
+  toggleSortByDate() {
+    this.isSortByDateVisible = !this.isSortByDateVisible;
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  public onValueChange(value: any) {
+    this.loading=true;
+    if (value && value.length === 2) {
+      this.startDate = this.dateFormatter(value[0]);
+      this.endDate = this.dateFormatter(value[1]);
+      console.log('Start Date:', this.startDate);
+      console.log('End Date:', this.endDate);
+    }
+    
+    const Req = {
+      TraineeID: this.TraineeID,
+      Page: this.currentPage,
+      PageSize: this.pageSize,
+      useremail: this.useremail,
+      admin: this.isAdmin,
+      searchterm: this.selectedValues,
+      searchstartdate: this.startDate,
+      searchenddate: this.endDate
+    };
+  
+    this.service.sortbtdate(Req).subscribe(
+      (response: any) => {
+        // Success callback
+        this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill || !candidate.notes) {
+            candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
+          }
+          return candidate;
+        });
+        this.totalRecords = 25;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        this.noResultsFound = this.candidates.length === 0;
+        this.loading = false; // Set loading to false on success
+        this.messageService.add({ severity: 'success', summary: ` Filter From ${this.startDate} To ${this.endDate} `});
+
+      },
+      (error: any) => {
+        // Error callback
+        console.error('Error occurred:', error);
+        // Handle error here
+        this.loading = false; // Set loading to false on error
+      }
+    );
+  }
+  
+  public dateFormatter(value: any) {
+    const formattedDate = formatDate(value, 'yyyy-MM-dd', "en-US");
+    return formattedDate;
+  }
+  
+
+  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute, private fb: FormBuilder,) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
     this.TraineeID = this.cookieService.get('TraineeID');
@@ -76,7 +231,9 @@ export class HrmsComponent implements OnInit {
     this.useremail = this.cookieService.get('userName1');
     this.isAdmin = this.cookieService.get('IsAdmin');
     console.log(this.isAdmin);
-
+    this.form = this.fb.group({
+      dates: [null]
+    });
   }
 
   ngOnInit(): void {
@@ -292,6 +449,7 @@ export class HrmsComponent implements OnInit {
 
   searchhrmscandidatelist(searchterm:string) {
     this.loading = true;
+    
     let Req = {
       TraineeID: this.TraineeID,
       Page: this.currentPage,
@@ -300,7 +458,7 @@ export class HrmsComponent implements OnInit {
       admin:this.isAdmin,
       searchterm:this.searchInput
     };
-
+    this.searchTerm = searchterm.toLowerCase();
     this.service.gethrmscandidateList(Req).subscribe(
       (response: any) => {
         // Success callback
@@ -332,9 +490,7 @@ export class HrmsComponent implements OnInit {
         this.loading = false; // Set loading to false on error
       }
     );
-    
-  }
-
+  } 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     this.fetchhrmscandidatelist();
