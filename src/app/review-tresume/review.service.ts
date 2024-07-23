@@ -93,7 +93,9 @@ export class ReviewService {
   updateFinancial(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'updateFinancial', request);
   }
-
+  Updateskill(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'Updateskill', request);
+  }
   emailplacementtracker(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + "emailplacementtracker", request);
   }

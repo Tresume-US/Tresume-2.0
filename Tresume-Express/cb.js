@@ -40,7 +40,7 @@ router.get('/CBcallback', async (req, res) => {
             grant_type: 'authorization_code',
             client_id: client_id,
             client_secret: client_secret,
-            code: '5A6FA1ED3E6B9BDA8A335235CE2749290E83940706003D79117D3FF830138DCC-1',
+            code: '674104BA07D700FD476F5F096D61594BBA2749A6CAA80927B1EED7F00E5B3BF4-1',
             redirect_uri: redirect_uri,
             scope: 'openid offline_access'
         }).toString(), {

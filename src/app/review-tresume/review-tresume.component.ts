@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnChanges, ViewChild, ElementRef, Input } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewService } from './review.service';
 import { MessageService } from 'primeng/api';
@@ -189,6 +189,11 @@ export class ReviewTresumeComponent implements OnChanges {
   videoPlayershow: boolean = false;
 skillSet: any;
   resumeFile: string | Blob;
+  combinedValues: never[];
+  skillsForm: FormGroup;
+  isModalOpen: boolean;
+  // row: any;
+  // value: any;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -335,6 +340,9 @@ skillSet: any;
     this.messageService.add({ severity: 'error', summary:  response.message });
     this.loading = false;
   }
+  rows: { skill: string, percentage: string }[] = [{ skill: '', percentage: '' }];
+
+
 
   FetchProfileVideo(){
     let req={
@@ -661,8 +669,10 @@ FetchResume() {
     }
   }
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe) {
-    
+  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe, private fb: FormBuilder) {
+    this.skillsForm = this.fb.group({
+      skills: this.fb.array([])
+    });
     this.candidateID = this.route.snapshot.params["traineeID"];
     this.candiateName  = this.route.snapshot.queryParams['firstName'];
     console.log(this.candidateID);
@@ -676,6 +686,51 @@ FetchResume() {
     this.candidateID = this.route.snapshot.params["traineeID"];
 
    }
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  rowInsert() {
+    this.rows.push({ skill: '', percentage: '' }); 
+  }
+
+  removeRow(index: number) {
+    if (this.rows.length > 1) {
+      this.rows.splice(index, 1);
+    }
+  }
+
+  onSubmit() {
+    console.log('Skills and Percentages:', this.rows);
+    this.closeModal();
+  
+    let skills = this.rows.map(row => ({
+      skill: row.skill,
+      percentage: row.percentage
+    }));
+  
+    let req = {
+      TraineeID: this.candidateID,
+      skills: skills
+    };
+  
+    console.log(req);
+  
+    this.service.Updateskill(req).subscribe(
+      () => {
+        this.messageService.add({ severity: 'success', summary: 'Skill Updated Successfully' });
+      },
+      () => {
+        this.messageService.add({ severity: 'error', summary: 'Updating Skill Failed' });
+      }
+    );
+  }
+  
+  
 
   ngOnInit(): void {
     this.fetchinterviewlist();
@@ -836,7 +891,9 @@ FetchResume() {
 
   // Submission - form - validation - function 
 
-  ngOnChanges(): void {
+ 
+  ngOnChanges(changes: any) {
+    
   }
 
 

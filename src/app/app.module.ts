@@ -106,13 +106,6 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TalentBenchComponent } from './talent-bench/talent-bench.component';
 import { MatSelectModule } from '@angular/material/select';
-
-//import { jsPDF } from 'jspdf';
-
-//import { jsPDF } from 'jspdf';
-
-//import { jsPDF } from 'jspdf';
-
 import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 import { SubmittedCandiatesComponent } from './submitted-candiates/submitted-candiates.component';
 import { JobBoardAccountComponent } from './job-board-account/job-board-account.component';
@@ -161,6 +154,8 @@ import { ArAgingReportComponent } from './ar-aging-report/ar-aging-report.compon
 import { NewTimeSheetReportComponent } from './new-time-sheet-report/new-time-sheet-report.component';
 import { SendInvoiceComponent } from './all-invoice/send-invoice/send-invoice.component';
 import { DatePipe } from '@angular/common';
+import { HighlightPipe } from '../app/hrms/hrms.pipe';
+
 import { MonsterComponent } from './landing-page/monster/monster.component';
 import { AdobeComponent } from './landing-page/adobe/adobe.component';
 import { TruncatePipe } from './truncate.pipe';
@@ -282,6 +277,7 @@ import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view
       CorporateDocumentComponent,
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
+      HighlightPipe,
       WhatsappComponent
     // TimesheetViewdetailsComponent
 

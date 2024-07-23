@@ -14,7 +14,6 @@ router.use(bodyparser.json());
 const exceljs = require("exceljs");
 const excel = require('exceljs');
 const fs = require('fs');
-
 const multer = require('multer');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
@@ -181,107 +180,297 @@ INNER JOIN Organization O ON T.userorganizationid = O.organizationid
   }
 });
 */
+function generateSearchCondition(searchterm) {
+  let conditionString = '';
+
+  switch (true) {
+      case Array.isArray(searchterm):
+          if (searchterm.length > 0) {
+              const arrayConditions = searchterm.map(term => `T.CandidateStatus LIKE '%${String(term).trim()}%'`);
+              conditionString = `(${arrayConditions.join(' OR ')})`;
+          }
+          break;
+
+      case (typeof searchterm === 'string' && searchterm.includes(" ")):
+          const words = searchterm.split(" ");
+          conditionString = `T.FirstName LIKE '%${words[0]}%' AND T.LastName LIKE '%${words[1]}%'`;
+          break;
+
+      case (typeof searchterm === 'string' && searchterm.includes("@")):
+          conditionString = `T.UserName LIKE '%${searchterm}%'`;
+          break;
+
+      case (typeof searchterm === 'string' && searchterm !== ''):
+          conditionString = `(T.FirstName LIKE '%${searchterm}%' OR T.LastName LIKE '%${searchterm}%' OR T.UserName LIKE '%${searchterm}%' OR T.Skill LIKE '%${searchterm}%')`;
+          break;
+
+      case (typeof searchterm === 'number' && searchterm !== 0):
+          const termString = String(searchterm);
+          conditionString = `T.CandidateStatus LIKE '%${termString}%'`;
+          break;
+
+      default:
+          conditionString = '';
+          break;
+  }
+
+  // Only add AND if there is a valid condition
+  return conditionString ? `AND ${conditionString}` : '';
+}
+
 
 router.post("/gethrmscandidateList", async (req, res) => {
   try {
-    const timeoutDuration = 60000; // Timeout duration in milliseconds (60 seconds)
+      const timeoutDuration = 60000;
 
-    // Set a timeout for the database query
-    const timeoutPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error("Request timed out"));
-      }, timeoutDuration);
-    });
+      const timeoutPromise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+              reject(new Error("Request timed out"));
+          }, timeoutDuration);
+      });
 
-    // Execute the database query within the timeout
-    const databasePromise = new Promise(async (resolve, reject) => {
-      try {
-        const pool = await sql.connect(config);
-        const request = new sql.Request();
-        var traineeid = req.body.TraineeID;
-        var useremail = req.body.useremail;
-        var admin = req.body.admin;
-        var searchterm = req.body.searchterm;
-        var Page = req.body.Page * 25;
-        var query = "";
+      const databasePromise = new Promise(async (resolve, reject) => {
+          try {
+              const pool = await sql.connect(config);
+              const request = new sql.Request();
+              const { TraineeID: traineeid, useremail, admin, searchterm } = req.body;
+              const Page = parseInt(req.body.Page) * 25;
+              let query = "";
 
-        // Function to generate search condition based on search term
-        function generateSearchCondition(searchterm) {
-          if (searchterm.includes(" ")) {
-            const words = searchterm.split(" ");
-            return `T.FirstName LIKE '%${words[0]}%' AND T.LastName LIKE '%${words[1]}%'`;
-          } else if (searchterm.includes("@")) {
-            return `T.UserName LIKE '%${searchterm}%'`;
-          } else {
-            return `(T.FirstName LIKE '%${searchterm}%' OR T.LastName LIKE '%${searchterm}%' OR T.UserName LIKE '%${searchterm}%'
-            OR T.Skill LIKE '%${searchterm}%'
-            )`;
+              if (admin) {
+                  query = `
+                      SELECT DISTINCT T.TraineeID, 
+                                      CONCAT(T.firstname, ' ', T.lastname) AS Name, 
+                                      CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
+                                      T.username AS Email, 
+                                      O.organizationname, 
+                                      T.LegalStatus AS LegalStatus, 
+                                      T.PhoneNumber AS Phone, 
+                                      CS.CSName AS CandidateStatus,
+                                      T.followupon, 
+                                      T.notes, 
+                                      T.CreateTime AS DateCreated,
+                                      T.Skill
+                      FROM Trainee T
+                      INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
+                      INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
+                      LEFT JOIN Memberdetails CreatedBy ON T.createby = CreatedBy.useremail
+                      INNER JOIN Organization O ON T.userorganizationid = O.organizationid
+                      WHERE M.useremail = '${useremail}' 
+                        AND T.active = 1 
+                        ${generateSearchCondition(searchterm)}
+                      ORDER BY T.CreateTime DESC
+                      OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+              } else {
+                  query = `
+                      SELECT DISTINCT T.TraineeID, 
+                                      CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, 
+                                      CONCAT(T.FirstName, ' ', T.LastName) AS Name, 
+                                      T.UserName AS Email, 
+                                      T.PhoneNumber AS Phone, 
+                                      T.LegalStatus AS LegalStatus, 
+                                      CS.CSName AS CandidateStatus, 
+                                      T.CreateTime AS DateCreated, 
+                                      T.followupon, 
+                                      T.notes, 
+                                      O.organizationname,
+                                      T.Skill
+                      FROM Trainee T
+                      INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
+                      LEFT JOIN Memberdetails CreatedBy ON T.CreateBy = CreatedBy.Useremail
+                      LEFT JOIN Organization O ON T.userorganizationid = O.organizationid
+                      WHERE T.RecruiterName = '${traineeid}' 
+                        ${generateSearchCondition(searchterm)}
+                      ORDER BY T.CreateTime DESC
+                      OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+              }
+
+              console.log(query);
+
+              const recordset = await request.query(query);
+
+              if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+                  const result = {
+                      flag: 1,
+                      result: recordset.recordsets[0],
+                  };
+                  resolve(result);
+              } else {
+                  const result = {
+                      flag: 0,
+                      error: "No active candidates found!",
+                  };
+                  resolve(result);
+              }
+          } catch (error) {
+              reject(error);
           }
-        }
-//INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
-        // Build the SQL query based on user role (admin or recruiter)
-        if (admin) {
-          query = `
-            SELECT Distinct T.TraineeID, CONCAT(T.firstname, ' ', T.lastname) AS Name, CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
-            T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
-            T.followupon, T.notes, T.CreateTime AS DateCreated,T.Skill
-            FROM Trainee T
-            INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
-            INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
-            LEFT JOIN Memberdetails CreatedBy ON T.createby = CreatedBy.useremail
-            INNER JOIN Organization O ON T.userorganizationid = O.organizationid
-            WHERE M.useremail = '${useremail}' AND T.active = 1 AND ${generateSearchCondition(searchterm)}
-            ORDER BY T.CreateTime DESC
-            OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
-        } else {
-          query = `
-            SELECT Distinct T.TraineeID, CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, CONCAT(T.FirstName, ' ', T.LastName) AS Name, T.UserName AS Email, T.PhoneNumber AS Phone, T.LegalStatus AS LegalStatus, CS.CSName AS CandidateStatus, T.CreateTime AS DateCreated, T.followupon, T.notes, O.organizationname,T.Skill
-            FROM Trainee T
-            INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
-            LEFT JOIN Memberdetails CreatedBy ON T.CreateBy = CreatedBy.Useremail
-            LEFT JOIN organization O ON T.userorganizationid = O.organizationid
-            WHERE T.RecruiterName = '${traineeid}' AND ${generateSearchCondition(searchterm)}
-            ORDER BY T.CreateTime DESC
-            OFFSET '${Page}' ROWS FETCH NEXT 25 ROWS ONLY`;
-        }
+      });
 
-        console.log(query);
+      const result = await Promise.race([databasePromise, timeoutPromise]);
 
-        const recordset = await request.query(query);
-
-        if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
-          const result = {
-            flag: 1,
-            result: recordset.recordsets[0],
-          };
-          resolve(result);
-        } else {
-          const result = {
-            flag: 0,
-            error: "No active candidates found!",
-          };
-          resolve(result);
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-
-    // Wait for either the database query to complete or the timeout to occur
-    const result = await Promise.race([databasePromise, timeoutPromise]);
-
-    res.send(result);
+      res.send(result);
   } catch (error) {
-    console.error("Error fetching candidates data:", error);
-    const result = {
-      flag: 0,
-      error: "An error occurred while fetching candidates data!",
-    };
-    res.status(500).send(result);
+      console.error("Error fetching candidates data:", error);
+      const result = {
+          flag: 0,
+          error: "An error occurred while fetching candidates data!",
+      };
+      res.status(500).send(result);
+  }
+});
+// router.post("/gethrmscandidateList", async (req, res) => {
+//   try {
+//     const timeoutDuration = 60000;
+
+//     const timeoutPromise = new Promise((resolve, reject) => {
+//       setTimeout(() => {
+//         reject(new Error("Request timed out"));
+//       }, timeoutDuration);
+//     });
+
+//     const databasePromise = new Promise(async (resolve, reject) => {
+//       try {
+//         const pool = await sql.connect(config);
+//         const request = new sql.Request();
+//         var traineeid = req.body.TraineeID;
+//         var useremail = req.body.useremail;
+//         var admin = req.body.admin;
+//         var searchterm = req.body.searchterm;
+//         var Page = req.body.Page * 25;
+//         var query = "";
+
+      
+      
+      
+
+//       if (admin) {
+//         query = `
+//             SELECT DISTINCT T.TraineeID, 
+//                             CONCAT(T.firstname, ' ', T.lastname) AS Name, 
+//                             CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
+//                             T.username AS Email, 
+//                             O.organizationname, 
+//                             T.LegalStatus AS LegalStatus, 
+//                             T.PhoneNumber AS Phone, 
+//                             CS.CSName AS CandidateStatus,
+//                             T.followupon, 
+//                             T.notes, 
+//                             T.CreateTime AS DateCreated,
+//                             T.Skill
+//             FROM Trainee T
+//             INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
+//             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
+//             LEFT JOIN Memberdetails CreatedBy ON T.createby = CreatedBy.useremail
+//             INNER JOIN Organization O ON T.userorganizationid = O.organizationid
+//             WHERE M.useremail = '${useremail}' 
+//               AND T.active = 1 
+//               ${generateSearchCondition(searchterm)}
+//             ORDER BY T.CreateTime DESC
+//             OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+//     } else {
+//         query = `
+//             SELECT DISTINCT T.TraineeID, 
+//                             CONCAT(CreatedBy.FirstName, ' ', CreatedBy.LastName) AS CreatedBy, 
+//                             CONCAT(T.FirstName, ' ', T.LastName) AS Name, 
+//                             T.UserName AS Email, 
+//                             T.PhoneNumber AS Phone, 
+//                             T.LegalStatus AS LegalStatus, 
+//                             CS.CSName AS CandidateStatus, 
+//                             T.CreateTime AS DateCreated, 
+//                             T.followupon, 
+//                             T.notes, 
+//                             O.organizationname,
+//                             T.Skill
+//             FROM Trainee T
+//             INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
+//             LEFT JOIN Memberdetails CreatedBy ON T.CreateBy = CreatedBy.Useremail
+//             LEFT JOIN Organization O ON T.userorganizationid = O.organizationid
+//             WHERE T.RecruiterName = '${traineeid}' 
+//               ${generateSearchCondition(searchterm)}
+//             ORDER BY T.CreateTime DESC
+//             OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+//     }
+    
+
+//         console.log(query);
+
+//         const recordset = await request.query(query);
+
+//         if (recordset && recordset.recordsets && recordset.recordsets.length > 0) {
+//           const result = {
+//             flag: 1,
+//             result: recordset.recordsets[0],
+//           };
+//           resolve(result);
+//         } else {
+//           const result = {
+//             flag: 0,
+//             error: "No active candidates found!",
+//           };
+//           resolve(result);
+//         }
+//       } catch (error) {
+//         reject(error);
+//       }
+//     });
+
+//     const result = await Promise.race([databasePromise, timeoutPromise]);
+
+//     res.send(result);
+//   } catch (error) {
+//     console.error("Error fetching candidates data:", error);
+//     const result = {
+//       flag: 0,
+//       error: "An error occurred while fetching candidates data!",
+//     };
+//     res.status(500).send(result);
+//   }
+// });
+
+router.post("/sortbtdate", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const { TraineeID, useremail, admin, searchterm, searchstartdate, searchenddate, Page } = req.body;
+    const offset = Page * 25;
+
+    const query = `
+      SELECT DISTINCT T.TraineeID, CONCAT(T.firstname, ' ', T.lastname) AS Name, 
+        CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
+        T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, 
+        T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
+        T.followupon, T.notes, T.CreateTime AS DateCreated, T.Skill
+      FROM Trainee T
+      INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
+      INNER JOIN Currentstatus CS ON T.CandidateStatus = CS.CSID
+      LEFT JOIN Memberdetails CreatedBy ON T.createby = CreatedBy.useremail
+      INNER JOIN Organization O ON T.userorganizationid = O.organizationid
+      WHERE M.useremail = @useremail 
+        AND T.active = 1 
+        AND T.CreateTime >= @searchstartdate 
+        AND T.CreateTime <= @searchenddate
+      ORDER BY T.CreateTime DESC
+      OFFSET @offset ROWS FETCH NEXT 25 ROWS ONLY
+    `;
+
+    const result = await pool.request()
+      .input('useremail', sql.NVarChar, useremail)
+      .input('searchstartdate', sql.DateTime, searchstartdate)
+      .input('searchenddate', sql.DateTime, searchenddate)
+      .input('offset', sql.Int, offset)
+      .query(query);
+
+    res.json({
+      flag: 1,
+      result: result.recordset,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred." });
   }
 });
 
-router.post("/updatehrmscandidate", async (req, res) => {});
+router.post("/updatehrmscandidate", async (req, res) => { });
 
 router.post("/addHrmsCandidate", async (req, res) => {
   console.log(req);
@@ -565,7 +754,7 @@ async function deactivateinterviewdata(TraineeInterviewID) {
     const request = pool.request();
     const queryResult = await request.query(
       "UPDATE TraineeInterview SET Active = 0 WHERE TraineeInterviewID = " +
-        TraineeInterviewID
+      TraineeInterviewID
     );
 
     if (queryResult.rowsAffected[0] === 0) {
@@ -1334,63 +1523,41 @@ router.post("/updateGeneral", async function (req, res) {
     res.status(500).send(data);
   }
 });
-
-router.post("/updateTrainee", async function (req, res) {
+router.post("/Updateskill", async function (req, res) {
   try {
+    const skills = req.body.skills;
+
     var query =
       "UPDATE Trainee SET " +
-      "  ReferredBy = " +
-      formatValue(req.body.ReferredBy) +
-      ", assistedBy = " +
-      formatValue(req.body.assistedBy) +
-      ", division = " +
-      formatValue(req.body.division) +
-      ", dob = " +
-      formatValue(req.body.dob) +
-      ", duiFelonyInfo = " +
-      formatValue(req.body.duiFelonyInfo) +
-      ", firstName = " +
-      formatValue(req.body.firstName) +
-      ", ftcNotes = " +
-      formatValue(req.body.ftcNotes) +
-      ", generalEmail = " +
-      formatValue(req.body.generalEmail) +
-      ", lastName = " +
-      formatValue(req.body.lastName) +
-      ", legalStatusVal = " +
-      formatValue(req.body.legalStatusVal) +
-      ", legalStatusValend = " +
-      formatValue(req.body.legalStatusValend) +
-      ", middleName = " +
-      formatValue(req.body.middleName) +
-      ", otherNotes = " +
-      formatValue(req.body.otherNotes) +
-      ", phoneNumberG = " +
-      formatValue(req.body.phoneNumberG) +
-      ", recruiterName = " +
-      formatValue(req.body.recruiterName) +
-      ", refered = " +
-      formatValue(req.body.refered) +
-      ", selectedLegalStatus = " +
-      formatValue(req.body.selectedLegalStatus) +
-      ", statusDate = " +
-      formatValue(req.body.statusDate) +
-      " WHERE TraineeID = " +
+      "  skillset = " +
+      formatValue(JSON.stringify(skills)) +
+      " WHERE " +
+      "  TraineeID = " +
       formatValue(req.body.TraineeID);
 
     console.log(query);
 
-    // Uncomment the following lines when you are ready to execute the query
-    // await sql.connect(config);
-    // var request = new sql.Request();
-    // var result = await request.query(query);
+    await sql.connect(config);
+    var request = new sql.Request();
+    var result = await request.query(query);
 
-    res.status(200).send("Data Updated");
+    const data = {
+      flag: 1,
+      message: "Data Updated",
+    };
+
+    res.send(data);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Internal Server Error");
+    console.error(error);
+    const data = {
+      flag: 0,
+      message: "Internal Server Error",
+    };
+    res.status(500).send(data);
   }
 });
+
+
 
 async function generateTraineeID() {
   try {
@@ -1707,8 +1874,8 @@ router.post("/fetchrecruiter", function (req, res) {
     request.query(
       // "select traineeid,firstname,lastname from trainee where organizationid = "+req.body.orgID+" and active = 1",
       "SELECT DISTINCT traineeid, firstname, lastname FROM trainee WHERE organizationid = " +
-        req.body.orgID +
-        " AND active = 1 AND role='recruiter' ORDER BY firstname ASC, lastname ASC",
+      req.body.orgID +
+      " AND active = 1 AND role='recruiter' ORDER BY firstname ASC, lastname ASC",
 
       function (err, recordset) {
         if (err) console.log(err);
@@ -1853,8 +2020,8 @@ VALUES ('${TresumeID}' ,'${req.body.TraineeID}' ,'' ,'' ,1 ,GETDATE() ,'${req.bo
 
     var query = `INSERT INTO [dbo].[TresumeNode] ([TresumeNodeID] ,[TresumeID] ,[ParentTresumeNodeID] ,[NodeDate] ,[Title] ,[Description] ,[TresumeNodeTypeID] ,[SortOrder] ,[Active] ,[CreateTime] ,[CreateBy] ,[LastUpdateTime] ,[LastUpdateBy] ,[NodeDateTo] ,[Org] ,[Location] ,[Tools] ,[Skill])
          VALUES ('${TresumeNodeID}' ,'${TresumeID}' ,'' ,GETDATE() ,'' ,'' ,'${req.body.type}' ,'' ,1 ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'${req.body.username}' ,GETDATE() ,'' ,'${req.body.Location}' ,'' ,'')`;
-    
-         console.log(query);
+
+    console.log(query);
     await sql.query(query);
 
     await sql.close();
@@ -1973,7 +2140,7 @@ async function emailPlacementTracker(candidateID, OrgID, placementList, useremai
   try {
     const workbook = new excel.Workbook();
     const worksheet = workbook.addWorksheet('Placement Data');
-    
+
     const headers = ['Work Start Date', 'Work End Date', 'Position Title', 'Marketer', 'End Client Name', 'Vendor', 'End Client Address'];
 
     worksheet.addRow(headers);
@@ -2034,7 +2201,7 @@ router.post("/Sendplacementmail", async (req, res) => {
     const { candidateID, OrgID, placementList } = req.body;
 
     console.log("OrgID:", OrgID);
-    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%,"+OrgID+",%' and WFID in (1,4,5,6,7) and active = 1";
+    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%," + OrgID + ",%' and WFID in (1,4,5,6,7) and active = 1";
 
     console.log(query);
     const useremailsResult = await pool.query(query);
@@ -2044,9 +2211,9 @@ router.post("/Sendplacementmail", async (req, res) => {
     if (useremailsResult && Array.isArray(useremailsResult.recordset)) {
       if (useremailsResult.recordset.length > 0) {
         const useremails = useremailsResult.recordset.map(result => result.useremail);
-        
+
         await emailPlacementTracker(candidateID, OrgID, placementList, useremails);
-        
+
         res.status(200).json({ success: true, message: 'Placement notification email sent successfully' });
       } else {
         console.error("Error handling placement notification: No matching records found");
@@ -2062,7 +2229,7 @@ router.post("/Sendplacementmail", async (req, res) => {
   }
 });
 
-async function emailFinancialTracker(candidateID, OrgID, financialData, useremails) { 
+async function emailFinancialTracker(candidateID, OrgID, financialData, useremails) {
   try {
     for (const useremail of useremails) {
       const mailOptions = {
@@ -2072,7 +2239,7 @@ async function emailFinancialTracker(candidateID, OrgID, financialData, useremai
         html: '<p><em>This is to notify you that the payroll process for the candidate can now commence as their financial details have been securely stored within the HRMS.</em></p>',
         attachments: [{
           filename: 'financial_details.xlsx',
-          content: financialData 
+          content: financialData
         }]
       };
 
@@ -2091,7 +2258,7 @@ router.post("/insertRecruitmentTracker", async (req, res) => {
     const financialData = await generateExcel(req.body);
 
     console.log("OrgID:", OrgID);
-    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%,"+OrgID+",%' and WFID in (1,4,6) and active = 1";
+    var query = "SELECT useremail FROM memberdetails WHERE ',' + accessorg + ',' LIKE '%," + OrgID + ",%' and WFID in (1,4,6) and active = 1";
     const useremailsResult = await pool.query(query);
 
     const useremails = useremailsResult.recordset.map(record => record.useremail);

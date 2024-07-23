@@ -173,10 +173,6 @@ color:white;
   border: 1px solid red;
 }
 
-::ng-deep .mat-tab-label-content {
-  font-size: 14px;
-}
-
 ::ng-deep .mat-tab-label{
   min-width: 100px !important;
   // min-width: 150px !important;
@@ -380,3 +376,55 @@ form,
   /* Styles for Chrome and Safari */
   color: #fff;
 }
+
+
+.modal.show {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  margin-top: 100px;
+}
+
+
+@keyframes growProgressBar {
+  0%, 33% { --pgPercentage: 0; }
+  100% { --pgPercentage: var(--value); }
+}
+
+@property --pgPercentage {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+  --size: 5rem;
+  --fg: #369;
+  --bg: #def;
+  --pgPercentage: var(--value);
+  animation: growProgressBar 6s 1 forwards;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 90%;
+  display: grid;
+  place-items: center;
+  background: 
+    radial-gradient(closest-side, white 80%, transparent 0 99.9%, white 0),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0)
+    ;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--fg);
+  border-radius: 30px;
+  margin:0px 0 0px 22px;
+}
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) '%';
+  margin-top: 25px;
+}
+
+
