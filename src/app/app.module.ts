@@ -166,7 +166,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
-
+import { WhatsappComponent } from './integration/whatsapp/whatsapp.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
@@ -277,7 +277,8 @@ import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view
       CorporateDocumentComponent,
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
-      HighlightPipe
+      HighlightPipe,
+      WhatsappComponent
     // TimesheetViewdetailsComponent
 
   ],

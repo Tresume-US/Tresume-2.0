@@ -355,6 +355,25 @@
                             </p>
                         </a>
                     </li>
+
+                    
+                    <li class="nav-item" *ngIf="checkFullAccess(12)">
+                        <a class="nav-link" style="cursor: pointer;" (click)="toggleSubMenu('integrationSubMenu')">
+                          <i class="nav-icon fas fa-link"></i>
+                          <p style="margin-left: -7px; margin-top: 1px;">
+                            Integration
+                            <i class="right fas fa-angle-left" [ngClass]="{'down': isSubMenuOpen['integrationSubMenu']}"></i>
+                          </p>
+                        </a>
+                        <ul id="whatsapp" class="nav nav-treeview" [ngStyle]="{'display': isSubMenuOpen['integrationSubMenu'] ? 'block' : 'none'}">
+                          <li class="nav-item">
+                            <a class="nav-link" routerLink="integration/whatsapp">
+                              <i class="fab fa-whatsapp"></i>
+                              <p>Whatsapp</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>     
                     <li class="nav-item">
                         <a routerLink="/profile" class="nav-link">
                             <!-- <i class="fa fa-user-circle-o" aria-hidden="true"></i>

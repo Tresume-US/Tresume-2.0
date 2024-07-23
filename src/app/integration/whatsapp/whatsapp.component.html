@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>WhatsApp</h2>
+    <form [formGroup]="whatappForm" (ngSubmit)="onSubmit()" class="whatsapp-form">
+      <div class="form-group">
+        <label for="businessName">Business Name:</label>
+        <input type="text" id="businessName" formControlName="businessName" class="form-control">
+        <div *ngIf="submitted && whatappControl.businessName.errors" class="invalid-feedback">
+          <div *ngIf="whatappControl.businessName.errors.required">
+            This field is mandatory
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="accessToken">Access Token:</label>
+        <input type="text" id="accessToken" formControlName="accessToken" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber" class="form-control">
+      </div>
+      <div class="row mt-3 offset-mt-4">
+        <div class="col-md-12 text-right">
+          <div class="btn-group">
+            <button type="button" (click)="ngOnInit()" class="btn btn-round btn-secondary custom-btn">Reset</button>
+            <button type="submit" class="btn btn-round btn-warning ml-2 custom-btn" style="background-color:#482668;color: white;">Send </button>
+            <!-- <button type="button" (click)="onCreate()" class="btn btn-round btn-warning">Create</button> -->
+          </div>
+        </div>
+      </div>
+      <!-- <button type="button" (click)="ngOnInit()" class="btn btn-round">Reset</button>
+      <button type="submit" class="btn btn-primary">Send Message</button> -->
+    </form>
+  </div>
+  <p-toast position="bottom-right"></p-toast>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
