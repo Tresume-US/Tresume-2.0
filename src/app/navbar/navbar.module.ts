@@ -12,4 +12,7 @@ import { NavigationService } from './navbar.service';
     exports: [NavbarComponent],
     providers: [NavigationService]
 })
-export class NavigationModule { }
+export class NavigationModule {
+
+    
+ }

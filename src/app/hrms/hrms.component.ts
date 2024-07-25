@@ -592,14 +592,30 @@ throw new Error('Method not implemented.');
       (x: any) => {
         this.handleSuccess(x);
         this.fetchhrmscandidatelist();
+        this.createNotification('Candidate added successfully to HRMS.');
       },
       (error: any) => {
         this.handleError(error);
+        this.createNotification('Failed to add candidate to the job board.');
       }
     );
 
   }
 
+  createNotification(message: string) {
+    const req = {  
+      message: message,
+      time: new Date(),
+      TraineeID:this.TraineeID,
+      orgID:this.OrgID,
+      createby:this.userName,
+    };
+    console.log(req)
+    this.service.createnotification(req).subscribe(
+
+    )
+    // this.notificationService.addNotification(notification);
+  }
   onSubmit() {
     console.log('Form Data:', this.formData);
   }

@@ -5492,3 +5492,35 @@ app.listen(port, () => {
 // });
 
 // task.start();
+
+
+app.post("/createnotification", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+
+        var request = new sql.Request();
+        // var otherinfo = Object.values(req.body.otherInfo).join(",");
+        request.query(
+          "INSERT INTO Notifications(Message,ReadStatus,Active,CreateTime,TraineeID,OrgID,CreateBy) VALUES ('"+req.body.message+"',1,1,'"+req.body.time+"','"+req.body.TraineeID+"','"+req.body.orgID+"','"+req.body.createby+"')",
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
+});

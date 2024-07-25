@@ -88,5 +88,51 @@ export class NavbarComponent implements OnInit {
         this.isSubMenuOpen[subMenuId] = !this.isSubMenuOpen[subMenuId];
       }
       
+      
+
+
     
+      
+
+      isPopupOpen = false;
+  unreadCount = 2;
+  selectedNotification: any = null;
+  notifications = [
+    { message: 'New comment on your post', time: new Date(), isRead: false },
+    // { message: 'Your order has been shipped', time: new Date(Date.now() - 24 * 60 * 60 * 1000), isRead: true },
+    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
+    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
+    // { message: 'Your order has been shipped', time: new Date(Date.now() - 24 * 60 * 60 * 1000), isRead: true },
+    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
+    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
+    
+  ];
+
+  togglePopup() {
+    this.isPopupOpen = !this.isPopupOpen;
+    this.selectedNotification = null;
+    console.log('Popup toggled:', this.isPopupOpen);
+  }
+
+  viewNotification(notification: any) {
+    this.selectedNotification = notification;
+  }
+
+  goBack() {
+    this.selectedNotification = null;
+  }
+
+  formatNotificationTime(notificationTime: Date): string {
+    const now = new Date();
+    const notificationDate = new Date(notificationTime);
+    const diffDays = Math.floor((now.getTime() - notificationDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return notificationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else if (diffDays === 1) {
+      return 'Yesterday ' + notificationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else {
+      return notificationDate.toLocaleDateString() + ' ' + notificationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+  }
 }
