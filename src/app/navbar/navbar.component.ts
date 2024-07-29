@@ -12,10 +12,11 @@ import { NavigationService } from './navbar.service';
 export class NavbarComponent implements OnInit {
 
     public onboardView: boolean = false;
-    public traineeID: any;
+    public traineeID:any;
     public traineeDetails: any = {};
     public userName: string;
     public isLoaded: boolean = false;
+    orgID:any;
     fullAccess: number[];
     viewOnly: number[];
     isDropdownOpen: { [key: string]: boolean } = {};
@@ -28,12 +29,14 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.traineeID = this.cookieService.get('TraineeID')
+      this.traineeID = this.cookieService.get('TraineeID')
+      this.orgID = this.cookieService.get('OrgID');
         this.userName = this.cookieService.get('userName1');
         this.userType = this.cookieService.get('usertype');
         this.timesheetrole = this.cookieService.get('timesheet_role');
         this.traineeDetails.FirstName = sessionStorage.getItem("FirstName");
         this.traineeDetails.LastName = sessionStorage.getItem("LastName");
+        this.getUnreadCount();
         let Req = {
             username: this.userName
         };
@@ -95,7 +98,24 @@ export class NavbarComponent implements OnInit {
       
 
       isPopupOpen = false;
-  unreadCount = 2;
+      unreadCount: number = 0;
+
+      getUnreadCount() {
+        let req = {
+          traineeID: this.traineeID,
+          orgID: this.orgID
+
+          // traineeID: 1176655,
+          // orgID: 28
+        };
+      console.log(req)
+        this.navService.fetchUnreadCount(req).subscribe((response: any) => {
+          this.unreadCount = response.unreadCount; 
+        }, (error) => {
+          console.error('Error fetching unread count:', error);
+        });
+      }
+      
   selectedNotification: any = null;
   notifications = [
     { message: 'New comment on your post', time: new Date(), isRead: false },

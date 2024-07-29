@@ -16,7 +16,9 @@ export class NavigationService {
     getuseraccess(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getuseraccess', request);
       }
-
+      fetchUnreadCount(req: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'fetchUnreadCount', req);
+      }
     checkFullAccess(numberToCheck: number): boolean {
         const userName = this.cookieService.get('userName1');
         var VewAccess = this.cookieService.get('ViewOnly');
