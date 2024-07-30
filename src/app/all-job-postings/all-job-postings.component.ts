@@ -157,8 +157,8 @@ console.log(this.usertype);
   deletejobdata(JobID:any){
     this.deleteIndex = JobID;
     this.showConfirmationDialog = true;
-
   }
+
   deleteJobPosting(JobID:any) {
     var req = {
       JobID:this.deleteIndex,

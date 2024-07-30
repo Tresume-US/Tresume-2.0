@@ -1,0 +1,183 @@
+.container-fluid {
+    width: 100%;
+    height: 280px;
+    margin: 0;
+    padding: 0;
+    // overflow-x: hidden;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #ede7f6;    
+}
+.btn{
+    background-color: #380838;
+    color: white;
+    font-size: 12px;
+    padding: 5px 10px;
+    }
+.mat-header-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.mat-header-content div {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+.mat-header-content i {
+    margin-right: 10px;
+    color: #555;
+}
+
+.fas {
+    min-width: 24px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.slanted-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #fff 30%, transparent 30%);
+}
+
+.slanted-line {
+    position: absolute;
+    top: 0;
+    left: -30%; 
+    width: 140%;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(-10deg);
+    z-index: -1;
+}
+.col-md-col-md-9.card.slanted-card {
+    background-color: #999496;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+.mat-header-content.m-4 div i {
+    color: white;
+}
+.content2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.amt {
+    text-align: left;
+    font-size: 16px;
+}
+.received{
+    border-left: 4px inset #FFA523;
+}
+.pending{
+    border-left: 4px inset #1CCD1C;
+}
+.m-0{
+    font-family: 'Times New Roman', Times, serif;
+    // font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Overlay styles */
+.popup-overlay {
+    position: fixed; /* Positioning relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's above other content */
+  }
+  
+  /* Popup box styles */
+  .popup {
+    background-color: #fff; /* White background */
+    padding: 20px; /* Spacing inside the popup */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-radius: 10px; /* Rounded corners */
+    width: 300px; /* Set a fixed width */
+    box-sizing: border-box; /* Include padding in the width */
+  }
+  
+  /* Input field styles */
+  .popup input[type="number"] {
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 20px; /* Space below the field */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  /* Button styles */
+  .popup button {
+    background-color: purple; /* Bootstrap primary blue */
+    color: white; /* White text */
+    // padding: 10px 20px; 
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    display: inline-block; /* Allow setting dimensions */
+  }
+  
+  /* Button hover effect */
+  .popup button:hover {
+    background-color: purple; /* A shade darker on hover */
+  }
+  
+  
+  /* Additional styles for button group */
+  .popup .button-group {
+    display: flex;
+    justify-content: space-around; /* Space out buttons */
+  }
+  
+  /* Adjust button styles if needed */
+  .popup button {
+    flex-grow: 1; /* Make buttons fill the space */
+    margin: 0 5px; /* Add space between buttons */
+    padding: none;
+  }
+  
+  /* Adjustments for individual button hover effect */
+  .popup button:hover {
+    opacity: 0.8;
+  }
+  button:disabled:hover {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .received-amt{
+    cursor: pointer;
+    color: rgb(68, 68, 136);
+  }
+

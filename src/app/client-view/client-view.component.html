@@ -1,0 +1,173 @@
+<div class="container-fluid p-4">
+    <div class="row justify-content-between">
+      <div class="col-md-9 card slanted-card">
+        <div class="slanted-line"></div>
+        <div class="mat-header-content m-4">
+          <div class="card-title">
+            <strong>{{ ClientDetails[0].ClientName }}</strong>
+          </div>
+          <div style="display: flex">
+            <div style="display: block" class="m-1">
+              <div class="text-center p-1">
+                <i class="fas fa-mobile-alt"></i>
+                {{ ClientDetails[0].ContactNumber }}
+              </div>
+              <div class="p-1">
+                <i class="fas fa-envelope"></i> {{ ClientDetails[0].EmailID }}
+              </div>
+              <div class="p-1">
+                <i class="fas fa-home"></i> {{ ClientDetails[0].Address }}
+              </div>
+            </div>
+            <div style="display: block" class="m-1">
+              <div class="p-1">
+                <i class="fas fa-briefcase"></i> {{ ClientDetails[0].Industry }}
+              </div>
+              <div class="p-1">
+                <i class="fas fa-user"></i> {{ ClientDetails[0].Country }}
+              </div>
+            </div>
+          </div>
+          <div style="
+              display: flex;  
+              justify-content: flex-end;
+              align-items: flex-end;
+              width: 100%;
+              height: 100%;
+            ">
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-2 card">
+        <div class="mat-header-content m-4 d-flex flex-column content2 p-0">
+          <div class="h6 text-center">SUMMARY</div>
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-start flex-column">
+              <div class="amt pl-2 received">
+                <b>{{ jobs[0].TotalJobCount }}</b>
+              </div>
+              <div class="m-0 pl-4">Total Jobs</div>
+            </div>
+          </div>
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-start">
+              <div class="d-flex align-items-start flex-column">
+                <div class="amt pl-2 pending">
+                  <b>{{ jobs[0].TotalApplicantCount }}</b>
+                </div>
+                <div class="m-0 pl-4">Total Candidates</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row p-4">
+    <table>
+      <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Pay Rate</th>
+            <th>New Applicants</th>
+            <th>Total Applicants</th>
+            <th>Posted On</th>
+            <th>Posted By</th>
+            <th>Job Type</th>
+            <!-- <th>Assignee</th> -->
+            <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of jobs">
+            <td (click)="openJobDescriptionModal(job)">{{ job.JobTitle }} {{job.JobID}}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.Company }}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.Location }}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.PayRate }}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.NewApplicants }}</td>
+            <td (click)="openJobDescriptionModal(job)">
+              {{ job.TotalApplicants }}
+              <a [routerLink]="['/applicantdetails/'+job.JobID]">
+                <i class="fas fa-external-link-alt"></i></a>
+            </td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.PostedOn | date:'MM/dd/yy' }}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.PostedBy }}</td>
+            <td (click)="openJobDescriptionModal(job)">{{ job.JobType }}</td>
+            <!-- <td>
+            <select name="Assignee" id="assignee" [(ngModel)]="job.TraineeID"  [ngModelOptions]="{standalone: true}" (change)="updateSelected($event.target.value,job.JobID)">
+              <option value="" selected disabled>Select Assignee</option>
+              <option *ngFor="let name of recruiterNames" [value]="name.TraineeID">{{name.FirstName }} {{name.LastName}}</option>
+            </select>
+            </td> -->
+            <td>
+              <span data-toggle="tooltip" data-placement="bottom" title="Edit"  *ngIf="usertype === 'RECRUITER'">
+                <a [routerLink]="['/recruitersview', job.JobID]"><i class="fas fa-pencil-alt"></i></a>
+              </span>
+              <span data-toggle="tooltip" data-placement="bottom" title="Edit" *ngIf="usertype === 'TRESUMEUSER'" >
+                <a [routerLink]="['/', job.JobID]"><i class="fas fa-eye"></i></a>
+              </span>
+              <span data-toggle="tooltip" data-placement="bottom" title="Delete"  (click)="deletejobdata(job.JobID)">
+                <i class="fas fa-trash-alt" data-toggle="modal" data-target="#EmailClientModal"></i>
+              </span>
+              <span data-toggle="tooltip" data-placement="bottom" title="mail"  (click)="openEmailModal(job.JobTitle, job.JobID,job.JobDescription)">
+                <i class="fa fa-envelope" data-toggle="modal" data-target="#EmailClientModal"></i>
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="noResultsFound">
+            <td colspan="11" class="text-center">
+              No results found.
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="modal fade" id="EmailClientModal" tabindex="-1" role="dialog" aria-labelledby="EmailClientModalLabel"
+  aria-hidden="true" *ngIf="showConfirmationDialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="EmailClientLabel">Confirm!</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure to delete the selected job?
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn" (click)="deleteJobPosting(JobID)">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EmailClientModal" tabindex="-1" role="dialog" aria-labelledby="EmailClientModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="recipient-email" class="col-form-label">Recipient Email:</label>
+            <input type="email" class="form-control" id="recipient-email" [(ngModel)]="recipientEmail">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal"  (click)="sendEmail()" [disabled]="!recipientEmail">Send mail</button>
+          <button type="button" class="btn " data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast position="bottom-right"></p-toast>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

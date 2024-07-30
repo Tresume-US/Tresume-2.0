@@ -67,10 +67,10 @@ export class ClientViewDetailsComponent implements OnInit {
       clientid: this.ClientID,
       OrgID: this.OrgID,
     };
-    console.log(Req)
     this.loading = true;
     this.service.getClientDetailsList(Req).subscribe((x: any) => {
       this.ClientDetails = x.result;
+      console.log("inside the clintdetails",this.ClientDetails)
       this.noResultsFound = this.ClientDetails.length === 0;
       this.loading = false;
     }),
