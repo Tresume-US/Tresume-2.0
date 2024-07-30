@@ -5501,7 +5501,6 @@ app.post("/createnotification", function (req, res) {
         if (err) throw err;
 
         var request = new sql.Request();
-        // var otherinfo = Object.values(req.body.otherInfo).join(",");
         request.query(
           "INSERT INTO Notifications(Message,ReadStatus,Active,CreateTime,TraineeID,OrgID,CreateBy) VALUES ('"+req.body.message+"',1,1,'"+req.body.time+"','"+req.body.TraineeID+"','"+req.body.orgID+"','"+req.body.createby+"')",
           function (err, recordset) {
@@ -5524,3 +5523,36 @@ app.post("/createnotification", function (req, res) {
     res.status(500).send("Error connecting to the database");
   }
 });
+
+
+app.post("/fetchUnreadCount", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log("Error connecting to the database:", err);
+        return res.status(500).send("Error connecting to the database");
+      }
+
+      var request = new sql.Request();
+      // request.input('traineeID', sql.VarChar, req.body.traineeID);
+      // request.input('orgID', sql.VarChar, req.body.orgID);
+
+      request.query(
+        "SELECT COUNT(*) AS ReadStatusCount FROM Notifications WHERE ReadStatus = 1 AND Active = 1 AND TraineeID = '"+ req.body.traineeID+"' AND OrgID = '"+req.body.orgID+"'",
+        function (err, recordset) {
+          if (err) {
+            console.log("Error executing query:", err);
+            return res.status(500).send("Error executing query");
+          }
+
+          // Directly send the count
+          res.json({ unreadCount: recordset.recordset[0].ReadStatusCount });
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Server error");
+  }
+});
+
