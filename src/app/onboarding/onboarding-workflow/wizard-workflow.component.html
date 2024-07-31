@@ -31,14 +31,13 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
 
 <div *ngIf="enableSteps">
     <mat-stepper #stepper2 linear>
-
         <mat-step [editable]="isEditable" completed="false">
             <ng-template matStepLabel>Send Welcome Email</ng-template>
             <section id="about">
                 <div class="container px-4">
                     <div class="row gx-4 justify-content-center">
                         <div class="col-lg-8">
-                            <h2>Welcome Email for {{candidateDetails.FirstName}} {{candidateDetails.LastName}}</h2>
+                            <!-- <h2  *ngFor="let name of candidateDetails">Welcome Email for {{name.FirstName}} {{name.LastName}}</h2> -->
                             <form [formGroup]="emailform">
                                 <formly-form [model]="model" [fields]="emailfields" [options]="options"
                                     [form]="emailform">
@@ -134,6 +133,7 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                 </button>
             </div>
         </mat-step>
+
         <mat-step [editable]="isEditable" completed="false">
             <ng-template matStepLabel>Review & Approve</ng-template>
             <section id="about">
@@ -164,7 +164,6 @@ flex-direction: column;padding-top: 100px; padding-top: 30px;">
                 </button>
             </div>
         </mat-step>
-
     </mat-stepper>
 </div>
 

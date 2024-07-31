@@ -428,3 +428,18 @@ div[role="progressbar"]::before {
 }
 
 
+.resume-builder-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.form-container, .preview-container {
+  width: 45%;
+}
+
+#resume-preview {
+  border: 1px solid #ccc;
+  padding: 20px;
+  height: 100%;
+}
