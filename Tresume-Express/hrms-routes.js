@@ -236,8 +236,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
               const { TraineeID: traineeid, useremail, admin, searchterm } = req.body;
               const Page = parseInt(req.body.Page) * 25;
               let query = "";
-
-              if (admin) {
+              if (admin == true) {
                   query = `
                       SELECT DISTINCT T.TraineeID, 
                                       CONCAT(T.firstname, ' ', T.lastname) AS Name, 

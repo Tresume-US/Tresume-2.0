@@ -7,6 +7,7 @@ import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { DatePipe } from '@angular/common';
+import jsPDF from 'jspdf';
 
 @Component({
   templateUrl: './review-tresume.component.html',
@@ -730,7 +731,8 @@ FetchResume() {
     );
   }
   
-  
+  resumeForm: FormGroup;
+
 
   ngOnInit(): void {
     this.fetchinterviewlist();
@@ -773,6 +775,13 @@ FetchResume() {
       selectedcurrentstatus:[''],
     });
     
+    this.resumeForm = this.fb.group({
+      name: [''],
+      email: [''],
+      summary: ['']
+      // Add more fields as necessary
+    });
+
     this.myForm = this.formBuilder.group({
       interviewInfo: ['', [Validators.required, Validators.minLength(3)]],
       client: ['', [Validators.required, Validators.minLength(3)]],
@@ -1563,4 +1572,22 @@ this.loading = true;
     this.videoPlayer.nativeElement.currentTime = 0;
   }
 
+  //Resume Builder 
+  downloadPDF() {
+    const doc = new jsPDF();
+    const content = document.getElementById('resume-preview');
+    
+    if (content) {
+      doc.html(content, {
+        callback: function (doc) {
+          doc.save('resume.pdf');
+        },
+        x: 10,
+        y: 10
+      });
+    } else {
+      console.error('Resume preview element not found');
+    }
+  }
+  
 }
