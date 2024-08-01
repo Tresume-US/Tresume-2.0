@@ -48,7 +48,57 @@ export class OnboardingListComponent implements OnInit {
     }];
     traineeId: string | null;
     useremail: string;
-
+    currentActive = 1;
+    showProgressModal = false;
+    
+    steps = [
+      'Step 1: Personal Information',
+      'Step 2: Contact Information',
+      'Step 3: Employment Details',
+      'Step 4: Review and Submit',
+      'Step 5: Contact Information',
+      'Step 6: Employment Details',
+      'Step 7: Review and Submit',
+    ];
+    
+    images = [
+      'assets/img/onboard/S1.png',
+      'assets/img/onboard/STEP2.png',
+      'assets/img/onboard/ST3.png',
+      'assets/img/onboard/S4.png',
+      'assets/img/onboard/S5.png',
+      'assets/img/onboard/S6.png',
+      'assets/img/onboard/S7.png'
+    ];
+    
+    get progressHeight() {
+        return ((this.currentActive - 1) / (this.steps.length - 1)) * 100 + '%';
+      }
+    
+    
+      next() {
+        if (this.currentActive < this.steps.length) {
+          this.currentActive++;
+        }
+        // if (this.currentActive > this.steps.length){
+        //     this.showProgressModal = false;
+        // }
+      }
+    
+        finish(){
+            if(this.currentActive == this.steps.length){
+            this.showProgressModal = false;
+            }
+        }
+      prev() {
+        if (this.currentActive > 1) {
+          this.currentActive--;
+        }
+      }
+    
+      skip() {
+        this.showProgressModal = false;
+      }
 
 
     constructor(private service: OnboardingService, private router: Router, private cookieService: CookieService, private dialog: MatDialog) {
@@ -63,7 +113,7 @@ export class OnboardingListComponent implements OnInit {
 
     ngOnInit(): void {
         //this.showCcpaPopup();
-       
+        this.showProgressModal = true;
         // this.fetchEmployeeList();
         this.OrgID = this.cookieService.get('OrgID') || "9";
         let cellRendererFn = function (params: any): any { return null; };
