@@ -5501,8 +5501,18 @@ app.post("/createnotification", function (req, res) {
         if (err) throw err;
 
         var request = new sql.Request();
-        request.query(
-          "INSERT INTO Notifications(Message,ReadStatus,Active,CreateTime,TraineeID,OrgID,CreateBy) VALUES ('"+req.body.message+"',1,1,'"+req.body.time+"','"+req.body.TraineeID+"','"+req.body.orgID+"','"+req.body.createby+"')",
+        if(req.body.Isadmin === "true") {
+          var query = "INSERT INTO Notifications(Message, ReadStatus, Active, CreateTime, TraineeID, OrgID, CreateBy) " +
+                      "VALUES ('" + req.body.message + "', 1, 1, '" + req.body.time + "', '" + req.body.TraineeID + "', '" + req.body.orgID + "', '" + req.body.createby + "')";
+        } else {
+          var query = "INSERT INTO Notifications(Message, ReadStatus, Active, CreateTime, TraineeID, OrgID, CreateBy) " +
+                      "VALUES ('" + req.body.message + "', 1, 1, '" + req.body.time + "', '" + req.body.TraineeID + "', '" + req.body.orgID + "', '" + req.body.createby + "'), " +
+                      "('" + req.body.messageadmin + "', 1, 1, '" + req.body.time + "', '" + req.body.TeamLead + "', '" + req.body.orgID + "', '" + req.body.createby + "')";
+        }
+        
+     console.log(req.body.Isadmin)
+       console.log(query)
+       request.query(query,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -5556,3 +5566,38 @@ app.post("/fetchUnreadCount", function (req, res) {
   }
 });
 
+
+app.post("/fetchNotifications", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "SELECT * FROM Notifications  WHERE ReadStatus = 1  AND Active = 1 AND TraineeID = '"+req.body.TraineeID+"' AND OrgID = '"+req.body.orgID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
+
+
+app.post("/UpdateNotificationResult", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "UPDATE Notifications set ReadStatus=2 where NID='"+req.body.NID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});

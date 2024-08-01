@@ -37,20 +37,25 @@
 
                         <div *ngIf="!selectedNotification" class="notification-list">
                             <div *ngFor="let notification of notifications" class="notification-item"
-                                [ngClass]="{'unread': !notification.isRead}" (click)="viewNotification(notification)">
-                                <div class="notification-text">{{ notification.message }}</div>
-                                <div class="notification-time">{{ formatNotificationTime(notification.time) }}</div>
+                                [ngClass]="{'unread': !notification.isRead}" (click)="viewNotification(notification.NID,notification.Message,notification.CreateTime)">
+                                <div class="notification-text">{{ notification.Message }}</div>
+                                <div class="notification-time">{{ formatNotificationTime(notification.CreateTime) }}</div>
                                 <div class="notification-dot" *ngIf="!notification.isRead"></div>
                             </div>
                         </div>
-
                         <div *ngIf="selectedNotification" class="notification-detail">
                             <span class="back-icon" (click)="goBack()">&larr;</span>
-                            <h2 class="notification-detail-title">{{ selectedNotification.message }}</h2>
-                            <p class="notification-detail-text">Detailed view of the notification...</p>
+                            <!-- <h3>Notification Details</h3> -->
+                            <p>{{ selectedNotificationtext }}</p>
+                            <div class="notification-detail-time">{{ formatNotificationTime(selectedNotificationTime)
+                            }}</div>
+                          </div>
+                        <!-- <div *ngIf="selectedNotification" class="notification-detail">
+                            <span class="back-icon" (click)="goBack()">&larr;</span>
+                            <h2 class="notification-detail-title">{{ selectedNotification.Message }}</h2>
                             <div class="notification-detail-time">{{ formatNotificationTime(selectedNotification.time)
                                 }}</div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </li>

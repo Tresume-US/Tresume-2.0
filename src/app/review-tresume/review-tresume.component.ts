@@ -7,7 +7,9 @@ import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { DatePipe } from '@angular/common';
+
 import jsPDF from 'jspdf';
+
 
 @Component({
   templateUrl: './review-tresume.component.html',
@@ -1572,6 +1574,36 @@ this.loading = true;
     this.videoPlayer.nativeElement.currentTime = 0;
   }
 
+
+
+
+  isVisible: boolean = false;
+  message: string = '';
+  createNotification(message: string) {
+    const req = {  
+      message: message,
+      time: new Date(),
+      TraineeID:this.TraineeID,
+      orgID:this.OrgID,
+      createby:this.userName,
+    };
+    console.log(req)
+    this.AppService.createnotification(req).subscribe(
+    )
+  }
+
+  showNotification(message: string): void {
+    this.message = message;
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
+  }
+  closeNotification(): void {
+    this.isVisible = false;
+  }
+
+
   //Resume Builder 
   downloadPDF() {
     const doc = new jsPDF();
@@ -1590,4 +1622,5 @@ this.loading = true;
     }
   }
   
+
 }
