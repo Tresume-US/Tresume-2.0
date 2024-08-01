@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit {
         this.traineeDetails.FirstName = sessionStorage.getItem("FirstName");
         this.traineeDetails.LastName = sessionStorage.getItem("LastName");
         this.getUnreadCount();
+        this.getNotification();
         let Req = {
             username: this.userName
         };
@@ -117,16 +118,25 @@ export class NavbarComponent implements OnInit {
       }
       
   selectedNotification: any = null;
-  notifications = [
-    { message: 'New comment on your post', time: new Date(), isRead: false },
-    // { message: 'Your order has been shipped', time: new Date(Date.now() - 24 * 60 * 60 * 1000), isRead: true },
-    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
-    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
-    // { message: 'Your order has been shipped', time: new Date(Date.now() - 24 * 60 * 60 * 1000), isRead: true },
-    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
-    { message: 'Password changed successfully', time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), isRead: false },
-    
-  ];
+  selectedNotificationtext:any=null;
+  selectedNotificationTime:any=null;
+  notifications: any[] = [];
+
+  getNotification() {
+    let Req = {
+      TraineeID: this.traineeID,
+      orgID: this.orgID
+    };
+    console.log(Req);
+    this.navService.fetchNotifications(Req).subscribe(
+      (response: any) => {
+        this.notifications = response.result;
+      },
+      (error: any) => {
+        console.error('Error fetching notifications:', error);
+      }
+    );
+  }
 
   togglePopup() {
     this.isPopupOpen = !this.isPopupOpen;
@@ -134,8 +144,19 @@ export class NavbarComponent implements OnInit {
     console.log('Popup toggled:', this.isPopupOpen);
   }
 
-  viewNotification(notification: any) {
-    this.selectedNotification = notification;
+  viewNotification(NID: any,Message:string,CreateTime:any) {
+this.selectedNotificationTime=CreateTime;
+this.selectedNotificationtext=Message;
+    this.selectedNotification = NID;
+    let Req = {
+      NID:this.selectedNotification
+    };
+    console.log(Req)
+    this.navService.UpdateNotificationResult(Req).subscribe(
+      
+    );
+    this.getUnreadCount();
+    this.getNotification();
   }
 
   goBack() {

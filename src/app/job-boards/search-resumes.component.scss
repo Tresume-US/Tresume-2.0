@@ -229,3 +229,40 @@
     color: #5d0aab
   }
   
+.notification {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background-color: #333; /* Darker background for better contrast */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Increased shadow for depth */
+  z-index: 10000;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-30px); /* Slightly larger translate effect */
+}
+
+.notification.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  animation: bounceIn 0.4s ease-out; /* Bounce effect on show */
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: translateY(-1000px);
+  }
+  60% {
+    transform: translateY(30px);
+  }
+  80% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

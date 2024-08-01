@@ -7,11 +7,12 @@ import { Router } from 'express';
 import { ActivatedRoute } from '@angular/router';
 import { HighlightPipe } from './hrms.pipe';
 import { formatDate } from '@angular/common';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-hrms',
   templateUrl: './hrms.component.html',
-  providers: [CookieService, HrmsService, MessageService,HighlightPipe],
+  providers: [CookieService, HrmsService, MessageService,HighlightPipe,AppService],
   styleUrls: ['./hrms.component.scss']
 })
 
@@ -34,6 +35,7 @@ throw new Error('Method not implemented.');
   candidates: any[] = [];
   noResultsFound: boolean = false;
   TraineeID: string;
+  Teamlead:any;
   addCandidate: any;
   OrgID: any;
   userName: string;
@@ -49,6 +51,8 @@ throw new Error('Method not implemented.');
   modalService: any;
   useremail: any;
   isAdmin: string;
+  FirstName: string;
+  LastName: string;
   searchterm: string = '';
   deleteIndex: number;
   showConfirmationDialog3: boolean;
@@ -221,15 +225,17 @@ throw new Error('Method not implemented.');
   }
   
 
-  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute, private fb: FormBuilder,) {
+  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute, private fb: FormBuilder,private appservice:AppService) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.routeType = this.route.snapshot.params["routeType"];
     this.candidateID = this.route.snapshot.params["traineeID"];
-
+this.Teamlead=this.cookieService.get('TeamLead')
     this.useremail = this.cookieService.get('userName1');
     this.isAdmin = this.cookieService.get('IsAdmin');
+    this.FirstName=this.cookieService.get('FirstName');
+    this.LastName=this.cookieService.get('LastName')
     console.log(this.isAdmin);
     this.form = this.fb.group({
       dates: [null]
@@ -237,7 +243,10 @@ throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
+    this.isAdmin = this.cookieService.get('IsAdmin');
     this.OrgID = this.cookieService.get('OrgID');
+    // this.createNotification('abnsd','bdsaf');
+    // this.showNotification('admin','rec')
     this.getOrganization();
     this.selectedOrgID = this.OrgID;
     this.TraineeID = this.cookieService.get('TraineeID');
@@ -246,7 +255,6 @@ throw new Error('Method not implemented.');
     this.getLegalStatusOptions();
     this.fetchhrmscandidatelist();
     this.gethrmsLocation();
-
 
     this.addCandidate = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -551,6 +559,8 @@ throw new Error('Method not implemented.');
       followupon = this.specifiedDate;
     }
     const referralType = this.formData.referralType === 'Others' ? this.formData.otherReferralType : this.formData.referralType;
+
+  const candidateName = `${this.addCandidate.value.firstName} ${this.addCandidate.value.lastName}`;
     let Req = {
       firstName: this.addCandidate.value.firstName,
       middleName: this.formData.middleName,
@@ -581,41 +591,83 @@ throw new Error('Method not implemented.');
     // this.service.addHrmsCandidate(Req).subscribe((x: any) => {
     //   console.log(x);
     // });
-    console.log(Req);
+   
     //     this.service.insertTrainee(Req).subscribe((ax: any) => {
     //       console.log(ax);
     // this.service.insertTraineeCandidate(Req).subscribe((x: any) => {
     //   console.log(x);
     // });
+ 
 
+    console.log(Req);
     this.service.insertTraineeCandidate(Req).subscribe(
       (x: any) => {
-        this.handleSuccess(x);
-        this.fetchhrmscandidatelist();
-        this.createNotification('Candidate added successfully to HRMS.');
+        // this.handleSuccess(x);
+      this.fetchhrmscandidatelist();
+      const recruitername = `${this.FirstName} ${this.LastName}`;
+      const successMessage = `${candidateName} successfully added to HRMS.`;
+      const successmessageAdmin= `${recruitername} has added Candidate ${candidateName} to HRMS.`; 
+      this.createNotification(successMessage,successmessageAdmin);
+      this.showNotification(successMessage,successmessageAdmin);
       },
       (error: any) => {
-        this.handleError(error);
-        this.createNotification('Failed to add candidate to the job board.');
+      const recruitername = `${this.FirstName} ${this.LastName}`;
+      const errorMessageAdmin= `${recruitername} could not add Candidate ${candidateName} to HRMS.` 
+      const errorMessage = `Failed to add ${candidateName} to the HRMS.`;
+      this.createNotification(errorMessage,errorMessageAdmin);
+      this.showNotification(errorMessage,errorMessageAdmin);
+     
       }
     );
 
   }
 
-  createNotification(message: string) {
-    const req = {  
-      message: message,
-      time: new Date(),
-      TraineeID:this.TraineeID,
-      orgID:this.OrgID,
-      createby:this.userName,
-    };
-    console.log(req)
-    this.service.createnotification(req).subscribe(
-
-    )
-    // this.notificationService.addNotification(notification);
+  isVisible: boolean = false;
+  message: string = '';
+  messageadmin: string ='';
+  createNotification(message: string, messageadmin: string) {
+    if (this.isAdmin === "true") {
+      const req = {  
+        message: message,
+        time: new Date(),
+        TraineeID: this.TraineeID,
+        orgID: this.OrgID,
+        createby: this.userName,
+        Isadmin: this.isAdmin,
+      };
+      console.log(req);
+      this.appservice.createnotification(req).subscribe();
+    } else {
+      const req = {  
+        message: message,
+        time: new Date(),
+        TraineeID: this.TraineeID,
+        orgID: this.OrgID,
+        createby: this.userName,
+        Isadmin: this.isAdmin,
+        TeamLead: this.Teamlead,
+        messageadmin: messageadmin
+      };
+      console.log(this.isAdmin);
+      console.log(req);
+      this.appservice.createnotification(req).subscribe();
+    }
+    console.log(this.isAdmin);
   }
+  
+
+  showNotification(message: string,messageadmin: string): void {
+    this.message = message;
+    this.messageadmin = messageadmin;
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
+  }
+  closeNotification(): void {
+    this.isVisible = false;
+  }
+  
   onSubmit() {
     console.log('Form Data:', this.formData);
   }
