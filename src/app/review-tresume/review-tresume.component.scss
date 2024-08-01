@@ -429,6 +429,7 @@ div[role="progressbar"]::before {
 
 
 
+
 .notification {
   position: fixed;
   top: 15px;
@@ -466,3 +467,20 @@ div[role="progressbar"]::before {
     transform: translateY(0);
   }
 }
+
+.resume-builder-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.form-container, .preview-container {
+  width: 45%;
+}
+
+#resume-preview {
+  border: 1px solid #ccc;
+  padding: 20px;
+  height: 100%;
+}
+

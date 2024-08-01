@@ -1316,6 +1316,95 @@
           </div>
         </div>
       </mat-tab>
+
+      <mat-tab label="Resume Builder" class="mt-5">
+        <div class="container">
+          <div class="resume-builder-container">
+            <div class="form-container">
+              <form [formGroup]="resumeForm">
+                <mat-form-field>
+                  <input matInput placeholder="First Name" formControlName="name">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Middle Name" formControlName="middlename">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Last Name" formControlName="lastname">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Recruiter Name" formControlName="recruiterName">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Phone" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Referred By" formControlName="referedby">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Deal Offered" formControlName="DealOffered">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Referred By(External)" formControlName="referedbyex">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="SSN" formControlName="ssn">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Status Date " formControlName="statusDate">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="DUI/Felony Info" formControlName="DUI">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Current Status" formControlName="currentStatus">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Legal Status Validity Start Date" formControlName="LegalValidityStartDate">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Legal Status Validity End Date" formControlName="LegalValidityEndDate">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Legal Status" formControlName="legalStatus">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Division" formControlName="division">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="DOB" formControlName="dob">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="FTC Notes" formControlName="ftcnotes">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Other Notes" formControlName="othernotes">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="skill Set" formControlName="skillset">
+                </mat-form-field>
+
+               
+                <!-- Add more fields as necessary -->
+              </form>
+            </div>
+            <div class="preview-container">
+              <div id="resume-preview">
+                <h1>{{ resumeForm.value.name }} {{resumeForm.value.lastname}}</h1>
+                <p>Email : {{ resumeForm.value.email }}</p>
+                <p></p>
+                
+                
+                <!-- Add more preview sections as necessary -->
+              </div>
+            </div>
+          </div>
+          <button mat-raised-button color="primary" (click)="downloadPDF()">Download as PDF</button>
+          
+        </div>
+      </mat-tab>
       
       
     </mat-tab-group>
