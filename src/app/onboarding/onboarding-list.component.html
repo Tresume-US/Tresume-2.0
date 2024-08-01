@@ -14,6 +14,7 @@
                 </div>
                 <div class="button-container">
                     <button class="btn" (click)="skip()">Skip</button>
+                    <button class="btn" (click)="hide()">Don't show me again</button>
                     <div class="nav-buttons">
                         <button class="btn" (click)="prev()" [disabled]="currentActive === 1">Prev</button>
                         <button class="btn" (click)="next()" [disabled]="currentActive === steps.length">Next</button>

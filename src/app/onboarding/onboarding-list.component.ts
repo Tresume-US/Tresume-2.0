@@ -30,6 +30,7 @@ export class OnboardingListComponent implements OnInit {
     public startDate: any;
     public endDate: any;
     public totalCounts: any = {};
+    obinstruction: any;
 
     selectedStatusOptions: any[] = [];
     filterForm = new FormGroup({
@@ -59,6 +60,7 @@ export class OnboardingListComponent implements OnInit {
       'Step 5: Contact Information',
       'Step 6: Employment Details',
       'Step 7: Review and Submit',
+      'Step 8: Contact Information',
     ];
     
     images = [
@@ -68,7 +70,8 @@ export class OnboardingListComponent implements OnInit {
       'assets/img/onboard/S4.png',
       'assets/img/onboard/S5.png',
       'assets/img/onboard/S6.png',
-      'assets/img/onboard/S7.png'
+      'assets/img/onboard/S7.png',
+      'assets/img/onboard/ST8.png',
     ];
     
     get progressHeight() {
@@ -113,8 +116,32 @@ export class OnboardingListComponent implements OnInit {
 
     ngOnInit(): void {
         //this.showCcpaPopup();
-        this.showProgressModal = true;
+        // this.showProgressModal = true;
         // this.fetchEmployeeList();
+        let req:any={
+            useremail: this.useremail
+        }
+        this.service.getinstructionstatus(req).subscribe(response => {
+            console.log('Full response from service:', response);  // Log the full response
+        
+            // Safely access response.recordsets[0][0].obinstruction with optional chaining
+            const instruction = response?.recordsets?.[0]?.[0]?.obinstruction;
+        
+            if (instruction !== undefined) {
+                this.obinstruction = instruction;
+        
+                if (this.obinstruction === 0) {
+                    this.showProgressModal = true;
+                } else {
+                    this.showProgressModal = false;
+                }
+            } else {
+                console.error('obinstruction is undefined in the response');
+            }
+        }, error => {
+            console.error('Error fetching instruction status:', error);
+        });
+        
         this.OrgID = this.cookieService.get('OrgID') || "9";
         let cellRendererFn = function (params: any): any { return null; };
         this.columnDefs = [
@@ -286,6 +313,24 @@ export class OnboardingListComponent implements OnInit {
           }
         }); */
     }
+
+    hide() {
+        let req: any = {
+            useremail: this.useremail
+        };
+    
+        this.service.updateinstruction(req).subscribe(
+            (response) => {
+                this.showProgressModal = false;
+            },
+            (error) => {
+                this.showProgressModal = false;
+            }
+        );
+    }
+    
+    
+
     employees: any[];
     fetchEmployeeList(){
         let Req = {

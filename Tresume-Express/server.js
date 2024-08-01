@@ -1355,6 +1355,53 @@ app.post("/getResumeDetails", function (req, res) {
 //     });
 //   });
 // });
+app.post("/getinstructionstatus", function (req, res) {
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log("Error connecting to the database:", err);
+      return res.status(500).send("Error connecting to the database");
+    }
+
+    var request = new sql.Request();
+    var query = `SELECT obinstruction FROM memberdetails WHERE useremail = @useremail AND active = 1`;
+
+    request.input('useremail', sql.VarChar, req.body.useremail);
+
+    request.query(query, function (err, recordset) {
+      if (err) {
+        console.log("Error executing query:", err);
+        return res.status(500).send("Error executing query");
+      }
+
+      res.json(recordset);
+    });
+  });
+});
+
+app.post("/updateinstruction", async (req, res) => {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+    const query = `UPDATE memberdetails SET obinstruction = 1 WHERE useremail = @useremail`;
+
+    request.input('useremail', sql.VarChar, req.body.useremail);
+
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] > 0) {
+      res.status(200).send("Update successful");
+    } else {
+      res.status(404).send("No user found with the provided email");
+    }
+  } catch (err) {
+    console.log("Database error:", err);
+    res.status(500).send("Error updating instruction");
+  } finally {
+    sql.close().catch(err => console.log("Error closing the connection:", err));
+  }
+});
+
 
 app.post("/getOnboardingList", function (req, res) {
   try {

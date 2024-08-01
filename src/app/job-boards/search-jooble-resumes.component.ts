@@ -137,7 +137,7 @@ export class SearchResumesJoobleComponent implements OnInit {
         { value: 'CE3211', name: 'Doctorate' },
 
     ];
-
+keyWord:string
     rowData: any;
     columnDefs: any;
     public gridOptions: GridOptions = {};
@@ -183,6 +183,7 @@ export class SearchResumesJoobleComponent implements OnInit {
             this.totalResults = response.totalCount;
             this.rowData = response.jobs;
         });
+        this.keyWord=this.model.keyword.toLowerCase()
     }
 
     pageChanged(event: PageChangedEvent): void {

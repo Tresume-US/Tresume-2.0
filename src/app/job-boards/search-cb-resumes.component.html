@@ -170,7 +170,7 @@
                 <div class="container-flex">
                     <div class="card-body">
                         <div class="card-job-info" style="width: 50%;">
-                            <h2>{{jobDetail.JobTitle}}</h2>
+                            <h2 [innerHTML]="jobDetail.JobTitle | keyhighlight: keyWord" ></h2>
                             <i class="label fa fa-location-arrow"> {{jobDetail.Location?.City}},
                                 {{jobDetail.Location?.Country}} </i>
                             <i class="label fa fa-building"> {{jobDetail.Employments &&
@@ -182,7 +182,7 @@
                             <i class="label fa fa-graduation-cap">Skills</i>
                             <div class="card-job-skilllist">
                                 <div *ngFor="let skill of jobDetail.skills" class="">
-                                    <p-chip label="{{skill}}"></p-chip>
+                                    <p-chip >  <span [innerHTML]="skill | keyhighlight: keyWord"></span></p-chip>
                                 </div>
                             </div>
                         </div>
