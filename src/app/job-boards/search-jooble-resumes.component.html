@@ -35,8 +35,8 @@
         <mat-card class="example-card">
             <mat-card-title class="border-title">
                 <div class="card-footer-actions">
-                    <div>
-                        {{jobDetail.title}}
+                    <div [innerHTML]="jobDetail.JobTitle | keyhighlight: keyWord" >
+                       
                     </div>
                     <div>
                         <p-message *ngIf="jobDetail.migrated" severity="info" text="Profile Migrated"
@@ -65,7 +65,7 @@
                             <i class="label fa fa-graduation-cap">Snippet</i>
                             <div class="card-job-skilllist">
                                 <div>
-                                    <p-chip [innerHtml]="jobDetail.snippet"></p-chip>
+                                    <p-chip [innerHtml]="jobDetail.snippet |keyhighlight :keyWord"></p-chip>
                                 </div>
                             </div>
                         </div>

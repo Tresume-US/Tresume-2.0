@@ -171,6 +171,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
+import { KeyhighlightPipe } from './keyhighlight.pipe';
 
 
 
@@ -278,7 +279,8 @@ import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
       HighlightPipe,
-      WhatsappComponent
+      WhatsappComponent,
+      KeyhighlightPipe
     // TimesheetViewdetailsComponent
 
   ],

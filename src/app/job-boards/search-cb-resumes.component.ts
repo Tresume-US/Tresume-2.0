@@ -63,7 +63,7 @@ export class SearchResumesCBComponent implements OnInit {
             },
         },
     ];
-
+keyWord:string
     states: any[] = [
         'Alabama',
         'Alaska',
@@ -514,6 +514,7 @@ export class SearchResumesCBComponent implements OnInit {
         this.searchRequestItem.filters = this.getFilterValues();
         this.searchRequestItem.facetFilter = this.getFacetFilterValues();
         this.edgeIDs = [];
+        this.keyWord=this.model.keyword.toLowerCase()
         this.service.getCBResumes(this.searchRequestItem).subscribe((x: any) => {
             if (x.code == 401) {
                 this.messageService.add({ severity: 'warning', summary: 'Session Expired. Please refresh the page' });

@@ -156,7 +156,7 @@
                 <div class="container-flex">
                     <div class="card-body">
                         <div class="card-job-info" style="width: 50%;">
-                            <h2>{{jobDetail.relevance.experience.title.name}}</h2>
+                            <h2 [innerHTML]="jobDetail.relevance.experience.title.name | keyhighlight :keyWord"></h2>
                             <i class="label fa fa-location-arrow"> {{jobDetail.location?.city}},
                                 {{jobDetail.location?.state}} </i>
                                 <i class="label fa fa-building">
@@ -173,7 +173,7 @@
                             <i class="label fa fa-graduation-cap">Skills</i>
                             <div class="card-job-skilllist">
                                 <div *ngFor="let skill of jobDetail.skills" class="" style="padding: 5px;">
-                                    <p-chip label="{{skill}}"></p-chip>
+                                    <p-chip >  <span [innerHTML]="skill | keyhighlight: keyWord"></span></p-chip>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +199,7 @@
                 <div class="container-flex">
                     <div class="card-body">
                         <div class="card-job-info" style="width: 50%;">
-                            <h2>{{jobDetail.JobTitle}}</h2>
+                            <h2 [innerHTML]="jobDetail.JobTitle | keyhighlight: keyWord" ></h2>
                             <i class="label fa fa-location-arrow"> {{jobDetail.Location?.City}},
                                 {{jobDetail.Location?.Country}} </i>
                             <i class="label fa fa-building"> {{jobDetail.Employments &&
@@ -211,7 +211,7 @@
                             <i class="label fa fa-graduation-cap">Skills</i>
                             <div class="card-job-skilllist">
                                 <div *ngFor="let skill of jobDetail.skills" class="">
-                                    <p-chip label="{{skill}}"></p-chip>
+                                    <p-chip >  <span [innerHTML]="skill | keyhighlight: keyWord"></span></p-chip>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@
                 <div class="container-flex">
                     <div class="card-body">
                         <div class="card-job-info" style="width: 50%;">
-                            <h2>{{ jobDetail.currentJobTitle }}</h2>
+                            <h2 [innerHTML]="jobDetail.currentJobTitle | keyhighlight: keyWord"></h2>
                             <i class="label fa fa-location-arrow"> {{ jobDetail.city }}, {{ jobDetail.country }} </i>
                             <i class="label fa fa-building"> {{ jobDetail.currentCompany }}
                             </i>
@@ -253,7 +253,7 @@
                   class=""
                   style="padding: 5px"
                 >
-                  <p-chip label="{{ skill }}"></p-chip>
+                <p-chip >  <span [innerHTML]="skill | keyhighlight: keyWord"></span></p-chip>
                 </div>
                         </div>
                     </div>
@@ -277,7 +277,7 @@
                 <div class="container-flex">
                     <div class="card-body">
                         <div class="card-job-info" style="width: 50%;">
-                            <h2>{{ jobDetail.TraineeTitle }}</h2>
+                            <h2 [innerHTML]="jobDetail.TraineeTitle |keyhighlight :keyWord" ></h2>
                             <i class="label fa fa-location-arrow"> {{ jobDetail.CurrentLocation }}</i>
                             <i class="label fa fa-building"> {{ jobDetail.YearsOfExpInMonths/12 }} Yrs Exp
                             </i>

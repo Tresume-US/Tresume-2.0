@@ -25,12 +25,12 @@ import { MessageService } from 'primeng/api';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as html2pdf from 'html2pdf.js';
 import { AppService } from '../app.service';
-
+import { KeyhighlightPipe } from '../keyhighlight.pipe';
 @Component({
   selector: 'app-search-resumes',
   templateUrl: './search-resumes.component.html',
   styleUrls: ['./search-resumes.component.scss'],
-  providers: [JobBoardsService, CookieService, MessageService,AppService],
+  providers: [JobBoardsService, CookieService, MessageService,AppService,KeyhighlightPipe],
 })
 export class SearchResumesComponent implements OnInit {
   form = new FormGroup({});
@@ -102,7 +102,7 @@ export class SearchResumesComponent implements OnInit {
   //     'Wisconsin',
   //     'Wyoming'
   // ];
-
+keyWord:string
   Jobboard: any[] = [
     { value: 'all', name: 'All' },
     { value: 'Dice', name: 'Dice' },
@@ -531,6 +531,7 @@ formData: any = {};
       insidesearch:this.insidesearch
     };
     console.log(req);
+    this.keyWord=this.model.keyword.toLowerCase()
     this.service.getResumes2(req).subscribe((x) => {
       this.loading = false;
       this.resultsFound = true;
@@ -556,6 +557,7 @@ formData: any = {};
       OrgID: this.OrgID,
     };
     console.log(req);
+    this.keyWord=this.model.keyword.toLowerCase()
     this.service.getResumes3(req).subscribe((x) => {
       this.loading = false;
       this.resultsFound = true;

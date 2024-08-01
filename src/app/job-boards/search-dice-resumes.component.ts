@@ -89,7 +89,7 @@ likelytoMove: string;
       },
     },
   ];
-
+keyWord:string
   fieldBool: FormlyFieldConfig[] = [
     {
       key: 'boolean',
@@ -831,6 +831,7 @@ likelytoMove: string;
         };
         this.service.jobBoardAudit(auditReq).subscribe((x) => { });
       }
+      this.keyWord=this.model.boolean.toLowerCase()
 
       this.service.getDiceSearch(req, this.accessToken).subscribe((x: any) => {
         console.log('x', x);
