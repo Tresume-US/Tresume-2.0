@@ -70,7 +70,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
         var useremail = req.body.useremail;
         var admin = req.body.admin;
         var searchterm = req.body.searchterm;
-        var Page = req.body.Page * 25;
+        var Page = req.body.Page * 24;
         var query = "";
 
         function generateSearchCondition(searchterm) {
@@ -109,7 +109,7 @@ INNER JOIN Organization O ON T.userorganizationid = O.organizationid
             searchterm
           )}
       ORDER BY T.CreateTime DESC
-      OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY
+      OFFSET ${Page} ROWS FETCH NEXT 24 ROWS ONLY
   )
   SELECT TotalCount, *
   FROM CountCTE
@@ -133,7 +133,7 @@ INNER JOIN Organization O ON T.userorganizationid = O.organizationid
             searchterm
           )}
       ORDER BY T.CreateTime DESC
-      OFFSET '${Page}' ROWS FETCH NEXT 25 ROWS ONLY
+      OFFSET '${Page}' ROWS FETCH NEXT 24 ROWS ONLY
   )
   SELECT TotalCount, *
   FROM CountCTE
@@ -234,7 +234,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
               const pool = await sql.connect(config);
               const request = new sql.Request();
               const { TraineeID: traineeid, useremail, admin, searchterm } = req.body;
-              const Page = parseInt(req.body.Page) * 25;
+              const Page = parseInt(req.body.Page) * 24;
               let query = "";
               if (admin == true) {
                   query = `
@@ -259,7 +259,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
                         AND T.active = 1 
                         ${generateSearchCondition(searchterm)}
                       ORDER BY T.CreateTime DESC
-                      OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+                      OFFSET ${Page} ROWS FETCH NEXT 24 ROWS ONLY`;
               } else {
                   query = `
                       SELECT DISTINCT T.TraineeID, 
@@ -281,7 +281,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
                       WHERE T.RecruiterName = '${traineeid}' 
                         ${generateSearchCondition(searchterm)}
                       ORDER BY T.CreateTime DESC
-                      OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+                      OFFSET ${Page} ROWS FETCH NEXT 24 ROWS ONLY`;
               }
 
               console.log(query);
@@ -336,7 +336,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
 //         var useremail = req.body.useremail;
 //         var admin = req.body.admin;
 //         var searchterm = req.body.searchterm;
-//         var Page = req.body.Page * 25;
+//         var Page = req.body.Page * 24;
 //         var query = "";
 
       
@@ -366,7 +366,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
 //               AND T.active = 1 
 //               ${generateSearchCondition(searchterm)}
 //             ORDER BY T.CreateTime DESC
-//             OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+//             OFFSET ${Page} ROWS FETCH NEXT 24 ROWS ONLY`;
 //     } else {
 //         query = `
 //             SELECT DISTINCT T.TraineeID, 
@@ -388,7 +388,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
 //             WHERE T.RecruiterName = '${traineeid}' 
 //               ${generateSearchCondition(searchterm)}
 //             ORDER BY T.CreateTime DESC
-//             OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
+//             OFFSET ${Page} ROWS FETCH NEXT 24 ROWS ONLY`;
 //     }
     
 
@@ -431,7 +431,7 @@ router.post("/sortbtdate", async (req, res) => {
   try {
     const pool = await sql.connect(config);
     const { TraineeID, useremail, admin, searchterm, searchstartdate, searchenddate, Page } = req.body;
-    const offset = Page * 25;
+    const offset = Page * 24;
 
     const query = `
       SELECT DISTINCT T.TraineeID, CONCAT(T.firstname, ' ', T.lastname) AS Name, 
@@ -449,7 +449,7 @@ router.post("/sortbtdate", async (req, res) => {
         AND T.CreateTime >= @searchstartdate 
         AND T.CreateTime <= @searchenddate
       ORDER BY T.CreateTime DESC
-      OFFSET @offset ROWS FETCH NEXT 25 ROWS ONLY
+      OFFSET @offset ROWS FETCH NEXT 24 ROWS ONLY
     `;
 
     const result = await pool.request()

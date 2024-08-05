@@ -101,207 +101,111 @@
     <!-- card -->
     <div *ngIf="loading">Loading...</div>
     <div *ngIf="!loading">
-      <div class="main-container" *ngFor="let candidate of candidates">
-        <div>
-          <div class="card mb-4">
-            <!-- <div class="card-body" style="line-height: 5px;padding: 15px;">
-              <div class="row">
-                <div class="left-column" style="padding: 8px; font-weight: 500;">
-                  <div>
-                    <a style="font-size: 26px; color: #482668;"
-                      [class.highlight]="searchTerm && candidate.Name.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0">
-                      {{ candidate.Name | highlight: searchTerm }}
-                    </a>
-                  </div>
-                </div>
+      <div class="mains">
+        <!--New Changes-->
+        <div class="main-container" *ngFor="let candidate of candidates">
+          <div class="card mb-6">
+              <div class="card-header">
+                  <h2 class="project-title">
+                      <a style="font-size: 18px; color: #482668;" [innerHTML]="candidate.Name | highlight: searchTerm"></a>
 
-                <div class="column" style="text-align: end;margin-right: 40px;">
-                  <a class="badge badge-warning" style="font-size: 16px; color: #482668;margin-right: 15px;"><i
-                      class="fas fa-globe"> </i> {{ candidate.organizationname }}</a>
-                  <i class="fa fa-eye fa-fw pt-2"
-                    [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"
-                    style="font-size: 20px;"></i>
-                  <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal"
-                    [attr.data-target]="'#exampleModal-' + candidate.TraineeID"
-                    style="font-size: 20px;margin-left: 14px;"></i>
-                </div>
-              </div>
 
-              <div class="modal fade" [id]="'exampleModal-' + candidate.TraineeID" tabindex="-1"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog larger">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel" style="font-size: larger;">Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Are you sure you want to remove the candidate from the talent bench? This action cannot be
-                      reversed.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-danger"
-                        (click)="deleteItem(candidate.TraineeID)">Delete</button>
-                    </div>
+                      <span class="status float-right" style="color: #492000;">{{ candidate.CandidateStatus }}</span>
+                      <!-- <span *ngIf="candidate.CandidateStatus === 'Direct Marketing'" style="color: red;" class="status" >{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'First Time Caller'" style="color: green;" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'On Training'" style="color: blue;" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'On Bench'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Marketing On Hold'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Requirement Based Marketing/Sourcing'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Has Offer'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Placed/Working at Client Location'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Terminate'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Replaced at Client Side'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Training'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Marketing'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Other'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>  -->
+                  </h2>
+                  <div class="column" style="text-align: start;">
+                      <a class="badge badge-light" style="font-size: 12px; color: #482668;">
+                          <i class="fas fa-globe"></i> 
+                          {{ candidate.organizationname }}
+                          <!-- <span *ngIf="candidate.organizationname === 'IQLogg'" style="color: red;" class="status" >{{ candidate.organizationname }}</span> -->
+                      </a>
                   </div>
-                </div>
-              </div>
-              <hr style="margin-top: 8px;">
-              <div class="row">
-                <div class="col-md-5">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>Email:</th>
-                      <td style="   word-break: break-all;
-                      line-height: 1.2;
-                      padding: 5px;">{{ candidate.Email | highlight: searchTerm}}</td>
-                    </tr>
-                    <tr>
-                      <th style="line-height: 1.2;">Candidate Status:</th>
-                      <td>{{ candidate.CandidateStatus }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>Phone:</th>
-                      <td>{{ candidate.Phone | highlight: searchTerm}}</td>
-                    </tr>
-                    <tr>
-                      <th>Legal Status:</th>
-                      <td>{{ candidate.LegalStatus }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-md-3 align-items-center">
-                  <div class="input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroup-sizing-sm">FollowUpOn</span>
-                    </div>
-                    <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                      value="{{ candidate.followupon }}"
-                      (change)="updateSelected($event.target.value, candidate.TraineeID, 1)">
+                  <!-- <div class="column1 mr-0 float-right pl-5">
+                      <i class="fa fa-eye fa-fw pt-2" style="color: black;" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"></i>
+                      <i type="button" class="fa fa-trash fa-fw pt-2" style="color: red;" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID"></i>
+                      <a href="tel:{{phoneNumberG}}" mat-button class="call-button" style="font-size: 5px; margin-left: -20px; color: green;">
+                          <mat-icon style="font-size: 17px;">phone</mat-icon>
+                      </a>
+                      <a href="mailto:{{candidate.Email}}" mat-button class="mail-button p-0 text-end" style="font-size: 5px; margin-left: -42px;color: #2EAFE6;">
+                          <mat-icon style="font-size: 17px;">mail</mat-icon>
+                      </a>
+                  </div> -->
+                   <div class="column1 mr-0 float-right pl-5">
+                      <i class="fa fa-eye fa-fw pt-2" style="color: black;" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"></i>
+                      <i type="button" class="fa fa-trash fa-fw pt-2" style="color: red;" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID"></i>
+                      <a href="tel:{{phoneNumberG}}" mat-button class="call-button" style="font-size: 5px; margin-left: -20px; color: green;">
+                          <mat-icon style="font-size: 17px;">phone</mat-icon>
+                      </a>
+                      <a href="mailto:{{candidate.Email}}" mat-button class="mail-button p-0 text-end" style="font-size: 5px; margin-left: -42px;color: #2EAFE6;">
+                          <mat-icon style="font-size: 17px;">mail</mat-icon>
+                      </a>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12" style="line-height: 2">
-                    <i class="fa fa-angle-double-right" aria-hidden="true"
-                      style="color: #482668;margin-right: 7px;"></i><b>Skills :</b> {{ candidate.Skill | highlight:
-                    searchTerm | truncate: 100 }}
+              </div>
+              <div class="card-body" style="background: linear-gradient(180deg, #ffffff 0%, #a799b7 100%)">
+                  <div class="info-line">
+                      <span class="info-label">E-Mail</span>
+                      <span class="info-value" [innerHTML]="candidate.Email | highlight: searchTerm"></span>
                   </div>
-                  <div class="col-md-12">
-                    <i class="fa fa-angle-double-right" aria-hidden="true"
-                      style="color: #482668;margin-right: 7px;"></i><b>Notes :</b> {{candidate.notes | truncate:100}}
+                  <div class="info-line">
+                      <span class="info-label">Phone</span>
+                      <span class="info-value">{{ candidate.Phone }}</span>
                   </div>
-                </div>
-                <div class="span">
-                  <span>Created By : </span>
-                  <span>{{ candidate.CreatedBy }}</span>&nbsp;&nbsp;
-                  <span>Date Created : </span>
-                  <span>{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
-                </div>
-              </div>
-            </div> -->
-            <div class="card-body" *ngFor="let candidate of candidates" style="line-height: 5px; padding: 15px;margin-bottom: 10px;">
-              <!-- Candidate Details Card -->
-              <div class="row">
-                <div class="left-column" style="padding: 8px; font-weight: 500;">
-                  <div>
-                    <a style="font-size: 26px; color: #482668;"
-                      [innerHTML]="candidate.Name | highlight: searchTerm">
-                    </a>
+                  <div class="info-line">
+                      <span class="info-label">Legal Status</span>
+                      <span class="info-value">{{ candidate.LegalStatus }}</span>
                   </div>
-                </div>
-                <div class="column" style="text-align: end; margin-right: 40px;">
-                  <a class="badge badge-warning" style="font-size: 16px; color: #482668; margin-right: 15px;">
-                    <i class="fas fa-globe"></i> {{ candidate.organizationname }}
-                  </a>
-                  <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"
-                    style="font-size: 20px;"></i>
-                  <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal"
-                    [attr.data-target]="'#exampleModal-' + candidate.TraineeID"
-                    style="font-size: 20px; margin-left: 14px;"></i>
-                    <a href="tel:{{phoneNumberG}}" mat-button class="call-button">
-                      <mat-icon>phone</mat-icon> 
-                    </a>
-                    <a href="mailto:{{candidate.Email}}" mat-button class="mail-button"    >
-                      <mat-icon>mail</mat-icon> 
-                    </a>
-                </div>
-              </div>
-          
-              <!-- Modal for Delete Confirmation -->
-              <div class="modal fade" [id]="'exampleModal-' + candidate.TraineeID" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <!-- Modal Content -->
-              </div>
-          
-              <!-- Other Candidate Details -->
-              <hr style="margin-top: 8px;">
-              <div class="row">
-                <div class="col-md-5">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>E-mail:</th>
-                      <td style="word-break: break-all; line-height: 1.2; padding: 5px;"
-                        [innerHTML]="candidate.Email | highlight: searchTerm"></td>
-                    </tr>
-                    <tr>
-                      <th style="line-height: 1.2;">Candidate Status:</th>
-                      <td>{{ candidate.CandidateStatus }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>Phone:</th>
-                      <td [innerHTML]="candidate.Phone | highlight: searchTerm"></td>
-                    </tr>
-                    <tr>
-                      <th>Legal Status:</th>
-                      <td>{{ candidate.LegalStatus }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-md-3 align-items-center">
-                  <div class="input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroup-sizing-sm">FollowUpOn</span>
-                    </div>
-                    <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                      value="{{ candidate.followupon }}" (change)="updateSelected($event.target.value, candidate.TraineeID, 1)">
+                  <!-- <div class="info-line">
+                      <span class="info-label">Skills</span>
+                      <span class="info-value">{{ candidate.Skill | highlight: searchTerm | truncate: 45 }}</span>
                   </div>
+                  <div class="info-line">
+                      <span class="info-label">Notes</span>
+                      <span class="info-value">{{ candidate.notes | truncate: 35 }}</span>
+                  </div> -->
+                  <div class="info-line">
+                      <span class="info-label">Created By</span>
+                      <span class="info-value">{{ candidate.CreatedBy }}</span>
+                  </div>
+                  <div class="info-line">
+                      <span class="info-label">Date Created</span>
+                      <span class="info-value">{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
+                  </div>
+                  <div class="info-line">
+                    <span class="info-label">Skills</span>
+                    <span class="info-value">{{ candidate.Skill | highlight: searchTerm | truncate: 30 }}</span>
                 </div>
+                <div class="info-line">
+                    <span class="info-label">Notes</span>
+                    <span class="info-value">{{ candidate.notes | truncate: 30 }}</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress" [ngStyle]="{'width': candidate.progress + '%'}"></div>
+                </div>
+                <div
+                *ngIf="candidate.score > 0"
+                class="score-container"
+                style="margin-top: 10px"
+              >
+                {{ candidate.score }}%
               </div>
-          
-              <!-- Additional Details -->
-              <div class="row">
-                <div class="col-md-12" style="line-height: 2">
-                  <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668; margin-right: 7px;"></i><b>Skills :</b>
-                  <span [innerHTML]="candidate.Skill | highlight: searchTerm | truncate: 100"></span>
-                </div>
-                <div class="col-md-12">
-                  <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668; margin-right: 7px;"></i><b>Notes :</b>
-                  <span>{{ candidate.notes | truncate: 100 }}</span>
-                </div>
-                 <!-- Created By and Date Created -->
-                <div class="span">
-                  <span>Created By : </span>
-                  <span>{{ candidate.CreatedBy }}</span>&nbsp;&nbsp;
-                  <span>Date Created : </span>
-                  <span>{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
-                </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
+      <!-- New Changes-->
     </div>
+  
     <div class="pagination-container">
       <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
       <ng-container *ngFor="let pageNumber of calculatePageRange()">
