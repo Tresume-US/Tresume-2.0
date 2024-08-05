@@ -470,36 +470,53 @@ export class HrmsComponent implements OnInit {
     this.searchTerm = searchterm.toLowerCase();
     this.service.gethrmscandidateList(Req).subscribe(
       (response: any) => {
-        // Success callback
         this.candidates = response.result;
         this.candidates = response.result.map((candidate: any) => {
           if (!candidate.Skill || !candidate.notes) {
             candidate.Skill = 'NA';
-            // candidate.notes = 'NA';
           }
           return candidate;
         });
         console.log(this.candidates);
         if (this.candidates.length === 0) {
-          // No records found
           this.messageService.add({ severity: 'danger', summary: 'No Records Found. Please Try Again' });
         } else {
-          // Records found
-          // this.totalRecords = response.result[0].TotalCount[0];
+          this.candidates = this.candidates.map((candidate: any) => {
+            let skills = candidate.Skill
+              ? candidate.Skill.toLowerCase().split(',')
+              : [];
+            let keywords = this.searchInput
+              .toLowerCase()
+              .split(/\s+and\s+|\s+/)
+              .map((kw) => kw.trim());
+            let matchCount = keywords.filter((kw) =>
+              skills.includes(kw)
+            ).length;
+            let score = (matchCount / keywords.length) * 100;
+            return { ...candidate, score: Math.round(score * 10) / 10 };
+          });
+
+          this.candidates.sort((a: any, b: any) => b.score - a.score);
+
+          this.candidates.forEach((candidate: any) => {
+            console.log(
+              `FullName: ${candidate.Name}, Score: ${candidate.score}%`
+            );
+          });
+
           this.totalRecords = 25;
           this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
           this.noResultsFound = false;
         }
-        this.loading = false; // Set loading to false in both success and failure cases
+        this.loading = false;
       },
       (error: any) => {
-        // Error callback
         console.error('Error occurred:', error);
-        // Handle error here
-        this.loading = false; // Set loading to false on error
+        this.loading = false; 
       }
     );
   }
+  
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     this.fetchhrmscandidatelist();
