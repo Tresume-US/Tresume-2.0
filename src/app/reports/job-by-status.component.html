@@ -1,0 +1,100 @@
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Job By Status</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .date-range-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .date-range-container input {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+  }
+
+  .date-range-container button {
+    margin-left: 0.5rem;
+  }
+
+  .btn {
+    background-color: #482668;
+    color: #fff;
+  }
+</style>
+
+
+<section class="content">
+  <div class="container-fluid">
+    <accordion [isAnimated]="true">
+      <accordion-group heading="Job By Status" [isOpen]=true>
+        <button mat-raised-button color="primary" (click)="onFilterClick()" class="filter-button">
+          <mat-icon>filter_list</mat-icon>
+          Filters
+          <span class="filter-count">1</span>
+        </button>
+        <button mat-raised-button color="primary" (click)="onExportChartCSV()" class="download-button"
+          style="margin-left: 5rem;">
+          <mat-icon>cloud_download</mat-icon>
+          Download
+        </button>
+        <div class="job-status">
+          <mat *ngIf="showFilterPopup" class="">
+            <mat-card-content>
+              <div class="form-group" style="width:22rem; padding-top: 4rem;">
+                <label for="date-range">Date Range</label>
+                <div class="date-range-container">
+                  <input id="date-range" type="text" placeholder="Select the dates to filter" class="form-control"
+                    formControlName="dates" bsDaterangepicker [bsConfig]="{
+                  adaptivePosition: true,
+                  ranges: ranges,
+                  containerClass: 'theme-default',
+                  isAnimated: true,
+                  showWeekNumbers: false
+                }" (bsValueChange)="onValueChange($event)" />
+                  <button mat-button class="btn" color="primary" (click)="sortDate()">Apply</button>
+                </div>
+              </div>
+
+              <button mat-button (click)="onAddFilterClick()">+ Add Filter</button>
+
+              <div class="additional-filters" *ngIf="showAdditionalFilters">
+                <mat-form-field>
+                  <mat-label>Condition</mat-label>
+                  <mat-select formControlName="condition">
+                    <mat-option *ngFor="let option of condition" [value]="option.value">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field style="margin-left: 5rem;">
+                  <mat-label>Value</mat-label>
+                  <mat-select formControlName="values" multiple>
+                    <mat-option *ngFor="let option of options" [value]="option.value">
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat>
+          <div class="circle-graph">
+            <div style="display: flex; justify-content: space-around; margin-top: 6rem;">
+              <div style="width: 60%;">
+                <canvas baseChart [data]="ChartData" [labels]="ChartLabels" [legend]="true" [chartType]="pieChartType"
+                  [colors]="ChartColors">
+                </canvas>
+              </div>
+            </div>
+          </div>

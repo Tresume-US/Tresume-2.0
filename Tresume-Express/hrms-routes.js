@@ -220,7 +220,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
         }
 //INNER JOIN Memberdetails M ON T.userorganizationid IN (SELECT Value FROM dbo.SplitString(M.accessorg, ','))
         // Build the SQL query based on user role (admin or recruiter)
-        if (admin) {
+        if (admin == 'true') {
           query = `
             SELECT Distinct T.TraineeID, CONCAT(T.firstname, ' ', T.lastname) AS Name, CONCAT(CreatedBy.firstname, ' ', CreatedBy.lastname) AS CreatedBy,      
             T.username AS Email, O.organizationname, T.LegalStatus AS LegalStatus, T.PhoneNumber AS Phone, CS.CSName AS CandidateStatus,
@@ -242,7 +242,7 @@ router.post("/gethrmscandidateList", async (req, res) => {
             LEFT JOIN organization O ON T.userorganizationid = O.organizationid
             WHERE T.RecruiterName = '${traineeid}' AND ${generateSearchCondition(searchterm)}
             ORDER BY T.CreateTime DESC
-            OFFSET '${Page}' ROWS FETCH NEXT 25 ROWS ONLY`;
+            OFFSET ${Page} ROWS FETCH NEXT 25 ROWS ONLY`;
         }
 
         console.log(query);

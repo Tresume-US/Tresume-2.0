@@ -112,6 +112,11 @@ import { ClientViewDetailsComponent } from './client-view-details/client-view-de
 import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.component';
 import { PerformanceReportsComponent } from './reports/performance-report.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
+import { jobReportComponent } from './reports/job-report.component';
+import { jobByStatusComponent } from './reports/job-by-status.component';
+import { jobByClientComponent } from './reports/job-by-client.component';
+
+
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: 'compliancedashboard', component: ComplianceDashboardComponent, canActivate: [AuthGuard]   },
@@ -217,6 +222,9 @@ const routes: Routes = [
   { path: 'reports/compliance', component: ComplianceReportComponent },
   { path: 'reports/pfa', component: PFAReportComponent },
   { path: 'reports/docexpiry', component: DocExpiryReportComponent },
+  { path: 'reports/jobreports', component: jobReportComponent },
+  { path: 'reports/jobbystatus', component: jobByStatusComponent },
+  { path: 'reports/jobbyclient', component: jobByClientComponent },
   { path: 'resetpassword/:resetkey', component: ResetPasswordComponent  },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'search/opt', component: SearchResumesOptComponent, canActivate: [AuthGuard] },

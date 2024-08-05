@@ -60,7 +60,10 @@ export class DashboardService {
         let requestDetails: any = { fromDate: request.fromDate, toDate: request.toDate, recruiterId: request.recruiterId, orgID: request.orgID };
         return this.http.post<ResponseDetails>(this.endpoint + 'performancereport', requestDetails);
     }
-
+    getjobreport(request: any): Observable<ResponseDetails> {
+        let requestDetails: any = { fromDate: request.fromDate, toDate: request.toDate, recruiterId: request.recruiterId, orgID: request.orgID };
+        return this.http.post<ResponseDetails>(this.endpoint + 'getjobreport', requestDetails);
+    }
     getAdminDashboardData(req: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'getAdminDashboardData/' , req);
     }

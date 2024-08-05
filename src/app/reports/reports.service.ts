@@ -5,7 +5,12 @@ import { formatDate } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment';
 
-
+export interface ResponseDetails {
+    RecruitmentmanagerID: number;
+    ActiveJobs: number;
+    InactiveJobs: number;
+    ClientName: string;
+  }
 
 @Injectable()
 
@@ -123,6 +128,32 @@ export class ReportsService {
         };
         return this.http.post<ResponseDetails>(this.endpoint + 'getDSRReport', requestDetails);
     }
+    getjobreportbystatus(request: any): Observable<ResponseDetails[]> {
+        const requestDetails = {
+          traineeId: request.traineeId,
+          startDate: request.startDate,
+            endDate: request.endDate
+        };
+        return this.http.post<ResponseDetails[]>(this.endpoint + 'getjobreportbystatus', requestDetails);
+      }
+      getjobreportbyclient(request: any): Observable<ResponseDetails[]> {
+        const requestDetails = {
+          traineeId: request.traineeId,
+          startDate: request.startDate,
+            endDate: request.endDate
+        };
+        return this.http.post<ResponseDetails[]>(this.endpoint + 'getjobreportbyclient', requestDetails);
+      }
+      getjobreportbydate(request: any): Observable<ResponseDetails[]> {
+        const requestDetails = {
+          traineeId: request.traineeId,
+          startDate: request.startDate,  // Consistent naming
+          endDate: request.endDate       // Consistent naming
+        };
+      
+        return this.http.post<ResponseDetails[]>(this.endpoint + 'getjobreportbydate', requestDetails);
+      }
+      
 
     getJobBoardAuditReport(request: any): Observable<ResponseDetails> {
         let requestDetails: any = {
@@ -151,6 +182,15 @@ export class ReportsService {
     return this.http.post<ResponseDetails>(this.endpoint + 'JobboardUsageReport', requestDetails);
 }
 
+getStatusReport(request: any): Observable<ResponseDetails> {
+    let requestDetails: any = {
+        startDate: request.startDate,
+        endDate: request.endDate,
+        traineeId: request.traineeId
+    };
+    return this.http.post<ResponseDetails>(this.endpoint + 'getStatusReport', requestDetails);
+}
+
 }
 
 export interface RequestItem {
@@ -160,6 +200,8 @@ export interface RequestItem {
 }
 
 export interface ResponseDetails {
+    inactive: any;
+    active: any;
     flag?: any;
     result?: any;
 }

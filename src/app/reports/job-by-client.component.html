@@ -1,0 +1,119 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Job By Client</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .filter-button,
+    .download-button {
+        margin: 10px;
+    }
+
+    .filter-count {
+        background-color: rgb(9, 184, 18);
+        border-radius: 50%;
+        color: white;
+        padding: 2px 6px;
+        margin-left: 5px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th.mat-header-cell,
+    td.mat-cell,
+    td.mat-footer-cell {
+        text-align: left;
+        padding: 8px;
+    }
+
+    .btn {
+        background-color: #482668;
+        color: #fff;
+    }
+
+    .table-container {
+        overflow: auto;
+        max-height: 400px;
+    }
+
+    .mat-elevation-z8 {
+        box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    mat-header-cell,
+    mat-cell {
+        padding: 8px;
+    }
+</style>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <accordion [isAnimated]="true">
+            <accordion-group heading="Job By Status" [isOpen]="true">
+                <button mat-raised-button color="primary" (click)="onFilterClick()" class="btn filter-button">
+                    <mat-icon>filter_list</mat-icon>
+                    Filters
+                    <span class="filter-count">1</span>
+                </button>
+                <button type="button" class="btn btn-info" (click)="onExportPivotCSV()">
+                    Export as CSV
+                </button>
+                <div class="job-status">
+                    <mat *ngIf="showFilterPopup" class="">
+                        <mat-card-content>
+                            <div class="form-group" style="width:22rem; padding-top: 4rem;">
+                                <label for="date-range">Date Range</label>
+                                <div class="date-range-container" style="display: flex; align-items: center;">
+                                    <input id="date-range" type="text" style="width: 28rem;"
+                                        placeholder="Select the dates to filter" class="form-control"
+                                        formControlName="dates" bsDaterangepicker
+                                        [bsConfig]="{ adaptivePosition: true, ranges: ranges, containerClass: 'theme-default', isAnimated: true, showWeekNumbers: false }"
+                                        (bsValueChange)="onValueChange($event)">
+                                    <button mat-button class="btn" color="primary" (click)="onApplyClick()"
+                                        style="margin-left: 0.5rem;">Apply</button>
+                                </div>
+                            </div>
+
+
+                            <button mat-button (click)="onAddFilterClick()">+ Add Filter</button>
+
+                            <div class="additional-filters" *ngIf="showAdditionalFilters">
+                                <mat-form-field>
+                                    <mat-label>Condition</mat-label>
+                                    <mat-select [(ngModel)]="selectedCondition" optionLabel="name">
+                                        <mat-option *ngFor="let option of condition" [value]="option.value">
+                                            {{ option.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field style="margin-left: 5rem;">
+                                    <mat-label>Value</mat-label>
+                                    <mat-select [(ngModel)]="selectedValues" multiple>
+                                        <mat-option *ngFor="let option of options" [value]="option.value">
+                                            {{ option.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </mat-card-content>
+                    </mat>
+                </div>
+
+                <div>
+                    <ag-grid-angular style="width: 100%; height: 622px;" class="ag-theme-alpine" [rowData]="rowData"
+                        [columnDefs]="columnDefs" [gridOptions]="gridOptions" (gridReady)="onGridReady($event)">
+                    </ag-grid-angular>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+</section>

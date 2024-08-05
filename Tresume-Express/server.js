@@ -310,7 +310,7 @@ app.get(
 
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.params.traineeId,
+          req.params.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -321,14 +321,14 @@ app.get(
 
               request.query(
                 "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.TBID) FROM TalentBench cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
-                  startDate +
-                  "' AND '" +
-                  endDate +
-                  "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-                  OrgID +
-                  "WHERE md.OrgId=" +
-                  OrgID +
-                  " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
+                startDate +
+                "' AND '" +
+                endDate +
+                "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                OrgID +
+                "WHERE md.OrgId=" +
+                OrgID +
+                " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
                 function (err, recordset) {
                   try {
                     if (err) throw err;
@@ -370,7 +370,7 @@ app.get(
 
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.params.traineeId,
+          req.params.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -381,14 +381,14 @@ app.get(
 
               request.query(
                 "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.PID) FROM Placements cs WHERE cs.Active=1 AND cs.RecuiterID=t.TraineeID AND (cs.CreatedTime BETWEEN '" +
-                  startDate +
-                  "' AND '" +
-                  endDate +
-                  "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-                  OrgID +
-                  "WHERE md.OrgId=" +
-                  OrgID +
-                  " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
+                startDate +
+                "' AND '" +
+                endDate +
+                "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                OrgID +
+                "WHERE md.OrgId=" +
+                OrgID +
+                " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
                 function (err, recordset) {
                   try {
                     if (err) throw err;
@@ -430,7 +430,7 @@ app.get(
 
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.params.traineeId,
+          req.params.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -441,14 +441,14 @@ app.get(
 
               request.query(
                 "select (t.FirstName + ' ' + t.LastName) as MarkerterName, (SELECT COUNT(cs.TraineeInterviewID) FROM TraineeInterview cs WHERE cs.Active=1 AND cs.RecruiterID=t.TraineeID AND (cs.CreateTime BETWEEN '" +
-                  startDate +
-                  "' AND '" +
-                  endDate +
-                  "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-                  OrgID +
-                  " WHERE md.OrgId=" +
-                  OrgID +
-                  " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
+                startDate +
+                "' AND '" +
+                endDate +
+                "')) as PlacemntCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                OrgID +
+                " WHERE md.OrgId=" +
+                OrgID +
+                " AND md.Active=1 AND t.Active=1 ORDER BY PlacemntCount desc",
                 function (err, recordset) {
                   try {
                     if (err) throw err;
@@ -490,7 +490,7 @@ app.get(
 
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.params.traineeId,
+          req.params.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -501,14 +501,14 @@ app.get(
 
               request.query(
                 "select (t.FirstName + ' ' + t.LastName) as MarketerName, (SELECT COUNT(cs.SubmissionID) FROM Submission cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND (cs.CreateTime BETWEEN '" +
-                  startDate +
-                  "' AND '" +
-                  endDate +
-                  "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
-                  OrgID +
-                  " WHERE md.OrgId=" +
-                  OrgID +
-                  " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
+                startDate +
+                "' AND '" +
+                endDate +
+                "')) as BenchCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID =  " +
+                OrgID +
+                " WHERE md.OrgId=" +
+                OrgID +
+                " AND md.Active=1 AND t.Active=1 ORDER BY BenchCount desc ",
                 function (err, recordset) {
                   try {
                     if (err) throw err;
@@ -550,7 +550,7 @@ app.get(
 
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.params.traineeId,
+          req.params.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -561,14 +561,14 @@ app.get(
 
               request.query(
                 "select (t.FirstName + ' ' + t.LastName) as RecruiterName, (SELECT COUNT(cs.TraineeID) FROM Trainee cs WHERE cs.Active=1 AND cs.CreateBy=t.UserName AND cs.Collab=1 AND cs.RecruiterName=t.TraineeID AND cs.UserOrganizationID=t.OrganizationID AND (cs.CreateTime BETWEEN '" +
-                  startDate +
-                  "' AND '" +
-                  endDate +
-                  "')) as FTCCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID = " +
-                  OrgID +
-                  " WHERE md.OrgId=" +
-                  OrgID +
-                  " AND md.Active=1 AND t.Active=1 ORDER BY FTCCount desc  ",
+                startDate +
+                "' AND '" +
+                endDate +
+                "')) as FTCCount from MemberDetails md JOIN Trainee t ON t.UserName=md.UserEmail  AND t.OrganizationID = " +
+                OrgID +
+                " WHERE md.OrgId=" +
+                OrgID +
+                " AND md.Active=1 AND t.Active=1 ORDER BY FTCCount desc  ",
                 function (err, recordset) {
                   try {
                     if (err) throw err;
@@ -603,12 +603,12 @@ app.post("/getTraineeDetails", function (req, res) {
   sql.connect(config, function (err) {
     try {
       if (err) throw err;
-      
+
       var request = new sql.Request();
       request.query(
         "select * from Trainee (nolock) where TraineeID = '" +
-          req.body.traineeId +
-          "' and Active = 1",
+        req.body.traineeId +
+        "' and Active = 1",
         function (err, recordset) {
           try {
             if (err) throw err;
@@ -640,7 +640,7 @@ app.get("/getLegalStatus/:traineeId", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
+        req.params.traineeId,
         function (err, recordset) {
           try {
             if (err) throw err;
@@ -648,8 +648,8 @@ app.get("/getLegalStatus/:traineeId", function (req, res) {
             var OrgID = recordset.recordsets[0][0].OrganizationID;
             request.query(
               "SELECT b.LegalText AS LegalStatus, COUNT(TraineeID) AS Total, b.LegalStatusID FROM Trainee a JOIN LegalStatus b ON b.LegalValue=a.LegalStatus WHERE a.Active=1 AND a.UserOrganizationID=" +
-                OrgID +
-                "  AND a.CandidateStatus IN (2,4,6,7,13) GROUP BY b.LegalText, b.LegalStatusID",
+              OrgID +
+              "  AND a.CandidateStatus IN (2,4,6,7,13) GROUP BY b.LegalText, b.LegalStatusID",
               function (err, recordset) {
                 try {
                   if (err) throw err;
@@ -687,7 +687,7 @@ app.get("/getAllRecruiters/:traineeId", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.params.traineeId,
+        req.params.traineeId,
         function (err, recordset) {
           try {
             if (err) throw err;
@@ -695,7 +695,7 @@ app.get("/getAllRecruiters/:traineeId", function (req, res) {
             var OrgID = recordset.recordsets[0][0].OrganizationID;
             request.query(
               "SELECT distinct r.TraineeID, r.FirstName + ' ' + ISNULL(r.LastName, '') as Name FROM MemberDetails orgR (nolock) JOIN Trainee r (nolock) ON r.UserName=orgR.UserEmail WHERE r.Active=1 AND orgR.Active=1 AND orgR.OrgID=" +
-                OrgID,
+              OrgID,
               function (err, recordset) {
                 try {
                   if (err) throw err;
@@ -729,11 +729,11 @@ app.post("/getFTCReport", function (req, res) {
   sql.connect(config, function (err) {
     try {
       if (err) throw err;
-      
+
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           try {
             if (err) throw err;
@@ -814,16 +814,16 @@ app.post("/getLoggedUser", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "select TraineeID from Trainee (nolock) where Username = '" +
-            req.body.userName +
-            "' and Active = 1",
+          req.body.userName +
+          "' and Active = 1",
           function (err, recordset) {
             try {
               if (err) throw err;
-              
+
               var result = {
                 flag: 1,
                 result: recordset.recordsets[0],
@@ -851,15 +851,15 @@ app.get("/deleteDocument/:docId", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "UPDATE CandidateDocument_New SET Active = 0 WHERE CandidateDocumentID =" +
-            req.params.docId,
+          req.params.docId,
           function (err, recordset) {
             try {
               if (err) throw err;
-              
+
               var result = {
                 flag: 1,
                 result: recordset.recordsets[0],
@@ -887,7 +887,7 @@ app.post("/uploadDocument/:traineeID", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         upload1(req, res, function (err) {
           try {
             if (err) throw err;
@@ -945,22 +945,22 @@ app.post("/uploadinsert", function (req, res) {
         var otherinfo = Object.values(req.body.otherInfo).join(",");
         request.query(
           "INSERT INTO CandidateDocument_New(TraineeID,DocumentName,DocumentPath,Active,CreateTime,CreateBy,LastUpdateTime,LastUpdateBy,DocumentTypeID,DocStartDate,DocExpiryDate,OtherInfo) VALUES (" +
-            req.body.loggedUserId +
-            ",'" +
-            req.body.FileName +
-            "','" +
-            req.body.FilePath +
-            "',1,GETUTCDATE(),'" +
-            req.body.loggedUserEmail +
-            "',NULL,NULL," +
-            req.body.docType +
-            ",'" +
-            req.body.startDate +
-            "','" +
-            req.body.expiryDate +
-            "','" +
-            otherinfo +
-            "' )",
+          req.body.loggedUserId +
+          ",'" +
+          req.body.FileName +
+          "','" +
+          req.body.FilePath +
+          "',1,GETUTCDATE(),'" +
+          req.body.loggedUserEmail +
+          "',NULL,NULL," +
+          req.body.docType +
+          ",'" +
+          req.body.startDate +
+          "','" +
+          req.body.expiryDate +
+          "','" +
+          otherinfo +
+          "' )",
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1012,13 +1012,13 @@ app.post("/updateJobDuties", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "UPDATE Placements SET JobDuties='" +
-            req.body.jd +
-            "' WHERE TraineeID=" +
-            req.body.traineeID,
+          req.body.jd +
+          "' WHERE TraineeID=" +
+          req.body.traineeID,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1045,13 +1045,13 @@ app.post("/updatesupervised", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "UPDATE Placements SET EmployeeSupervised='" +
-            req.body.supervised +
-            "' WHERE TraineeID=" +
-            req.body.traineeID,
+          req.body.supervised +
+          "' WHERE TraineeID=" +
+          req.body.traineeID,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1078,13 +1078,13 @@ app.post("/updateworktype", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "UPDATE Placements SET Worktype='" +
-            req.body.worktype +
-            "' WHERE TraineeID=" +
-            req.body.traineeID,
+          req.body.worktype +
+          "' WHERE TraineeID=" +
+          req.body.traineeID,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1111,7 +1111,7 @@ app.get("/getEducationDetails/:traineeID", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.input("TraineeID", sql.VarChar, req.params.traineeID);
         request.execute("GetTraineeEduDetails", function (err, recordset) {
@@ -1144,11 +1144,11 @@ app.post("/getResumes", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.body.traineeId,
+          req.body.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1204,11 +1204,11 @@ app.post("/getResumes1", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "select OrganizationID from Trainee where TraineeID=" +
-            req.body.traineeId,
+          req.body.traineeId,
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1302,12 +1302,12 @@ app.post("/getResumeDetails", function (req, res) {
     sql.connect(config, function (err) {
       try {
         if (err) throw err;
-        
+
         var request = new sql.Request();
         request.query(
           "select HtmlResume from Trainee (nolock) where TraineeID = '" +
-            req.body.traineeID +
-            "' and Active = 1",
+          req.body.traineeID +
+          "' and Active = 1",
           function (err, recordset) {
             try {
               if (err) throw err;
@@ -1480,8 +1480,8 @@ app.post("/getChecklists", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select CL.ListID, CL.OrgID, CL.ListName, CL.ListType, CL.DocTypeID, CL.Position, DT.DocTypeName from Checklists CL JOIN DocType DT on CL.DocTypeID=DT.DTID where CL.OrgID = '" +
-          req.body.OrgID +
-          "'",
+        req.body.OrgID +
+        "'",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1578,16 +1578,16 @@ app.post("/saveChecklist", function (req, res) {
       var request = new sql.Request();
       request.query(
         "insert into Checklists (ID,ListID,OrgID,ListName,ListType,DocTypeID,Position) values((select isnull(max(ID),0) + 1 from Checklists), " +
-          req.body.ListID +
-          ", " +
-          req.body.OrgID +
-          ", '" +
-          req.body.ListName +
-          "', 'Employee', " +
-          req.body.docTypeID +
-          "," +
-          req.body.Position +
-          ")",
+        req.body.ListID +
+        ", " +
+        req.body.OrgID +
+        ", '" +
+        req.body.ListName +
+        "', 'Employee', " +
+        req.body.docTypeID +
+        "," +
+        req.body.Position +
+        ")",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1651,7 +1651,7 @@ app.post("/getChecklistNames", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select distinct ListID, ListName from Checklists where OrgID=" +
-          req.body.OrgID, // Access OrgID from request body
+        req.body.OrgID, // Access OrgID from request body
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1683,10 +1683,10 @@ app.post("/getWizardSteps", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select a.ListID,a.ListName,a.ListType,a.DocTypeID,a.Position,b.DocTypeName from Checklists a inner join DocType b on a.DocTypeID=b.DTID where a.OrgID=" +
-          req.body.OrgID +
-          " and a.ListID=" +
-          req.body.ListID +
-          " order by a.Position",
+        req.body.OrgID +
+        " and a.ListID=" +
+        req.body.ListID +
+        " order by a.Position",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1719,14 +1719,14 @@ app.post("/createOnboarding", function (req, res) {
       var request = new sql.Request();
       request.query(
         "Insert into CurrentOnboardings (ID,OrgID,CreateDate,TraineeID,FirstName,LastName, StartDate, Status,PercentComplete,Active) OUTPUT Inserted.ID Values((select isnull(max(ID),0) + 1 from CurrentOnboardings)," +
-          req.body.OrgID +
-          ",(SELECT CAST(GETDATE() AS DATE))," +
-          req.body.traineeID +
-          ",'" +
-          req.body.FirstName +
-          "','" +
-          req.body.LastName +
-          "',(SELECT CAST(GETDATE() AS DATE)),1,0,1)",
+        req.body.OrgID +
+        ",(SELECT CAST(GETDATE() AS DATE))," +
+        req.body.traineeID +
+        ",'" +
+        req.body.FirstName +
+        "','" +
+        req.body.LastName +
+        "',(SELECT CAST(GETDATE() AS DATE)),1,0,1)",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1869,8 +1869,8 @@ app.post("/getOnboardingRequest", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select * from OnboardingDocRequest where OnboardID=" +
-          req.body.OnboardID +
-          " and isRequested=1",
+        req.body.OnboardID +
+        " and isRequested=1",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -1998,8 +1998,8 @@ app.post("/onboardSession", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select * from OnboardingSession where SessionID='" +
-          req.body.sessionID +
-          " ' ",
+        req.body.sessionID +
+        " ' ",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2042,22 +2042,22 @@ app.post("/approveFiles", function (req, res) {
         var otherinfo = Object.values(req.body.otherInfo).join(",");
         request.query(
           "INSERT INTO CandidateDocument_New(TraineeID, DocumentName, DocumentPath, Active, CreateTime, CreateBy, LastUpdateTime, LastUpdateBy, DocumentTypeID, DocStartDate, DocExpiryDate, OtherInfo) VALUES(" +
-            req.body.traineeID +
-            ", '" +
-            req.body.FileName +
-            "', '" +
-            req.body.FilePath +
-            "', 1, GETUTCDATE(), '" +
-            req.body.loggedUserEmail +
-            "', NULL, NULL, " +
-            req.body.docType +
-            ", '" +
-            req.body.startDate +
-            "', '" +
-            req.body.expiryDate +
-            "', '" +
-            otherinfo +
-            "')",
+          req.body.traineeID +
+          ", '" +
+          req.body.FileName +
+          "', '" +
+          req.body.FilePath +
+          "', 1, GETUTCDATE(), '" +
+          req.body.loggedUserEmail +
+          "', NULL, NULL, " +
+          req.body.docType +
+          ", '" +
+          req.body.startDate +
+          "', '" +
+          req.body.expiryDate +
+          "', '" +
+          otherinfo +
+          "')",
           function (err, recordset) {
             if (err) {
               console.log(err);
@@ -2067,9 +2067,9 @@ app.post("/approveFiles", function (req, res) {
             var request = new sql.Request();
             request.query(
               "update OnboardingDocRequest set Status=1 where OnboardID=" +
-                req.body.onboardID +
-                " and DocTypeID=" +
-                req.body.docType,
+              req.body.onboardID +
+              " and DocTypeID=" +
+              req.body.docType,
               function (err, recordset) {
                 if (err) {
                   console.log(err);
@@ -2098,7 +2098,7 @@ app.post("/expirydata", function (req, res) {
   sql.connect(config, function (err) {
     try {
       if (err) throw err;
-      
+
       var request = new sql.Request();
       request.query(
         "SELECT * FROM CandidateDocument_New WHERE TRAINEEID = '" +
@@ -2169,9 +2169,9 @@ app.post("/getDocPath", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select filepath from OnboardingDocRequest where OnboardID=" +
-          req.body.onboardID +
-          "and DocTypeID=" +
-          req.body.docTypeID,
+        req.body.onboardID +
+        "and DocTypeID=" +
+        req.body.docTypeID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2204,22 +2204,22 @@ app.post("/insertUploadFilepath", function (req, res) {
       let filepath = req.body.filepath ? req.body.filepath : "";
       request.query(
         "INSERT INTO OnboardingDocRequest (ID, OnboardID, DocTypeName, DocTypeID, isRequested, Status, isViewed, isUpload, filepath, DocNotes, AdditionalChecklistID, AdditionalChecklistName) VALUES ((SELECT ISNULL(MAX(ID),0) + 1 FROM OnboardingDocRequest), " +
-          req.body.onboardID +
-          ", '" +
-          req.body.docTypeName +
-          "', " +
-          req.body.docTypeID +
-          ", " +
-          req.body.requested +
-          ", 0, 0, 0, '" +
-          filepath +
-          "', '" +
-          req.body.docNote +
-          "', '" +
-          req.body.additionalChecklistID +
-          "', '" +
-          req.body.additionalChecklistName +
-          "')",
+        req.body.onboardID +
+        ", '" +
+        req.body.docTypeName +
+        "', " +
+        req.body.docTypeID +
+        ", " +
+        req.body.requested +
+        ", 0, 0, 0, '" +
+        filepath +
+        "', '" +
+        req.body.docNote +
+        "', '" +
+        req.body.additionalChecklistID +
+        "', '" +
+        req.body.additionalChecklistName +
+        "')",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2251,9 +2251,9 @@ app.get("/download/:ID/:DocID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select filepath from OnboardingDocRequest where OnboardID=" +
-          req.params.ID +
-          "and DocTypeID=" +
-          req.params.DocID,
+        req.params.ID +
+        "and DocTypeID=" +
+        req.params.DocID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2302,9 +2302,9 @@ app.get("/reviewdownload/:ID/:DocID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
-          req.params.ID +
-          " and DocTypeID=" +
-          req.params.DocID,
+        req.params.ID +
+        " and DocTypeID=" +
+        req.params.DocID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2358,9 +2358,9 @@ app.get("/reviewFile/:ID/:DocID", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select SignedFilepath from OnboardingDocRequest where OnboardID=" +
-          req.params.ID +
-          "and DocTypeID=" +
-          req.params.DocID,
+        req.params.ID +
+        "and DocTypeID=" +
+        req.params.DocID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2413,9 +2413,9 @@ app.post("/updateDocStatus", function (req, res) {
       var request = new sql.Request();
       request.query(
         "update OnboardingDocRequest set isUpload=1 where OnboardID=" +
-          req.body.onboardID +
-          " and DocTypeID=" +
-          req.body.docTypeID,
+        req.body.onboardID +
+        " and DocTypeID=" +
+        req.body.docTypeID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2455,11 +2455,11 @@ app.post("/updateSignFilepath", function (req, res) {
       var request = new sql.Request();
       request.query(
         "update OnboardingDocRequest set SignedFilePath='" +
-          req.body.filepath +
-          "' where OnboardID=" +
-          req.body.onboardID +
-          " and DocTypeID=" +
-          req.body.docTypeID,
+        req.body.filepath +
+        "' where OnboardID=" +
+        req.body.onboardID +
+        " and DocTypeID=" +
+        req.body.docTypeID,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2491,7 +2491,7 @@ app.post("/getInterviewsReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2534,7 +2534,7 @@ app.post("/getBenchTrackerReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2577,7 +2577,7 @@ app.post("/getPlacementsReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2620,7 +2620,7 @@ app.post("/getLegalStatusReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2663,7 +2663,7 @@ app.post("/getH1BExpiryReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2706,7 +2706,7 @@ app.post("/getBillableEmployeeReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2749,7 +2749,7 @@ app.post("/getNonH1BReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2825,62 +2825,9 @@ app.post("/getNonH1BReport", function (req, res) {
 // });
 
 
-app.post("/getDSRReport", async (req, res) => {
-  const { startDate, endDate, OrganizationId, traineeId } = req.body;
 
-  try {
-    await sql.connect(config);
 
-    var query = '';
 
-    // Add conditional filter based on UserRole
-    if (req.body.UserRole == 1  || req.body.userRole == 3) {
-      query = `SELECT s.submissionid, CONCAT(t.FirstName, ' ', t.LastName) AS Candidate, CONCAT(m.FirstName, ' ', m.LastName) AS Marketer,  
-                        s.title, FORMAT(s.submissiondate, 'MM/dd/yyyy') AS SubmissionDate, 
-                        s.VendorName, s.ClientName, s.Note, s.Rate
-                 FROM submission s 
-                 INNER JOIN Trainee t ON s.TraineeID = t.TraineeID 
-                 INNER JOIN Trainee m ON s.markerterid = m.TraineeID 
-                 WHERE s.Active = 1 AND m.Active = 1 
-                 AND s.SubmissionDate BETWEEN @startDate AND @endDate 
-                 AND m.OrganizationID = @OrganizationId 
-                 ORDER BY SubmissionDate`;
-    } else {
-      query = `SELECT s.submissionid, CONCAT(t.FirstName, ' ', t.LastName) AS Candidate, CONCAT(m.FirstName, ' ', m.LastName) AS Marketer,  
-                        s.title, FORMAT(s.submissiondate, 'MM/dd/yyyy') AS SubmissionDate, 
-                        s.VendorName, s.ClientName, s.Note, s.Rate
-                 FROM submission s 
-                 INNER JOIN Trainee t ON s.TraineeID = t.TraineeID 
-                 INNER JOIN Trainee m ON s.markerterid = m.TraineeID 
-                 WHERE s.Active = 1 AND m.Active = 1 
-                 AND s.SubmissionDate BETWEEN @startDate AND @endDate 
-                 AND s.markerterid = @traineeId 
-                 ORDER BY SubmissionDate`;
-    }
-
-    console.log(query);
-    console.log(req.body.UserRole);
-
-    const request = new sql.Request();
-    request.input('startDate', sql.Date, startDate);
-    request.input('endDate', sql.Date, endDate);
-    request.input('OrganizationId', sql.Int, OrganizationId);
-    request.input('traineeId', sql.Int, traineeId);
-
-    const result = await request.query(query);
-
-    res.send({
-      flag: 1,
-      result: result.recordset
-    });
-
-  } catch (error) {
-    console.error("Error occurred: ", error);
-    res.status(500).send("An error occurred while processing your request.");
-  } finally {
-    await sql.close();
-  }
-});
 
 
 app.post("/getSiteVisitReport", function (req, res) {
@@ -2894,7 +2841,7 @@ app.post("/getSiteVisitReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2935,7 +2882,7 @@ app.post("/getPFAReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -2976,7 +2923,7 @@ app.post("/getDocumentExpiryReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "select OrganizationID from Trainee where TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -3019,8 +2966,8 @@ app.post("/checkIfJobSeekerResumeExists", function (req, res) {
       var request = new sql.Request();
       request.query(
         "SELECT * FROM Trainee (nolock) WHERE Username = '" +
-          req.body.emailID +
-          "' AND Active = 1",
+        req.body.emailID +
+        "' AND Active = 1",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -3046,101 +2993,101 @@ app.post("/createJobSeekerDetails", function (req, res) {
 
   // Set a timeout for the entire request
   const timeout = setTimeout(() => {
-      const result = {
-          flag: 0,
-          error: "Request timed out",
-      };
-      res.status(504).send(result);
+    const result = {
+      flag: 0,
+      error: "Request timed out",
+    };
+    res.status(504).send(result);
   }, timeoutDuration);
 
   try {
-      sql.connect(config, function (err) {
-          clearTimeout(timeout); // Clear the timeout since the database connection has completed or failed
+    sql.connect(config, function (err) {
+      clearTimeout(timeout); // Clear the timeout since the database connection has completed or failed
+      if (err) {
+        console.log(err);
+        const result = {
+          flag: 0,
+          error: "An error occurred while connecting to the database",
+        };
+        res.status(500).send(result);
+        return;
+      }
+      var request = new sql.Request();
+      console.log(
+        "select OrganizationID, UserName from Trainee where TraineeID=" +
+        req.body.traineeId
+      );
+      request.query(
+        "select OrganizationID, UserName from Trainee where TraineeID=" +
+        req.body.traineeId,
+        function (err, recordset) {
           if (err) {
+            console.log(err);
+            const result = {
+              flag: 0,
+              error: "An error occurred while querying the database",
+            };
+            res.status(500).send(result);
+            return;
+          }
+          console.log(recordset);
+          var OrgID = recordset.recordsets[0][0].OrganizationID;
+          var UserName = recordset.recordsets[0][0].UserName;
+          var skillsString = "";
+          if (req.body.source == "OptNation") {
+            skillsString = req.body.skills;
+          } else {
+            skillsString = req.body.skills.join(",");
+          }
+          request.input("EmailID", sql.VarChar, req.body.emailID);
+          request.input("FirstName", sql.VarChar, req.body.firstName);
+          request.input("LastName", sql.VarChar, req.body.lastName);
+          request.input("Title", sql.VarChar, req.body.title);
+          request.input(
+            "CurrentLocation",
+            sql.VarChar,
+            req.body.currentLocation
+          );
+          request.input(
+            "YearsOfExpInMonths",
+            sql.VarChar,
+            req.body.yearsOfExpInMonths
+          );
+          request.input("Skills", sql.VarChar, skillsString);
+          request.input("HtmlResume", sql.VarChar, req.body.htmlResume);
+          request.input("Source", sql.VarChar, req.body.source);
+          request.input("ATSID", sql.VarChar, req.body.ATSID);
+          request.input("UserOrganizationID", sql.Int, OrgID);
+          request.input("CreateBy", sql.VarChar, UserName);
+          request.input("harvest", sql.VarChar, "");
+          request.input("securityclearance", sql.VarChar, req.body.securityclearance);
+          request.input("ats_md5email", sql.VarChar, req.body.ATSID);
+          request.execute("CreateJobSeekerProfile", function (err, recordset) {
+            if (err) {
               console.log(err);
               const result = {
-                  flag: 0,
-                  error: "An error occurred while connecting to the database",
+                flag: 0,
+                error: "An error occurred while executing the stored procedure",
               };
               res.status(500).send(result);
               return;
-          }
-          var request = new sql.Request();
-          console.log(
-              "select OrganizationID, UserName from Trainee where TraineeID=" +
-              req.body.traineeId
-          );
-          request.query(
-              "select OrganizationID, UserName from Trainee where TraineeID=" +
-              req.body.traineeId,
-              function (err, recordset) {
-                  if (err) {
-                      console.log(err);
-                      const result = {
-                          flag: 0,
-                          error: "An error occurred while querying the database",
-                      };
-                      res.status(500).send(result);
-                      return;
-                  }
-                  console.log(recordset);
-                  var OrgID = recordset.recordsets[0][0].OrganizationID;
-                  var UserName = recordset.recordsets[0][0].UserName;
-                  var skillsString = "";
-                  if (req.body.source == "OptNation") {
-                      skillsString = req.body.skills;
-                  } else {
-                      skillsString = req.body.skills.join(",");
-                  }
-                  request.input("EmailID", sql.VarChar, req.body.emailID);
-                  request.input("FirstName", sql.VarChar, req.body.firstName);
-                  request.input("LastName", sql.VarChar, req.body.lastName);
-                  request.input("Title", sql.VarChar, req.body.title);
-                  request.input(
-                      "CurrentLocation",
-                      sql.VarChar,
-                      req.body.currentLocation
-                  );
-                  request.input(
-                      "YearsOfExpInMonths",
-                      sql.VarChar,
-                      req.body.yearsOfExpInMonths
-                  );
-                  request.input("Skills", sql.VarChar, skillsString);
-                  request.input("HtmlResume", sql.VarChar, req.body.htmlResume);
-                  request.input("Source", sql.VarChar, req.body.source);
-                  request.input("ATSID", sql.VarChar, req.body.ATSID);
-                  request.input("UserOrganizationID", sql.Int, OrgID);
-                  request.input("CreateBy", sql.VarChar, UserName);
-                  request.input("harvest", sql.VarChar, "");
-                  request.input("securityclearance", sql.VarChar, req.body.securityclearance);
-                  request.input("ats_md5email", sql.VarChar, req.body.ATSID);
-                  request.execute("CreateJobSeekerProfile", function (err, recordset) {
-                      if (err) {
-                          console.log(err);
-                          const result = {
-                              flag: 0,
-                              error: "An error occurred while executing the stored procedure",
-                          };
-                          res.status(500).send(result);
-                          return;
-                      }
-                      var result = {
-                          flag: 1,
-                          // result: recordset.recordsets[0]
-                      };
-                      res.send(result);
-                  });
-              }
-          );
-      });
+            }
+            var result = {
+              flag: 1,
+              // result: recordset.recordsets[0]
+            };
+            res.send(result);
+          });
+        }
+      );
+    });
   } catch (error) {
-      console.error("Error:", error);
-      const result = {
-          flag: 0,
-          error: "An unexpected error occurred",
-      };
-      res.status(500).send(result);
+    console.error("Error:", error);
+    const result = {
+      flag: 0,
+      error: "An unexpected error occurred",
+    };
+    res.status(500).send(result);
   }
 });
 
@@ -3157,10 +3104,10 @@ app.post("/checkIfProfileMigrated", function (req, res) {
       var request = new sql.Request();
       request.query(
         "SELECT ATSID, MigrateProfileID, CreateBy, CreateTime FROM Trainee (nolock) WHERE Role = 'TRESUMEUSER' AND Source = '" +
-          req.body.source +
-          "' AND UserOrganizationID = (SELECT OrganizationID FROM Trainee WHERE TraineeID = " +
-          req.body.traineeId +
-          ") AND Active = 1 ORDER BY CreateTime DESC;",
+        req.body.source +
+        "' AND UserOrganizationID = (SELECT OrganizationID FROM Trainee WHERE TraineeID = " +
+        req.body.traineeId +
+        ") AND Active = 1 ORDER BY CreateTime DESC;",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -3182,7 +3129,7 @@ app.post("/checkIfProfileMigrated", function (req, res) {
 });
 
 
- app.post("/getCBAuthToken", function (req, res) {
+app.post("/getCBAuthToken", function (req, res) {
   axios
     .post("https://auth.careerbuilder.com/connect/token", {
       grant_type: "refresh_token",
@@ -3191,7 +3138,7 @@ app.post("/checkIfProfileMigrated", function (req, res) {
         "reMVgeKh9WNEMmeZrF2RUhqLQa8WrZF/ye7zButWAe9EFGs2oTxShTRSQIXa9q+lo7n3Tt0giOTxuHZyowwswQ==",
       refresh_token:
         "B98E9CDE88F53EB35F4FDE0E5423220F6DB9A96313BAC3CFB4FB2FC2BD3B0787-1",
-      scope:"offline_access"
+      scope: "offline_access"
     })
     .then((result) => {
       res.send(result.data);
@@ -3199,7 +3146,7 @@ app.post("/checkIfProfileMigrated", function (req, res) {
     .catch((error) => {
       res.send(error);
     });
-}); 
+});
 
 // app.post("/getCBAuthToken", function (req, res) {
 //   try {
@@ -3328,40 +3275,40 @@ app.post("/GetCBResumePreview", function (req, res) {
     console.log(response);
     if (response.data && response.data.length > 0) {
       const options2 = {
-          url:
-              "https://api.careerbuilder.com/consumer/edge/profiles/" +
-              req.body.edgeID +
-              "/Resumes/RDB/" +
-              response.data[0].ResumeDID +
-              "/Preview",
-          method: "GET",
-          headers: {
-              Accept: "text/html",
-              Authorization: `Bearer ${req.body.token}`,
-          },
-          gzip: true,
+        url:
+          "https://api.careerbuilder.com/consumer/edge/profiles/" +
+          req.body.edgeID +
+          "/Resumes/RDB/" +
+          response.data[0].ResumeDID +
+          "/Preview",
+        method: "GET",
+        headers: {
+          Accept: "text/html",
+          Authorization: `Bearer ${req.body.token}`,
+        },
+        gzip: true,
       };
       request(options2, (err2, res2, body) => {
-          if (err2) {
-              console.error(err2);
-              res.send({
-                  flag: 0,
-                  message: "Error fetching preview"
-              });
-          } else {
-              res.send({
-                  flag: 1,
-                  text: res2.body
-              });
-          }
+        if (err2) {
+          console.error(err2);
+          res.send({
+            flag: 0,
+            message: "Error fetching preview"
+          });
+        } else {
+          res.send({
+            flag: 1,
+            text: res2.body
+          });
+        }
       });
-  } else {
+    } else {
       res.send({
-          flag: 2,
-          message: "Message not available"
+        flag: 2,
+        message: "Message not available"
       });
-  }
-  
+    }
+
   });
 });
 
@@ -3415,7 +3362,7 @@ app.post("/downloadCBResume", function (req, res) {
         //fs.writeFile('D:/Code/SV Report/' + response.data.Filename, buffer, (error) => {
         fs.writeFile(
           "C:/inetpub/vhosts/tresume.us/httpdocs/Content/" +
-            response.data.Filename,
+          response.data.Filename,
           buffer,
           (error) => {
             if (error) {
@@ -3472,7 +3419,7 @@ app.post("/saveResume", function (req, res) {
         writeStream.write(buffer);
         writeStream.end();
         let response = {
-          msg:"Resume saved successfully"
+          msg: "Resume saved successfully"
         }
         res.send(response);
       });
@@ -3495,14 +3442,14 @@ app.post("/jobBoardAuditLog", function (req, res) {
       let filepath = req.body.filepath ? req.body.filepath : "";
       request.query(
         "INSERT INTO JobBoardAudit (JobBoardSource, Query, DateLogged, UserName) VALUES ('" +
-          req.body.jobBoard +
-          "','" +
-          req.body.query +
-          "','" +
-          req.body.dateTime +
-          "','" +
-          req.body.userName +
-          "')",
+        req.body.jobBoard +
+        "','" +
+        req.body.query +
+        "','" +
+        req.body.dateTime +
+        "','" +
+        req.body.userName +
+        "')",
         function (err, recordset) {
           if (err) {
             console.error(err);
@@ -3530,7 +3477,7 @@ app.post("/getJobBoardAuditReport", function (req, res) {
       var request = new sql.Request();
       request.query(
         "SELECT OrganizationID FROM Trainee WHERE TraineeID=" +
-          req.body.traineeId,
+        req.body.traineeId,
         function (err, recordset) {
           if (err) {
             console.error(err);
@@ -3620,8 +3567,8 @@ app.post("/getResumePath", function (req, res) {
         `SELECT ResumePath, ResumeName
          FROM Resumes
          WHERE EmailID='` +
-          req.body.userName +
-          `'`,
+        req.body.userName +
+        `'`,
         function (err, recordset) {
           if (err) {
             console.error(err);
@@ -3798,11 +3745,11 @@ app.post("/getNotSubmittedReport", function (req, res) {
     try {
       request.query(
         "select tsm.FromDate,tsm.ToDate,r.Username, tsm.UserID from TimeSheetMaster tsm inner join Registration r on tsm.userID = r.RegistrationID where tsm.FromDate BETWEEN '" +
-          req.body.fromDate +
-          "' AND '" +
-          req.body.endDate +
-          "' and r.OrganizationId=" +
-          req.body.OrganizationId,
+        req.body.fromDate +
+        "' AND '" +
+        req.body.endDate +
+        "' and r.OrganizationId=" +
+        req.body.OrganizationId,
         function (err, recordset) {
           if (err) {
             console.error("Error executing SQL query:", err);
@@ -3819,10 +3766,10 @@ app.post("/getNotSubmittedReport", function (req, res) {
 
           request.query(
             "select * from Registration where RegistrationID  NOT IN " +
-              "(" +
-              filteredResult +
-              ") and OrganizationId=" +
-              req.body.OrganizationId,
+            "(" +
+            filteredResult +
+            ") and OrganizationId=" +
+            req.body.OrganizationId,
             function (err, recordSet) {
               if (err) {
                 console.error("Error executing SQL query:", err);
@@ -3863,8 +3810,8 @@ app.post("/getSubmittedRatio", function (req, res) {
     try {
       request.query(
         "select tsm.FromDate,tsm.ToDate,tsm.UserID from TimeSheetMaster tsm  where tsm.FromDate='" +
-          previousSunday +
-          "'",
+        previousSunday +
+        "'",
         function (err, recordset) {
           if (err) {
             console.error("Error executing SQL query:", err);
@@ -3876,9 +3823,9 @@ app.post("/getSubmittedRatio", function (req, res) {
 
           request.query(
             "select Name,LegalStatus,EmailID from Registration where RoleID=1 and CreatedOn <'" +
-              previousSunday +
-              "' and OrganizationId=" +
-              req.body.OrganizationId,
+            previousSunday +
+            "' and OrganizationId=" +
+            req.body.OrganizationId,
             function (err, rex) {
               if (err) {
                 console.error("Error executing SQL query:", err);
@@ -4029,7 +3976,7 @@ app.post("/fetchrecruiter", function (req, res) {
     }
 
     var request = new sql1.Request();
-    
+
     try {
       var sql =
         "INSERT INTO Org_Division(Orgid,DivisionName,dice,cb,monster,clearancejob,active,createtime,createby,type)VALUES( '" +
@@ -4039,13 +3986,13 @@ app.post("/fetchrecruiter", function (req, res) {
         "',0,0,0,0,1,'','" +
         req.body.userName +
         "',0)";
-      
+
       request.query(sql, function (err, result) {
         if (err) {
           console.error("Error executing SQL query:", err);
           return res.status(500).send({ error: "Query Execution Error" });
         }
-        
+
         res.send(result);
         console.log("1 record inserted");
       });
@@ -4304,7 +4251,7 @@ app.post("/getclientipaddress", function (req, res) {
         console.error("Error sending request:", err);
         return res.status(500).send({ error: "Request Error" });
       }
-      
+
       res.send(response);
     });
   } catch (error) {
@@ -4441,9 +4388,9 @@ app.post("/getMarketerNames", async (req, res) => {
     const request = new sql.Request();
     request.input("orgID", sql.Int, req.body.orgID);
     request.input("keyword", sql.NVarChar(100), req.body.keyword);
-    
+
     const recordset = await request.execute("sp_SearchMarketerNames");
-    
+
     if (recordset.recordsets.length === 0) {
       var result = {
         flag: 2,
@@ -4479,7 +4426,7 @@ app.post("/getTresumedata", function (req, res) {
       `%' OR Title LIKE '%` +
       req.body.keyword +
       `%')`;
-    
+
     if (req.body.location) {
       sql +=
         `AND
@@ -4498,9 +4445,9 @@ app.post("/getTresumedata", function (req, res) {
         req.body.location +
         `')))`;
     }
-    
+
     sql += `ORDER BY ISNULL(CreateTime, '1900-01-01T00:00:00') DESC`;
-    
+
     try {
       request.query(sql, function (err, recordset) {
         if (err) {
@@ -4529,8 +4476,8 @@ app.post("/atsmigrateprofile", function (req, res) {
       }
       var request = new sql.Request();
       request.query(
-        "UPDATE Trainee SET Collab = 1, CandidateStatus = 8,notes = '"+req.body.notes+"' WHERE TraineeID = " +
-          req.body.traineeId,
+        "UPDATE Trainee SET Collab = 1, CandidateStatus = 8,notes = '" + req.body.notes + "' WHERE TraineeID = " +
+        req.body.traineeId,
         function (err, recordset) {
           try {
             if (err) {
@@ -4688,8 +4635,8 @@ app.post("/checkmd5resume", function (req, res) {
       var request = new sql.Request();
       request.query(
         "SELECT * FROM Trainee (nolock) WHERE ats_md5email = '" +
-          req.body.md5emailID +
-          "' AND Active = 1",
+        req.body.md5emailID +
+        "' AND Active = 1",
         function (err, recordset) {
           if (err) {
             console.log(err);
@@ -4759,7 +4706,7 @@ app.post("/getOnboardingCount", function (req, res) {
   }
 });
 
-function parsePhraseToQuery(phrase,inseidesearch) {
+function parsePhraseToQuery(phrase, inseidesearch) {
   const words = phrase
     .split(/(\(|\)|\b(?:and|or)\b)/i)
     .filter((word) => word.trim() !== "")
@@ -4788,8 +4735,8 @@ function parsePhraseToQuery(phrase,inseidesearch) {
       ].trim()}%' OR firstname like '%${words[
         i
       ].trim()}%' OR lastname like '%${words[i].trim()}%'`;
-      if(inseidesearch == 1){
-        query+=` OR htmlresume like '%${words[i].trim()}%'`
+      if (inseidesearch == 1) {
+        query += ` OR htmlresume like '%${words[i].trim()}%'`
       }
     }
   }
@@ -4801,7 +4748,7 @@ app.post("/getResumes2", function (req, res) {
   try {
     var traineeId = req.body.traineeId;
     var insidesearch = req.body.insidesearch ? 1 : 0;
-    var keyword = parsePhraseToQuery(req.body.keyword,insidesearch);
+    var keyword = parsePhraseToQuery(req.body.keyword, insidesearch);
     var location = req.body.location;
     var title = req.body.jobTitle;
     var daysWithin = req.body.daysWithin;
@@ -4811,7 +4758,7 @@ app.post("/getResumes2", function (req, res) {
     var OrgID = req.body.OrgID;
     var recruiter = req.body.recruiter;
     var securityclearance = req.body.securityclearance
-    
+
     console.log(Jobboard);
 
     const timeoutDuration = 60000; // Timeout duration in milliseconds (60 seconds)
@@ -5286,13 +5233,13 @@ app.post("/getplacementsBytID", function (req, res) {
           console.log(err);
           return res.status(500).send("Database query error");
         }
-  
+
         var data = recordset.recordsets[0];
         var result = {
           flag: 1,
           result: data,
         };
-  
+
         res.send(result);
       });
     });
@@ -5323,12 +5270,12 @@ app.post("/UpdateplacementsBytID", function (req, res) {
           console.log(err);
           return res.status(500).send("Database query error");
         }
-  
+
         var result = {
           flag: 1,
           Message: "Placement Updated Successfully",
         };
-  
+
         res.send(result);
       });
     });
@@ -5377,13 +5324,13 @@ app.post("/JobboardUsageReport", function (req, res) {
         console.log(err);
         return res.status(500).send("Database connection error");
       }
-      
-      var request = new sql.Request();
-        const startDate = req.body.startDate;
-        const endDate = req.body.endDate;
-        const orgID = req.body.OrgID;
 
-        const sqlQuery = `
+      var request = new sql.Request();
+      const startDate = req.body.startDate;
+      const endDate = req.body.endDate;
+      const orgID = req.body.OrgID;
+
+      const sqlQuery = `
             SELECT
                 CONCAT(T.Firstname, ' ', T.LastName) as Name,
                 T.Traineeid,
@@ -5410,13 +5357,13 @@ app.post("/JobboardUsageReport", function (req, res) {
           console.log(err);
           return res.status(500).send("Database query error");
         }
-  
+
         var data = recordset.recordsets[0];
         var result = {
           flag: 1,
           result: data,
         };
-  
+
         res.send(result);
       });
     });
@@ -5428,49 +5375,49 @@ app.post("/JobboardUsageReport", function (req, res) {
 
 app.post('/performancereport', async (req, res) => {
   try {
-    if(req.body.recruiterId == 'All'){
+    if (req.body.recruiterId == 'All') {
       const [
-        submissionlist,interviewlist,placementlist
-     ] = await Promise.all([
-         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Submission s ON t.traineeid = s.markerterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid = "+req.body.orgID),
-         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN         placements s ON CAST(t.traineeid AS VARCHAR) = s.marketername JOIN Trainee rt ON rt.TraineeID = s.TraineeID          WHERE rt.Active=1 and s.ACTIVE = 1 and t.organizationid = "+req.body.orgID),
-         pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Traineeinterview s ON t.traineeid = s.recruiterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid ="+req.body.orgID),
-         
-     ]);
+        submissionlist, interviewlist, placementlist
+      ] = await Promise.all([
+        pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Submission s ON t.traineeid = s.markerterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid = " + req.body.orgID),
+        pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN         placements s ON CAST(t.traineeid AS VARCHAR) = s.marketername JOIN Trainee rt ON rt.TraineeID = s.TraineeID          WHERE rt.Active=1 and s.ACTIVE = 1 and t.organizationid = " + req.body.orgID),
+        pool.query("SELECT CONCAT(rt.Firstname, ' ', rt.LastName) as Candidate, s.clientname FROM trainee t JOIN Traineeinterview s ON t.traineeid = s.recruiterid JOIN Trainee rt ON rt.TraineeID = s.TraineeID WHERE t.organizationid =" + req.body.orgID),
 
-     const responseData = {
-         submissionlist: submissionlist.recordset,
-         placementlist: placementlist.recordset,
-         interviewlist: interviewlist.recordset,
+      ]);
 
-         
-     };
+      const responseData = {
+        submissionlist: submissionlist.recordset,
+        placementlist: placementlist.recordset,
+        interviewlist: interviewlist.recordset,
 
-     res.json(responseData);
-    }else{
+
+      };
+
+      res.json(responseData);
+    } else {
       const [
-        submissionlist,interviewlist,placementlist
-     ] = await Promise.all([
-      pool.query("select CONCAT(t.Firstname, ' ', t.LastName) as Candidate,s.clientname  from submission as s inner join trainee as t on t.traineeid = s.traineeid where s.MarkerterID ='"+req.body.recruiterId+"' AND s.createtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
-      pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate, p.clientname FROM placements as p  inner join trainee as t on t.traineeid = p.traineeid where CAST(p.marketername AS VARCHAR) ='"+req.body.recruiterId+"' AND p.createdtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
-      pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate,i.clientname FROM Traineeinterview as i inner join trainee as t on t.traineeid = i.traineeid where i.recruiterid ='"+req.body.recruiterId+"' AND i.createtime between '"+req.body.fromDate+"' AND '"+req.body.toDate+"'"),
-         
-     ]);
+        submissionlist, interviewlist, placementlist
+      ] = await Promise.all([
+        pool.query("select CONCAT(t.Firstname, ' ', t.LastName) as Candidate,s.clientname  from submission as s inner join trainee as t on t.traineeid = s.traineeid where s.MarkerterID ='" + req.body.recruiterId + "' AND s.createtime between '" + req.body.fromDate + "' AND '" + req.body.toDate + "'"),
+        pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate, p.clientname FROM placements as p  inner join trainee as t on t.traineeid = p.traineeid where CAST(p.marketername AS VARCHAR) ='" + req.body.recruiterId + "' AND p.createdtime between '" + req.body.fromDate + "' AND '" + req.body.toDate + "'"),
+        pool.query("SELECT CONCAT(t.Firstname, ' ', t.LastName)as Candidate,i.clientname FROM Traineeinterview as i inner join trainee as t on t.traineeid = i.traineeid where i.recruiterid ='" + req.body.recruiterId + "' AND i.createtime between '" + req.body.fromDate + "' AND '" + req.body.toDate + "'"),
 
-     const responseData = {
-         submissionlist: submissionlist.recordset,
-         placementlist: placementlist.recordset,
-         interviewlist: interviewlist.recordset,
+      ]);
 
-         
-     };
+      const responseData = {
+        submissionlist: submissionlist.recordset,
+        placementlist: placementlist.recordset,
+        interviewlist: interviewlist.recordset,
 
-     res.json(responseData);
+
+      };
+
+      res.json(responseData);
     }
-      
+
   } catch (error) {
-      console.error('Error fetching data:', error);
-      res.status(500).json({ error: 'Internal server error' });
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -5490,3 +5437,142 @@ app.listen(port, () => {
 // });
 
 // task.start();
+
+
+app.post("/getjobreportbystatus", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input('traineeId', sql.Int, req.body.traineeId);
+      request.input('startDate', sql.Int, req.body.startdate);
+      request.input('endDate', sql.Int, req.body.enddate);
+
+      var query = `
+        SELECT 
+          RecruitmentmanagerID,
+          SUM(CASE WHEN Active = 1 THEN 1 ELSE 0 END) AS ActiveJobs,
+          SUM(CASE WHEN Active = 0 THEN 1 ELSE 0 END) AS InactiveJobs
+        FROM 
+          job
+        WHERE 
+          RecruitmentmanagerID = @traineeId
+        GROUP BY 
+          RecruitmentmanagerID;
+      `;
+
+  //     SELECT 
+  //     Active,
+  //     COUNT(jobID) AS job_count
+  // FROM 
+  //     job
+  // GROUP BY 
+  //     Active;
+  
+
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error querying Trainee table");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordset,
+        };
+        console.log(result.result);
+        res.send(result.result);
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.post("/getjobreportbyclient", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+      request.input('traineeId', sql.Int, req.body.traineeId);
+      request.input('startDate', sql.Int, req.body.startdate);
+      request.input('endDate', sql.Int, req.body.enddate);
+
+      var query = `
+        SELECT 
+    c.ClientID,
+    c.ClientName,
+    SUM(CASE WHEN j.Active = 1 THEN 1 ELSE 0 END) AS ActiveJobs,
+    SUM(CASE WHEN j.Active = 0 THEN 1 ELSE 0 END) AS InactiveJobs,
+    COUNT(DISTINCT j.JobID) AS TotalJobs
+FROM 
+    Clients c
+LEFT JOIN 
+    (SELECT DISTINCT ClientID, JobID, Active FROM Job) j ON c.ClientID = j.ClientID
+GROUP BY 
+    c.ClientID, c.ClientName
+ORDER BY 
+    c.ClientID;`;
+      request.query(query, function (err, recordset) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("Error querying Trainee table");
+          return;
+        }
+        var result = {
+          flag: 1,
+          result: recordset.recordset,
+        };
+        console.log(result.result);
+        res.send(result.result);
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.post("/getjobreportbydate", function (req, res) {
+  sql.connect(config)
+    .then(pool => {
+      return pool.request()
+        .input('traineeId', sql.Int, req.body.traineeId)
+        .input('startDate', sql.DateTime, new Date(req.body.startDate))
+        .input('endDate', sql.DateTime, new Date(req.body.endDate))
+        .query(`
+          SELECT 
+            RecruitmentmanagerID,
+            SUM(CASE WHEN Active = 1 THEN 1 ELSE 0 END) AS ActiveJobs,
+            SUM(CASE WHEN Active = 0 THEN 1 ELSE 0 END) AS InactiveJobs
+          FROM 
+            job
+          WHERE 
+            RecruitmentmanagerID = @traineeId
+            AND CreateTime BETWEEN @startDate AND @endDate
+          GROUP BY 
+            RecruitmentmanagerID;
+        `);
+    })
+    .then(result => {
+      res.json({
+        flag: 1,
+        result: result.recordset,
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error querying job table");
+    });
+});

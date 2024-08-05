@@ -176,7 +176,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
-
+import { jobReportComponent } from './reports/job-report.component';
+import { jobByStatusComponent} from './reports/job-by-status.component';
+import { jobByClientComponent} from './reports/job-by-client.component';
 
 
 @NgModule({
@@ -282,6 +284,9 @@ import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view
       CorporateDocumentComponent,
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
+      jobReportComponent,
+      jobByStatusComponent,
+      jobByClientComponent
     // TimesheetViewdetailsComponent
 
   ],
@@ -358,7 +363,7 @@ import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view
     PaginationModule.forRoot(),
     NgxLoadingModule.forRoot({}),
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatNativeDateModule 
   ],
   providers: [CookieService, BsLocaleService, AuthGuard, AppService, AppConfigService,DatePipe,
     {

@@ -1,0 +1,79 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Job Report</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.card-container {
+  display: flex;
+  justify-content: space-between; /* Adjust as needed */
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(50% - 10px); /* Adjust width as needed */
+}
+
+.card-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.card-content {
+  text-align: center;
+}
+.card:hover {
+      background-color: #7647a2; 
+      color: white  ;/* Adjust highlight color as needed */
+    }
+
+.jobs-card {
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 36rem;
+height: 20rem;
+box-shadow: rgba(128, 96, 245, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+background-image: linear-gradient(666deg, rgba(94, 94, 94, 0.04) 0%, rgba(94, 94, 94, 0.04) 48%,rgba(220, 220, 220, 0.04) 48%, rgba(220, 220, 220, 0.04) 100%),linear-gradient(628deg, rgba(232, 232, 232, 0.04) 0%, rgba(232, 232, 232, 0.04) 9%,rgba(135, 135, 135, 0.04) 9%, rgba(135, 135, 135, 0.04) 100%),linear-gradient(384deg, rgba(26, 26, 26, 0.04) 0%, rgba(26, 26, 26, 0.04) 47%,rgba(147, 147, 147, 0.04) 47%, rgba(147, 147, 147, 0.04) 100%),linear-gradient(566deg, rgba(235, 235, 235, 0.04) 0%, rgba(235, 235, 235, 0.04) 68%,rgba(140, 140, 140, 0.04) 68%, rgba(140, 140, 140, 0.04) 100%),linear-gradient(450deg, rgb(180,99,221),rgb(243, 198, 242));
+}
+
+.jobs-card:hover {
+  transform: scale(1.05);
+}
+
+</style>
+
+<section class="content">
+    <div class="container-fluid">
+        <accordion [isAnimated]="true">
+            <div class="card-container">
+                <mat-card class="jobs-card" style="margin-left: 2rem;width: 33rem;" [routerLink]="['/reports/jobbystatus']">
+                    <mat-card-header>
+                      <mat-card-title>
+                        <h1 class="centered-bold-text" style="margin-left: 8rem;"  >Tap to view job status</h1>
+                      </mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src="https://img.freepik.com/free-vector/gradient-join-us-concept-illustrated_23-2148948787.jpg?t=st=1721324557~exp=1721328157~hmac=7f0a6ca8521f908943da3a0e66ec88fcae93c7be3e0bc68b11eb04feda1f5445&w=996" alt="Job Status Image">
+                    <mat-card-content>
+                    </mat-card-content>
+                  </mat-card>
+                  
+                  <mat-card class="jobs-card" style="margin-left: 2rem;width: 33rem;" [routerLink]="['/reports/jobbyclient']">
+                    <mat-card-header>
+                      <mat-card-title>
+                        <h1 class="centered-bold-text">Tap to view job client</h1>
+                      </mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src="https://img.freepik.com/free-vector/illustrated-choice-worker-concept_23-2148636290.jpg?t=st=1721324693~exp=1721328293~hmac=660cdd32b875daa04973e9d96d72073429cd3b5c26c5a6feb01aa47b13cb12b5&w=996" alt="Job Client Image">
+                    <mat-card-content>
+                    </mat-card-content>
+                  </mat-card>
+              </div>
+        </accordion>
