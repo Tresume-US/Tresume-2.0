@@ -91,6 +91,8 @@ export class HrmsService {
   // createnotification(request: any): Observable<ResponseDetails> {
   //   return this.http.post<ResponseDetails>(this.endpoint + 'createnotification', request);
   // }
+
+  
 }
 export interface ResponseDetails {
   message(message: any): unknown;

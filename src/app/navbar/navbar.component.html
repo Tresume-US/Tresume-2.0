@@ -27,7 +27,7 @@
                 <div class="notification-container">
                     <div class="notification-icon" (click)="togglePopup()">
                         <i class="fas fa-bell"></i>
-                        <span class="badge" *ngIf="unreadCount !== 0">{{ unreadCount }}</span>
+                        <span class="badge" *ngIf="notificationCount !== 0">{{  this.notificationCount  }}</span>
                       </div>
                     <div class="notification-popup" *ngIf="isPopupOpen">
                         <div *ngIf="!selectedNotification" class="notification-header">
