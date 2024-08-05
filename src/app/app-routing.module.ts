@@ -113,6 +113,9 @@ import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.co
 import { PerformanceReportsComponent } from './reports/performance-report.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 import { WhatsappComponent } from './integration/whatsapp/whatsapp.component';
+import { MailChimpComponent } from './integration/mail-chimp/mail-chimp.component';
+import { BeeLinesComponent } from './integration/bee-lines/bee-lines.component';
+
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: 'compliancedashboard', component: ComplianceDashboardComponent, canActivate: [AuthGuard]   },
@@ -238,6 +241,8 @@ const routes: Routes = [
   { path: 'reports/performance', component: PerformanceReportsComponent },
   { path: 'recruitersview/:jobId', component: RecruiterViewJobsComponent },
   { path: 'integration/whatsapp', component: WhatsappComponent},
+  { path: 'integration/mail-chimps', component: MailChimpComponent},
+  { path: 'integration/beeline', component:BeeLinesComponent},
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  
