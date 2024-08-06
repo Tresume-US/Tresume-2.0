@@ -373,6 +373,14 @@
                             </a>
                           </li>
                         </ul>
+                        <ul id="email" class="nav nav-treeview" [ngStyle]="{'display': isSubMenuOpen['integrationSubMenu'] ? 'block' : 'none'}">
+                            <li class="nav-item">
+                              <a class="nav-link" routerLink="integration/email">
+                                <i class="fa fa-envelope"></i>
+                                <p>Email</p>
+                              </a>
+                            </li>
+                          </ul>
                       </li>     
                     <li class="nav-item">
                         <a routerLink="/profile" class="nav-link">

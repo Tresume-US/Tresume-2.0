@@ -39,7 +39,6 @@ export class WhatsappComponent implements OnInit {
    
     if (this.whatappForm.invalid) {
       this.submitted = true;
-      console.log("inside the invalid");
       Swal.fire({
         title: 'Mandatory fields missing !!!',
         text: 'Please fill in all the required fields.',

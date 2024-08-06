@@ -18,8 +18,15 @@ export class IntegrationService {
   }
 
   insertWhatsapp(obj:any): Observable<ResponseDetails>{
-    console.log("inside the insertwhatsapp")
     return this.http.post<ResponseDetails>(this.endpoint+'insert-whatsapp',obj)
+  }
+
+  insertEmail(obj:any): Observable<ResponseDetails>{
+    return this.http.post<ResponseDetails>(this.endpoint+'insert-email',obj)
+  }
+
+  sendEmail(obj:any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint+'send-mail', obj );
   }
 
 }

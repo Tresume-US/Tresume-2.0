@@ -38,6 +38,10 @@ export class CreateNewJobsComponent{
   reqInfo: any;
   orgInfo: any;
   selectedstate:any=0;
+  orgLogo: string = '';
+  orgName: string = '';
+  isAdmin: string;
+  admin:any;
   OrgID: string;
   routeType: any;
   TraineeID: any;
@@ -140,6 +144,12 @@ this.loading = true;
   this.TraineeID = this.cookieService.get('TraineeID');
   this.username = this.cookieService.get('userName1');
   this.routeType = this.route.snapshot.params["routeType"];
+  this.isAdmin = this.cookieService.get('IsAdmin');
+  if(!this.isAdmin){
+    this.admin = this.cookieService.get('admin')
+  }else{
+    this.admin = this.cookieService.get('userName1')
+  }
   this.getJobPostData();
   }
 
@@ -182,11 +192,6 @@ this.loading = true;
     // Log the selected value
     console.log(selectedOption.Value);
   }
-  
-   
-
-
-
 
 getCity() {
   console.log(this.selectedstate);
@@ -303,10 +308,10 @@ getCity() {
           jobboardaccount:this.selectedJobboardaccount
       };
   
-      console.log(Req);
       this.service.PostJob(Req).subscribe(
           (x: any) => {
             this.loading = false;
+            this.Email(Req);
               this.messageService.add({ severity: 'success', summary: 'Job Posted Successfully' });
               this.router.navigate(['/jobpostings']);
           },
@@ -326,9 +331,60 @@ getCity() {
   
   }
 
-  JobboardSelection(data:any){
-    
+  Email(data: any) {
+    var clientlogo;
+    if (this.orgLogo === null || this.orgLogo === undefined) {
+        clientlogo = '';
+    } else {
+        clientlogo = `<img src='${this.orgLogo}' alt = '${this.orgName}' class='logo'>`;
+    }
 
+    // Prepare the job details
+    const jobDetails = `
+      <p>Job Code: ${data.JobCode}</p>
+      <h3>BASIC INFORMATION</h3>
+      <p>COMPANY NAME: ${data.Company}</p>
+      <p>JOB TITLE: ${data.JobTitle}</p>
+      <p>COUNTRY: ${data.Country}</p>
+      <p>STATE: ${data.State}</p>
+      <p>CITY: ${data.City}</p>
+      <p>ZIP CODE: ${data.ZipCode}</p>
+      <p>CITY CODE: ${data.AreaCode}</p>
+      <p>ADDRESS: ${data.Address}</p>
+      <h3>REQUIREMENT INFORMATION</h3>
+      <p>MIN. EXPERIENCE: ${data.MinYearsOfExpInMonths / 12} years</p>
+      <p>Job Status: ${data.JobStatus}</p>
+      <p>Legal Status: ${data.LegalStatus}</p>
+      <p>Pay Rate: ${data.PayRate}</p>
+      <p>Bill Rate: ${data.BillRate}</p>
+      <p>JOB DESCRIPTION: ${data.JobDescription}</p>
+    `;
+
+    // Format the email content
+    const emailContent = `
+      <p>Hello Admin,</p>
+      <p>A new job has been successfully posted to the system.</p>
+      <p>Job Details:</p>
+      ${jobDetails}
+      <p>Thanks & Regards,</p>
+      <p>${this.username}</p>
+    `;
+
+    // Prepare the request for sending the email
+    const request = {
+        to: this.admin,
+        subject: 'Job Posted Successfully',
+        text: emailContent,
+    };
+
+    // Send the email
+    this.service.sendEmail(request).subscribe(x => {
+        this.messageService.add({ severity: 'success', summary: 'Job Posting Email Sent' });
+    });
+}
+
+
+  JobboardSelection(data:any){
     if(data.Active){
       this.selectedJobboardaccount.push(data)
     }else{

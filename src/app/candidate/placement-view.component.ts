@@ -13,13 +13,14 @@ import * as FileSaver from 'file-saver';
 import { CookieService } from 'ngx-cookie-service';
 import { MatLabel } from '@angular/material/form-field';
 import { MessageService } from 'primeng/api';
+import { HrmsService } from '../hrms/hrms.service';
 
 
 @Component({
     selector: 'app-placement-view',
     templateUrl: './placement-view.component.html',
     styleUrls: ['./candidate.component.scss'],
-    providers: [CandidateService, DashboardService, DatePipe,MessageService]
+    providers: [CandidateService, DashboardService, DatePipe,MessageService,HrmsService]
 })
 
 
@@ -38,6 +39,10 @@ export class PlacementViewComponent implements OnInit {
     public gridOptions: GridOptions = {};
     public traineeId: any;
     public saved: boolean = false;
+    isAdmin: string;
+    admin:any;
+    orgLogo: string = '';
+    orgName: string = '';
 
 
     states: { name: string, code: string }[] = [
@@ -100,11 +105,17 @@ export class PlacementViewComponent implements OnInit {
     OrgID: any;
     placementAdd: any;
 
-    constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private service: CandidateService, private datePipe: DatePipe, private cd: ChangeDetectorRef, private cookieService: CookieService,private router: Router, private messageService: MessageService) {
+    constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private service: CandidateService, private datePipe: DatePipe, private cd: ChangeDetectorRef, private cookieService: CookieService,private router: Router, private messageService: MessageService,private hrmsService:HrmsService) {
         this.placementItem.placementID = this.route.snapshot.params["placementID"];
         this.placementItem.TraineeID = this.traineeId = this.route.snapshot.params["traineeId"];
         this.placementItem.routetype = this.traineeId = this.route.snapshot.params["routetype"];
         this.OrgID = this.cookieService.get('OrgID');
+        this.isAdmin = this.cookieService.get('IsAdmin');
+        if(this.isAdmin == 'false'){
+          this.admin = this.cookieService.get('admin')
+        }else{
+          this.admin = this.cookieService.get('userName1')
+        }
         this.myForm = this.formBuilder.group({
         });
 
@@ -304,6 +315,43 @@ export class PlacementViewComponent implements OnInit {
         this.placementItem.MarketerID = params.TraineeID;
 
     }
+    generateEmailContent(data:any, action: string, additionalInfo?: string) {
+        let subject = '';
+        let text = '';
+      
+        switch (action) {
+            case 'placement':
+              subject = 'Candidate placement  Successfully';
+              text = `
+              <p>Hello,</p>
+               <p>A candidate's placement details have been successfully updated in the system.</p>
+              <p>Thank You </p>
+              `;
+              break;
+        }
+      
+        return { subject, text };
+      }
+    Email(data: any, action: string, additionalInfo?: string) {
+        var clientlogo;
+        if (this.orgLogo === null || this.orgLogo === undefined) {
+          clientlogo = '';
+        } else {
+          clientlogo = `<img src='${this.orgLogo}' alt='${this.orgName}' class='logo'>`;
+        }
+        const emailContent = this.generateEmailContent( data, action, additionalInfo);
+      
+        const request = {
+          orgid: this.OrgID,
+          to: this.admin,
+          subject: emailContent.subject,
+          text: emailContent.text,
+        };
+      
+        this.hrmsService.sendEmail(request).subscribe(x => {
+          this.messageService.add({ severity: 'success', summary: 'Email Sent' });
+        });
+      }
 
     onSubmit() {
         this.loading = true;
@@ -316,6 +364,7 @@ export class PlacementViewComponent implements OnInit {
           this.router.navigateByUrl(url);
         });
         this.messageService.add({ severity: 'success', summary:  'Success' });
+        this.Email(requestItem ,'placement')
         this.loading = false;
 
     }

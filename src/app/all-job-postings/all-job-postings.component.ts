@@ -195,7 +195,6 @@ console.log(this.usertype);
       subject: `Job Details: ${this.selectedJobTitle} -${this.selectedJobID}`,
       content: `Job Description: ${this.selectedJobDescription}`
     };
-  console.log(req)
     this.loading = true;
 
     this.service.JdEmailSent(req).subscribe(

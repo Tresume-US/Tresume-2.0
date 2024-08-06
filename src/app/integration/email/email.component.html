@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>Email</h2>
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" class="email-form">
+      <div class="form-group">
+        <label for="user">User:</label>
+        <input type="text" id="user" formControlName="user" class="form-control">
+        <!-- <div *ngIf="submitted && whatappControl.user.errors" class="invalid-feedback">
+          <div *ngIf="whatappControl.user.errors.required">
+            This field is mandatory
+          </div>
+        </div> -->
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="text" id="password" formControlName="password" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="host">SMTP Host:</label>
+        <input type="text" id="host" formControlName="smtphost" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="port">SMTP Port:</label>
+        <input type="text" id="host" formControlName="smtpport" class="form-control">
+      </div>
+      <div class="row mt-3 offset-mt-4">
+        <div class="col-md-12 text-right">
+          <div class="btn-group">
+            <button type="button" (click)="ngOnInit()" class="btn btn-round btn-secondary custom-btn">Reset</button>
+            <button type="submit" class="btn btn-round btn-warning ml-2 custom-btn" style="background-color:#482668;color: white;">Send </button>
+            <!-- <button type="button" (click)="onCreate()" class="btn btn-round btn-warning">Create</button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-toast position="bottom-right"></p-toast>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

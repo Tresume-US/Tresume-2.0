@@ -113,6 +113,8 @@ import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.co
 import { PerformanceReportsComponent } from './reports/performance-report.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 import { WhatsappComponent } from './integration/whatsapp/whatsapp.component';
+import { EmailComponent } from './integration/email/email.component';
+
 const routes: Routes = [
   { path: 'dashboard/:traineeId', component: DashboardComponent, canActivate: [AuthGuard]  },
   { path: 'compliancedashboard', component: ComplianceDashboardComponent, canActivate: [AuthGuard]   },
@@ -238,6 +240,7 @@ const routes: Routes = [
   { path: 'reports/performance', component: PerformanceReportsComponent },
   { path: 'recruitersview/:jobId', component: RecruiterViewJobsComponent },
   { path: 'integration/whatsapp', component: WhatsappComponent},
+  { path: 'integration/email', component: EmailComponent},
   // { path: '', redirectTo: 'homelanding', pathMatch: 'full' },
   { path: '**', redirectTo: '', pathMatch: 'full' }, 
  

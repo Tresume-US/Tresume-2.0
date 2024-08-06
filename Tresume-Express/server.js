@@ -53,7 +53,7 @@ const Invoice = require("./Invoice");
 const CorporateDocument = require("./corporate-document");
 const CBapi = require("./cb");
 const Dashboard = require("./dashboard");
-const WhatsApp = require("./whatsapp")
+const Integration = require("./integration")
 
 app.use("/", onboardRoutes);
 app.use("/", Dashboard);
@@ -78,7 +78,7 @@ app.use("/", Invoice);
 app.use("/", submittedcandidates);
 app.use("/", CorporateDocument);
 app.use("/", CBapi);
-app.use("/", WhatsApp)
+app.use("/", Integration)
 app.use(
   session({
     secret: "Tresume@123",
@@ -91,15 +91,15 @@ app.use("/", onboardRoutes);
 app.use("/", candidateRoutes);
 
 const route = express.Router();
-const transporter = nodemailer.createTransport({
-  port: 465,
-  host: "smtp.mail.yahoo.com",
-  auth: {
-    user: "support@tresume.us",
-    pass: "xzkmvglehwxeqrpd",
-  },
-  secure: true,
-});
+// const transporter = nodemailer.createTransport({
+//   port: 465,
+//   host: "smtp.mail.yahoo.com",
+//   auth: {
+//     user: "support@tresume.us",
+//     pass: "xzkmvglehwxeqrpd",
+//   },
+//   secure: true,
+// });
 
 // function formatValue(value) {
 //   return value !== undefined ? `'${value}'` : '';
@@ -146,92 +146,139 @@ function getDaysBetweenDates(start, end, dayName) {
   return result;
 }
 
-app.post("/text-mail", (req, res) => {
-  const { to, subject, text } = req.body;
-  const mailData = {
-    from: "support@tresume.us",
-    to: to,
-    subject: subject,
-    html: `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tresume</title>
-    <style>
-        body {
+async function getFrom(orgId) {
+  try {
+    // let pool = await sql.connect(config);
+    const result = await pool.query`SELECT * FROM Integrations WHERE type = 2 AND orgId = ${orgId}`;
+    return result.recordset;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+app.post('/text-mail', async (req, res) => {
+  try {
+    const { orgid, to, subject, text } = req.body;
+    console.log('inside the server', orgid);
+
+    const integrationData = await getFrom(orgid);
+    if (!integrationData.length) {
+      return res.status(404).send({ message: 'No integration data found for the given orgId' });
+    }
+
+    const { username, password, host, smtpport } = integrationData[0];
+
+    // Configure the transporter with the retrieved SMTP details
+    const transporter = nodemailer.createTransport({
+      host: host,
+      port: smtpport,
+      secure: smtpport == 465, // true for 465, false for other ports
+      auth: {
+        user: username,
+        pass: password,
+      },
+    });
+
+    const mailData = {
+      from: username,
+      to: to,
+      subject: subject,
+      html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Tresume</title>
+      <style>
+          body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
         }
         .container {
             width: 100%;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
         }
         .header {
             text-align: center;
             background-color: #482668;
-            padding: 20px 0;
-     
+            padding: 10px 0;
         }
         .logo {
             display: block;
             margin: 0 auto;
+            height: 50px;
+            min-height: 50px;
         }
         .content {
-            padding: 40px 20px;
+            padding:20px;
             background-color: #f7f9fa;
-            border-top-left-radius: 50px;
-            border-top-right-radius: 50px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333333;
         }
         .footer {
             text-align: center;
             background-color: #e7e7e7;
-            padding: 20px 0;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-        }
-        .footer p {
+            padding: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
             font-size: 12px;
             color: #8d8d8d;
+        }
+        .footer p {
+            margin: 5px 0;
         }
         .footer img {
             display: inline-block;
             vertical-align: middle;
             margin-right: 5px;
         }
-    </style>
-    </head>
-    <body style="background-color: #482668;">
-    <div class="container">
-        <div class="header">
-            <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo" height="100" class="logo">
-        </div>
-        <div class="content">
-            ${text}
-        </div>
-        <div class="footer">
-            <p>POWERED BY <img src="https://tresume.us/assets/img/logo.png" alt="Tresume Logo" height="30"></p>
-            <p> 44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
-            <p>(703) 9863350 | support@tresume.us </p>
-            <p style="font-weight: bold; font-size: 12px; color: #a4a4a4;">© 2024 Tresume. Ltd. All rights reserved</p>
-        </div>
-    </div>
-    </body>
-    </html>
-    
-    `,
-  };
+      </style>
+      </head>
+      <body>
+      <div class="container">
+          <div class="header">
+              <img src="https://tresume.us/email/Tresume_logo.png" alt="Tresume Logo"  class="logo">
+          </div>
+          <div class="content">
+              ${text}
+              
+          </div>
+          <div class="footer">
+              <p>POWERED BY </p>
+              <p>44121 Leesburg Pike., STE 230 Ashburn, VA 20147, United States Of America</p>
+              <p>(703) 986-3350 | support@tresume.us</p>
+              <p style="font-weight: bold; color: #a4a4a4;">© 2024 Tresume Ltd. All rights reserved</p>
+          </div>
+      </div>
+      </body>
+      </html>
+      `,
+    };
 
-  transporter.sendMail(mailData, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    res.status(200).send({ message: "Mail sent", message_id: info.messageId });
-  });
+    transporter.sendMail(mailData, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send({ message: 'Error sending mail', error: error.message });
+      }
+      res.status(200).send({ message: 'Mail sent', message_id: info.messageId });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'An error occurred', error: error.message });
+  }
 });
+
+
 
 
 // config for your database

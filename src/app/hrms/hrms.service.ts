@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 
@@ -85,6 +85,22 @@ export class HrmsService {
   deleteHrmsdata(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deleteHrmsdata', request);
   }
+
+  getorganizationLogo(orgID: any): Observable<ResponseDetails> {
+    let req = { OrgID: orgID }
+    return this.http.post<ResponseDetails>(this.endpoint + 'getorganizationLogo', req);
+  }
+
+  sendEmail(request: any): Observable<ResponseDetails> {
+    let params = new HttpParams({
+        fromObject: { orgid:request.orgid, to: request.to, subject: request.subject, text: request.text },
+    });
+
+    let httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    };
+    return this.http.post<ResponseDetails>(this.endpoint + 'text-mail', params.toString(), httpOptions);
+}
 }
 export interface ResponseDetails {
   message(message: any): unknown;

@@ -31,7 +31,11 @@ export class TalentBenchComponent implements OnInit {
   legalStatus: string[] = [];
   tableData: any[] = [];
   searchTerm: string = '';
+  orgLogo: string = '';
+  orgName: string = '';
   noResultsFound: boolean = false;
+  isAdmin: string;
+  admin:any;
   newGroupName: any;
   grouplistdata: any;
   groupOptions: any;
@@ -53,9 +57,15 @@ export class TalentBenchComponent implements OnInit {
     this.TraineeID = this.cookieService.get('TraineeID');
     this.routeType = 2;
     this.candidateID = this.route.snapshot.params["traineeID"];
+    this.isAdmin = this.cookieService.get('IsAdmin');
+    if(this.isAdmin == 'false'){
+      this.admin = this.cookieService.get('admin')
+    }else{
+      this.admin = this.cookieService.get('userName1')
+    }
   }
 
-  recruiterNames: string[] = [];
+  recruiterNames: any[] = [];
   candidateStatuses: string[] = [];
   marketerNames: string[] = [''];
   marketerName: string[] = [''];
@@ -400,7 +410,7 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
   }
 
   saveData() {
-
+console.log("inside the dave data")
     let Req = {
       firstName: this.addCandidate.value.FirstName,
       middleName: this.addCandidate.value.MiddleName,
@@ -428,6 +438,7 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
     this.service.AddTalentBenchList(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
+        this.Email(Req);
         this.fetchtalentbenchlist();
       },
       (error: any) => {
@@ -448,6 +459,51 @@ updateSelected(selectedId: string, traineeID: number,type:any) {
     });
   }
 
+  Email(data:any) {
+    console.log("inside the email",data)
+    var clientlogo;
+    if (this.orgLogo === null || this.orgLogo === undefined) {
+        clientlogo = '';
+    } else {
+        clientlogo = `<img src='${this.orgLogo}' alt = '${this.orgName}' class='logo'>`;
+    }
+    const candidateDetails = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      gender: data.gender,
+      currentLocation: data.currentLocation
+    };
+const formattedCandidateDetails = `
+  <p>First Name: ${candidateDetails.firstName}</p>
+  <p>Last Name: ${candidateDetails.lastName}</p>
+  <p>Email: ${candidateDetails.email}</p>
+  <p>Phone: ${candidateDetails.phone}</p>
+  <p>Gender: ${candidateDetails.gender}</p>
+  <p>Current Location: ${candidateDetails.currentLocation}</p>
+`;
+
+let recruiter = this.recruiterNames.find(val => val.traineeid == this.recruiterName);
+
+const request = {
+  to: this.admin,
+  subject: 'Candidate Added Successfully',
+  text: `
+    <p>Hello ${recruiter.firstname + " " + recruiter.lastname},</p>
+    <p>A new candidate has been successfully added to the system.</p>
+    <p>Candidate Details:</p>
+    ${formattedCandidateDetails}
+    <p>Thanks & Regards,</p>
+    <p>${recruiter.firstname + " " + recruiter.lastname}</p>
+  `,
+};
+
+    this.service.sendEmail(request).subscribe(x => {
+        this.messageService.add({ severity: 'success', summary: 'Welcome Email Sent' });
+    });
+  
+  }
   fetchtalentbenchlist() {
     this.loading = true;
     let Req = {

@@ -7,10 +7,11 @@ import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { DatePipe } from '@angular/common';
+import { HrmsService } from '../hrms/hrms.service';
 
 @Component({
   templateUrl: './review-tresume.component.html',
-  providers: [CookieService, ReviewService, MessageService,AppService],
+  providers: [CookieService, ReviewService, MessageService, AppService, HrmsService],
   styleUrls: ['./review-tresume.component.scss']
 })
 
@@ -53,12 +54,11 @@ export class ReviewTresumeComponent implements OnChanges {
   routingnum1: any;
   salaryDepositType: any;
   howMuch: any;
-  submissionList: any[] = []; 
+  submissionList: any[] = [];
 
 
   //general declaration
   recruiterName: any = 0;
-  ReferredBy: any;
   currentStatus: any;
   legalStatusVal: Date;
   legalStatusValend: Date;
@@ -150,8 +150,8 @@ export class ReviewTresumeComponent implements OnChanges {
   deleteIndex: number;
   reviewService: any;
   placementList: any;
-  candidateID:any;
-  selectedcurrentstatus:string='';
+  candidateID: any;
+  selectedcurrentstatus: string = '';
   selectedStatus: string = '-PLACED/WORKING AT CLIENT LOCATION-';
   statuss: string[] = ['ON TRAINING', 'DIRECT MARKETTING', 'ON BENCH', 'MARKETTING ON HOLD', 'HAS OFFER', 'FIRST TIME CALLER', 'DROPPED TRAINING'];
 
@@ -164,10 +164,10 @@ export class ReviewTresumeComponent implements OnChanges {
   ssn: string = '';
   showSSN: boolean = false;
   inputDisabled: boolean = true;
-  loading:boolean = false;
-  phoneNumberG:any 
-  generalEmail:any 
-  DealOffered:any 
+  loading: boolean = false;
+  phoneNumberG: any
+  generalEmail: any
+  DealOffered: any
   selectedrecruiterName: any;
   state: any;
   ReferredBy2: any;
@@ -181,14 +181,18 @@ export class ReviewTresumeComponent implements OnChanges {
   Availability: any = '0';
   txtComments: any;
   MarketerName: any;
-  TresumeID:any = '';
+  TresumeID: any = '';
   candiateName: any;
   ProfileVideoFile: any;
-  profilevideoPath:any;
+  profilevideoPath: any;
   videouploadDate: any;
   videoPlayershow: boolean = false;
-skillSet: any;
+  skillSet: any;
   resumeFile: string | Blob;
+  isAdmin: string;
+  admin: any;
+  orgLogo: string = '';
+  orgName: string = '';
 
   startShowingSSN() {
     this.showSSN = true;
@@ -211,11 +215,11 @@ skillSet: any;
         break;
       case 2:
         this.saveInterviewFormData();
-        
+
         break;
       case 3:
         this.savePlacementFormData();
-        
+
         break;
       case 4:
         this.saveFinancialInfoFormData();
@@ -223,7 +227,7 @@ skillSet: any;
       case 5:
         this.saveSiteVisitFormData();
         break;
-      
+
       default:
         console.error('Invalid tab index');
     }
@@ -246,8 +250,8 @@ skillSet: any;
       statusDate: this.datePipe.transform(this.statusDate),
       duiFelonyInfo: this.duiFelonyInfo,
       selectedcurrentstatus: this.selectedcurrentstatus,
-      legalStatusVal:  this.datePipe.transform(this.legalStatusVal),
-      legalStatusValend:  this.datePipe.transform(this.legalStatusValend),
+      legalStatusVal: this.datePipe.transform(this.legalStatusVal),
+      legalStatusValend: this.datePipe.transform(this.legalStatusValend),
       selectedLegalStatus: this.selectedLegalStatus,
       ftcNotes: this.ftcNotes,
       otherNotes: this.otherNotes,
@@ -271,13 +275,13 @@ skillSet: any;
       City: this.personalCity,
       Zipcode: this.personalZipcode,
       AddressType: this.addressType,
-      ReferredBy_external:this.referredByExternal,
+      ReferredBy_external: this.referredByExternal,
       skill: this.skillSet
-  };
-  
+    };
+
     console.log(Req);
-    
-    console.log('Education Data:'+this.educations);
+
+    console.log('Education Data:' + this.educations);
 
     console.log('Experience Data:');
     for (let i = 0; i < this.experiences.length; i++) {
@@ -319,9 +323,9 @@ skillSet: any;
       'Zipcode': this.personalZipcode,
       'Address Type': this.addressType
     };
-      console.log("Personal-Info Tab")
-      console.log(formData);
-    
+    console.log("Personal-Info Tab")
+    console.log(formData);
+
   }
 
   private handleSuccess(response: any): void {
@@ -330,30 +334,32 @@ skillSet: any;
     this.loading = false;
     this.fetchinterviewlist();
   }
-  
+
   private handleError(response: any): void {
-    this.messageService.add({ severity: 'error', summary:  response.message });
+    this.messageService.add({ severity: 'error', summary: response.message });
     this.loading = false;
   }
 
-  FetchProfileVideo(){
-    let req={
-      traineeid:this.candidateID
+  FetchProfileVideo() {
+    let req = {
+      traineeid: this.candidateID
     }
 
     this.service.FetchProfileVideo(req).subscribe(
       (x: any) => {
-        let result = x.result;
-        if(result[0].profilevideoPath == '' || result[0].profilevideoPath == null){
+        let result = x;
+        if (result.profilevideoPath == '' || result.profilevideoPath == null) {
           this.videoPlayershow = false
-        }else{
+        } else {
           this.videoPlayershow = true
-          this.profilevideoPath = result[0].profilevideoPath;
-          this.videouploadDate = result[0].videouploadDate;
-          this.FetchProfileVideo();
+          this.profilevideoPath = result.profilevideoPath;
+          this.videouploadDate = result.videouploadDate;
+         
+          // this.FetchProfileVideo();
         }
-        
+
         this.loading = false;
+   
       },
       (error: any) => {
         this.loading = false;
@@ -361,27 +367,28 @@ skillSet: any;
     );
   }
 
-Resumepath: string = '';
+  Resumepath: string = '';
 
-FetchResume() {
-  let req = {
-    traineeid: this.candidateID
-  };
+  FetchResume() {
+    let req = {
+      traineeid: this.candidateID
+    };
 
-  this.service.FetchResume(req).subscribe(
-    (x: any) => {
-      let result = x.result;
-      if (result && result.length > 0 && result[0].ResumePath) {
-        this.Resumepath = "https://tresume.us/" + result[0].ResumePath;
+    this.service.FetchResume(req).subscribe(
+      (x: any) => {
+        console.log(x,"responce from fetchresume")
+        let result = x;
+        if (result && result.length > 0 && result[0].ResumePath) {
+          this.Resumepath = "https://tresume.us/" + result[0].ResumePath;
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        console.error('Error fetching resume:', error);
+        this.loading = false;
       }
-      this.loading = false;
-    },
-    (error: any) => {
-      console.error('Error fetching resume:', error);
-      this.loading = false;
-    }
-  );
-}
+    );
+  }
   // submitResume() {
   //   console.log('resume',this.resumeFile)
   //     console.log(this.candidateID)
@@ -389,7 +396,7 @@ FetchResume() {
   //     const formData = new FormData();
   //     formData.append('resume', this.resumeFile);
   //     formData.append('traineeid', this.candidateID);
-  
+
   //     // this.service.ProfileResumeUpload(formData).subscribe(
   //     //   response => {
   //     //     this.resumeUrl = response.path;
@@ -408,21 +415,21 @@ FetchResume() {
   //     const formData = new FormData();
   //     formData.append('resume', this.resumeFile);
   //     formData.append('traineeid', this.candidateID);
-      
+
   //     console.log('resume', this.resumeFile);
   //     console.log('candidateID', this.candidateID);
-      
+
   //     if (this.resumeFile instanceof File) {
   //       console.log('Document path:', this.resumeFile.name);
   //     } else {
   //       console.log('Selected file is not of type File.');
   //     }
-      
+
   //   } else {
   //     console.log('No resume file selected.');
   //   }
   // }
-  
+
   // onFileSelectedResume(event: Event): void {
   //   const input = event.target as HTMLInputElement;
   //   if (input.files && input.files.length > 0) {
@@ -447,7 +454,7 @@ FetchResume() {
       if (reader.result) {
         this.fileBlob = reader.result;
         const b64Data = (this.fileBlob as string).split(',')[1];
-        this.saveResume(b64Data, file.name); 
+        this.saveResume(b64Data, file.name);
       }
     };
     reader.readAsDataURL(file);
@@ -466,7 +473,7 @@ FetchResume() {
 
   private saveResume(b64Data: string, filename: string): void {
     const saveResumeReq = {
-      Filename: this.generalEmail+'_'+filename,
+      Filename: this.generalEmail + '_' + filename,
       Content: b64Data,
       userName: this.candidateID,
       emailID: this.generalEmail,
@@ -480,13 +487,13 @@ FetchResume() {
       this.messageService.add({ severity: 'error', summary: 'Resume upload failed' });
     });
   }
-  
+
 
   onFileSelected(event: any) {
     this.ProfileVideoFile = event.target.files[0];
   }
 
-  submitVideo(){
+  submitVideo() {
     this.loading = true;
     if (!this.ProfileVideoFile) {
       console.error('No file selected');
@@ -509,7 +516,93 @@ FetchResume() {
 
 
   }
+  generateEmailContent(data: any, action: string, additionalInfo?: string) {
+    console.log("inside the generateemail")
+    let subject = '';
+    let text = '';
 
+    switch (action) {
+      case 'submission':
+        const candidateDetailsSubmission = {
+          title: data.title,
+          submissionDate: data.submissionDate,
+          notes: data.notes,
+          vendorName: data.vendorName,
+          rate: data.rate,
+          clientName: data.clientName,
+          // recruiteremail: data.userName,
+          // MarketerID: data.TraineeID,
+          // CandidateID: data.candidateID
+        };
+        const formattedCandidateDetailsSubmission = `
+        ${candidateDetailsSubmission.title ? `<p>Title: ${candidateDetailsSubmission.title}</p>` : ''}
+        ${candidateDetailsSubmission.submissionDate ? `<p>Submission Date: ${candidateDetailsSubmission.submissionDate}</p>` : ''}
+        ${candidateDetailsSubmission.notes ? `<p>Notes: ${candidateDetailsSubmission.notes}</p>` : ''}
+        ${candidateDetailsSubmission.vendorName ? `<p>Vendor Name: ${candidateDetailsSubmission.vendorName}</p>` : ''}
+        ${candidateDetailsSubmission.rate ? `<p>Rate: ${candidateDetailsSubmission.rate}</p>` : ''}
+        ${candidateDetailsSubmission.clientName ? `<p>Client Name: ${candidateDetailsSubmission.clientName}</p>` : ''}
+      `;     
+        subject = 'Candidate Submission Successful';
+        text = `
+          <p>Hello,</p>
+          <p>A candidate's submission has been successfully processed from the system.</p>
+          <p>Candidate Details:</p>
+          ${formattedCandidateDetailsSubmission}
+        `;
+        break;
+      case 'interview':
+        const candidateDetailsInterview = {
+          interviewDate: data.interviewDate,
+          interviewTime: data.interviewTime,
+          interviewInfo: data.interviewInfo,
+          client: data.client,
+          vendor: data.vendor,
+          subVendor: data.subVendor,
+          // assistedBy: data.assistedBy,
+          // typeOfAssistance: data. typeOfAssistance,
+          //interviewMode: data.interviewMode
+        };
+        const formattedCandidateDetailsInterview = `
+        ${candidateDetailsInterview.interviewDate ? `<p>Interview Date: ${candidateDetailsInterview.interviewDate}</p>` : ''}
+        ${candidateDetailsInterview.interviewTime ? `<p>Interview Time: ${candidateDetailsInterview.interviewTime}</p>` : ''}
+        ${candidateDetailsInterview.interviewInfo ? `<p>Interview Info: ${candidateDetailsInterview.interviewInfo}</p>` : ''}
+        ${candidateDetailsInterview.client ? `<p>Client: ${candidateDetailsInterview.client}</p>` : ''}
+        ${candidateDetailsInterview.vendor ? `<p>Vendor: ${candidateDetailsInterview.vendor}</p>` : ''}
+        ${candidateDetailsInterview.subVendor ? `<p>Sub Vendor: ${candidateDetailsInterview.subVendor}</p>` : ''}
+      `;      
+        subject = 'Candidate Interview Details Successfully Updated';
+        text = `
+          <p>Hello,</p>
+          <p>A candidate's interview details have been successfully updated in the system.</p>
+          <p>Candidate Details:</p>
+          ${formattedCandidateDetailsInterview}
+          <p>Thank You </p>
+        `;
+        break;
+    }
+
+    return { subject, text };
+  }
+  Email(data: any, action: string, additionalInfo?: string) {
+    var clientlogo;
+    if (this.orgLogo === null || this.orgLogo === undefined) {
+      clientlogo = '';
+    } else {
+      clientlogo = `<img src='${this.orgLogo}' alt='${this.orgName}' class='logo'>`;
+    }
+    const emailContent = this.generateEmailContent(data, action, additionalInfo);
+
+    const request = {
+      orgid: this.OrgID,
+      to: this.admin,
+      subject: emailContent.subject,
+      text: emailContent.text,
+    };
+
+    this.hrmsService.sendEmail(request).subscribe(x => {
+      this.messageService.add({ severity: 'success', summary: 'Email Sent' });
+    });
+  }
   saveInterviewFormData() {
 
     console.log('Saving data for the Interview tab:', this.interviewFormData);
@@ -524,18 +617,19 @@ FetchResume() {
       assistedBy: this.myForm.get('assistedBy').value,
       typeOfAssistance: this.myForm.get('typeOfAssistance').value,
       interviewMode: this.myForm.get('interviewMode').value,
-      interviewTimeZone:'EST',
-      traineeID:this.candidateID,
-      recruiterID:this.TraineeID,
-      recruiteremail:this.userName,
-      InterviewStatus:'SCHEDULED',
+      interviewTimeZone: 'EST',
+      traineeID: this.candidateID,
+      recruiterID: this.TraineeID,
+      recruiteremail: this.userName,
+      InterviewStatus: 'SCHEDULED',
     };
-    
+
     console.log(Req);
 
     this.service.insertTraineeInterview(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
+        this.Email(Req, 'interview');
       },
       (error: any) => {
         this.handleError(error);
@@ -558,15 +652,16 @@ FetchResume() {
       vendorName: this.myFormSubmission.value.vendorName,
       rate: this.myFormSubmission.value.rate,
       clientName: this.myFormSubmission.value.clientName,
-      recruiteremail:this.userName,
-      MarketerID:this.TraineeID,
-      CandidateID:this.candidateID
+      recruiteremail: this.userName,
+      MarketerID: this.TraineeID,
+      CandidateID: this.candidateID
     };
     console.log(Req);
     this.service.insertSubmissionInfo(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
         this.getSubmissionList();
+        this.Email(Req, 'submission');
       },
       (error: any) => {
         this.handleError(error);
@@ -605,7 +700,7 @@ FetchResume() {
       Bank2RoutingNumber: this.myFormFinancial.value.routingnum2,
       SalaryDepositType: this.myFormFinancial.value.salaryDepositType,
       HowMuch: this.myFormFinancial.value.howMuch,
-      TraineeID:this.candidateID
+      TraineeID: this.candidateID
 
     };
     console.log(Req);
@@ -623,19 +718,19 @@ FetchResume() {
     console.log('Saving data for the Site Visit tab:', this.siteVisitFormData);
     this.showSaveButton = false
   }
-  
+
 
   onTabChange(tabIndex: number) {
     if (tabIndex >= 0) {
       this.currentTabIndex = tabIndex;
       this.tabIndex = tabIndex;
-      if(tabIndex === 3 || tabIndex ===6 || tabIndex===7|| tabIndex===8){
+      if (tabIndex === 3 || tabIndex === 6 || tabIndex === 7 || tabIndex === 8) {
         this.showSaveButton = false
-      }else{
+      } else {
         this.showSaveButton = true;
       }
       this.saveButtonLabel = `Save`;
-      this.router.navigate(['/reviewtresume/'+this.routeType+'/'+this.candidateID+'/'+tabIndex]);
+      this.router.navigate(['/reviewtresume/' + this.routeType + '/' + this.candidateID + '/' + tabIndex]);
     }
 
     this.currentTabIndex = tabIndex;
@@ -661,10 +756,10 @@ FetchResume() {
     }
   }
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe) {
-    
+  constructor(private route: ActivatedRoute, private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder, private AppService: AppService, private router: Router, private datePipe: DatePipe, private hrmsService: HrmsService) {
+
     this.candidateID = this.route.snapshot.params["traineeID"];
-    this.candiateName  = this.route.snapshot.queryParams['firstName'];
+    this.candiateName = this.route.snapshot.queryParams['firstName'];
     console.log(this.candidateID);
     console.log('First Name:', this.candiateName);
     this.tabIndex = this.route.snapshot.params["tabIndex"];
@@ -674,14 +769,20 @@ FetchResume() {
     this.routeType = this.route.snapshot.params["routeType"];
     this.onTabChange(parseInt(this.tabIndex));
     this.candidateID = this.route.snapshot.params["traineeID"];
+    this.isAdmin = this.cookieService.get('IsAdmin');
+    if (this.isAdmin == 'false') {
+      this.admin = this.cookieService.get('admin')
+    } else {
+      this.admin = this.cookieService.get('userName1')
+    }
 
-   }
+  }
 
   ngOnInit(): void {
     this.fetchinterviewlist();
     this.getPlacementList();
     this.fetchCandidateInfo();
-    this.getSubmissionList() ;
+    this.getSubmissionList();
     this.getOrgUserList();
     this.fetchCandidateInfo();
     this.getmarketername();
@@ -690,10 +791,10 @@ FetchResume() {
     this.getState();
     this.getdivision();
     this.FetchProfileVideo();
-    this.FetchResume();
+    // this.FetchResume();
 
     this.currentTabIndex = this.tabIndex;
-    
+
     this.FormGeneral = this.formBuilder.group({
       phoneNumberG: ['', [Validators.required]],
       generalEmail: ['', [Validators.required]],
@@ -715,9 +816,9 @@ FetchResume() {
       otherNotes: [''],
       division: [''],
       dob: [''],
-      selectedcurrentstatus:[''],
+      selectedcurrentstatus: [''],
     });
-    
+
     this.myForm = this.formBuilder.group({
       interviewInfo: ['', [Validators.required, Validators.minLength(3)]],
       client: ['', [Validators.required, Validators.minLength(3)]],
@@ -737,13 +838,13 @@ FetchResume() {
       vendorName: ['', [Validators.required, Validators.minLength(3)]],
       rate: ['', [Validators.required, Validators.minLength(3)]],
       clientName: ['', [Validators.required, Validators.minLength(3)]],
-      
+
     });
 
     this.myFormFinancial = this.formBuilder.group({
       accountnum1: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       accountnum2: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-       FinancialNotes: [''],
+      FinancialNotes: [''],
       salaryinfo: [''],
       maritalStatus: ['Married'],
       legalStatus: [''],
@@ -768,21 +869,21 @@ FetchResume() {
       howMuch: [''],
       routingnum1: [''],
       routingnum2: [''],
-      
-      
+
+
     });
 
     // this.disableFormGroup(this.myFormFinancial);
     var viewaccess = this.AppService.checkViewOnly(2);
-    if(!viewaccess){
+    if (!viewaccess) {
       this.disableGeneralFields();
       this.disableInterviewFields();
       this.disableSubmissionFields();
       this.disableFinancialFields();
     }
-    
+
   }
-  
+
 
   disableGeneralFields() {
     Object.keys(this.FormGeneral.controls).forEach(controlName => {
@@ -852,12 +953,12 @@ FetchResume() {
   }
 
   // emailPlacementTracker() {
-    
+
   //   const req = {
   //     TraineeID: this.candidateID,
   //     OrgID: this.OrgID,
   //   };
-   
+
   //   this.service.Sendplacementmail(req).subscribe((x: any) => {
   //     this.TraineeID = x.result;
   //     this.OrgID = x.result;
@@ -873,7 +974,7 @@ FetchResume() {
       OrgID: this.OrgID,
       placementList: this.placementList
     };
-  
+
     this.service.Sendplacementmail(req).subscribe(
       (response: any) => {
         console.log('Email sent successfully:', response);
@@ -887,10 +988,10 @@ FetchResume() {
       }
     );
   }
-  
 
-  
-  
+
+
+
   getSubmissionList() {
     const req = {
       TraineeID: this.candidateID,
@@ -900,7 +1001,7 @@ FetchResume() {
       this.submissionList = x.result;
     });
   }
-  
+
   fetchinterviewlist() {
     let Req = {
       TraineeID: this.candidateID,
@@ -956,35 +1057,35 @@ FetchResume() {
     });
     console.log(this.selectedstate1);
   }
-  
+
   getOrgUserList() {
     let Req = {
       TraineeID: this.candidateID,
-      OrgID:this.OrgID
+      OrgID: this.OrgID
     };
     this.service.getOrgUserList(Req).subscribe((x: any) => {
-    this.referedby = x.result;
-    this.recruiterName = x.result;
-    this.loading = false;
-    }),(error: any) => {
+      this.referedby = x.result;
+      this.recruiterName = x.result;
+      this.loading = false;
+    }), (error: any) => {
       this.loading = false;
     };
   }
-  
+
   fetchCandidateInfo() {
     let Req = {
       TraineeID: this.candidateID,
     };
     this.service.getCandidateInfo(Req).subscribe((x: any) => {
       console.log(x.result[0].Candidatestatus);
-      this.test = x.result[0].Candidatestatus;  
+      this.test = x.result[0].Candidatestatus;
       this.selectedcurrentstatus = x.result[0].Candidatestatus;
       this.middleName = x.result[0].MiddleName || '';
       this.skillSet = x.result[0].Skill || '';
-      this.phoneNumberG = x.result[0].PhoneNumber || ''; 
+      this.phoneNumberG = x.result[0].PhoneNumber || '';
       this.generalEmail = x.result[0].UserName || '';
       this.selectedrecruiterName = x.result[0].RecruiterName || '';
-      this.legalStatusVal = x.result[0].Legalstartdate || ''; 
+      this.legalStatusVal = x.result[0].Legalstartdate || '';
       this.firstName = x.result[0].FirstName || '';
       this.middleName = x.result[0].MiddleName || '';
       this.lastName = x.result[0].LastName || '';
@@ -996,7 +1097,7 @@ FetchResume() {
       this.duiFelonyInfo = x.result[0].DuiFelonyInfo || '';
       this.MarketerName = x.result[0].marketername || '';
       this.legalStatusValend = x.result[0].Legalenddate || '';
-      this.selectedLegalStatus = x.result[0].LegalStatus || '';  
+      this.selectedLegalStatus = x.result[0].LegalStatus || '';
       this.ftcNotes = x.result[0].FTCNotes || '';
       this.otherNotes = x.result[0].Notes || '';
       this.division = x.result[0].division || '';
@@ -1014,13 +1115,15 @@ FetchResume() {
       this.addressType = x.result[0].AddressType || '';
       this.passportvalStartdate = x.result[0].PassvalidateStartdate || '';
       this.passportvalenddate = x.result[0].Passvalidateenddate || '';
-      if(x.tresumeInfo.length ===0){
+      if (x.tresumeInfo.length === 0) {
         // this.addRow();
         // this.addRow1();
-      }else{
+      } else {
         var tinfo = x.tresumeInfo
-        tinfo.forEach((item: { TresumeNodeTypeID?: any; Title?: string; Org?: string; NodeDate?: string; NodeDateTo?: string; 
-          Location?: any; TresumeNodeID?: string; TresumeID?: string; Skill?: string; }) => {
+        tinfo.forEach((item: {
+          TresumeNodeTypeID?: any; Title?: string; Org?: string; NodeDate?: string; NodeDateTo?: string;
+          Location?: any; TresumeNodeID?: string; TresumeID?: string; Skill?: string;
+        }) => {
           // Check the value of TresumeNodeTypeID
           if (item.TresumeNodeTypeID === 1) {
             this.educations.push(item);
@@ -1030,22 +1133,22 @@ FetchResume() {
             this.TresumeID = item.TresumeID;
           }
         });
-        if(this.educations.length ===0){
+        if (this.educations.length === 0) {
           // this.addRow();
         }
-        if(this.experiences.length ===0){
+        if (this.experiences.length === 0) {
           // this.addRow1();
         }
       }
 
       // this.FormGeneral.patchValue({
-        
-  
+
+
       // });
       this.myFormFinancial.patchValue({
         accountnum1: x.result[0].Bank1AccountNumber || '',
         accountnum2: x.result[0].Bank2AccountNumber || '',
-         FinancialNotes: x.result[0]. FinancialNotes || '',
+        FinancialNotes: x.result[0].FinancialNotes || '',
         salaryinfo: x.result[0].Salary || '',
         maritalStatus: x.result[0].MaritalStatus || 'Married',
         legalStatus: x.result[0].LegalStatus || '',
@@ -1146,7 +1249,7 @@ FetchResume() {
     this.showConfirmationDialog = false;
   }
 
-  canceldeletesubmission(){
+  canceldeletesubmission() {
     console.log(this.showConfirmationDialog3);
     this.showConfirmationDialog3 = false;
   }
@@ -1197,38 +1300,38 @@ FetchResume() {
   }
 
   // submission delete
-deletesubmissiondata(submissionid: number) {
-  this.deleteIndex = submissionid;
-  console.log(this.deleteIndex);
-  this.showConfirmationDialog3 = true;
-}
-confirmdeletesubmission() {
-  console.log(this.deleteIndex);
-  let Req = {
-    submissionid: this.deleteIndex,
-  };
-  this.service.deletesubmissiondata(Req).subscribe((x: any) => {
-    var flag = x.flag;
-    this.getSubmissionList();
+  deletesubmissiondata(submissionid: number) {
+    this.deleteIndex = submissionid;
+    console.log(this.deleteIndex);
+    this.showConfirmationDialog3 = true;
+  }
+  confirmdeletesubmission() {
+    console.log(this.deleteIndex);
+    let Req = {
+      submissionid: this.deleteIndex,
+    };
+    this.service.deletesubmissiondata(Req).subscribe((x: any) => {
+      var flag = x.flag;
+      this.getSubmissionList();
 
-    if (flag === 1) {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Submission Deleted Sucessfully',
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Please try again later',
-      });
-    }
-  });
-  this.showConfirmationDialog3 = false;
-}
-cancelDeletesubmission() {
-  console.log(this.showConfirmationDialog3);
-  this.showConfirmationDialog3 = false;
-}
+      if (flag === 1) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Submission Deleted Sucessfully',
+        });
+      } else {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Please try again later',
+        });
+      }
+    });
+    this.showConfirmationDialog3 = false;
+  }
+  cancelDeletesubmission() {
+    console.log(this.showConfirmationDialog3);
+    this.showConfirmationDialog3 = false;
+  }
 
   //financialinfo
 
@@ -1246,11 +1349,11 @@ cancelDeletesubmission() {
   GoTonext() {
     this.router.navigate(['/candidateView/:id/sitevisit']);
   }
-// Venkat Tracker Code 
+  // Venkat Tracker Code 
   addRecruitmentTracker() {
     this.loading = true;
     let Req = {
-      CandidateName: this.firstName +' '+this.lastName,
+      CandidateName: this.firstName + ' ' + this.lastName,
       TraineeID: this.candidateID,
       OrgID: this.OrgID,
       FinancialNotes: this.myFormFinancial.value.FinancialNotes,
@@ -1297,15 +1400,15 @@ cancelDeletesubmission() {
   }
 
   // Education
-  educations:any[] = [];
+  educations: any[] = [];
 
   addRow() {
-this.loading = true;
+    this.loading = true;
     let req = {
-      TraineeID:this.candidateID,
-      TresumeID:this.TresumeID,
-      username:this.userName,
-      type:1
+      TraineeID: this.candidateID,
+      TresumeID: this.TresumeID,
+      username: this.userName,
+      type: 1
     };
     this.service.addTresumeNode(req).subscribe(
       (x: any) => {
@@ -1315,8 +1418,8 @@ this.loading = true;
           NodeDate: '',
           NodeDateTo: '',
           Location: '',
-          TresumeNodeID:x.TresumeNodeID,
-          TresumeID:x.TresumeID
+          TresumeNodeID: x.TresumeNodeID,
+          TresumeID: x.TresumeID
         });
         this.loading = false;
       },
@@ -1329,37 +1432,37 @@ this.loading = true;
   }
 
   //Above function will remove all row in education tab
-  deleteRow(index: number,TresumeNodeID:any) {
+  deleteRow(index: number, TresumeNodeID: any) {
     this.loading = true;
     let req = {
-      TresumeNodeID:TresumeNodeID,  
+      TresumeNodeID: TresumeNodeID,
     };
     this.service.DeleteTresumeNode(req).subscribe(
       (x: any) => {
         this.messageService.add({ severity: 'Success', summary: 'Education Deleted Successfully' });
         this.educations.splice(index, 1);
-        this.loading=false;
+        this.loading = false;
       },
       (error: any) => {
         this.messageService.add({ severity: 'danger', summary: 'Error adding Experience. Please try again' });
         this.loading = false;
       }
     );
-      
-    
+
+
   }
 
   // Experience
   experienceForm: FormGroup;
-  experiences:any = [];
+  experiences: any = [];
 
   addRow1() {
-this.loading = true;
+    this.loading = true;
     let req = {
-      TraineeID:this.TraineeID,
-      TresumeID:this.TresumeID,
-      username:this.userName,
-      type:2
+      TraineeID: this.TraineeID,
+      TresumeID: this.TresumeID,
+      username: this.userName,
+      type: 2
     };
     this.service.addTresumeNode(req).subscribe(
       (x: any) => {
@@ -1369,9 +1472,9 @@ this.loading = true;
           NodeDate: '',
           NodeDateTo: '',
           Location: '',
-          TresumeNodeID:x.TresumeNodeID,
-          TresumeID:x.TresumeID,
-          Skill:''
+          TresumeNodeID: x.TresumeNodeID,
+          TresumeID: x.TresumeID,
+          Skill: ''
         });
         this.loading = false
       },
@@ -1380,17 +1483,17 @@ this.loading = true;
         this.loading = false;
       }
     );
-   
+
   }
 
-  UpdateTresumeNode(type:any,data:any){
+  UpdateTresumeNode(type: any, data: any) {
     console.log(data);
     let req = {
-      data:data,
+      data: data,
     };
     this.service.UpdateTresumeNode(req).subscribe(
       (x: any) => {
-        
+
       },
       (error: any) => {
         this.messageService.add({ severity: 'danger', summary: 'Error adding Experience. Please try again' });
@@ -1399,10 +1502,10 @@ this.loading = true;
     );
   }
 
-  deleteRow1(index: number,TresumeNodeID:any) {
+  deleteRow1(index: number, TresumeNodeID: any) {
     this.loading = true;
     let req = {
-      TresumeNodeID:TresumeNodeID,  
+      TresumeNodeID: TresumeNodeID,
     };
     this.service.DeleteTresumeNode(req).subscribe(
       (x: any) => {
@@ -1415,7 +1518,7 @@ this.loading = true;
         this.loading = false;
       }
     );
-      
+
   }
 
   // download DSR Submission tab 
@@ -1433,7 +1536,7 @@ this.loading = true;
 
     let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += "Title,SubmissionDate,MarketerName,VendorName,ClientName,Note,Rate\n";
-    
+
     data.forEach(submission => {
       csvContent += `${submission.Title},${submission.SubmissionDate},${submission.MarketerName},${submission.VendorName},${submission.ClientName},${submission.Note},${submission.Rate}\n`;
     });
@@ -1450,7 +1553,7 @@ this.loading = true;
 
     this.showmovetotalentbench = true;
   }
-  cancelMoveTB(){
+  cancelMoveTB() {
     this.showmovetotalentbench = false;
   }
 
@@ -1471,7 +1574,7 @@ this.loading = true;
       txtComments: this.txtComments || '',
       CreateBy: this.userName || ''
     };
-  
+
     this.service.MoveToTalentBench(Req).subscribe(
       (x: any) => {
         this.handleSuccess(x);
@@ -1483,12 +1586,12 @@ this.loading = true;
       }
     );
   }
-  
 
-  movetoBack(){
-    if(this.routeType == 1){
+
+  movetoBack() {
+    if (this.routeType == 1) {
       this.router.navigate(['/candidates/1']);
-    }else if(this.routeType ==3){
+    } else if (this.routeType == 3) {
       this.router.navigate(['/talentBench']);
     }
   }

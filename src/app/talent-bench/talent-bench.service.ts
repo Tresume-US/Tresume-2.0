@@ -94,6 +94,18 @@ InterviewReportDownload(request: any): Observable<any> {
 fetchmultiorg(request: any): Observable<ResponseDetails> {
   return this.http.post<ResponseDetails>(this.endpoint + 'fetchmultiorg', request);
 }
+
+sendEmail(request: any): Observable<ResponseDetails> {
+  let params = new HttpParams({
+      fromObject: { to: request.to, subject: request.subject, text: request.text },
+  });
+
+  let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+  };
+  return this.http.post<ResponseDetails>(this.endpoint + 'text-mail', params.toString(), httpOptions);
+}
+
 }
 export interface ResponseDetails {
   flag?: any;
