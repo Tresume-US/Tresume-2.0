@@ -132,8 +132,66 @@
       </a>
   
     </div>
-  </nav>
+
+
+    <div class="chat-icon-container">
+      <i class='fas fa-headset animated-icon' (click)="toggleChatBot()"></i>
+    </div>
+
+
+    
+    <div #chatBot class="chat-bot d-none">
+      <div class="bg-primary p-3 rounded-top" style="text-align: center;">
+        Tresume Helpdesk
+      </div>
+      <div class="chat-window">
+        <p *ngFor="let message of messages" class="px-2 chatbot-message">{{ message }}</p>
+        <!-- Back to Main Menu button after each message -->
+        <button *ngIf="step !== 0" (click)="backToMainMenu()" class="btn btn-secondary m-2">Back to Main Menu</button>
+      </div>
+      <div class="pb-2" style="margin-top: auto;">
+        <!-- Input field or options buttons -->
+        <div *ngIf="showInput" class="px-2 pt-2">
+          <input [(ngModel)]="userInput" type="text" class="rounded w-100 chat-input p-2" placeholder="Write a Message" (keydown.enter)="sendMessage()">
+          <div class="d-flex justify-content-end px-2 align-items-center">
+            <div class="icon-container" (click)="sendMessage()">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!showInput && options.length > 0" class="px-2 pt-2">
+          <button *ngFor="let option of options" (click)="handleButtonClick(option)" class="btn option-btn m-1">{{ option }}</button>
+        </div>
+      </div>
+    </div>
+    
+    
   
+ 
+<!-- <div class="chat-icon-container">
+  <i class='fas fa-headset animated-icon' (click)="toggleChatBot()"></i>
+</div>
+<div #chatBot class="chat-bot d-none">
+  <div class="bg-primary p-3 rounded-top">
+    Tresume Helpdesk
+  </div>
+  <div class="chat-window">
+    <p *ngFor="let message of messages" 
+       [ngClass]="{'chatbot-message': message.isBot, 'user-message': !message.isBot}" 
+       class="px-2">{{message.text}}</p>
+  </div>
+  <div class="pb-2" style="margin-top: auto;">
+    <div class="px-2 pt-2">
+      <input [(ngModel)]="userInput" type="text" class="rounded w-100 chat-input p-2" placeholder="Write a Message" (keydown.enter)="sendMessage()">
+      <div class="d-flex justify-content-end px-2 align-items-center">
+        <div class="icon-container" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+  </nav>
   <div class="video-container">
     <video #video autoplay muted loop playsinline>
       <source src="assets/videos/landing.mp4" type="video/mp4" />
