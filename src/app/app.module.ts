@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -172,6 +172,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 import { KeyhighlightPipe } from './keyhighlight.pipe';
+import { MailChimpComponent } from './integration/mail-chimp/mail-chimp.component';
+import { BeeLinesComponent } from './integration/bee-lines/bee-lines.component';
 
 
 
@@ -280,7 +282,9 @@ import { KeyhighlightPipe } from './keyhighlight.pipe';
       RecruiterViewJobsComponent,
       HighlightPipe,
       WhatsappComponent,
-      KeyhighlightPipe
+      KeyhighlightPipe,
+      MailChimpComponent,
+      BeeLinesComponent
     // TimesheetViewdetailsComponent
 
   ],
@@ -359,6 +363,7 @@ import { KeyhighlightPipe } from './keyhighlight.pipe';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
+  schemas: [NO_ERRORS_SCHEMA],
   providers: [CookieService, BsLocaleService, AuthGuard, AppService, AppConfigService,DatePipe,
     {
       provide: APP_INITIALIZER,

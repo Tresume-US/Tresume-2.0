@@ -29,6 +29,7 @@ var cors = require("cors");
 app.use(cors());
 const pool = require("./database");
 const cron = require("node-cron");
+const mailchimp = require("./mailchimp")
 
 const onboardRoutes = require("./onboarding-routes");
 const candidateRoutes = require("./candidate-routes");
@@ -78,7 +79,8 @@ app.use("/", Invoice);
 app.use("/", submittedcandidates);
 app.use("/", CorporateDocument);
 app.use("/", CBapi);
-app.use("/", WhatsApp)
+app.use("/", WhatsApp),
+app.use("/", mailchimp)
 app.use(
   session({
     secret: "Tresume@123",

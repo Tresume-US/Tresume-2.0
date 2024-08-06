@@ -2334,7 +2334,6 @@ router.post("/ProfileVideoUpload", upload.single('Profilevideo'), async (req, re
     const pool = await sql.connect(config);
     const request = pool.request();
     var query = `update Trainee set profilevideoPath ='${filename}',videouploadDate = GETDATE() where TraineeID = '${TraineeID}'`;
-    console.log(query);
     const queryResult = await request.query(query);
 
     let result = {

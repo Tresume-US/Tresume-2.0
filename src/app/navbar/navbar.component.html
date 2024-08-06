@@ -397,7 +397,7 @@
                     </li>
 
 
-                    <li class="nav-item" *ngIf="checkFullAccess(13)">
+                    <li class="nav-item" *ngIf="checkFullAccess(12)">
                         <a class="nav-link" style="cursor: pointer;" (click)="toggleSubMenu('integrationSubMenu')">
                             <i class="nav-icon fas fa-link"></i>
                             <p style="margin-left: -7px; margin-top: 1px;">
@@ -415,6 +415,21 @@
                                 </a>
                             </li>
                         </ul>
+                        <ul id="mail-chimps" class="nav nav-treeview"
+                        [ngStyle]="{'display': isSubMenuOpen['integrationSubMenu'] ? 'block' : 'none'}">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="integration/mail-chimps">
+                                <i class="fab fa-mailchimp"></i>
+                                <p> Mail chimp</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="integration/beeline">
+                                <i class="fab fa-behance"></i>
+                                <p> Beeline</p>
+                            </a>
+                        </li>
+                    </ul>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/profile" class="nav-link">

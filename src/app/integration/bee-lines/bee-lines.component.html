@@ -1,0 +1,31 @@
+<div class="mail-chimp-container">
+    <mat-card>
+      <mat-card-title>Beeline Configuration</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="beelineForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="fill">
+            <mat-label>API Key</mat-label>
+            <input matInput formControlName="apiKey" placeholder="Enter your API Key">
+            <mat-error *ngIf="beelineForm.get('apiKey')!.hasError('required')">
+              API Key is required
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Secret Key</mat-label>
+            <input matInput formControlName="secretKey" placeholder="Enter your Secret Key">
+            <mat-error *ngIf="beelineForm.get('secretKey')!.hasError('required')">
+              Secret Key is required
+            </mat-error>
+          </mat-form-field>
+  
+          <div class="button-container">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!beelineForm.valid">
+              Submit
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
