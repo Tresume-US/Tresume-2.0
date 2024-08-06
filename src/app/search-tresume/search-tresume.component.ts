@@ -10,7 +10,6 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class SearchTresumeComponent{
   loading:boolean = false;
-
   @ViewChild('myTabs') myTabs: TabsetComponent;
   basicactive:string='active';
   reqactive:string = '';
@@ -18,7 +17,6 @@ export class SearchTresumeComponent{
   previewinfo = '';
   address:string='';
   selectedLegalstatus:string = '';
-
   companyname:string='';
   jobtitle:string='';
   zipcode:string='';
