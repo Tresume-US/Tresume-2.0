@@ -32,7 +32,10 @@
                     <div class="notification-popup" *ngIf="isPopupOpen">
                         <div *ngIf="!selectedNotification" class="notification-header">
                             <span class="notification-title">Notifications</span>
+                            <span style="display: flex;">
+                            <span *ngIf="notificationCount !== 0" class="mark-all-read" (click)="markAllRead()">Mark all read</span>
                             <span class="notification-close" (click)="togglePopup()">&times;</span>
+                        </span>
                         </div>
 
                         <div *ngIf="!selectedNotification" class="notification-list">

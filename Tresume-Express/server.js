@@ -5650,3 +5650,20 @@ app.post("/UpdateNotificationResult", async (req, res) => {
     res.status(500).send("An error occurred while processing your request.");
   }
 });
+
+app.post("/updateAllRead", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "UPDATE Notifications set ReadStatus=2 where TraineeID='"+req.body.TraineeID+"' AND OrgID='"+req.body.OrgID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});

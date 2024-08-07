@@ -191,4 +191,23 @@ export class NavbarComponent implements OnInit {
       return notificationDate.toLocaleDateString() + ' ' + notificationDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
   }
+
+  markAllRead() {
+    let Req = {
+      TraineeID: this.traineeID,
+      OrgID: this.orgID
+    };
+    console.log(Req);
+    this.navService.updateAllRead(Req).subscribe(
+        response => {
+            console.log('Update all read response:', response);
+            this.getNotification();
+            this.getUnreadCount();
+        },
+        error => {
+            console.error('Error marking all notifications as read:', error);
+        }
+    );
+}
+
 }

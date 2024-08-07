@@ -61,7 +61,9 @@ export class NavigationService {
         })
       );
     }
-
+    updateAllRead(req: any): Observable<ResponseDetails> {
+      return this.http.post<ResponseDetails>(this.endpoint + 'updateAllRead', req);
+    }
 }
 interface ResponseDetails2 {
   unreadCount: number;
