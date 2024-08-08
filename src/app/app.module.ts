@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -106,13 +106,6 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TalentBenchComponent } from './talent-bench/talent-bench.component';
 import { MatSelectModule } from '@angular/material/select';
-
-//import { jsPDF } from 'jspdf';
-
-//import { jsPDF } from 'jspdf';
-
-//import { jsPDF } from 'jspdf';
-
 import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 import { SubmittedCandiatesComponent } from './submitted-candiates/submitted-candiates.component';
 import { JobBoardAccountComponent } from './job-board-account/job-board-account.component';
@@ -161,6 +154,8 @@ import { ArAgingReportComponent } from './ar-aging-report/ar-aging-report.compon
 import { NewTimeSheetReportComponent } from './new-time-sheet-report/new-time-sheet-report.component';
 import { SendInvoiceComponent } from './all-invoice/send-invoice/send-invoice.component';
 import { DatePipe } from '@angular/common';
+import { HighlightPipe } from '../app/hrms/hrms.pipe';
+
 import { MonsterComponent } from './landing-page/monster/monster.component';
 import { AdobeComponent } from './landing-page/adobe/adobe.component';
 import { TruncatePipe } from './truncate.pipe';
@@ -171,12 +166,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
-
+import { WhatsappComponent } from './integration/whatsapp/whatsapp.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
 import { ClientViewComponent } from './client-view/client-view.component';
+import { KeyhighlightPipe } from './keyhighlight.pipe';
+import { MailChimpComponent } from './integration/mail-chimp/mail-chimp.component';
+import { BeeLinesComponent } from './integration/bee-lines/bee-lines.component';
 
 
 
@@ -284,6 +282,11 @@ import { ClientViewComponent } from './client-view/client-view.component';
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
       ClientViewComponent,
+      HighlightPipe,
+      WhatsappComponent,
+      KeyhighlightPipe,
+      MailChimpComponent,
+      BeeLinesComponent
     // TimesheetViewdetailsComponent
 
   ],
@@ -362,6 +365,7 @@ import { ClientViewComponent } from './client-view/client-view.component';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
+  schemas: [NO_ERRORS_SCHEMA],
   providers: [CookieService, BsLocaleService, AuthGuard, AppService, AppConfigService,DatePipe,
     {
       provide: APP_INITIALIZER,

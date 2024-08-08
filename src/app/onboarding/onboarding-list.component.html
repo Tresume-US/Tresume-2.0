@@ -3,7 +3,26 @@
         <div class="row pt-3 pl-2 main">
                 <h2>CURRENT ONBOARDING LIST</h2>
         </div>
-   
+        <div class="progress-modal" [ngClass]="{'active': showProgressModal}">
+            <div class="container">
+                <div class="top-section">
+                    <div class="progress-container">
+                        <div class="progress" [style.height]="progressHeight"></div>
+                        <div class="circle" *ngFor="let step of steps; let i = index" [ngClass]="{'active': i < currentActive}">{{i + 1}}</div>
+                    </div>
+                    <img [src]="images[currentActive - 1]" alt="Step Image" class="top-image">
+                </div>
+                <div class="button-container">
+                    <button class="btn" (click)="skip()">Skip</button>
+                    <button class="btn" (click)="hide()">Don't show me again</button>
+                    <div class="nav-buttons">
+                        <button class="btn" (click)="prev()" [disabled]="currentActive === 1">Prev</button>
+                        <button class="btn" (click)="next()" [disabled]="currentActive === steps.length">Next</button>
+                        <button class="btn" (click)="finish()" [disabled]="currentActive < 7" >Finish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="content m-2">
             <div class="row">
                 <div class="col-lg-4 col-6">
@@ -17,7 +36,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a routerLink="/reports" class="smaller-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-6">
@@ -31,7 +50,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer">More info <i
+                        <a routerLink="/reports" class="smaller-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -46,7 +65,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a routerLink="/reports" class="small-box-footer">More info <i
+                        <a routerLink="/reports" class="smaller-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>

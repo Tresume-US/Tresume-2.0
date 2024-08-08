@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnChanges, ViewChild, ElementRef, Input } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewService } from './review.service';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,9 @@ import { AppService } from '../app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageModule } from 'primeng/message';
 import { DatePipe } from '@angular/common';
+
+import jsPDF from 'jspdf';
+
 
 @Component({
   templateUrl: './review-tresume.component.html',
@@ -189,6 +192,11 @@ export class ReviewTresumeComponent implements OnChanges {
   videoPlayershow: boolean = false;
 skillSet: any;
   resumeFile: string | Blob;
+  combinedValues: never[];
+  skillsForm: FormGroup;
+  isModalOpen: boolean;
+  // row: any;
+  // value: any;
 
   startShowingSSN() {
     this.showSSN = true;
@@ -335,6 +343,9 @@ skillSet: any;
     this.messageService.add({ severity: 'error', summary:  response.message });
     this.loading = false;
   }
+  rows: { skill: string, percentage: string }[] = [{ skill: '', percentage: '' }];
+
+
 
   FetchProfileVideo(){
     let req={
@@ -661,8 +672,10 @@ FetchResume() {
     }
   }
 
-  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe) {
-    
+  constructor(private route: ActivatedRoute,private cookieService: CookieService, private service: ReviewService, private messageService: MessageService, private formBuilder: FormBuilder,private AppService:AppService, private router:Router, private datePipe: DatePipe, private fb: FormBuilder) {
+    this.skillsForm = this.fb.group({
+      skills: this.fb.array([])
+    });
     this.candidateID = this.route.snapshot.params["traineeID"];
     this.candiateName  = this.route.snapshot.queryParams['firstName'];
     console.log(this.candidateID);
@@ -676,6 +689,52 @@ FetchResume() {
     this.candidateID = this.route.snapshot.params["traineeID"];
 
    }
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  rowInsert() {
+    this.rows.push({ skill: '', percentage: '' }); 
+  }
+
+  removeRow(index: number) {
+    if (this.rows.length > 1) {
+      this.rows.splice(index, 1);
+    }
+  }
+
+  onSubmit() {
+    console.log('Skills and Percentages:', this.rows);
+    this.closeModal();
+  
+    let skills = this.rows.map(row => ({
+      skill: row.skill,
+      percentage: row.percentage
+    }));
+  
+    let req = {
+      TraineeID: this.candidateID,
+      skills: skills
+    };
+  
+    console.log(req);
+  
+    this.service.Updateskill(req).subscribe(
+      () => {
+        this.messageService.add({ severity: 'success', summary: 'Skill Updated Successfully' });
+      },
+      () => {
+        this.messageService.add({ severity: 'error', summary: 'Updating Skill Failed' });
+      }
+    );
+  }
+  
+  resumeForm: FormGroup;
+
 
   ngOnInit(): void {
     this.fetchinterviewlist();
@@ -718,6 +777,13 @@ FetchResume() {
       selectedcurrentstatus:[''],
     });
     
+    this.resumeForm = this.fb.group({
+      name: [''],
+      email: [''],
+      summary: ['']
+      // Add more fields as necessary
+    });
+
     this.myForm = this.formBuilder.group({
       interviewInfo: ['', [Validators.required, Validators.minLength(3)]],
       client: ['', [Validators.required, Validators.minLength(3)]],
@@ -836,7 +902,9 @@ FetchResume() {
 
   // Submission - form - validation - function 
 
-  ngOnChanges(): void {
+ 
+  ngOnChanges(changes: any) {
+    
   }
 
 
@@ -1505,5 +1573,54 @@ this.loading = true;
     this.videoPlayer.nativeElement.pause();
     this.videoPlayer.nativeElement.currentTime = 0;
   }
+
+
+
+
+  isVisible: boolean = false;
+  message: string = '';
+  createNotification(message: string) {
+    const req = {  
+      message: message,
+      time: new Date(),
+      TraineeID:this.TraineeID,
+      orgID:this.OrgID,
+      createby:this.userName,
+    };
+    console.log(req)
+    this.AppService.createnotification(req).subscribe(
+    )
+  }
+
+  showNotification(message: string): void {
+    this.message = message;
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
+  }
+  closeNotification(): void {
+    this.isVisible = false;
+  }
+
+
+  //Resume Builder 
+  downloadPDF() {
+    const doc = new jsPDF();
+    const content = document.getElementById('resume-preview');
+    
+    if (content) {
+      doc.html(content, {
+        callback: function (doc) {
+          doc.save('resume.pdf');
+        },
+        x: 10,
+        y: 10
+      });
+    } else {
+      console.error('Resume preview element not found');
+    }
+  }
+  
 
 }

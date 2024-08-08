@@ -283,7 +283,7 @@
         <div class="container-flex">
           <div class="card-body">
             <div class="card-job-info" style="width: 50%">
-              <h2>{{ jobDetail.currentJobTitle }}</h2>
+              <h2 [innerHTML]="jobDetail.currentJobTitle | keyhighlight:keyWord" ></h2>
               <i class="label fa fa-location-arrow">
                 {{ jobDetail.city }}, {{ jobDetail.country }}
               </i>

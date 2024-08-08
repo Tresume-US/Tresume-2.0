@@ -159,4 +159,99 @@ router.post('/getSuperAdminDashboardData', async (req, res) => {
     }
 });
 
+
+// router.post('/getUserJobPostingData', async (req, res) => {
+//     var startdate=req.body.StartDate;
+//     var enddate=req.body.EndDate;
+//     var traineeid=req.body.traineeid
+//     try {
+//         const jobPostingData = await pool.query(`SELECT j.RecruitmentManagerID, COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, t.firstname, t.lastname, CAST(FLOOR(CAST(j.CreateTime AS FLOAT)) AS DATETIME) AS CreateDate
+//                                                  FROM Job j 
+//                                                  JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID 
+//                                                  WHERE j.CreateTime >= '${startdate}' 
+//                                                  AND j.CreateTime <= '${enddate}' AND j.RecruitmentManagerID='${traineeid}' AND j.Active=1
+//                                                  GROUP BY j.RecruitmentManagerID, t.firstname, t.lastname, CAST(FLOOR(CAST(j.CreateTime AS FLOAT)) AS DATETIME) 
+//                                                  ORDER BY RecruitmentManagerCount ASC`);
+
+//         res.json(jobPostingData.recordset);
+//     } catch (error) {
+//         console.error('Error fetching job posting data:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
+// router.post('/getAdminJobPostingData', async (req, res) => {
+//     var startdate=req.body.StartDate;
+//     var enddate=req.body.EndDate;
+//     var accessorg = req.body.AccessOrg;
+//     try {
+//         const jobPostingData = await pool.query(`SELECT j.RecruitmentManagerID, COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, t.firstname, t.lastname  FROM Job j 
+//                                                  JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID 
+//                                                  WHERE j.CreateTime >= '${startdate}' 
+//                                                  AND j.CreateTime <= '${enddate}' AND j.OrgID IN (${accessorg}) AND j.Active=1
+//                                                  GROUP BY j.RecruitmentManagerID, t.firstname, t.lastname
+//                                                  ORDER BY RecruitmentManagerCount DESC;`); 
+
+//         res.json(jobPostingData.recordset);
+//     } catch (error) {
+//         console.error('Error fetching job posting data:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
+// router.post('/getSuperAdminJobPostingData', async (req, res) => {
+//     var startdate=req.body.StartDate;
+//     var enddate=req.body.EndDate;
+//     var accessorg = req.body.AccessOrg;
+//     try {
+//         const jobPostingData = await pool.query(`SELECT COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, j.OrgID, o.OrganizationName FROM Job j JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID JOIN Organization o ON j.OrgID = o.OrganizationID WHERE j.CreateTime >= '${startdate}' AND j.CreateTime <= '${enddate}' AND j.Active = 1 GROUP BY 
+//     j.OrgID, o.OrganizationName ORDER BY RecruitmentManagerCount ASC;`); 
+
+//         res.json(jobPostingData.recordset);
+//     } catch (error) {
+//         console.error('Error fetching job posting data:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
+
+router.post('/getJobPostingData', async (req, res) => {
+    var startdate=req.body.StartDate;
+    var enddate=req.body.EndDate;
+    var accessorg = req.body.AccessOrg;
+    var traineeid=req.body.traineeid
+    try {
+       if(req.body.userRole == 1){
+            const jobPostingData = await pool.query(`SELECT j.RecruitmentManagerID, COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, t.firstname, t.lastname  FROM Job j 
+                                                         JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID 
+                                                         WHERE j.CreateTime >= '${startdate}' 
+                                                         AND j.CreateTime <= '${enddate}' AND j.OrgID IN (${accessorg}) AND j.Active=1
+                                                         GROUP BY j.RecruitmentManagerID, t.firstname, t.lastname
+                                                         ORDER BY RecruitmentManagerCount DESC;`); 
+        
+                res.json(jobPostingData.recordset);
+        }
+        else if(req.body.userRole == 2){
+        const jobPostingData = await pool.query(`SELECT j.RecruitmentManagerID, COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, t.firstname, t.lastname, CAST(FLOOR(CAST(j.CreateTime AS FLOAT)) AS DATETIME) AS CreateDate
+                                                 FROM Job j 
+                                                 JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID 
+                                                 WHERE j.CreateTime >= '${startdate}' 
+                                                 AND j.CreateTime <= '${enddate}' AND j.RecruitmentManagerID='${traineeid}' AND j.Active=1
+                                                 GROUP BY j.RecruitmentManagerID, t.firstname, t.lastname, CAST(FLOOR(CAST(j.CreateTime AS FLOAT)) AS DATETIME) 
+                                                 ORDER BY RecruitmentManagerCount ASC`); 
+                                                 res.json(jobPostingData.recordset);
+}
+
+else {
+    const jobPostingData = await pool.query(`SELECT COUNT(j.RecruitmentManagerID) AS RecruitmentManagerCount, j.OrgID, o.OrganizationName FROM Job j JOIN Trainee t ON j.RecruitmentManagerID = t.TraineeID JOIN Organization o ON j.OrgID = o.OrganizationID WHERE j.CreateTime >= '${startdate}' AND j.CreateTime <= '${enddate}' AND j.Active = 1 GROUP BY 
+    j.OrgID, o.OrganizationName ORDER BY RecruitmentManagerCount ASC;`); 
+
+        res.json(jobPostingData.recordset);
+}
+       
+    } catch (error) {
+        console.error('Error fetching job posting data:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 module.exports = router;

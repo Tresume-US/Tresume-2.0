@@ -157,6 +157,10 @@ export class OnboardingService {
         return this.http.post<ResponseDetails>(this.endpoint + 'rejectDoc', request);
     }
 
+    updateinstruction(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateinstruction', request);
+    }
+
     deleteRequestedDoc(id: any, onBoardID: any): Observable<ResponseDetails> {
         let request = {
             id: id, onBoardID: onBoardID
@@ -197,6 +201,9 @@ export class OnboardingService {
         const req = new HttpRequest('POST', this.endpoint + "/uploadtransientDocuments", formData);
         return this.http.request(req);
     }
+    getinstructionstatus(request:any):Observable<ResponseDetails>{
+        return this.http.post<ResponseDetails>(this.endpoint + 'getinstructionstatus',request)
+    }
 
     createAgreement(request: any): Observable<ResponseDetails> {
         return this.http.post<ResponseDetails>(this.endpoint + 'agreements', request);
@@ -227,6 +234,8 @@ export class OnboardingService {
 }
 
 export interface ResponseDetails {
+    recordsets: any;
+    obinstruction: number;
     flag?: any;
     result?: any;
 }

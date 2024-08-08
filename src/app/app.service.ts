@@ -66,6 +66,10 @@ export class AppService {
         return this.ViewOnly.includes(numberToCheck);
       }
 
+      createnotification(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'createnotification', request);
+      }
+
 }
 
 export interface ResponseDetails {

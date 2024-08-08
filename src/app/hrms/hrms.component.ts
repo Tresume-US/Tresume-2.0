@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { HrmsService, } from './hrms.service';
 import { Router } from 'express';
 import { ActivatedRoute } from '@angular/router';
-
+import { HighlightPipe } from './hrms.pipe';
+import { formatDate } from '@angular/common';
+import { AppService } from '../app.service';
+import { NavigationService } from '../navbar/navbar.service';
 
 @Component({
   selector: 'app-hrms',
   templateUrl: './hrms.component.html',
-  providers: [CookieService, HrmsService, MessageService],
+  providers: [CookieService, HrmsService, MessageService, HighlightPipe, AppService, NavigationService],
   styleUrls: ['./hrms.component.scss']
 })
 
 export class HrmsComponent implements OnInit {
+  toggleDatePicker() {
+    throw new Error('Method not implemented.');
+  }
   candidateID: any;
   interviewData: any[];
   candidates1: string[] = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
@@ -30,6 +36,7 @@ export class HrmsComponent implements OnInit {
   candidates: any[] = [];
   noResultsFound: boolean = false;
   TraineeID: string;
+  Teamlead: any;
   addCandidate: any;
   OrgID: any;
   userName: string;
@@ -45,10 +52,13 @@ export class HrmsComponent implements OnInit {
   modalService: any;
   useremail: any;
   isAdmin: string;
+  FirstName: string;
+  LastName: string;
   searchterm: string = '';
   deleteIndex: number;
   showConfirmationDialog3: boolean;
   isConfirmationModalVisible: boolean = false;
+  searchTerm: string;
 
   onFollowUpOptionChange() {
   }
@@ -66,21 +76,178 @@ export class HrmsComponent implements OnInit {
   rate: number;
   clientName: string;
   selectedOrgID: any;
-  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  isDropdownOpen = false;
+  option1 = false;
+  option2 = false;
+  option3 = false;
+  isCandidateStatusDropdownOpen = false;
+  isSortByDateVisible = false;
+  startdate: string | null = null;
+  enddate: string | null = null;
+  candidateStatus = {
+    onBench: false,
+    offerLetter: false,
+    terminate: false
+  };
+  selectedValues: string[] = [];
+  showDatePicker = false;
+  public startDate: any;
+  public endDate: any;
+  form: FormGroup;
+
+
+  ranges: any = {
+    'Today': [new Date(), new Date()],
+    'Yesterday': [new Date(new Date().setDate(new Date().getDate() - 1)), new Date(new Date().setDate(new Date().getDate() - 1))],
+    // A
+  };
+  toggleDropdown(event: Event) {
+    this.isCandidateStatusDropdownOpen = false;
+    this.isDropdownOpen = !this.isDropdownOpen;
+    event.stopPropagation();
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: Event) {
+    this.isDropdownOpen = false;
+  }
+  toggleCandidateStatusDropdown(event: Event): void {
+    this.isCandidateStatusDropdownOpen = !this.isCandidateStatusDropdownOpen;
+    event.stopPropagation();
+  }
+  onCheckboxChange(option: string, event: any) {
+    this.loading = true;
+    if (event.target.checked) {
+      this.selectedValues.push(option);
+    } else {
+      const index = this.selectedValues.indexOf(option);
+      if (index > -1) {
+        this.selectedValues.splice(index, 1);
+      }
+    }
+    console.log(this.selectedValues);
+    let Req = {
+      TraineeID: this.TraineeID,
+      Page: this.currentPage,
+      PageSize: this.pageSize,
+      useremail: this.useremail,
+      admin: this.isAdmin,
+      searchterm: this.selectedValues,
+      searchstartdate: this.startDate,
+      searchenddate: this.endDate
+    };
+
+    this.service.gethrmscandidateList(Req).subscribe(
+      (response: any) => {
+        // Success callback
+        this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill || !candidate.notes) {
+            candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
+          }
+          return candidate;
+        });
+        // this.totalRecords = response.result[0].TotalCount[0];
+        this.totalRecords = 25;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        this.noResultsFound = this.candidates.length === 0;
+        this.loading = false; // Set loading to false on success
+        this.messageService.add({ severity: 'success', summary: `Filtered by selected candidate status` });
+      },
+      (error: any) => {
+        // Error callback
+        console.error('Error occurred:', error);
+        // Handle error here
+        this.loading = false; // Set loading to false on error
+      }
+    );
+  }
+
+  toggleSortByDate() {
+    this.isSortByDateVisible = !this.isSortByDateVisible;
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  public onValueChange(value: any) {
+    this.loading = true;
+    if (value && value.length === 2) {
+      this.startDate = this.dateFormatter(value[0]);
+      this.endDate = this.dateFormatter(value[1]);
+      console.log('Start Date:', this.startDate);
+      console.log('End Date:', this.endDate);
+    }
+
+    const Req = {
+      TraineeID: this.TraineeID,
+      Page: this.currentPage,
+      PageSize: this.pageSize,
+      useremail: this.useremail,
+      admin: this.isAdmin,
+      searchterm: this.selectedValues,
+      searchstartdate: this.startDate,
+      searchenddate: this.endDate
+    };
+
+    this.service.sortbtdate(Req).subscribe(
+      (response: any) => {
+        // Success callback
+        this.candidates = response.result;
+        this.candidates = response.result.map((candidate: any) => {
+          if (!candidate.Skill || !candidate.notes) {
+            candidate.Skill = 'NA';
+            // candidate.notes = 'NA';
+          }
+          return candidate;
+        });
+        this.totalRecords = 25;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        this.noResultsFound = this.candidates.length === 0;
+        this.loading = false; // Set loading to false on success
+        this.messageService.add({ severity: 'success', summary: ` Filter From ${this.startDate} To ${this.endDate} ` });
+
+      },
+      (error: any) => {
+        // Error callback
+        console.error('Error occurred:', error);
+        // Handle error here
+        this.loading = false; // Set loading to false on error
+      }
+    );
+  }
+
+  public dateFormatter(value: any) {
+    const formattedDate = formatDate(value, 'yyyy-MM-dd', "en-US");
+    return formattedDate;
+  }
+
+
+  constructor(private cookieService: CookieService, private service: HrmsService, private messageService: MessageService, private formBuilder: FormBuilder, private route: ActivatedRoute, private fb: FormBuilder, private appservice: AppService, private navService: NavigationService) {
     this.OrgID = this.cookieService.get('OrgID');
     this.userName = this.cookieService.get('userName1');
     this.TraineeID = this.cookieService.get('TraineeID');
     this.routeType = this.route.snapshot.params["routeType"];
     this.candidateID = this.route.snapshot.params["traineeID"];
-
+    this.Teamlead = this.cookieService.get('TeamLead')
     this.useremail = this.cookieService.get('userName1');
     this.isAdmin = this.cookieService.get('IsAdmin');
+    this.FirstName = this.cookieService.get('FirstName');
+    this.LastName = this.cookieService.get('LastName')
     console.log(this.isAdmin);
-
+    this.form = this.fb.group({
+      dates: [null]
+    });
   }
 
   ngOnInit(): void {
+    this.isAdmin = this.cookieService.get('IsAdmin');
     this.OrgID = this.cookieService.get('OrgID');
+    // this.createNotification('abnsd','bdsaf');
+    // this.showNotification('admin','rec')
     this.getOrganization();
     this.selectedOrgID = this.OrgID;
     this.TraineeID = this.cookieService.get('TraineeID');
@@ -89,7 +256,6 @@ export class HrmsComponent implements OnInit {
     this.getLegalStatusOptions();
     this.fetchhrmscandidatelist();
     this.gethrmsLocation();
-
 
     this.addCandidate = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -104,7 +270,7 @@ export class HrmsComponent implements OnInit {
       marketerName: [''],
       notes: ['', [Validators.required]],
       referralType: [''],
-      selectedOrgID:[''],
+      selectedOrgID: [''],
       // university: [''],
       middleName: [''],
       gender: ['male'],
@@ -140,19 +306,19 @@ export class HrmsComponent implements OnInit {
     // });
 
   }
-  
 
 
-  multiorgID:any;
+
+  multiorgID: any;
   getOrganization() {
     const Req = {
-      useremail:this.userName
+      useremail: this.userName
     };
     this.service.fetchmultiorg(Req).subscribe((x: any) => {
       this.multiorgID = x;
     });
   }
-  
+
   // fetchinterviewlist() {
   //   let Req = {
   //     TraineeID: this.candidateID,
@@ -258,9 +424,9 @@ export class HrmsComponent implements OnInit {
       TraineeID: this.TraineeID,
       Page: this.currentPage,
       PageSize: this.pageSize,
-      useremail:this.useremail,
-      admin:this.isAdmin,
-      searchterm:this.searchInput
+      useremail: this.useremail,
+      admin: this.isAdmin,
+      searchterm: this.searchInput
     };
 
     this.service.gethrmscandidateList(Req).subscribe(
@@ -268,7 +434,7 @@ export class HrmsComponent implements OnInit {
         // Success callback
         this.candidates = response.result;
         this.candidates = response.result.map((candidate: any) => {
-          if (!candidate.Skill || !candidate.notes ) {
+          if (!candidate.Skill || !candidate.notes) {
             candidate.Skill = 'NA';
             // candidate.notes = 'NA';
           }
@@ -287,54 +453,70 @@ export class HrmsComponent implements OnInit {
         this.loading = false; // Set loading to false on error
       }
     );
-    
+
   }
 
-  searchhrmscandidatelist(searchterm:string) {
+  searchhrmscandidatelist(searchterm: string) {
     this.loading = true;
+
     let Req = {
       TraineeID: this.TraineeID,
       Page: this.currentPage,
       PageSize: this.pageSize,
-      useremail:this.useremail,
-      admin:this.isAdmin,
-      searchterm:this.searchInput
+      useremail: this.useremail,
+      admin: this.isAdmin,
+      searchterm: this.searchInput
     };
-
+    this.searchTerm = searchterm.toLowerCase();
     this.service.gethrmscandidateList(Req).subscribe(
       (response: any) => {
-        // Success callback
         this.candidates = response.result;
         this.candidates = response.result.map((candidate: any) => {
-          if (!candidate.Skill || !candidate.notes ) {
+          if (!candidate.Skill || !candidate.notes) {
             candidate.Skill = 'NA';
-            // candidate.notes = 'NA';
           }
           return candidate;
         });
         console.log(this.candidates);
         if (this.candidates.length === 0) {
-          // No records found
           this.messageService.add({ severity: 'danger', summary: 'No Records Found. Please Try Again' });
         } else {
-          // Records found
-          // this.totalRecords = response.result[0].TotalCount[0];
+          this.candidates = this.candidates.map((candidate: any) => {
+            let skills = candidate.Skill
+              ? candidate.Skill.toLowerCase().split(',')
+              : [];
+            let keywords = this.searchInput
+              .toLowerCase()
+              .split(/\s+and\s+|\s+/)
+              .map((kw) => kw.trim());
+            let matchCount = keywords.filter((kw) =>
+              skills.includes(kw)
+            ).length;
+            let score = (matchCount / keywords.length) * 100;
+            return { ...candidate, score: Math.round(score * 10) / 10 };
+          });
+
+          this.candidates.sort((a: any, b: any) => b.score - a.score);
+
+          this.candidates.forEach((candidate: any) => {
+            console.log(
+              `FullName: ${candidate.Name}, Score: ${candidate.score}%`
+            );
+          });
+
           this.totalRecords = 25;
           this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
           this.noResultsFound = false;
         }
-        this.loading = false; // Set loading to false in both success and failure cases
+        this.loading = false;
       },
       (error: any) => {
-        // Error callback
         console.error('Error occurred:', error);
-        // Handle error here
-        this.loading = false; // Set loading to false on error
+        this.loading = false; 
       }
     );
-    
   }
-
+  
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     this.fetchhrmscandidatelist();
@@ -395,6 +577,8 @@ export class HrmsComponent implements OnInit {
       followupon = this.specifiedDate;
     }
     const referralType = this.formData.referralType === 'Others' ? this.formData.otherReferralType : this.formData.referralType;
+
+    const candidateName = `${this.addCandidate.value.firstName} ${this.addCandidate.value.lastName}`;
     let Req = {
       firstName: this.addCandidate.value.firstName,
       middleName: this.formData.middleName,
@@ -425,23 +609,92 @@ export class HrmsComponent implements OnInit {
     // this.service.addHrmsCandidate(Req).subscribe((x: any) => {
     //   console.log(x);
     // });
-    console.log(Req);
+
     //     this.service.insertTrainee(Req).subscribe((ax: any) => {
     //       console.log(ax);
     // this.service.insertTraineeCandidate(Req).subscribe((x: any) => {
     //   console.log(x);
     // });
 
+
+    console.log(Req);
     this.service.insertTraineeCandidate(Req).subscribe(
       (x: any) => {
-        this.handleSuccess(x);
+        // this.handleSuccess(x);
         this.fetchhrmscandidatelist();
+        const recruitername = `${this.FirstName} ${this.LastName}`;
+        const successMessage = `${candidateName} successfully added to HRMS.`;
+        const successmessageAdmin = `${recruitername} has added Candidate ${candidateName} to HRMS.`;
+        this.createNotification(successMessage, successmessageAdmin);
+        this.showNotification(successMessage, successmessageAdmin);
+
+        let req = {
+          traineeID: this.TraineeID,
+          orgID: this.OrgID
+        };
+
+         this.navService.fetchUnreadCount(req).subscribe(response => {
+          // this.navService.updateCount(response.unreadCount);
+          });
+
       },
       (error: any) => {
         this.handleError(error);
+        // const recruitername = `${this.FirstName} ${this.LastName}`;
+        // const errorMessageAdmin = `${recruitername} could not add Candidate ${candidateName} to HRMS.`
+        // const errorMessage = `Failed to add ${candidateName} to the HRMS.`;
+        // this.createNotification(errorMessage, errorMessageAdmin);
+        // this.showNotification(errorMessage, errorMessageAdmin);
+
       }
     );
 
+  }
+
+  isVisible: boolean = false;
+  message: string = '';
+  messageadmin: string = '';
+  createNotification(message: string, messageadmin: string) {
+    if (this.isAdmin === "true") {
+      const req = {
+        message: message,
+        time: new Date(),
+        TraineeID: this.TraineeID,
+        orgID: this.OrgID,
+        createby: this.userName,
+        Isadmin: this.isAdmin,
+      };
+      console.log(req);
+      this.appservice.createnotification(req).subscribe();
+    } else {
+      const req = {
+        message: message,
+        time: new Date(),
+        TraineeID: this.TraineeID,
+        orgID: this.OrgID,
+        createby: this.userName,
+        Isadmin: this.isAdmin,
+        TeamLead: this.Teamlead,
+        messageadmin: messageadmin
+      };
+      console.log(this.isAdmin);
+      console.log(req);
+      this.appservice.createnotification(req).subscribe();
+    }
+    console.log(this.isAdmin);
+  }
+
+
+  showNotification(message: string, messageadmin: string): void {
+    this.message = message;
+    this.messageadmin = messageadmin;
+    this.isVisible = true;
+    setTimeout(() => {
+      this.isVisible = false;
+    }, 5000);
+  }
+  closeNotification(): void {
+    this.isVisible = false;
   }
 
   onSubmit() {
@@ -550,7 +803,7 @@ export class HrmsComponent implements OnInit {
     this.service.gethrmscandidateList(Req).subscribe((response: any) => {
       this.candidates = response.result;
       this.candidates = response.result.map((candidate: any) => {
-        if (!candidate.Skill || !candidate.notes ) {
+        if (!candidate.Skill || !candidate.notes) {
           candidate.Skill = 'NA';
         }
         return candidate;
@@ -587,7 +840,7 @@ export class HrmsComponent implements OnInit {
     this.service.gethrmscandidateList(Req).subscribe((response: any) => {
       this.candidates = response.result;
       this.candidates = response.result.map((candidate: any) => {
-        if (!candidate.Skill || !candidate.notes ) {
+        if (!candidate.Skill || !candidate.notes) {
           candidate.Skill = 'NA';
         }
         return candidate;
@@ -741,7 +994,7 @@ export class HrmsComponent implements OnInit {
   // }
   deleteItem(TraineeID: any) {
     let Req = {
-      TraineeID: TraineeID, 
+      TraineeID: TraineeID,
     };
     this.service.deleteHrmsdata(Req).subscribe((x: any) => {
       var flag = x.flag;
@@ -752,7 +1005,7 @@ export class HrmsComponent implements OnInit {
           severity: 'success',
           summary: 'Hrms data removed sucessfully',
         });
-      this.fetchhrmscandidatelist();
+        this.fetchhrmscandidatelist();
       } else {
         this.messageService.add({
           severity: 'error',

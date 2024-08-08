@@ -222,18 +222,34 @@ $brand-primary:#482668;
 .btn{
     color:white;   
 }
-.small-box-footer{
+.smaller-box-footer{
     background-color: #482668;
+    color:white;
+    background-color: #482668;
+    color: white;
+    // background-color: #0000001a; 
+    color: #fffc;
+    display: block;
+    padding: 3px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    z-index: 10;
 }
-.small-box-footer:hover{
+.smaller-box-footer:hover{
     background-color: #5d0aab;
+    color:white;
 }
 .Onboarding{
     display: flex;
     justify-content: right;
-    color:#482668;
+    background-color:#482668;
     
 }
+.btn.action-button{
+    background-color: #482668;
+}
+
 .btn.action-button:hover{
     background-color: #5d0aab;
 }
@@ -254,3 +270,191 @@ $brand-primary:#482668;
     padding: 8px;
     border: 1px solid #ddd;
 }
+
+// .blurred {
+//     filter: blur(5px);
+//   }
+
+  @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+  :root {
+    --line-border-fill: #3498db;
+    --line-border-empty: #e0e0e0;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #f6f7fb;
+    font-family: 'Muli', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  .container-fluid {
+    width: 100%;
+  }
+  
+  .header {
+    padding-top: 20px;
+  }
+  
+  .progress-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .progress-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .container {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .top-section {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .progress {
+    position: absolute;
+    width: 4px;
+    background-color: var(--line-border-fill);
+    transition: height 0.4s ease;
+    z-index: 1;
+  }
+  
+  .circle {
+    background-color: #fff;
+    color: #999;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    transition: border-color 0.4s ease;
+    margin-bottom: 20px;
+    z-index: 2;
+    margin-right: 20px;
+  }
+  
+  .circle.active {
+    border-color: #482668;
+  }
+  
+  .image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .top-image {
+    max-width: 93%;
+    height: auto;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+  }
+  
+  .btn {
+    // background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:disabled {
+    background-color: #ccc;
+  }
+  
+  .btn:hover:not(:disabled) {
+    background-color: #5d0aab;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  
+  .table th, .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .small-box {
+    position: relative;
+    display: block;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .small-box > .inner {
+    padding: 10px;
+  }
+  
+  .small-box > .small-box-footer {
+    position: absolute;
+    text-align: center;
+    padding: 3px 0;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    display: block;
+    z-index: 10;
+  }
+  
+  .small-box > .icon {
+    color: rgba(0, 0, 0, 0.15);
+    z-index: 0;
+  }
+  
+  .fa-arrow-circle-right {
+    margin-left: 5px;
+  }
+  
+  .progress-modal.active + .container-fluid {
+    filter: blur(5px);
+  }
+  

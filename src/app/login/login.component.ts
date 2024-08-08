@@ -67,6 +67,9 @@ export class LoginComponent {
             const IsAdmin = response.result[0].IsAdmin
             const AccessOrg = response.result[0].AccessOrg
             const UserRole = response.result[0].UserRole
+            const TeamLead=response.result[0].TeamLead
+            const FirstName=response.result[0].FirstName
+            const LastName=response.result[0].LastName
             this.cookieService.set('userName1', userName);
             this.cookieService.set('OrgID', orgID);
             this.cookieService.set('TraineeID', traineeID);
@@ -79,6 +82,9 @@ export class LoginComponent {
             this.cookieService.set('RoleID', RoleID);
             this.cookieService.set('AccessOrg', AccessOrg);
             this.cookieService.set('UserRole', UserRole);
+            this.cookieService.set('TeamLead', TeamLead);
+            this.cookieService.set('FirstName', FirstName);
+            this.cookieService.set('LastName', LastName);
             this.router.navigate(['/dashboard/' + traineeID]);
           }
 

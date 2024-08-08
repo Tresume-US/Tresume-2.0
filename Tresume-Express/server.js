@@ -29,6 +29,7 @@ var cors = require("cors");
 app.use(cors());
 const pool = require("./database");
 const cron = require("node-cron");
+const mailchimp = require("./mailchimp")
 
 const onboardRoutes = require("./onboarding-routes");
 const candidateRoutes = require("./candidate-routes");
@@ -53,6 +54,7 @@ const Invoice = require("./Invoice");
 const CorporateDocument = require("./corporate-document");
 const CBapi = require("./cb");
 const Dashboard = require("./dashboard");
+const WhatsApp = require("./whatsapp")
 
 app.use("/", onboardRoutes);
 app.use("/", Dashboard);
@@ -77,6 +79,8 @@ app.use("/", Invoice);
 app.use("/", submittedcandidates);
 app.use("/", CorporateDocument);
 app.use("/", CBapi);
+app.use("/", WhatsApp),
+app.use("/", mailchimp)
 app.use(
   session({
     secret: "Tresume@123",
@@ -1353,6 +1357,53 @@ app.post("/getResumeDetails", function (req, res) {
 //     });
 //   });
 // });
+app.post("/getinstructionstatus", function (req, res) {
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log("Error connecting to the database:", err);
+      return res.status(500).send("Error connecting to the database");
+    }
+
+    var request = new sql.Request();
+    var query = `SELECT obinstruction FROM memberdetails WHERE useremail = @useremail AND active = 1`;
+
+    request.input('useremail', sql.VarChar, req.body.useremail);
+
+    request.query(query, function (err, recordset) {
+      if (err) {
+        console.log("Error executing query:", err);
+        return res.status(500).send("Error executing query");
+      }
+
+      res.json(recordset);
+    });
+  });
+});
+
+app.post("/updateinstruction", async (req, res) => {
+  try {
+    await sql.connect(config);
+
+    const request = new sql.Request();
+    const query = `UPDATE memberdetails SET obinstruction = 1 WHERE useremail = @useremail`;
+
+    request.input('useremail', sql.VarChar, req.body.useremail);
+
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] > 0) {
+      res.status(200).send("Update successful");
+    } else {
+      res.status(404).send("No user found with the provided email");
+    }
+  } catch (err) {
+    console.log("Database error:", err);
+    res.status(500).send("Error updating instruction");
+  } finally {
+    sql.close().catch(err => console.log("Error closing the connection:", err));
+  }
+});
+
 
 app.post("/getOnboardingList", function (req, res) {
   try {
@@ -5490,3 +5541,129 @@ app.listen(port, () => {
 // });
 
 // task.start();
+
+
+app.post("/createnotification", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      try {
+        if (err) throw err;
+
+        var request = new sql.Request();
+        if(req.body.Isadmin === "true") {
+          var query = "INSERT INTO Notifications(Message, ReadStatus, Active, CreateTime, TraineeID, OrgID, CreateBy) " +
+                      "VALUES ('" + req.body.message + "', 1, 1, '" + req.body.time + "', '" + req.body.TraineeID + "', '" + req.body.orgID + "', '" + req.body.createby + "')";
+        } else {
+          var query = "INSERT INTO Notifications(Message, ReadStatus, Active, CreateTime, TraineeID, OrgID, CreateBy) " +
+                      "VALUES ('" + req.body.message + "', 1, 1, '" + req.body.time + "', '" + req.body.TraineeID + "', '" + req.body.orgID + "', '" + req.body.createby + "'), " +
+                      "('" + req.body.messageadmin + "', 1, 1, '" + req.body.time + "', '" + req.body.TeamLead + "', '" + req.body.orgID + "', '" + req.body.createby + "')";
+        }
+        
+     console.log(req.body.Isadmin)
+       console.log(query)
+       request.query(query,
+          function (err, recordset) {
+            try {
+              if (err) throw err;
+            } catch (error) {
+              console.log("Error executing query:", error);
+              res.status(500).send("Error executing query");
+            }
+          }
+        );
+        res.json(true);
+      } catch (error) {
+        console.log("Error connecting to the database:", error);
+        res.status(500).send("Error connecting to the database");
+      }
+    });
+  } catch (error) {
+    console.log("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
+  }
+});
+
+
+app.post("/fetchUnreadCount", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log("Error connecting to the database:", err);
+        return res.status(500).send("Error connecting to the database");
+      }
+
+      var request = new sql.Request();
+      // request.input('traineeID', sql.VarChar, req.body.traineeID);
+      // request.input('orgID', sql.VarChar, req.body.orgID);
+
+      request.query(
+        "SELECT COUNT(*) AS ReadStatusCount FROM Notifications WHERE ReadStatus = 1 AND Active = 1 AND TraineeID = '"+ req.body.traineeID+"' AND OrgID = '"+req.body.orgID+"'",
+        function (err, recordset) {
+          if (err) {
+            console.log("Error executing query:", err);
+            return res.status(500).send("Error executing query");
+          }
+
+          // Directly send the count
+          res.json({ unreadCount: recordset.recordset[0].ReadStatusCount });
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+
+app.post("/fetchNotifications", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "SELECT * FROM Notifications  WHERE ReadStatus = 1  AND Active = 1 AND TraineeID = '"+req.body.TraineeID+"' AND OrgID = '"+req.body.orgID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
+
+
+app.post("/UpdateNotificationResult", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "UPDATE Notifications set ReadStatus=2 where NID='"+req.body.NID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});
+
+app.post("/updateAllRead", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const query = "UPDATE Notifications set ReadStatus=2 where TraineeID='"+req.body.TraineeID+"' AND OrgID='"+req.body.OrgID+"'";
+    console.log(query);
+    const result = await request.query(query);
+    res.json({
+      flag: 1,
+      result: result.recordset, 
+    });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+});

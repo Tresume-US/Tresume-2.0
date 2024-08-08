@@ -22,190 +22,200 @@
           </div> -->
       <div class="col-md-6">
         <div class="form-group text-center mt-4">
-          <!-- <label for="search" class="label-large">Search:</label> -->
           <input [(ngModel)]="searchInput" type="text" class="form-control" id="search"
-            placeholder="Search Candidates..." [ngModelOptions]="{standalone: true}" (ngModelChange)="searchhrmscandidatelist(searchInput)">
+            placeholder="Search Candidates by Name , E-Mail , Skill.." [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="searchhrmscandidatelist(searchInput)">
         </div>
       </div>
+
       <div class="col-md-4">
         <div class="form-group text-center mt-4 ">
           <button type="button" class="btn btn-wdth text-white" data-toggle="modal"
-            data-target=".bd-example-modal-xl">Add Candidate</button>
-            <span (click)="sortTable('DateCreated')">
-              <button  class="btn btn-wdth text-white" style="margin-left: 15px;"> Sort by date
-                <i class="fa text-white"
-                [ngClass]="{'fa-sort-asc': sortBy === 'DateCreated' && sortOrder === 'asc', 'fa-sort-desc': sortBy === 'DateCreated' && sortOrder === 'desc', 'fa-sort': sortBy !== 'DateCreated'}"></i>
+            data-target=".bd-example-modal-xl" style="display: inline;">Add Candidate</button>
+            <button class="btn btn-wdth text-white" style="display: inline;margin-left: 15px;" (click)="toggleDropdown($event)">
+              Filter
+              <i class="fa fa-filter" aria-hidden="true" style="color: white;"></i>
+            </button>
+            <!-- <div class="dropdown-container" (click)="stopPropagation($event)">
+              <button class="btn btn-wdth text-white" style="margin-left: 15px;" (click)="toggleDropdown($event)">
+                Filter
+                <i class="fa fa-filter" aria-hidden="true" style="color: white;"></i>
               </button>
-            </span>
+              <div *ngIf="isDropdownOpen" class="dropdown-content" style="border-radius: 10px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+                <ul style="list-style: none; padding: 0;line-height: 1.8;font-size: 14px;">
+                  <li><a class="dropdown-item" (click)="toggleSortByDate()">Sort By Date</a>
+                    <div *ngIf="showDatePicker" >
+                      <input id="date-range" type="text" 
+                        class="form-control col-md-2" formControlName="dates" bsDaterangepicker
+                        [bsConfig]="{ adaptivePosition: true, ranges:ranges, containerClass:'theme-default',isAnimated: true, showWeekNumbers:false }"
+                        (bsValueChange)="onValueChange($event)">
+                      </div>
+                        </li>
+                 
+                  <li class="dropdown-parent">
+                    <a class="dropdown-item" (click)="toggleCandidateStatusDropdown($event)">Candidate Status</a>
+                    <ul *ngIf="isCandidateStatusDropdownOpen" style="list-style: none; padding-left: 15px;" class="nested-dropdown">
+                      <ul *ngIf="isCandidateStatusDropdownOpen" class="nested-dropdown" style="box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; border-radius: 10px;" >
+                        <li *ngFor="let option of currentStatusOptions" style="text-align: justify;" >
+                          
+                          <input type="checkbox" (change)="onCheckboxChange(option.CSID, $event)" />{{ option.CSName }}
+                           
+                          
+                        </li>
+                      </ul>
+              
+                     
+                      
+                    </ul>
+                  </li>
+                </ul> 
+              </div>
+            </div> -->
+            <div class="dropdown-container" (click)="stopPropagation($event)">
+              
+              <div [ngClass]="{'dropdown-content': true, 'dropdown-content--animated': true, 'dropdown_menu': true, 'dropdown_menu-6': true, 'show': isDropdownOpen}">
+                <ul style="list-style: none; padding: 0;">
+                  <li >
+                    <a class="dropdown-item " (click)="toggleDatePicker()"   formControlName="dates" bsDaterangepicker
+                    [bsConfig]="{ adaptivePosition: true, ranges:ranges, isAnimated: !true, showWeekNumbers:false }"
+                    (bsValueChange)="onValueChange($event)" >Sort By Date</a>
+                  </li>
+                  <li class="dropdown-parent" style="padding: 0;">
+                    <a class="dropdown-item" (click)="toggleCandidateStatusDropdown($event)" style="margin-bottom: 5px;">
+                      Candidate Status
+                    </a>
+                    <ul *ngIf="isCandidateStatusDropdownOpen" class="nested-dropdown dropdown_menu dropdown_menu-5">
+                      <li *ngFor="let option of currentStatusOptions; let i = index" class="dropdown_item-{{i + 1}}" style="text-align: justify; margin-bottom: 5px; font-size: 15px;">
+                        <input type="checkbox" (change)="onCheckboxChange(option.CSID, $event)" style="margin-right: 10px;" />{{ option.CSName }}
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          
         </div>
       </div>
     </div>
-    <!-- <div class="row mt-3">
-      <div class="col-md-6">
-        <div class="form-group">
-          <div style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
-            <label class="label-large" style="margin-right: 50px;">Follow up on:</label>
-            <div class="Filterbtn" style="display: flex; justify-content: space-between; width: 200px;">
-              <button class="btn btn-wdth text-white" [disabled]="followuponbutton()"
-                (click)="filterCandidates()">Search</button>
-              <button class="btn btn-wdth text-white" (click)="clearAndReload()">Clear</button>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-between">
-            <div class="col">
-              <label>Start date:</label>
-              <input type="date" class="form-control" id="followUpStartDate" placeholder="Start date"
-                [(ngModel)]="followUpStartDate" [ngModelOptions]="{standalone: true}" (change)="followstartdate = true">
-            </div>
-            <div class="col">
-              <label>End date:</label>
-              <input type="date" class="form-control" id="followUpEndDate" placeholder="End date"
-                [(ngModel)]="followUpEndDate" [ngModelOptions]="{standalone: true}" (change)="followenddate = true">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <div style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
-            <label for="dateCreated" class="label-large" style="margin-right: 50px;">Date Created:</label>
-            <div class="Filterbtn" style="display: flex; justify-content: space-between; width: 200px;">
-              <button class="btn btn-wdth text-white" [disabled]="isSearchButtonDisabled()"
-                (click)="onSearch()">Search</button>
-              <button class="btn btn-wdth text-white" (click)="onClear()">Clear</button>
-             
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-between">
-            <div class="col">
-              <label>Start date:</label>
-              <input type="date" class="form-control" id="dateCreatedStartDate" placeholder="Start date"
-                [(ngModel)]="dateCreatedStartDate" [ngModelOptions]="{standalone: true}"
-                (change)="fromDateEntered = true">
-            </div>
-            <div class="col">
-              <label>End date:</label>
-              <input type="date" class="form-control" id="dateCreatedEndDate" placeholder="End date"
-                [(ngModel)]="dateCreatedEndDate" [ngModelOptions]="{standalone: true}" (change)="toDateEntered = true">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     
-  <!-- card -->
-  <div *ngIf="loading">Loading...</div>
-<div *ngIf="!loading">
-    <div class="main-container" *ngFor="let candidate of candidates">
-      <!-- <div class="col-12" *ngIf="isCandidateVisible(candidate)"> -->
-        <div>
-          <div class="card mb-4">
-            <div class="card-body" style="line-height: 5px;padding: 15px;">
-              <div class="row">
-                <div class="left-column" style="padding: 8px;font-weight: 500;">
-                    <div>
-                      <a style="font-size: 26px; color: #482668;">{{ candidate.Name }}</a>
-                    </div>
-                </div>
-                <div class="column" style="text-align: end;margin-right: 40px;">
-                  <a class="badge badge-warning"  style="font-size: 16px; color: #482668;margin-right: 15px;"><i class="fas fa-globe"> </i> {{ candidate.organizationname }}</a>
-                    <i class="fa fa-eye fa-fw pt-2" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']" style="font-size: 20px;"></i>
-                    <i type="button" class="fa fa-trash fa-fw pt-2" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID" style="font-size: 20px;margin-left: 14px;"></i>
-                  </div>
-              </div>
+    <!-- card -->
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="!loading">
+      <div class="mains">
+        <!--New Changes-->
+        <div class="main-container" *ngFor="let candidate of candidates">
+          <div class="card mb-6">
+              <div class="card-header">
+                  <h2 class="project-title">
+                      <a style="font-size: 18px; color: #482668;" [innerHTML]="candidate.Name | highlight: searchTerm"></a>
 
-              <div class="modal fade" [id]="'exampleModal-' + candidate.TraineeID" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog larger">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel" style="font-size: larger;">Confirmation</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Are you sure you want to remove the candidate from the talent bench? This action cannot be reversed.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-danger" (click)="deleteItem(candidate.TraineeID)">Delete</button>
-                    </div>
+
+                      <span class="status float-right" style="color: #492000;">{{ candidate.CandidateStatus }}</span>
+                      <!-- <span *ngIf="candidate.CandidateStatus === 'Direct Marketing'" style="color: red;" class="status" >{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'First Time Caller'" style="color: green;" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'On Training'" style="color: blue;" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'On Bench'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Marketing On Hold'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Requirement Based Marketing/Sourcing'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Has Offer'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Placed/Working at Client Location'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Terminate'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Replaced at Client Side'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Training'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Marketing'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>
+                      <span *ngIf="candidate.CandidateStatus === 'Dropped - Other'" style="color: rgb(161, 144, 144);" class="status">{{ candidate.CandidateStatus }}</span>  -->
+                  </h2>
+                  <div class="column" style="text-align: start;">
+                      <a class="badge badge-light" style="font-size: 12px; color: #482668;">
+                          <i class="fas fa-globe"></i> 
+                          {{ candidate.organizationname }}
+                          <!-- <span *ngIf="candidate.organizationname === 'IQLogg'" style="color: red;" class="status" >{{ candidate.organizationname }}</span> -->
+                      </a>
                   </div>
-                </div>
+                  <!-- <div class="column1 mr-0 float-right pl-5">
+                      <i class="fa fa-eye fa-fw pt-2" style="color: black;" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"></i>
+                      <i type="button" class="fa fa-trash fa-fw pt-2" style="color: red;" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID"></i>
+                      <a href="tel:{{phoneNumberG}}" mat-button class="call-button" style="font-size: 5px; margin-left: -20px; color: green;">
+                          <mat-icon style="font-size: 17px;">phone</mat-icon>
+                      </a>
+                      <a href="mailto:{{candidate.Email}}" mat-button class="mail-button p-0 text-end" style="font-size: 5px; margin-left: -42px;color: #2EAFE6;">
+                          <mat-icon style="font-size: 17px;">mail</mat-icon>
+                      </a>
+                  </div> -->
+                   <div class="column1 mr-0 float-right pl-5">
+                      <i class="fa fa-eye fa-fw pt-2" style="color: black;" [routerLink]="['/reviewtresume/'+routeType+'/'+candidate.TraineeID+'/0']"></i>
+                      <i type="button" class="fa fa-trash fa-fw pt-2" style="color: red;" data-toggle="modal" [attr.data-target]="'#exampleModal-' + candidate.TraineeID"></i>
+                      <a href="tel:{{phoneNumberG}}" mat-button class="call-button" style="font-size: 5px; margin-left: -20px; color: green;">
+                          <mat-icon style="font-size: 17px;">phone</mat-icon>
+                      </a>
+                      <a href="mailto:{{candidate.Email}}" mat-button class="mail-button p-0 text-end" style="font-size: 5px; margin-left: -42px;color: #2EAFE6;">
+                          <mat-icon style="font-size: 17px;">mail</mat-icon>
+                      </a>
+                  </div>
               </div>
-              
-              
-              <hr style="margin-top: 8px;">
-              <div class="row">
-                <div class="col-md-5">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>Email:</th>
-                      <td style="   word-break: break-all;
-                      line-height: 1.2;
-                      padding: 5px;" >{{ candidate.Email }}</td>
-                    </tr>
-                    <tr>
-                      <th style="line-height: 1.2;" >Candidate Status:</th>
-                      <td>{{ candidate.CandidateStatus }}</td>
-                    </tr>
-                  </table>
-                  <!-- <a class="button-10 " data-toggle="modal" data-target="#exampleModalCenter" (click)="openInterviewModal(candidate.TraineeID)">+ Add Interview
-                  </a> -->
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-borderless no-border">
-                    <tr>
-                      <th>Phone:</th>
-                      <td>{{ candidate.Phone }}</td>
-                    </tr>
-                    <tr>
-                      <th>Legal Status:</th>
-                      <td>{{ candidate.LegalStatus }}</td>
-                    </tr>
-                  </table>
-                </div>
-                <div class="col-md-3 align-items-center">
-                  <div class="input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroup-sizing-sm">FollowUpOn</span>
-                    </div>
-                    <input type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{ candidate.followupon }}" 
-                    (change)="updateSelected($event.target.value, candidate.TraineeID, 1)">
+              <div class="card-body" style="background: linear-gradient(180deg, #ffffff 0%, #a799b7 100%)">
+                  <div class="info-line">
+                      <span class="info-label">E-Mail</span>
+                      <span class="info-value" [innerHTML]="candidate.Email | highlight: searchTerm"></span>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12" style="line-height: 2">
-                    <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668;margin-right: 7px;"></i><b>Skills :</b> {{candidate.Skill | truncate:100}}
+                  <div class="info-line">
+                      <span class="info-label">Phone</span>
+                      <span class="info-value">{{ candidate.Phone }}</span>
                   </div>
-                  <div class="col-md-12">
-                    <i class="fa fa-angle-double-right" aria-hidden="true" style="color: #482668;margin-right: 7px;"></i><b>Notes :</b> {{candidate.notes | truncate:100}}
-                  </div></div>
-                <div class="span">
-                  <span>Created By : </span>
-                  <span>{{ candidate.CreatedBy }}</span>&nbsp;&nbsp;
-                  <span>Date Created : </span>
-                  <span>{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
+                  <div class="info-line">
+                      <span class="info-label">Legal Status</span>
+                      <span class="info-value">{{ candidate.LegalStatus }}</span>
+                  </div>
+                  <!-- <div class="info-line">
+                      <span class="info-label">Skills</span>
+                      <span class="info-value">{{ candidate.Skill | highlight: searchTerm | truncate: 45 }}</span>
+                  </div>
+                  <div class="info-line">
+                      <span class="info-label">Notes</span>
+                      <span class="info-value">{{ candidate.notes | truncate: 35 }}</span>
+                  </div> -->
+                  <div class="info-line">
+                      <span class="info-label">Created By</span>
+                      <span class="info-value">{{ candidate.CreatedBy }}</span>
+                  </div>
+                  <div class="info-line">
+                      <span class="info-label">Date Created</span>
+                      <span class="info-value">{{ candidate.DateCreated | date:'MM/dd/yy hh:mm a' }}</span>
+                  </div>
+                  <div class="info-line">
+                    <span class="info-label">Skills</span>
+                    <span class="info-value">{{ candidate.Skill | highlight: searchTerm | truncate: 30 }}</span>
                 </div>
+                <div class="info-line">
+                    <span class="info-label">Notes</span>
+                    <span class="info-value">{{ candidate.notes | truncate: 30 }}</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress" [ngStyle]="{'width': candidate.progress + '%'}"></div>
+                </div>
+                <div
+                *ngIf="candidate.score > 0"
+                class="score-container"
+                style="margin-top: 10px"
+              >
+                {{ candidate.score }}%
               </div>
-            </div>
+              </div>
           </div>
-        </div>
-      <!-- </div> -->
+      </div>
+      <!-- New Changes-->
     </div>
-    </div>
+  
     <div class="pagination-container">
       <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
       <ng-container *ngFor="let pageNumber of calculatePageRange()">
-        <button class="pagination-button" (click)="onPageChange(pageNumber)" [disabled]="currentPage === pageNumber">{{ pageNumber }}</button>
+        <button class="pagination-button" (click)="onPageChange(pageNumber)" [disabled]="currentPage === pageNumber">{{
+          pageNumber }}</button>
       </ng-container>
       <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-    </div>    
+    </div>
   </div>
-  </div>
+</div>
 
 
 
@@ -214,7 +224,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content container2 ">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Add Candidate</h2>
+        <h2 class="modal-title" id="exampleModalLongTitle">Add Candidate</h2> 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="close" aria-hidden="true">&times;</span>
         </button>
@@ -332,7 +342,7 @@
             </div> -->
           </div>
           <div class="row">
-            
+
             <div class="col-md-4">
               <div class="form-group text-center">
                 <label>Current Location *</label>
@@ -359,7 +369,8 @@
             </div>
             <div class="col-md-4">
               <label class="label">Referral Type *</label>
-              <select name="referralType" id="referralType" class="form-control" [(ngModel)]="formData.referralType" [ngModelOptions]="{standalone: true}" (change)="onReferralTypeChange()">
+              <select name="referralType" id="referralType" class="form-control" [(ngModel)]="formData.referralType"
+                [ngModelOptions]="{standalone: true}" (change)="onReferralTypeChange()">
                 <option value="Phone">Phone</option>
                 <option value="Email">Email</option>
                 <option value="Others">Others</option>
@@ -367,10 +378,10 @@
               <div *ngIf="formData.referralType === 'Others'">
                 <label class="label" for="otherReferralTypeInput">Others:</label>
                 <input type="text" id="otherReferralTypeInput" name="otherReferralType" class="form-control"
-                      [(ngModel)]="formData.otherReferralType" [ngModelOptions]="{standalone: true}">
+                  [(ngModel)]="formData.otherReferralType" [ngModelOptions]="{standalone: true}">
               </div>
             </div>
-            
+
           </div>
           <div class="row">
             <div class="col-md-4" *ngIf="routeType == 1">
@@ -379,8 +390,10 @@
           <div class="row">
             <div class="col-md-4" *ngIf="routeType == 1">
               <label>Organization</label>
-              <select class="form-control" name="selectedOrgID" [(ngModel)]="selectedOrgID" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{ type.organizationname }}</option>
+              <select class="form-control" name="selectedOrgID" [(ngModel)]="selectedOrgID"
+                [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let type of multiorgID" [value]="type.organizationid">{{ type.organizationname }}
+                </option>
               </select>
             </div>
             <div class="col-md-4" *ngIf="routeType == 1">
@@ -388,7 +401,7 @@
               <textarea class="textarea" name="notes" rows="2" formControlName="notes"></textarea>
             </div>
 
-            
+
           </div>
 
           <!-- For TimeSheet -->
@@ -442,8 +455,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn" data-dismiss="modal" (click)="savehrmsdata()"
-        [disabled]="!addCandidate.get('firstName').valid || 
+        <button type="button" class="btn" data-dismiss="modal" (click)="savehrmsdata()" [disabled]="!addCandidate.get('firstName').valid || 
         !addCandidate.get('lastName').valid || 
         addCandidate.get('email').invalid || 
         addCandidate.get('phone').invalid || 
@@ -461,11 +473,12 @@
   </div>
 </div>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle" >Interview</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Interview</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -476,39 +489,47 @@
             <div class="row">
               <div class="col-md-4">
                 <label for="interviewDate">Interview Date</label>
-                <input type="date" class="form-control" id="interviewDate" name="interviewDate" placeholder="Interview Date" [(ngModel)]="interviewDate">
+                <input type="date" class="form-control" id="interviewDate" name="interviewDate"
+                  placeholder="Interview Date" [(ngModel)]="interviewDate">
               </div>
               <div class="col-md-4">
                 <label for="interviewTime">Interview Time</label>
-                <input type="time" class="form-control" id="interviewTime" name="interviewTime" placeholder="Interview Time" [(ngModel)]="interviewTime">
+                <input type="time" class="form-control" id="interviewTime" name="interviewTime"
+                  placeholder="Interview Time" [(ngModel)]="interviewTime">
               </div>
               <div class="col-md-4">
                 <label for="interviewInfo">Notes</label>
-                <input type="text" class="form-control" id="interviewInfo" name="interviewInfo" placeholder="Notes" [(ngModel)]="interviewInfo">
+                <input type="text" class="form-control" id="interviewInfo" name="interviewInfo" placeholder="Notes"
+                  [(ngModel)]="interviewInfo">
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-4">
                 <label for="client">Client</label>
-                <input type="text" class="form-control" id="client" name="client" placeholder="Client" [(ngModel)]="client">
+                <input type="text" class="form-control" id="client" name="client" placeholder="Client"
+                  [(ngModel)]="client">
               </div>
               <div class="col-md-4">
                 <label for="vendor">Vendor</label>
-                <input type="text" class="form-control" id="vendor" name="vendor" placeholder="Vendor" [(ngModel)]="vendor">
+                <input type="text" class="form-control" id="vendor" name="vendor" placeholder="Vendor"
+                  [(ngModel)]="vendor">
               </div>
               <div class="col-md-4">
                 <label for="subVendor">Sub Vendor</label>
-                <input type="text" class="form-control" id="subVendor" name="subVendor" placeholder="Sub Vendor" [(ngModel)]="subVendor">
+                <input type="text" class="form-control" id="subVendor" name="subVendor" placeholder="Sub Vendor"
+                  [(ngModel)]="subVendor">
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-4">
                 <label for="assistedBy">Assisted by</label>
-                <input type="text" class="form-control" id="assistedBy" name="assistedBy" placeholder="Assisted by" [(ngModel)]="assistedBy">
+                <input type="text" class="form-control" id="assistedBy" name="assistedBy" placeholder="Assisted by"
+                  [(ngModel)]="assistedBy">
               </div>
               <div class="col-md-4">
                 <label for="typeOfAssistance">Type of Assistance</label>
-                <input type="text" class="form-control" id="typeOfAssistance" name="typeOfAssistance" placeholder="Type of Assistance" [(ngModel)]="typeOfAssistance">
+                <input type="text" class="form-control" id="typeOfAssistance" name="typeOfAssistance"
+                  placeholder="Type of Assistance" [(ngModel)]="typeOfAssistance">
               </div>
               <div class="col-md-4">
                 <label for="interviewMode">Interview Mode</label>
@@ -529,7 +550,8 @@
 </div>
 
 
-<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -548,7 +570,8 @@
               </div>
               <div class="col-md-4">
                 <label for="submissionDate">Submission Date</label>
-                <input type="date" class="form-control" id="submissionDate" name="submissionDate" placeholder="Submission Date" [(ngModel)]="submissionDate">
+                <input type="date" class="form-control" id="submissionDate" name="submissionDate"
+                  placeholder="Submission Date" [(ngModel)]="submissionDate">
               </div>
               <div class="col-md-4">
                 <label for="notes">Notes</label>
@@ -560,7 +583,8 @@
             <div class="row">
               <div class="col-md-4">
                 <label for="vendorName">Vendor Name</label>
-                <input type="text" class="form-control" id="vendorName" name="vendorName" placeholder="Vendor Name" [(ngModel)]="vendorName">
+                <input type="text" class="form-control" id="vendorName" name="vendorName" placeholder="Vendor Name"
+                  [(ngModel)]="vendorName">
               </div>
               <div class="col-md-4">
                 <label for="rate">Rate</label>
@@ -568,12 +592,13 @@
               </div>
               <div class="col-md-4">
                 <label for="clientName">Client Name</label>
-                <input type="text" class="form-control" id="clientName" name="clientName" placeholder="Client Name" [(ngModel)]="clientName">
+                <input type="text" class="form-control" id="clientName" name="clientName" placeholder="Client Name"
+                  [(ngModel)]="clientName">
               </div>
             </div>
           </div>
         </form>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -582,6 +607,11 @@
     </div>
   </div>
 </div>
+
+<div [class.show]="isVisible" class="notification" role="alert">
+  <span>{{ message }}</span>
+</div>
+
 
 <p-toast position="bottom-right"></p-toast>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>

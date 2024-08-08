@@ -306,7 +306,8 @@
         <div class="container-flex">
           <div class="card-body">
             <div class="card-job-info" style="width: 50%">
-              <h2>{{ jobDetail.TraineeTitle }}</h2>
+              <h2 [innerHTML]="jobDetail.TraineeTitle| keyhighlight:keyWord"></h2>
+              <!-- <h2>{{ jobDetail.TraineeTitle }}</h2> -->
               <i class="label fa fa-location-arrow">
                 {{ jobDetail.CurrentLocation }}
               </i>
@@ -455,6 +456,11 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div [class.show]="isVisible" class="notification" role="alert">
+  <span>{{ message }}</span>
 </div>
 
 <p-toast position="bottom-right"></p-toast>

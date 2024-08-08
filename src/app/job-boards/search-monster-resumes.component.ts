@@ -244,6 +244,7 @@ export class SearchResumesMonsterComponent implements OnInit {
         { value: 'WantsTemp', label: 'Temporary' },
         { value: 'WantsSeasonal', label: 'Seasonal' }
     ];
+    keyWord:string
     selectedJobType: string;
     selectedWorkStatus: string;
     selectedLanguageProficiency: string;
@@ -814,6 +815,7 @@ export class SearchResumesMonsterComponent implements OnInit {
             }
             this.service.jobBoardAudit(auditReq).subscribe(x => { });
         }
+        this.keyWord=this.model.keyword.toLowerCase()
 
         this.service.getMonsterSearch(req).subscribe(
             (x: any) => {

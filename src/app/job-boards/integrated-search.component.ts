@@ -68,7 +68,7 @@ export class IntegratedSearchComponent implements OnInit {
             },
         }
     ];
-
+keyWord:string
     fieldBool: FormlyFieldConfig[] = [
         {
             key: 'boolean',
@@ -690,6 +690,7 @@ export class IntegratedSearchComponent implements OnInit {
             Jobboard:{ value: 'all', name: 'All' },
             recruiter:0
         }
+        this.keyWord=this.model.boolean.toLowerCase()
         this.service.getResumes2(req).subscribe(x => {
             let response = x.result;
             this.tresumeData = response;

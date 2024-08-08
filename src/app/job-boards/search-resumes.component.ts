@@ -24,12 +24,13 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { MessageService } from 'primeng/api';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as html2pdf from 'html2pdf.js';
-
+import { AppService } from '../app.service';
+import { KeyhighlightPipe } from '../keyhighlight.pipe';
 @Component({
   selector: 'app-search-resumes',
   templateUrl: './search-resumes.component.html',
   styleUrls: ['./search-resumes.component.scss'],
-  providers: [JobBoardsService, CookieService, MessageService],
+  providers: [JobBoardsService, CookieService, MessageService,AppService,KeyhighlightPipe],
 })
 export class SearchResumesComponent implements OnInit {
   form = new FormGroup({});
@@ -101,7 +102,7 @@ export class SearchResumesComponent implements OnInit {
   //     'Wisconsin',
   //     'Wyoming'
   // ];
-
+keyWord:string
   Jobboard: any[] = [
     { value: 'all', name: 'All' },
     { value: 'Dice', name: 'Dice' },
@@ -172,7 +173,8 @@ formData: any = {};
     private cookieService: CookieService,
     private modalService: BsModalService,
     private messageService: MessageService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private appservice:AppService
   ) {
     this.traineeId = this.cookieService.get('TraineeID');
     this.OrgID = this.cookieService.get('OrgID');
@@ -529,6 +531,7 @@ formData: any = {};
       insidesearch:this.insidesearch
     };
     console.log(req);
+    this.keyWord=this.model.keyword.toLowerCase()
     this.service.getResumes2(req).subscribe((x) => {
       this.loading = false;
       this.resultsFound = true;
@@ -554,6 +557,7 @@ formData: any = {};
       OrgID: this.OrgID,
     };
     console.log(req);
+    this.keyWord=this.model.keyword.toLowerCase()
     this.service.getResumes3(req).subscribe((x) => {
       this.loading = false;
       this.resultsFound = true;
@@ -752,13 +756,15 @@ formData: any = {};
         lastUpdatedBy: this.lastUpdatedBy,
         experience: this.experience,
       };
-      // console.log(Req);
+      console.log(Req);
       // this.Service.insertJobboardCandidate(Req).subscribe(
       //   (x: any) => {
       //     this.messageService.add({ severity: 'success', summary: 'Inserted Successfully' });
+      //     this.createNotification('Candidate added successfully');
       //   },
       //   (error: any) => {
       //     this.messageService.add({ severity: 'error', summary: 'Failed to insert data' });
+      //     this.createNotification('Failed to add candidate')
       //   }
       // );
   
@@ -809,4 +815,35 @@ formData: any = {};
       };
       reader.readAsText(file);
     }
+
+
+
+
+    isVisible: boolean = false;
+    message: string = '';
+    createNotification(message: string) {
+      const req = {  
+        message: message,
+        time: new Date(),
+        TraineeID:this.TraineeID,
+        orgID:this.OrgID,
+        createby:this.userName,
+      };
+      console.log(req)
+      this.appservice.createnotification(req).subscribe(
+      )
+    }
+  
+    showNotification(message: string): void {
+      this.message = message;
+      this.isVisible = true;
+      setTimeout(() => {
+        this.isVisible = false;
+      }, 5000);
+    }
+    closeNotification(): void {
+      this.isVisible = false;
+    }
+    
+
 }

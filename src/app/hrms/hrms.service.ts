@@ -41,6 +41,9 @@ export class HrmsService {
   insertTraineeCandidate(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'insertTraineeCandidate', request);
   }
+  sortbtdate(request: any): Observable<ResponseDetails> {
+    return this.http.post<ResponseDetails>(this.endpoint + 'sortbtdate', request);
+  }
 
   getOrgUserList(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'getOrgUserList', request);
@@ -85,6 +88,11 @@ export class HrmsService {
   deleteHrmsdata(request: any): Observable<ResponseDetails> {
     return this.http.post<ResponseDetails>(this.endpoint + 'deleteHrmsdata', request);
   }
+  // createnotification(request: any): Observable<ResponseDetails> {
+  //   return this.http.post<ResponseDetails>(this.endpoint + 'createnotification', request);
+  // }
+
+  
 }
 export interface ResponseDetails {
   message(message: any): unknown;
