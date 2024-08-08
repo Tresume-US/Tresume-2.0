@@ -171,6 +171,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
+import { ClientViewComponent } from './client-view/client-view.component';
 import { KeyhighlightPipe } from './keyhighlight.pipe';
 import { MailChimpComponent } from './integration/mail-chimp/mail-chimp.component';
 import { BeeLinesComponent } from './integration/bee-lines/bee-lines.component';
@@ -280,6 +281,7 @@ import { BeeLinesComponent } from './integration/bee-lines/bee-lines.component';
       CorporateDocumentComponent,
       ClientViewDetailsComponent,
       RecruiterViewJobsComponent,
+      ClientViewComponent,
       HighlightPipe,
       WhatsappComponent,
       KeyhighlightPipe,

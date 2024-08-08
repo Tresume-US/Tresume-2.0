@@ -109,6 +109,7 @@ import { MultipleInvoicesComponent } from './all-invoice/multiple-invoices/multi
 import { InvoiceReportComponent } from './invoice-report/invoice-report.component';
 import { CorporateDocumentComponent } from './corporate-document/corporate-document.component';
 import { ClientViewDetailsComponent } from './client-view-details/client-view-details.component';
+import { ClientViewComponent } from './client-view/client-view.component';
 import { JobBoardusageReportComponent } from './reports/jobboard-usage-report.component';
 import { PerformanceReportsComponent } from './reports/performance-report.component';
 import { RecruiterViewJobsComponent } from './recruiter-view-jobs/recruiter-view-jobs.component';
@@ -238,6 +239,7 @@ const routes: Routes = [
   { path: 'multiple-invoices', component: MultipleInvoicesComponent },
   { path: 'corpdocument', component: CorporateDocumentComponent },
   { path: 'clientdetails/:ClientID', component: ClientViewDetailsComponent },
+  { path: 'clientview/:ClientID', component: ClientViewComponent },
   { path: 'reports/performance', component: PerformanceReportsComponent },
   { path: 'recruitersview/:jobId', component: RecruiterViewJobsComponent },
   { path: 'integration/whatsapp', component: WhatsappComponent},

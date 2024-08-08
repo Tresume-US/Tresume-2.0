@@ -24,7 +24,7 @@
                     <th>Email ID</th>
                     <th>Website</th>
                     <th>Owner</th>
-                    <th *ngIf="routeType == 1">View Details</th>
+                    <th>View Details</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -41,20 +41,25 @@
                             <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientdetails',client.ClientID]"></i>
                         </div>
                       </td>
+                      <td *ngIf="routeType == 0"  >
+                        <div >
+                            <i class="fa fa-eye fa-lg ml-3 mr-2" [routerLink]="['/clientview', client.ClientID]"></i>
+                        </div>
+                      </td>
                       <td>
                         <div>
                           <i class="fa fa-trash fa-lg ml-3 mr-2" (click)="deleteclient(client.ClientID)"></i>
                         </div>
                       </td>
-                    </tr>                  
+                    </tr>
                 </ng-container>
-              </tbody>              
+              </tbody>
         </table>
     </div>
-</div>
-
-
-<div *ngIf="showConfirmationDialog" class="modal align-center">
+  </div>
+  
+  
+  <div *ngIf="showConfirmationDialog" class="modal align-center">
     <div class="modal-content justify-content-center ">
         <button type="button" class="close close-modal" (click)="cancelDelete()">
             <span aria-hidden="true">&times;</span>
@@ -66,8 +71,8 @@
             <button class="btn btn-sm btn-bgcolor text-white ml-5" (click)="cancelDelete()">Cancel</button>
         </div>
     </div>
-</div>
-
-<p-toast position="bottom-right"></p-toast>
-
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  </div>
+  
+  <p-toast position="bottom-right"></p-toast>
+  
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
