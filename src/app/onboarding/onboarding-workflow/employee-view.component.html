@@ -75,12 +75,16 @@
                                 </ul>
 
                             </div>
+                            <div class="tab-content">
+                                <input type="checkbox" id="terms" [(ngModel)]="acceptedTerms" style="margin-top: 5px;">
+                                <label for="terms" style="margin-left: 5px;">I am submitting the documents to the best of my knowledge.</label>
+                            </div>
 
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane active d-flex" style="padding: 10px;">
                                 <button type="button" class="btn btn-primary ml-auto" style="background-color: #482668;"
-                                    (click)=" submitDocs()">
+                                    (click)=" submitDocs()" [disabled]="!acceptedTerms">
                                     Submit to Employer
                                 </button>
                             </div>

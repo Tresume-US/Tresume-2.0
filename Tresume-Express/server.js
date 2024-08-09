@@ -55,7 +55,7 @@ const CorporateDocument = require("./corporate-document");
 const CBapi = require("./cb");
 const Dashboard = require("./dashboard");
 const WhatsApp = require("./whatsapp")
-
+const router = require("./onboarding-routes");
 app.use("/", onboardRoutes);
 app.use("/", Dashboard);
 app.use("/", candidateRoutes);
@@ -1422,7 +1422,8 @@ app.post("/getOnboardingList", function (req, res) {
                           ISNULL(CONVERT(NVARCHAR(10), CO.startdate, 101), '1900-01-01T00:00:00') AS 'StartDate',
                           CO.status,
                           CO.PercentComplete AS Completed,
-                          CO.ID
+                          CO.ID,
+                          CO.terms
                    FROM CurrentOnboardings CO
                    INNER JOIN Memberdetails M ON CHARINDEX(',' + CAST(CO.OrgID AS VARCHAR) + ',', ',' + M.accessorg + ',') > 0
                    INNER JOIN Organization O ON CO.OrgID = O.organizationid
@@ -1975,7 +1976,44 @@ app.post("/saveOnboardingRequest", function (req, res) {
     res.status(500).send("Internal server error");
   }
 });
-
+router.post("/updateDocumentstatus", function (req, res) {
+  try {
+    sql.connect(config, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error connecting to database");
+        return;
+      }
+      var request = new sql.Request();
+   
+      request.query(
+        "update CurrentOnboardings set terms='" + req.body.terms + "' where ID= '" + req.body.OnboardID + "';",
+        function (err, result) {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Error executing query");
+            return;
+          }
+          const response = {
+            flag: 1,
+            message: "Data Updated",
+            terms: req.body.terms,
+            onboardID:req.body.OnboardID
+          };
+          res.send(response);
+        }
+      );
+   
+    });
+  } catch (error) {
+    console.error(error);
+    const data = {
+      flag: 0,
+      message: "Internal Server Error",
+    };
+    res.status(500).send(data);
+  }
+});
 app.post("/updateOnboardStatus", function (req, res) {
   try {
     sql.connect(config, function (err) {

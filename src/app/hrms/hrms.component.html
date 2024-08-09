@@ -106,6 +106,13 @@
         <div class="main-container" *ngFor="let candidate of candidates">
           <div class="card mb-6">
               <div class="card-header">
+                <div
+                *ngIf="candidate.score > 0"
+                class="score-container"
+                style="margin-top: 10px"
+              ><h3><span >This Profile Matches  {{ candidate.score  }}% In </span><span [innerHTML]="candidate.Skill | highlight: searchTerm"></span></h3>
+                
+              </div>
                   <h2 class="project-title">
                       <a style="font-size: 18px; color: #482668;" [innerHTML]="candidate.Name | highlight: searchTerm"></a>
 
