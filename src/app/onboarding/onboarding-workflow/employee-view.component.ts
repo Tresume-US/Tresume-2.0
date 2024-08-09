@@ -22,6 +22,7 @@ export class EmployeeViewComponent implements OnInit {
     loaded: boolean = false;
     uploadFile: any[] = [];
     isCompleted: boolean;
+acceptedTerms:boolean=false;
 
     uploadUrl = `${environment.apiUrl}uploadReqOnboardDocument`;
 
@@ -117,9 +118,22 @@ export class EmployeeViewComponent implements OnInit {
 
         }
     }
-
+    storedvalue:number;
     submitDocs() {
         this.isCompleted = true;
-    }
+        this.storedvalue=this.acceptedTerms?1:0;
+        console.log(this.storedvalue)
+        if(this.storedvalue==0){
+            alert("Are you sure you want to submit the document without checking it?");
+        }
+        let req={
+                     OnboardID:this.sessionDetails.OnboardID,
+                     terms:this.storedvalue
+                 }
+                this.service.updateDocumentstatus(req).subscribe(x =>{
+                    console.log('Response:', x);
+                });
+
+}
 
 }

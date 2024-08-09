@@ -167,7 +167,9 @@ export class OnboardingService {
         }
         return this.http.post<ResponseDetails>(this.endpoint + 'deleteRequestedDoc', request);
     }
-
+    updateDocumentstatus(request: any): Observable<ResponseDetails> {
+        return this.http.post<ResponseDetails>(this.endpoint + 'updateDocumentstatus' , request);
+    }
     //Adobe E-Sign
 
     getAdobeToken() {
